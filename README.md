@@ -14,39 +14,27 @@ Forked from ChengSashankh/quick-api-server
 
 - To enable router level header validation, add `"validate": true` to config/settings.json
 - To add an endpoint, use the routers in routes/user.js and routes/admin.js to add your endpoints.
-- Add your computate / processing code to compute/
 
 ## Endpoints
 
-Just starting to list out what we might need
+REST is designed around resources. Resources can be objects, data or services. Here are the resources in our app:
 
-Authentication:
-    - Sign up 
-    - Sign in using social media
-    - Reset password
+On each of these, we want to support functionality in nested fashion. 
 
-For manipulating a trip:
+/api/v1
 
-    - Create or delete a trip:
-    - POST /api/v1/trip/create
-    - POST /api/v1/trip/delete
-
-Edit members of trip:
-
-    - POST /api/v1/trip/add
-    - POST /api/v1/trip/remove
-
-For manipulating locations in a trip:
-
-    - GET  /api/v1/trip/places
-    - POST /api/v1/trip/addplace
-    - POST /api/v1/trip/removeplace
-    - POST /api/v1/trip/rightswipe
-    - POST /api/v1/trip/leftswipe
-    - POST /api/v1/trip/superlike
-
-For getting locations from library:
-    - /api/v1/locations?city="singapore"
+    - /user
+        (Not sure yet what functionality is needed under this)
+    - /trips
+        - /members 
+        - /vote
+        - /itinerary
+        - /locations
+            - /top
+            - /votes
+    - /places
+        - /store
+        - /search
 
 
 

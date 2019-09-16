@@ -9,19 +9,34 @@ if (settings.validate) {
     router.use(validateRequest);
 }
 
+/**************** Trip Member APIs  ****************/
+
+// These are the people who are a part of this trip
+
+router.get('/members', function (req, res) {
+    res.end('Get members of this trip');
+});
+
+router.post('/members', function (req, res) {
+    res.end('Add a member to this trip');
+});
+
+router.delete('/members', function (req, res) {
+    res.end('Delete a member from this trip');
+});
+
 /**************** Trip Voting APIs  ****************/
+
+// These are the votes that have been cast inside this trip
 
 router.post('/vote', function (req, res) {
     console.log(req.body);
     res.end('You chose to vote');
 });
 
-router.get('/vote', function (req, res) {
-    console.log(req.body);
-    res.end('You want to see the votes');
-});
-
 /**************** Trip Itinerary APIs  ****************/
+
+// These are the itineraries inside the trip
 
 router.post('/itinerary', function (req, res) {
     console.log('You chose to add a trip')
@@ -41,21 +56,22 @@ router.delete('/itinerary', function (req, res) {
 
 /**************** Trip Locations APIs  ****************/
 
-router.get('/location', function (req, res) {
-    console.log('Get places in the trip');
+// These are the locations inside the trip
+
+router.get('/locations', function (req, res) {
+    res.end('Get places in the trip');
 });
 
-router.post('/location', function (req, res) {
-    console.log('Add places in the trip');
+router.post('/locations', function (req, res) {
+    res.end('Add places in the trip');
 });
 
-router.get('/location/top', function (req, res) {
-    console.log('Get top n locations in the trip');
-})
+router.get('/locations/top', function (req, res) {
+    res.end('Get top n locations in the trip');
+});
 
-router.get('/', function (req, res) {
-    let computeValue = computeResource.getSampleMessage();
-    res.end('User router reached. ' + computeValue);
+router.get('/locations/votes', function (req, res) {
+    res.end('You want to see the votes');
 });
 
 module.exports = router;

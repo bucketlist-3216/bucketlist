@@ -11,21 +11,24 @@ if (settings.validate) {
     router.use(validateRequest);
 }
 
-router.post('/location', function(req, res) {
+/**************** Update Places Store  ****************/
+
+router.post('/store', function(req, res) {
     console.log('Add a location to the database');
 });
 
-router.delete('/location', function(req, res) {
+router.delete('/store', function(req, res) {
     console.log('Delete a location from database');
 });
 
-router.get('/location', function (req, res) {
+router.get('/store', function (req, res) {
     console.log('Get details of a location');
 });
 
-router.get('/', function (req, res) {
-    let computeValue = computeResource.getSampleMessage();
-    res.end('User router reached. ' + computeValue);
+/**************** Place Search APIs  ****************/
+
+router.get('/search', function (req, res) {
+    console.log('Search for a location based on params');
 });
 
 module.exports = router;

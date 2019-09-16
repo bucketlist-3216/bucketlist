@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const {
     users,
     trips,
-    locations,
+    places,
     admin 
 } = require('./routes');
 const config = require('../config/settings');
@@ -29,9 +29,9 @@ app.use('/api/', function (req, res, next) {
 
 /************************** Routes **************************/
 
-app.use('/api/v1/trip', trips);
-app.use('/api/v1/locations', locations);
-app.user('api/v1/user', users);
+app.use('/api/v1/trips', trips);
+app.use('/api/v1/places', places);
+app.use('api/v1/user', users);
 
 app.use('/debug', admin);
 

@@ -13,6 +13,8 @@ if (settings.validate) {
 
 /**************** User end points ****************/
 
+// Dont know what end points we need here. Leaving blank for now.
+
 /***
  * Get user profile
  */
