@@ -27,3 +27,39 @@ This repository was
 - used to develop [Find and Seek](https://devpost.com/software/find-and-seek-n0ejt9) for a hackathon. API server exposed through public IP ( running on EC2 ) for a demo.
 
 - used for [clip](https://github.com/ChengSashankh/clip), a personal project requiring a centralized API server to handle multi-platform collaborative clipboard. 
+
+## Endpoints
+
+Authentication:
+- Sign up 
+- Sign in using social media
+- Reset password
+
+For manipulating a trip:
+
+    - Create or delete a trip:
+    - POST /api/v1/trip/create
+    - POST /api/v1/trip/delete
+
+Edit members of trip:
+
+    - POST /api/v1/trip/add
+    - POST /api/v1/trip/remove
+
+For manipulating locations in a trip:
+
+    - GET  /api/v1/trip/places
+    - POST /api/v1/trip/addplace
+    - POST /api/v1/trip/removeplace
+    - POST /api/v1/trip/rightswipe
+    - POST /api/v1/trip/leftswipe
+    - POST /api/v1/trip/superlike
+
+For getting locations from library:
+    - /api/v1/locations?city="singapore"
+
+For 
+
+
+
+

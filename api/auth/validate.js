@@ -1,9 +1,9 @@
 var listedKeys = require('../../config/settings.json').listedKeys;
 
 var validateRequest = function(req, res, next) {
-    var isValid = false;
-    var errorCode = 403;
-    var errorMessage = 'Invalid API_KEY';
+    let isValid = false;
+    let errorCode = 403;
+    let errorMessage = 'Invalid API_KEY';
 
     let challenge = req.get('API_KEY');
 

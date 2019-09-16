@@ -1,7 +1,9 @@
-const user = require('./user');
+const users = require('./users');
 const admin = require('./admin');
 
 module.exports = {
-    user,
+    users,
+    trips,
+    locations,
     admin
 };
