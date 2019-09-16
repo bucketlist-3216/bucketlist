@@ -1,7 +1,6 @@
 const express = require('express');
-const graphql = require('graphql');
-const graphqlHTTP = require('express-graphql');
 const bodyParser = require('body-parser');
+const { DBClient } = require('../database');
 const {
     users,
     trips,
@@ -10,6 +9,10 @@ const {
 } = require('./routes');
 const config = require('../config/settings');
 const cors = require('cors');
+
+/************************** Database Connection **************************/
+
+const dbClient = new DBClient(config.database);
 
 /************************** CORS + JSON parsing **************************/
 

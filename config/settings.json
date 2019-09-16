@@ -5,5 +5,11 @@
         "sampleKey2",
         "sampleKey3"
     ],
-    "validate": false
+    "validate": false,
+    "database": {
+        "host": "localhost",
+        "user": "dbuser",
+        "password": "dbpass",
+        "database": "mydb"
+    }
 }
