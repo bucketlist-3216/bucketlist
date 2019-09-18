@@ -25,3 +25,9 @@ Back end will be hosted on port `8080`. To run:
 npm run start:back
 ```
 API queries will be called through `http://localhost:8080`
+
+
+To run both front- and back-end in one shell window (not recommended as it's difficult to debug):
+```js
+npm start
+```
