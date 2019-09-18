@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run start:front & npm run start:back",
     "start:front": "webpack-dev-server --open --hot --mode development",
     "start:back": "nodemon src/server/index.js",
     "build": "webpack --mode production"
