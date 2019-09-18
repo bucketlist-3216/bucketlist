@@ -1,20 +1,30 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const path = require('path');
+const cors = require('cors')
 const app = express();
 
-const PORT = process.env.PORT || 8080
+const port = process.env.PORT || 8080
 
-app.use(express.static(path.join(__dirname, 'build')));
+// keep this here, need for server static files in the future
+// app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/ping', function (req, res) {
-  return res.send('pong');
+/************************** CORS + JSON parsing **************************/
+
+app.use(cors());
+app.use(bodyParser.json());
+
+/************************** Middleware for logging **************************/
+
+app.use('/api/', function (req, res, next) {
+  console.log('Request URL:', req.originalUrl);
+  next();
+}, function (req, res, next) {
+  console.log('Request Type:', req.method);
+  next();
 });
 
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
-app.listen(PORT, function () {
-  console.log(`Server running on ${PORT}`)
+app.listen(port, () =>  {
+  console.log(`Server running on ${port}`)
 });
