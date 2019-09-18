@@ -1,8 +1,7 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
-  entry: './src/client/index.js',
+  entry: './index.js',
   module: {
-
     rules: [
       {
         test: /\.(js|jsx)$/,
@@ -18,13 +17,21 @@ module.exports = {
             loader: "html-loader"
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/client/index.html",
+      template: "./index.html",
       filename: "index.html"
     })
-  ]
+  ],
+  devServer: {
+    inline: true,
+    port: 5000
+  },
 };
