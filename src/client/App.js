@@ -1,8 +1,13 @@
 import React from 'react';
-import styles from './styles.css'
+import Button from 'react-bootstrap/Button'
 
 const App = () => {
-  return <div className={styles.test}>Hello World</div>;
+  return (
+    <div>
+      <div>Hello World</div>
+      <Button />
+    </div>
+  );
 };
 
 export default App
