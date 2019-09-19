@@ -1,23 +1,48 @@
 {
-  "name": "api-template",
+  "name": "bucketlist",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "BucketList progressive WebApp",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node api/server.js"
+    "start": "npm run start:front & npm run start:back",
+    "start:front": "webpack-dev-server --open --hot --mode development",
+    "start:back": "nodemon src/server/index.js",
+    "build": "webpack --mode production"
   },
-  "keywords": [
-    "api",
-    "template"
-  ],
-  "author": "Sashankh Chengavalli Kumar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChengSashankh/bucketlist.git"
+  },
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChengSashankh/bucketlist/issues"
+  },
+  "homepage": "https://github.com/ChengSashankh/bucketlist#readme",
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
+  },
   "dependencies": {
-    "body-parser": "",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
     "cors": "^2.8.5",
-    "express": "",
+    "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "graphql": "^14.5.4"
+    "graphql": "^14.5.6",
+    "nodemon": "^1.19.2",
+    "react-bootstrap": "^1.0.0-beta.12"
   }
 }

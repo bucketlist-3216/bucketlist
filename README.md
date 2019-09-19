@@ -1,55 +1,33 @@
-# Assignment 3
+# bucketlist
 
-Forked from ChengSashankh/quick-api-server
+Project Config:
+- React + Webpack + Babel for front-end (in `./src/client`)
+- Node + Express for back-end ( in `./src/server`)
 
-## Set up
+## Getting Started
 
-- Clone this repo, cd into the repository and run `npm i`
-- [ Optional ] If required change the port number in config/settings.json
-- [ Optional ] If you intend to set up some header validation, add them into auth/validate.js
-- `npm start` will start the server on the configured port
-- Look for the postman collection to get a sample request
+Clone project into your local repo and run:
+```js
+npm install
+```
+This will ensure you have the appropriate dependencies
 
-## Developing
+### Running Front-End and Back-End on Dev
 
-- To enable router level header validation, add `"validate": true` to config/settings.json
-- To add an endpoint, use the routers in routes/user.js and routes/admin.js to add your endpoints.
-- Add your computate / processing code to compute/
+Front end will be hosted on port `5000`. To run:
+```js
+npm run start:front
+```
+it will be accessible on `http://localhost:5000/`
 
-## Endpoints
-
-Just starting to list out what we might need
-
-Authentication:
-    - Sign up 
-    - Sign in using social media
-    - Reset password
-
-For manipulating a trip:
-
-    - Create or delete a trip:
-    - POST /api/v1/trip/create
-    - POST /api/v1/trip/delete
-
-Edit members of trip:
-
-    - POST /api/v1/trip/add
-    - POST /api/v1/trip/remove
-
-For manipulating locations in a trip:
-
-    - GET  /api/v1/trip/places
-    - POST /api/v1/trip/addplace
-    - POST /api/v1/trip/removeplace
-    - POST /api/v1/trip/rightswipe
-    - POST /api/v1/trip/leftswipe
-    - POST /api/v1/trip/superlike
-
-For getting locations from library:
-    - /api/v1/locations?city="singapore"
+Back end will be hosted on port `8080`. To run:
+```js
+npm run start:back
+```
+API queries will be called through `http://localhost:8080`
 
 
-
-
-
-
+To run both front- and back-end in one shell window (not recommended as it's difficult to debug):
+```js
+npm start
+```
