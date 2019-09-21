@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 
-import LoginView from './containers/LoginView';
+import LoginView from './pages/LoginView';
 import './styles.scss';
 
 const App = () => {
