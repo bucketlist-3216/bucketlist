@@ -1,13 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { DBClient } = require('./database');
+const { DBClient } = require('../database');
 const {
     users,
     trips,
     places,
     admin 
-} = require('./api/routes');
-const config = require('./config/settings');
+} = require('./routes');
+const config = require('../config/settings');
 const cors = require('cors');
 
 /************************** Database Connection **************************/
