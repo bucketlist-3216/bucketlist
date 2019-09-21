@@ -1,6 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
-  entry: './index.js',
+  entry: './index.jsx',
   module: {
     rules: [
       {
@@ -8,6 +8,9 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
+        },
+        resolve: {
+          extensions: ['.js', '.jsx']
         }
       },
       {

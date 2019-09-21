@@ -5,7 +5,6 @@ import './styles.scss'
 
 const App = () => {
   return (
-
     <LoginView />
   );
 };
