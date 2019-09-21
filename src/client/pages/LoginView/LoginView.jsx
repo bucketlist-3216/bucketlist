@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 
-import Login from '../../components/Login'
+import Login from '../../components/Login';
 import './styles.scss';
 
 class LoginView extends Component {
@@ -12,7 +11,9 @@ class LoginView extends Component {
   render() {
     return (
       <div className="landing-page">
-        <Login />
+        <div className="login-container">
+          <Login />
+        </div>
       </div>
     );
   }

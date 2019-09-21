@@ -10,7 +10,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="login-container">
+      <div className="login">
         <Button variant="primary">Login</Button>
         <Button variant="danger">Sign Up</Button>
       </div>

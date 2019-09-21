@@ -2,7 +2,13 @@
   height: 100%;
   // background-image: url('../../../../assets/login/bg-login.png');
   background-image: url('https://user-images.githubusercontent.com/15785697/65377390-316ea880-dc79-11e9-985b-b5b38ca829a0.png');
-  background-repeat: no-repeat;
+  // background-repeat: no-repeat;
   background-size: cover;
-}
 
+
+  .login-container {
+    justify-content: center;
+    align-items: center;
+    
+  }
+}
