@@ -36,13 +36,23 @@ class TripPlaceQueryModel extends EntityQueryModel {
     }
 
     // Delete a location from this trip
-    deleteLocationFromTrip (locationParticulars) {
-
+    deleteLocationFromTrip (filters) {
+        return knex(this.tableName)
+            .where(filters)
+            .del();
     }
 
     // Get the top locations in this particular trip (in order)
     getTopLocationInTrip (tripParticulars) {
 
+    }
+
+    //Get the number of votes of this location in this trip
+    // Incomplete
+    getLocationVotes (locationParticulars) {
+        return knex(this.tableName)
+            .select(this.selectableProps)
+            .where(locationParticulars);
     }
 }
 

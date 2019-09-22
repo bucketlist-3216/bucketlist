@@ -178,7 +178,7 @@ router.post('/locations', function (req, res) {
 
     insert
         .then(function(insertionResponse) {
-            res.end(JSON.stringify({"inserted_id": insertionResponse}));
+            res.json({"inserted": insertionResponse});
         })
         .catch(function(err) {
             console.log(JSON.stringify(err));
@@ -186,13 +186,29 @@ router.post('/locations', function (req, res) {
         });
 });
 
+// Delete a location from this trip.
+router.delete('/locations', function (req, res) {
+    const deleteLocation = tripPlaceQueryModel.deleteLocationFromTrip(req.body.trip);
+
+    deleteLocation
+        .then(function(deletionResponse) {
+            res.json({"deleted": deletionResponse});
+        })
+        .catch(function(err) {
+            console.log(JSON.stringify(err));
+            res.status(500).end('Unable to delete trip location');
+        });
+});
+
 // Get the top locations by vote.
+// TODO: This needs to be implemented
 router.get('/locations/top', function (req, res) {
+    // This call is not implemented
     const getTopLocations = tripPlaceQueryModel.getTopLocationInTrip(req.body.trip);
 
     getTopLocations
         .then(function(queryResponse) {
-            res.end('The top locations in this trip are ', JSON.stringify(queryResponse));
+            res.json(queryResponse);
         })
         .catch(function (err) {
             res.status(500).end('Unable to get top locations');
@@ -200,6 +216,7 @@ router.get('/locations/top', function (req, res) {
 });
 
 // Get the votes for the chosen location
+// TODO: Need to implement this 
 router.get('/locations/votes', function (req, res) {
     const getVotes = tripPlaceQueryModel.get
 });
