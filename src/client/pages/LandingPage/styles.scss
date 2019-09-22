@@ -1,0 +1,46 @@
+.landing-page {
+  height: 100%;
+  // background-image: url('../../../../assets/login/bg-login.png');
+  background-image: url('https://user-images.githubusercontent.com/15785697/65377390-316ea880-dc79-11e9-985b-b5b38ca829a0.png');
+  // background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+
+  .login-container {
+    // display: block;
+    // justify-content: center;
+    // align-items: center;
+    background-color: white;
+    opacity: 0.5;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    min-width: 450px;
+    height: 30%;
+    margin: auto 50px;
+  }
+
+  .title {
+    @media screen and (max-width: 768px) {
+      display:none;
+    }
+    margin-bottom: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    right: 0;
+    min-width: 500px;
+    // max-height: 20px;
+
+    h1 {
+      font-family: 'GlossAndBloom';
+      text-align: right;
+      color: white;
+      opacity: 0.6;
+      font-size: 90px;
+    }
+  }
+}

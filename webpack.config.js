@@ -32,6 +32,13 @@ module.exports = {
         ]
       },
       {
+        test: /\.(svg)$/,
+        loader: 'react-svg-loader',
+        options: {
+          jsx: true
+        }
+      },
+      {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
@@ -46,7 +53,8 @@ module.exports = {
       {
         test: /\.(png|jpg)$/,
         use: ['url-loader']
-      }
+      },
+
     ]
   },
   plugins: [

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import _ from 'lodash';
 
-import './styles.scss'
+import PROVIDERS from '../../constants/providers';
+import './styles.scss';
+import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
 
 class Login extends Component {
   constructor(props) {
@@ -11,8 +14,15 @@ class Login extends Component {
   render() {
     return (
       <div className="login">
-        <Button className="login-button">Login</Button>
-        <Button className="signup-button">Sign Up</Button>
+        <div className="sso-container">
+          {PROVIDERS.map((provider, key) => (
+            <SingleSignOnButton
+              key={key}
+              domain={provider.id}
+              providerName={provider.providerName}
+            />
+          ))}
+        </div>
       </div>
     );
   }
