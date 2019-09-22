@@ -4,11 +4,13 @@
   background-image: url('https://user-images.githubusercontent.com/15785697/65377390-316ea880-dc79-11e9-985b-b5b38ca829a0.png');
   // background-repeat: no-repeat;
   background-size: cover;
-
+  background-position: center;
+  overflow: hidden;
 
   .login-container {
+    display: flex;
     justify-content: center;
+    height: 150%;
     align-items: center;
-    
   }
 }

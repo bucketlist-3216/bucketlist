@@ -11,8 +11,8 @@ class Login extends Component {
   render() {
     return (
       <div className="login">
-        <Button variant="primary">Login</Button>
-        <Button variant="danger">Sign Up</Button>
+        <Button className="login-button">Login</Button>
+        <Button className="signup-button">Sign Up</Button>
       </div>
     );
   }
