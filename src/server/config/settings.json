@@ -7,9 +7,9 @@
     ],
     "validate": false,
     "database": {
-        "host": "35.240.178.105",
-        "user": "",
+        "host": "127.0.0.1",
+        "user": "root",
         "password": "",
-        "database": ""
+        "database": "bucketlist"
     }
 }

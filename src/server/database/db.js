@@ -40,6 +40,13 @@ class DBClient {
     }
 }
 
-const dbClient = new DBClient(config.database);
+// const dbClient = new DBClient(config.database);
 
-module.exports = dbClient;
+const knex = require('knex')({
+    client: 'mysql',
+    connection: config.database
+});
+
+module.exports = {
+    knex
+};

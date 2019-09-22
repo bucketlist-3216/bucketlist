@@ -2,7 +2,8 @@ const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json')
-const dbClient = require('../../database')
+const VotesQueryModel = require('../query-model/votes-query-model');
+const TripPlaceQueryModel = require('../query-model/trip-place-query-model');
 
 // Trip API router
 const router = express.Router();
@@ -29,10 +30,20 @@ router.delete('/members', function (req, res) {
 /**************** Trip Voting APIs  ****************/
 
 // These are the votes that have been cast inside this trip
+const votesQueryModel = new VotesQueryModel();
 
 router.post('/vote', function (req, res) {
-    console.log(req.body);
-    res.end('You chose to vote');
+    // Cast the vote
+    const vote = votesQueryModel.castVote(req.body.vote);
+
+    // Insert into database and return response
+    vote.then(function (res) {
+        res.end('Vote cast');
+    });
+});
+
+router.get('/vote', function (req, res) {
+
 });
 
 /**************** Trip Itinerary APIs  ****************/
@@ -58,19 +69,50 @@ router.delete('/itinerary', function (req, res) {
 /**************** Trip Locations APIs  ****************/
 
 // These are the locations inside the trip
+const tripPlaceQueryModel = new TripPlaceQueryModel();
 
+// View the locations in the trip.
+// TODO: Implement this endpoint
 router.get('/locations', function (req, res) {
-    res.end('Get places in the trip');
+    const tripLocations = tripPlaceQueryModel.getLocationsInTrip(req.body.trip);
+
+    tripLocations
+        .then(function(queryResponse) {
+            res.end('The places in the trip are ', JSON.stringify(queryResponse));
+        })
+        .catch(function(err) {
+            res.status(500).end('Unable to get trip locations');
+        });
 });
 
+// Add a location to this trip.
 router.post('/locations', function (req, res) {
-    res.end('Add places in the trip');
+    const insert = tripPlaceQueryModel.addLocationToTrip(req.body.trip);
+
+    insert
+        .then(function(insertionResponse) {
+            res.end('The place was inserted', JSON.stringify(insertionResponse));
+        })
+        .catch(function(err) {
+            console.log(JSON.stringify(err));
+            res.status(500).end('Unable to insert trip locations');
+        });
 });
 
+// Get the top locations by vote.
 router.get('/locations/top', function (req, res) {
-    res.end('Get top n locations in the trip');
+    const getTopLocations = tripPlaceQueryModel.getTopLocationInTrip(req.body.trip);
+
+    getTopLocations
+        .then(function(queryResponse) {
+            res.end('The top locations in this trip are ', JSON.stringify(queryResponse));
+        })
+        .catch(function (err) {
+            res.status(500).end('Unable to get top locations');
+        });
 });
 
+// Do we need this anymore?
 router.get('/locations/votes', function (req, res) {
     res.end('You want to see the votes');
 });
