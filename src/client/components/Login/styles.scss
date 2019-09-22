@@ -28,8 +28,7 @@
     margin-top: 10px;
     border-radius: 0;
     border: 0;
-    background-color: #f18a7c;
-    opacity: 0.8;
+    background-color: rgba(241,138,124, 0.62);
     color: #353839;
     font-family: 'JosefinSans-Regular';
 
@@ -51,10 +50,9 @@
 
     .email-field,
     .password-field {
-      background-color: #fad9d4;
+      background-color: rgba(241,138,124, 0.24);
       border: 0;
       height: 38px;
-      // opacity: 0.3;
 
       &::placeholder {
         font-family: 'JosefinSans-Regular';
