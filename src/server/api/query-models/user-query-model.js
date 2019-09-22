@@ -18,8 +18,7 @@ class UserQueryModel extends EntityQueryModel {
 
         return knex(this.tableName)
             .insert(toInsert);
-    } 
-
+    }
 }
 
 module.exports = UserQueryModel;

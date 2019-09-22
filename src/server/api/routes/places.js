@@ -2,7 +2,7 @@ const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json');
-const PlaceQueryModel = require('../query-model/places-query-model'); 
+const { PlaceQueryModel } = require('../query-models'); 
 const _ = require('underscore');
 
 const computeResource = new Compute();

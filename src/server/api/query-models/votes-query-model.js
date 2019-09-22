@@ -23,17 +23,18 @@ class VotesQueryModel extends EntityQueryModel {
 
     // Cast a vote for a location
     castVote(vote) {
+        console.log(vote);
+
         vote = _.omit(vote, this.nonInsertableProps);
         const filter = {
             "trip_place_id": vote['trip_place_id'],
             "trip_friend_id": vote['trip_friend_id']
         };
 
+        console.log(filter);
+
         // Delete any older votes for the same thing
-        const deleteOldVotes = 
-            knex(this.tableName)
-            .where(filter)
-            .del();
+        const deleteOldVotes = this.deleteVote(filter);
         
         // TODO: Logic is flawed here. Need to fix this
         let that = this;
@@ -47,10 +48,10 @@ class VotesQueryModel extends EntityQueryModel {
             });
     }
 
-    // Add a 
-    addVoteToLocationQuery(locationParticulars) {
-
+    deleteVote(filter) {
+        return knex(this.tableName).where(filter).del();
     }
+
 }
 
 module.exports = VotesQueryModel;

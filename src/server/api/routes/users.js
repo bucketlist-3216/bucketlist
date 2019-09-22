@@ -2,7 +2,7 @@ const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json');
-const { UserQueryModel } = require('../query-model')
+const { UserQueryModel } = require('../query-models')
 
 const computeResource = new Compute();
 const userQueryModel = new UserQueryModel();

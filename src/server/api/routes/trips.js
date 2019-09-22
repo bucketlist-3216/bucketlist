@@ -2,12 +2,13 @@ const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json')
+const _ = require('underscore');
 const { 
     VotesQueryModel,
     TripPlaceQueryModel, 
     TripQueryModel, 
     TripFriendQueryModel 
-} = require('../query-model');
+} = require('../query-models');
 
 // Trip API router
 const router = express.Router();
@@ -20,10 +21,12 @@ if (settings.validate) {
 // These are the people who are a part of this trip
 const tripQueryModel = new TripQueryModel();
 
+// TODO: Do we really need this?
 router.get('/', function (req, res) {
     res.end('Get all trips');
 });
 
+// Create a trip
 router.post('/', function (req, res) {
     const toInsert = req.body.trip;
 
@@ -37,8 +40,24 @@ router.post('/', function (req, res) {
         });
 });
 
+// Delete a trip
 router.delete('/', function (req, res) {
-    res.end('Delete a trip');
+    const toDelete = req.body.trip;
+
+    // Delete from mySQL using knex
+    const deletion = tripQueryModel.deleteTrip(toDelete);
+
+    // Construct response after deletion
+    deletion
+        .then(function (returnObject) {
+            res.end('Return object was ', JSON.stringify(returnObject));
+        });
+});
+
+// TODO: Implement this - Update a trip
+router.put('/', function (req, res) {
+    const toUpdate = req.body.trip;
+    res.end('Update an existing trip record');
 });
 
 /**************** Trip Member APIs  ****************/
@@ -46,16 +65,23 @@ router.delete('/', function (req, res) {
 // These are the people who are a part of this trip
 const tripFriendQueryModel = new TripFriendQueryModel();
 
+// Get the members of a given trip.
 router.get('/members', function (req, res) {
-    res.end('Get members of this trip');
+    let getTripFriends = tripFriendQueryModel.getTripFriends(req.body.tripFriend);
+
+    getTripFriends
+        .then(function (queryResponse) {
+            res.json({"tripFriends": queryResponse});
+        })
 });
 
+// Add a member to a trip (adding a member-trip association)
 router.post('/members', function (req, res) {
-    let addTripFriend = tripFriendQueryModel.addTripFriend(req.body.tripFriend);
+    const addTripFriend = tripFriendQueryModel.addTripFriend(req.body.tripFriend);
 
     addTripFriend
         .then(function (insertionResponse) {
-            res.end(JSON.stringify({"insertedId":insertionResponse}));
+            res.json({"insertedId": insertionResponse});
         })
         .catch(function (err) {
             res.status(500).end('Could not add user to trip');
@@ -63,8 +89,18 @@ router.post('/members', function (req, res) {
         });
 });
 
+// Remove a member from a trip
 router.delete('/members', function (req, res) {
-    res.end('Delete a member from this trip');
+    const deleteMember = tripFriendQueryModel.deleteTripFriend(req.body.tripFriend);
+
+    deleteMember
+        .then(function (deletionResponse) {
+            res.json({"deletedId": deletionResponse});
+        })
+        .catch(function (err) {
+            res.status(500).end('Could not delete user from trip');
+            console.log (JSON.stringify(err));
+        });
 });
 
 /**************** Trip Voting APIs  ****************/
@@ -82,13 +118,23 @@ router.post('/vote', function (req, res) {
     });
 });
 
-router.get('/vote', function (req, res) {
+router.delete('/vote', function (req, res) {
+    const toDelete = req.body.vote;
 
+    // Delete from mySQL using knex
+    const deletion = votesQueryModel.deleteVote(toDelete);
+
+    // Construct response after deletion
+    deletion
+        .then(function (returnObject) {
+            res.json({"deletedId": returnObject});
+        });
 });
 
 /**************** Trip Itinerary APIs  ****************/
 
 // These are the itineraries inside the trip
+// Are these being deferred for now? 
 
 router.post('/itinerary', function (req, res) {
     console.log('You chose to add a trip')
@@ -118,10 +164,11 @@ router.get('/locations', function (req, res) {
 
     tripLocations
         .then(function(queryResponse) {
-            res.end('The places in the trip are ', JSON.stringify(queryResponse));
+            res.json({"location_ids": _.map(queryResponse, pair => pair['place_id'])});
         })
         .catch(function(err) {
             res.status(500).end('Unable to get trip locations');
+            console.log(err);
         });
 });
 
@@ -152,9 +199,9 @@ router.get('/locations/top', function (req, res) {
         });
 });
 
-// Do we need this anymore?
+// Get the votes for the chosen location
 router.get('/locations/votes', function (req, res) {
-    res.end('You want to see the votes');
+    const getVotes = tripPlaceQueryModel.get
 });
 
 module.exports = router;

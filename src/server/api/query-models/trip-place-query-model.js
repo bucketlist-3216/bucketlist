@@ -11,7 +11,7 @@ class TripPlaceQueryModel extends EntityQueryModel {
         this.validFilters = ['trip_place_id'];
         this.nonInsertableProps = ['trip_place_id'];
         this.tableName = 'Trip_Place';
-        this.selectableProps = []
+        this.selectableProps = ['place_id', 'trip_id']
         
         this.userMutable = false
         this.votingQueryModel = new VotingQueryModel();
@@ -19,7 +19,12 @@ class TripPlaceQueryModel extends EntityQueryModel {
 
     // Get all the locations in this particular trip
     getLocationsInTrip (tripParticulars) {
+        const tripId = tripParticulars['trip_id'];
 
+        let that = this;
+        return knex(this.tableName)
+            .select(this.selectableProps)
+            .where({"trip_id": tripId});
     }
 
     // Add a location to this trip
