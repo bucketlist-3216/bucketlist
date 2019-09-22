@@ -16,7 +16,7 @@ const dbClient = new DBClient(config.database);
 
 /************************** CORS + JSON parsing **************************/
 
-var app = express()
+const app = express()
 app.use(cors());
 app.use(bodyParser.json());
 

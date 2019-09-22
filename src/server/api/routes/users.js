@@ -3,10 +3,10 @@ const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json')
 
-var computeResource = new Compute();
+const computeResource = new Compute();
 
 // User API router
-var router = express.Router();
+const router = express.Router();
 if (settings.validate) {
     router.use(validateRequest);
 }
@@ -14,6 +14,14 @@ if (settings.validate) {
 /**************** User end points ****************/
 
 // Dont know what end points we need here. Leaving blank for now.
+
+/***
+ * Post user profile
+ */
+router.post('/profile', function(req, res) {
+    res.end();
+});
+
 
 /***
  * Get user profile

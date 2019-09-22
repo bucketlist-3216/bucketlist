@@ -4,7 +4,7 @@ const validateRequest = require('../auth');
 const settings = require('../../config/settings.json')
 
 // Trip API router
-var router = express.Router();
+const router = express.Router();
 if (settings.validate) {
     router.use(validateRequest);
 }

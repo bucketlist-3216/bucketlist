@@ -3,10 +3,10 @@ const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json')
 
-var computeResource = new Compute();
+const computeResource = new Compute();
 
 // Locations API router
-var router = express.Router();
+const router = express.Router();
 if (settings.validate) {
     router.use(validateRequest);
 }

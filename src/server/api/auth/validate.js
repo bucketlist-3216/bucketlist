@@ -1,6 +1,6 @@
-var listedKeys = require('../../config/settings.json').listedKeys;
+const listedKeys = require('../../config/settings.json').listedKeys;
 
-var validateRequest = function(req, res, next) {
+const validateRequest = function(req, res, next) {
     let isValid = false;
     let errorCode = 403;
     let errorMessage = 'Invalid API_KEY';
