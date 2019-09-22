@@ -12,5 +12,15 @@
     justify-content: center;
     height: 150%;
     align-items: center;
+    flex-direction: column;
+
+    .title h1 {
+      font-family: 'GlossAndBloom';
+      text-align: center;
+      color: white;
+      opacity: 0.6;
+      font-size: 90px;
+      margin-bottom: 50px;
+    }
   }
 }

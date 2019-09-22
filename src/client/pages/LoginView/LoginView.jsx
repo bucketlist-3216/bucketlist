@@ -12,6 +12,9 @@ class LoginView extends Component {
     return (
       <div className="landing-page">
         <div className="login-container">
+          <div className="title">
+            <h1>Swipe. List. Go</h1>
+          </div>
           <Login />
         </div>
       </div>
