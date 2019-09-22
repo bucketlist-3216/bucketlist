@@ -1,0 +1,26 @@
+.landing-page {
+  height: 100%;
+  // background-image: url('../../../../assets/login/bg-login.png');
+  background-image: url('https://user-images.githubusercontent.com/15785697/65377390-316ea880-dc79-11e9-985b-b5b38ca829a0.png');
+  // background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+
+  .login-container {
+    display: flex;
+    justify-content: center;
+    height: 150%;
+    align-items: center;
+    flex-direction: column;
+
+    .title h1 {
+      font-family: 'GlossAndBloom';
+      text-align: center;
+      color: white;
+      opacity: 0.6;
+      font-size: 90px;
+      margin-bottom: 50px;
+    }
+  }
+}
