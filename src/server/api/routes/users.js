@@ -2,9 +2,10 @@ const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json');
-const dbClient = require('../../database')
+const { UserQueryModel } = require('../query-model')
 
 const computeResource = new Compute();
+const userQueryModel = new UserQueryModel();
 
 // User API router
 const router = express.Router();
@@ -19,8 +20,12 @@ if (settings.validate) {
 /***
  * Post user profile
  */
-router.post('/profile', function(req, res) {
-    res.end();
+router.post('/', function(req, res) {
+    const insertion = userQueryModel.addUser(req.body.user);
+
+    insertion.then(function (insertionResponse) {
+        res.end(JSON.stringify({"insertedId": insertionResponse}));
+    });
 });
 
 

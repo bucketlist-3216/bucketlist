@@ -25,7 +25,7 @@ router.get('/store', function (req, res) {
     // TODO: Error handling to be done here.
     query
         .then(function (places) {
-            res.end('This is the response: ' + JSON.stringify(places));
+            res.end(JSON.stringify({"places": places}));
         })
         .catch(function (err) {
             throw new Error('Error querying server');

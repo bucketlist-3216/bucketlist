@@ -2,8 +2,12 @@ const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json')
-const VotesQueryModel = require('../query-model/votes-query-model');
-const TripPlaceQueryModel = require('../query-model/trip-place-query-model');
+const { 
+    VotesQueryModel,
+    TripPlaceQueryModel, 
+    TripQueryModel, 
+    TripFriendQueryModel 
+} = require('../query-model');
 
 // Trip API router
 const router = express.Router();
@@ -11,16 +15,52 @@ if (settings.validate) {
     router.use(validateRequest);
 }
 
+/**************** Trip APIs  ****************/
+
+// These are the people who are a part of this trip
+const tripQueryModel = new TripQueryModel();
+
+router.get('/', function (req, res) {
+    res.end('Get all trips');
+});
+
+router.post('/', function (req, res) {
+    const toInsert = req.body.trip;
+
+    // Insert into mySQL using knex
+    const insertion = tripQueryModel.addTrip(toInsert);
+
+    // Construct response after insertion
+    insertion
+        .then(function (returnObject) {
+            res.end('Return object was ', JSON.stringify(returnObject));
+        });
+});
+
+router.delete('/', function (req, res) {
+    res.end('Delete a trip');
+});
+
 /**************** Trip Member APIs  ****************/
 
 // These are the people who are a part of this trip
+const tripFriendQueryModel = new TripFriendQueryModel();
 
 router.get('/members', function (req, res) {
     res.end('Get members of this trip');
 });
 
 router.post('/members', function (req, res) {
-    res.end('Add a member to this trip');
+    let addTripFriend = tripFriendQueryModel.addTripFriend(req.body.tripFriend);
+
+    addTripFriend
+        .then(function (insertionResponse) {
+            res.end(JSON.stringify({"insertedId":insertionResponse}));
+        })
+        .catch(function (err) {
+            res.status(500).end('Could not add user to trip');
+            console.log (JSON.stringify(err));
+        });
 });
 
 router.delete('/members', function (req, res) {
@@ -37,7 +77,7 @@ router.post('/vote', function (req, res) {
     const vote = votesQueryModel.castVote(req.body.vote);
 
     // Insert into database and return response
-    vote.then(function (res) {
+    vote.then(function (insertionResponse) {
         res.end('Vote cast');
     });
 });
@@ -91,7 +131,7 @@ router.post('/locations', function (req, res) {
 
     insert
         .then(function(insertionResponse) {
-            res.end('The place was inserted', JSON.stringify(insertionResponse));
+            res.end(JSON.stringify({"inserted_id": insertionResponse}));
         })
         .catch(function(err) {
             console.log(JSON.stringify(err));

@@ -34,7 +34,7 @@ app.use('/api/', function (req, res, next) {
 
 app.use('/api/v1/trips', trips);
 app.use('/api/v1/places', places);
-app.use('api/v1/user', users);
+app.use('/api/v1/user', users);
 
 app.use('/debug', admin);
 

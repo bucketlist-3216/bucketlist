@@ -1,29 +1,27 @@
 const EntityQueryModel = require('./entity');
-const VotingQueryModel = require('./votes-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 
-class TripPlaceQueryModel extends EntityQueryModel {
+class TripQueryModel extends EntityQueryModel {
     
     constructor(dbClient) {
         super(dbClient);
         
-        this.validFilters = ['trip_place_id'];
-        this.nonInsertableProps = ['trip_place_id'];
-        this.tableName = 'Trip_Place';
+        this.validFilters = ['trip_id'];
+        this.nonInsertableProps = ['trip_id'];
+        this.tableName = 'Trip';
         this.selectableProps = []
         
-        this.userMutable = false
-        this.votingQueryModel = new VotingQueryModel();
+        this.userMutable = false;
     }
 
     // Get all the locations in this particular trip
-    getLocationsInTrip (tripParticulars) {
+    getTrip (tripParticulars) {
 
     }
 
     // Add a location to this trip
-    addLocationToTrip (toInsert) {
+    addTrip (toInsert) {
         toInsert = _.omit(toInsert, this.nonInsertableProps);
 
         return knex(this.tableName)
@@ -41,4 +39,4 @@ class TripPlaceQueryModel extends EntityQueryModel {
     }
 }
 
-module.exports = TripPlaceQueryModel;
+module.exports = TripQueryModel;
