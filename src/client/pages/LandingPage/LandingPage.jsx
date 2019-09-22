@@ -15,7 +15,7 @@ class LandingPage extends Component {
           <Login />
         </div>
         <div className="title">
-          <h1>Swipe. List. Go</h1>
+          <h1>Swipe. List. Go.</h1>
         </div>
       </div>
     );

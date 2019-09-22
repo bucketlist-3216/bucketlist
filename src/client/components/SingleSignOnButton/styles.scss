@@ -1,27 +1,3 @@
 .sso-button {
-  display: block;
-  position: relative;
-  height: 90px;
-  flex-basis: 90px;
-  font-weight: 700;
-  font-size: 1.3rem;
-  padding: 0;
-  img {
-    display: block;
-    width: 36px;
-    height: 36px;
-    margin: 0 auto;
-  }
-  span {
-    display: block;
-    padding-top: 4px;
-    text-align: center;
-  }
-  &:focus {
-    outline: none !important;
-  }
-  &:hover {
-    background-color: darken($white, 1%);
-    border-color: $black20;
-  }
+  width: 150px;
 }
