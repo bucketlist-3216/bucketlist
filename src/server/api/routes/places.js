@@ -2,6 +2,7 @@ const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json')
+const dbClient = require('../../database')
 
 const computeResource = new Compute();
 
@@ -14,6 +15,15 @@ if (settings.validate) {
 /**************** Update Places Store  ****************/
 
 router.post('/store', function(req, res) {
+    let command = req.body.command;
+    console.log('The value of command is ', command);
+    dbClient.query(command, (err, row) => {
+        console.log('I received the error object', err);
+        console.log('I received the row object', row);
+        return {
+            "status": "yayyy"
+        };
+    })
     console.log('Add a location to the database');
 });
 

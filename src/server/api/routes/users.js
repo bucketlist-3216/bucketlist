@@ -1,7 +1,8 @@
 const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
-const settings = require('../../config/settings.json')
+const settings = require('../../config/settings.json');
+const dbClient = require('../../database')
 
 const computeResource = new Compute();
 

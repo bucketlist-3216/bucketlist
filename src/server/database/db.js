@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const config = require('../config/settings');
 
 /***
  * Database client class. This will implement mysql operations.
@@ -16,13 +17,20 @@ class DBClient {
 
     sanitize(queryString) {
         // TODO: Sanitize the query
-        return queryString;
+        let sanitizedQueryString = queryString;
+        return sanitizedQueryString;
     }
 
-    query(queryString) {
-        this.connection.query(queryString, function (err, rows, fields) {
-            if (err) throw err
-          
+    /***
+     * This method receives callback and executes it on the results from the query.
+     */
+    query(queryString, cb) {
+        // TODO: Check if connection valid, else call connect() here. 
+        let sanitizedQueryString = this.sanitize(queryString);
+
+        this.connection.query(sanitizedQueryString, function (err, rows, fields) {
+            if (err) throw err;
+            cb(err, rows);
             console.log('The solution is: ', rows[0].solution)
           })
     }
@@ -32,4 +40,6 @@ class DBClient {
     }
 }
 
-module.exports = DBClient;
+const dbClient = new DBClient(config.database);
+
+module.exports = dbClient;

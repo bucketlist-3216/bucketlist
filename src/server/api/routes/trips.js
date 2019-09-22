@@ -2,6 +2,7 @@ const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
 const settings = require('../../config/settings.json')
+const dbClient = require('../../database')
 
 // Trip API router
 const router = express.Router();

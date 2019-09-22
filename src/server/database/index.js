@@ -1,5 +1,3 @@
-const DBClient = require('./db');
+const dbClient = require('./db');
 
-module.exports = {
-    DBClient
-};
+module.exports = dbClient;
