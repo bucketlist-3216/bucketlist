@@ -1,0 +1,61 @@
+.landing-page {
+  height: 100%;
+  background-image: url('/assets/login/bg-login.png');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+
+  .brand {
+    .brand-logo {
+      height: 70px;
+      margin: 20px 20px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .brand-title {
+      font-family: 'JosefinSans-SemiBold';
+      color: white;
+      font-weight: 700;
+      font-size: 45px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .login-container {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    position: absolute;
+    top: 10%;
+    bottom: 0;
+    width: 30%;
+    min-width: 450px;
+    // height: 30%;
+    max-height: 400px;
+    margin: auto;
+    left: 10%;
+    right: 90%px;
+  }
+
+  .title {
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+    margin-bottom: 20px;
+    margin-right: 50px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    right: 0;
+    min-width: 500px;
+    // max-height: 20px;
+
+    h1 {
+      font-family: 'GlossAndBloom';
+      text-align: right;
+      color: white;
+      opacity: 0.6;
+      font-size: 90px;
+    }
+  }
+}
