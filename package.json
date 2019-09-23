@@ -25,9 +25,11 @@
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-inline-react-svg": "^1.1.0",
     "css-loader": "^3.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -38,6 +40,7 @@
     "webpack-dev-server": "^3.8.1"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
     "cors": "^2.8.5",
@@ -48,10 +51,16 @@
     "lodash": "^4.17.15",
     "mysql": "^2.17.1",
     "nodemon": "^1.19.2",
+    "prop-types": "^15.7.2",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-bootstrap-navbar": "^1.1.0",
     "react-router-dom": "^5.0.1",
+<<<<<<< HEAD
     "react-select-search": "^0.9.6",
+=======
+    "react-svg-loader": "^3.0.3",
+    "sass": "^1.22.12",
+>>>>>>> 59d001340df58996418373e2cb4dce13e5ac6cc1
     "url-loader": "^2.1.0"
   }
 }
