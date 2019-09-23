@@ -3,7 +3,6 @@ import { Button, Form } from 'react-bootstrap';
 import _ from 'lodash';
 
 import PROVIDERS from '../../constants/providers';
-import './styles.scss';
 import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
 
 class Login extends Component {

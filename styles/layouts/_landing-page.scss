@@ -1,16 +1,12 @@
 .landing-page {
   height: 100%;
-  // background-image: url('../../../../assets/login/bg-login.png');
-  background-image: url('https://user-images.githubusercontent.com/15785697/65377390-316ea880-dc79-11e9-985b-b5b38ca829a0.png');
-  // background-repeat: no-repeat;
+  background-image: url('/assets/login/bg-login.png');
   background-size: cover;
   background-position: center;
   overflow: hidden;
 
   .login-container {
-    // background-color: white;
     background: rgba(255,255,255, 0.7);
-    // opacity: 0.7;
     border-radius: 20px;
     position: absolute;
     top: 10%;

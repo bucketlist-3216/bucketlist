@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Button } from 'react-bootstrap';
 
-import './styles.scss';
-
 const SingleSignOnButton = (props) => {
   const { domain, providerName } = props;
   const identity = providerName.toLowerCase();

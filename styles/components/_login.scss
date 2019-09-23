@@ -20,31 +20,7 @@
     flex-direction: row;
     justify-content: space-between;
   }
-
-  .submit-button {
-    float: right;
-    width: 144px;
-    height: 38px;
-    margin-top: 10px;
-    border-radius: 0;
-    border: 0;
-    background-color: rgba(241,138,124, 0.62);
-    color: #353839;
-    font-family: 'JosefinSans-Regular';
-
-    &:hover {
-      background-color: #f18a7c;
-      opacity: 1;
-      color: #353839
-    
-    }
-
-    // no fucking clue why this doesn't work. will come back to it
-    &:active {
-      color: #f18a7c;
-    }
-  }
-
+  
   .login-fields {
     margin-top: 20px;
 
