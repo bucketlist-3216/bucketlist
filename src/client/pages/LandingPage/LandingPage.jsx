@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 import Login from '../../components/Login';
-import './styles.scss';
 
-class LoginView extends Component {
+class LandingPage extends Component {
   constructor(props) {
     super(props);
   }
@@ -12,14 +11,14 @@ class LoginView extends Component {
     return (
       <div className="landing-page">
         <div className="login-container">
-          <div className="title">
-            <h1>Swipe. List. Go</h1>
-          </div>
           <Login />
+        </div>
+        <div className="title">
+          <h1>Swipe. List. Go.</h1>
         </div>
       </div>
     );
   }
 }
 
-export default LoginView;
+export default LandingPage;

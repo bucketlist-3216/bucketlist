@@ -1,0 +1,59 @@
+// //Button
+// .btn {
+//   display: block;
+//   color: $red;
+//   border-color: transparent;
+
+//   &:disabled, 
+//   &.disabled {  
+//     pointer-events: none;
+//   }
+// }
+
+// //Alternate Button
+// .btn.alt {
+//   color: $blue;
+// }
+.sso-button {
+  background-color: rgba(255, 255, 255 ,1.0);
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  vertical-align: middle;
+  margin-right: 20px;
+  width: 120px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    margin: 5px 10px 5px 5px;
+  }
+
+  span {
+    font-family: 'JosefinSans-Regular';
+    margin: 8px 0px 2px 5px;
+  }
+}
+
+.submit-button {
+  float: right;
+  width: 144px;
+  height: 38px;
+  margin-top: 10px;
+  border-radius: 0;
+  border: 0;
+  background-color: rgba(241,138,124, 0.62);
+  color: #353839;
+  font-family: 'JosefinSans-Regular';
+
+  &:hover {
+    background-color: #f18a7c;
+    opacity: 1;
+    color: #353839
+  }
+
+  // no fucking clue why this doesn't work. will come back to it
+  &:active {
+    color: #f18a7c;
+  }
+}
