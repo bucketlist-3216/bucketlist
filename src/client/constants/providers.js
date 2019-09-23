@@ -1,15 +1,18 @@
+import GoogleIcon from '../../../assets/login/login-google.svg';
+import FacebookIcon from '../../../assets/login/login-facebook.svg';
+
 const PROVIDERS = [
   {
     id: 'google',
     providerName: 'Google',
     domain: 'google.com',
-    logo: '/assets/login/login-google.svg'
+    logo: <GoogleIcon />
   },
   {
     id: 'facebook',
     providerName: 'Facebook',
     domain: 'facebook.com',
-    logo: '/assets/login/login-facebook.svg'
+    logo: <FacebookIcon />
   }
 ];
 

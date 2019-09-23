@@ -14,6 +14,26 @@
 // .btn.alt {
 //   color: $blue;
 // }
+.sso-button {
+  background-color: rgba(255, 255, 255 ,1.0);
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  vertical-align: middle;
+  margin-right: 20px;
+  width: 120px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    margin: 5px 10px 5px 5px;
+  }
+
+  span {
+    font-family: 'JosefinSans-Regular';
+    margin: 8px 0px 2px 5px;
+  }
+}
 
 .submit-button {
   float: right;

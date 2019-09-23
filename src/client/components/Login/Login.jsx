@@ -24,6 +24,7 @@ class Login extends Component {
               key={key}
               domain={provider.id}
               providerName={provider.providerName}
+              logo={provider.logo}
             />
           ))}
         </div>
