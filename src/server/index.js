@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { DBClient } = require('./database');
 const {
     users,
     trips,
@@ -9,10 +8,6 @@ const {
 } = require('./api/routes');
 const config = require('./config/settings');
 const cors = require('cors');
-
-/************************** Database Connection **************************/
-
-const dbClient = new DBClient(config.database);
 
 /************************** CORS + JSON parsing **************************/
 
@@ -34,7 +29,7 @@ app.use('/api/', function (req, res, next) {
 
 app.use('/api/v1/trips', trips);
 app.use('/api/v1/places', places);
-app.use('api/v1/user', users);
+app.use('/api/v1/user', users);
 
 app.use('/debug', admin);
 

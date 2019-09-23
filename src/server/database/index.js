@@ -1,5 +1,1 @@
-const DBClient = require('./db');
-
-module.exports = {
-    DBClient
-};
+module.exports = require('./db');
