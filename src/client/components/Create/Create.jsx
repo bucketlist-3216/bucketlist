@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Button, Form } from "react-bootstrap";
 import Link from './link.png';
 
-import './Create.scss'
-
 class Create extends Component {
   constructor(props) {
     super(props);
@@ -42,45 +40,45 @@ class Create extends Component {
       <div style={{display: 'flex',  justifyContent:'center'}}>
         <form onSubmit={this.handleSubmit}>
           <label>
-            <div style={{textAlign: 'center'}} className="CreateTitle">
+            <div style={{textAlign: 'center'}} className="create-title">
               Bucketlist
             </div>
             <div style={{textAlign: 'center'}}>
-              <select value={this.state.city} onChange={this.handleChangeCity} className="InputCity">
+              <select value={this.state.city} onChange={this.handleChangeCity} className="form-dropdown-button-long">
                 <option value="Select City">Select City</option>
                 <option value="City 1">Singapore</option>
                 <option value="City 2">New York</option>
                 <option value="City 3">Thailand</option>
               </select>
             </div>
-            <div style={{textAlign: 'center'}} className="CreateBody">
+            <div style={{textAlign: 'center'}} className="create-body">
               Travel Dates
             </div>
             <div style={{textAlign: 'center'}}>
-              <select value={this.state.from} onChange={this.handleChangeFrom} className="InputFromTo">
+              <select value={this.state.from} onChange={this.handleChangeFrom} className="form-dropdown-button-short">
                 <option value="Select From">From</option>
                 <option value="From 1">From 1</option>
                 <option value="From 2">From 2</option>
                 <option value="From 3">From 3</option>
               </select>
-              <select value={this.state.to} onChange={this.handleChangeTo} className="InputFromTo">
+              <select value={this.state.to} onChange={this.handleChangeTo} className="form-dropdown-button-short">
                 <option value="Select To">To</option>
                 <option value="To 1">To 1</option>
                 <option value="To 2">To 2</option>
                 <option value="To 3">To 3</option>
               </select>
             </div>
-            <div style={{textAlign: 'center'}} className="CreateBody">
+            <div style={{textAlign: 'center'}} className="create-body">
               Add Friends
             </div>
             <div style={{textAlign: 'center'}}>
-              <Button variant="outline-primary" className="InputCity" onClick={this.handleAddFriends}>+</Button>
+              <Button variant="outline-primary" className="form-button-long" onClick={this.handleAddFriends}>+</Button>
             </div>
             <div style={{textAlign: 'center'}}>
-               <img src={Link} alt="Link icon" className="Link-Icon" /> or generate sharing link
+               <img src={Link} alt="Link icon" className="link-icon" /> or generate sharing link
             </div>
             <div style={{textAlign: 'center'}}>
-              <input type="submit" value="Let's go!" className="InputSubmit"/>
+              <input type="submit" value="Let's go!" className="form-submit"/>
             </div>
           </label>
         </form>
