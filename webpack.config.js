@@ -3,7 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, 'index.jsx'),
+  entry: path.join(__dirname, 'src/client', 'BucketList.jsx'),
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
