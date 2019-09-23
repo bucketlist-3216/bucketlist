@@ -1,4 +1,4 @@
-.form-dropdown-button-long {
+.form-dropdown-button {
   width: 400px;
   height: 40px;
   margin: 10px;
@@ -14,7 +14,7 @@
   background-color: rgba(241, 138, 124, 0.24);
 }
 
-.form-dropdown-button-short {
+.form-date {
   width: 190px;
   height: 40px;
   margin: 10px;
@@ -22,15 +22,10 @@
   font-family: 'JosefinSans-Regular';
   font-weight: 700;
   font-size: 18px;
-  border: 1px solid #CCC;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) 98% / 5% no-repeat #EEE;
   background-color: rgba(241, 138, 124, 0.24);
 }
 
-.form-button-long {
+.form-button {
   width: 400px;
   height: 40px;
   margin: 10px;
