@@ -1,0 +1,49 @@
+.InputCity {
+  width: 400px;
+  height: 40px;
+  background-color: #f18a7c;
+  margin: 10px;
+  alignSelf:'center';
+}
+
+.InputFromTo {
+  width: 190px;
+  height: 40px;
+  background-color: #f18a7c;
+  margin: 10px;
+  alignSelf:'center';
+}
+
+.InputSubmit {
+  width: 400px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #343434;
+  margin: 10px;
+  alignSelf:'center';
+}
+
+.Title {
+    font-family: 'Josefin Sans';
+    font-size: 48px;
+}
+
+.Link-Icon {
+  height: 10%;
+  background-image: url('https://image.flaticon.com/icons/svg/34/34735.svg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+select {
+  margin: 50px;
+  padding: 5px 35px 5px 5px;
+  font-size: 16px;
+  border: 1px solid #CCC;
+  height: 34px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) 98% / 5% no-repeat #EEE;
+}

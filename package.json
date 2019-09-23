@@ -49,7 +49,9 @@
     "mysql": "^2.17.1",
     "nodemon": "^1.19.2",
     "react-bootstrap": "^1.0.0-beta.12",
+    "react-bootstrap-navbar": "^1.1.0",
     "react-router-dom": "^5.0.1",
+    "react-select-search": "^0.9.6",
     "url-loader": "^2.1.0"
   }
 }
