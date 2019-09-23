@@ -7,16 +7,18 @@ import './Header.scss';
 class Header extends Component {
     render(){
         return (
-            <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#home">
+            <Navbar className="Header">
+                <Navbar.Brand href="#">
+                <div className="HeaderTitle">
                   <img
-                    alt=""
+                    alt="Bucketlist Logo"
                     src={BucketListLogo}
                     width="30"
                     height="30"
                     className="d-inline-block align-top"
                   />
-                  {' Bucketlist'}
+                  {' bucketlist'}
+                  </div>
                 </Navbar.Brand>
               </Navbar>
         );
