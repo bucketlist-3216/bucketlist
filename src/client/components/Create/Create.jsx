@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form } from "react-bootstrap";
 import Link from './link.png';
 
-import './styles.scss'
+import './Create.scss'
 
 class Create extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class Create extends Component {
       <div style={{display: 'flex',  justifyContent:'center'}}>
         <form onSubmit={this.handleSubmit}>
           <label>
-            <div style={{textAlign: 'center'}} className="Title">
+            <div style={{textAlign: 'center'}} className="CreateTitle">
               Bucketlist
             </div>
             <div style={{textAlign: 'center'}}>
@@ -49,7 +49,7 @@ class Create extends Component {
                 <option value="City 3">City 3</option>
               </select>
             </div>
-            <div style={{textAlign: 'center'}}>
+            <div style={{textAlign: 'center'}} className="CreateBody">
               Travel Dates
             </div>
             <div style={{textAlign: 'center'}}>
@@ -67,7 +67,7 @@ class Create extends Component {
               </select>
             </div>
             <div style={{textAlign: 'center'}}>
-               <img src={Link} alt="Link icon" /> or generate sharing link
+               <img src={Link} alt="Link icon" className="Link-Icon" /> or generate sharing link
             </div>
             <div style={{textAlign: 'center'}}>
               <input type="submit" value="Let's go!" className="InputSubmit"/>

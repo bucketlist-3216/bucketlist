@@ -3,7 +3,6 @@
   height: 40px;
   background-color: #f18a7c;
   margin: 10px;
-  alignSelf:'center';
 }
 
 .InputFromTo {
@@ -11,7 +10,6 @@
   height: 40px;
   background-color: #f18a7c;
   margin: 10px;
-  alignSelf:'center';
 }
 
 .InputSubmit {
@@ -20,17 +18,20 @@
   color: #ffffff;
   background-color: #343434;
   margin: 10px;
-  alignSelf:'center';
 }
 
-.Title {
+.CreateTitle {
     font-family: 'Josefin Sans';
     font-size: 48px;
 }
 
+.CreateBody {
+    font-family: 'Josefin Sans';
+    font-size: 24px;
+}
+
 .Link-Icon {
-  height: 10%;
-  background-image: url('https://image.flaticon.com/icons/svg/34/34735.svg');
+  height: 25px;
   background-size: cover;
   background-position: center;
   overflow: hidden;
