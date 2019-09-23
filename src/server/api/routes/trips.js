@@ -35,12 +35,12 @@ router.post('/', function (req, res) {
 
     // Construct response after insertion
     insertion
-        .then(function (returnObject) {
-            res.end('Return object was ', JSON.stringify(returnObject));
+        .then(function (insertionResponse) {
+            res.json({"insertedId": insertionResponse});
         })
         .catch(function (err) {
             res.status(500).end(`Unable to add trip because of the following error: ${err.message}`);
-            console.log(JSON.stringify(err));
+            console.log(err);
         });
 });
 
@@ -54,7 +54,11 @@ router.delete('/', function (req, res) {
     // Construct response after deletion
     deletion
         .then(function (returnObject) {
-            res.end('Return object was ', JSON.stringify(returnObject));
+            res.json({"deletedId": returnObject});
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to delete trip because of the following error: ${err.message}`);
+            console.log(err);
         });
 });
 
@@ -66,8 +70,12 @@ router.put('/', function (req, res) {
 
     // Construct response after updating
     updating
-        .then(function (returnObject) {
-            res.end('Return object was ', JSON.stringify(returnObject));
+        .then(function (updateResponse) {
+            res.json({"updatedId": updateResponse});
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to update trip because of the following error: ${err.message}`);
+            console.log(err);
         });
 });
 

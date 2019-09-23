@@ -38,11 +38,11 @@ class TripQueryModel extends EntityQueryModel {
 
     // Update the particulars of  a trip
     updateTrip (toUpdate) {
-        toUpdate = _.omit(toUpdate, this.nonInsertableProps);
-        filters = _.pick(filters, this.validFilters);
+        const data = _.omit(toUpdate, this.nonInsertableProps);
+        const filters = _.pick(toUpdate, this.validFilters);
         return knex(this.tableName)
             .where(filters)
-            .update(toUpdate);
+            .update(data);
     }
 }
 
