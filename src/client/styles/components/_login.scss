@@ -1,0 +1,40 @@
+.login {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 50px;
+  height: 100%;
+
+  .login-title {
+    font-family: 'JosefinSans-Regular';
+    font-weight: 700;
+
+    h1 {
+      color: black;
+      font-size: 30px;
+    }
+  }
+
+  .sso-container {
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-between;
+  }
+  
+  .login-fields {
+    margin-top: 20px;
+
+    .email-field,
+    .password-field {
+      background-color: rgba(241,138,124, 0.24);
+      border: 0;
+      height: 38px;
+
+      &::placeholder {
+        font-family: 'JosefinSans-Regular';
+        font-weight: 600;
+        color: #353839;
+      }
+    }
+  }
+}

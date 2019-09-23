@@ -84,7 +84,6 @@ router.get('/members', function (req, res) {
         .then(function (queryResponse) {
             res.json({"tripFriends": queryResponse});
         })
-
 });
 
 // Add a member to a trip (adding a member-trip association)
@@ -97,7 +96,7 @@ router.post('/members', function (req, res) {
         })
         .catch(function (err) {
             res.status(500).end(`Unable to add user to trip because of the following error: ${err.message}`);
-            console.log(JSON.stringify(err));
+            console.log(err);
         });
 });
 
@@ -111,7 +110,7 @@ router.delete('/members', function (req, res) {
         })
         .catch(function (err) {
             res.status(500).end(`Unable to delete user from trip because of the following error: ${err.message}`);
-            console.log (JSON.stringify(err));
+            console.log (err);
         });
 });
 
@@ -131,7 +130,7 @@ router.post('/vote', function (req, res) {
         })
         .catch(function (err) {
             res.status(500).end(`Unable to cast a vote because of the following error: ${err.message}`);
-            console.log(JSON.stringify(err));
+            console.log(err);
         });
 });
 

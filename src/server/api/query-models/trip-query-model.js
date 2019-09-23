@@ -11,7 +11,6 @@ class TripQueryModel extends EntityQueryModel {
         this.nonInsertableProps = ['trip_id'];
         this.tableName = 'Trip';
         this.selectableProps = []
-
         this.userMutable = false;
     }
 
