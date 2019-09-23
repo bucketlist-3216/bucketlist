@@ -41,7 +41,7 @@ class Create extends Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             <div style={{textAlign: 'center'}} className="create-title">
-              Bucketlist
+              Create New Trip
             </div>
             <div style={{textAlign: 'center'}}>
               <select value={this.state.city} onChange={this.handleChangeCity} className="form-dropdown-button-long">
@@ -74,7 +74,7 @@ class Create extends Component {
             <div style={{textAlign: 'center'}}>
               <Button variant="outline-primary" className="form-button-long" onClick={this.handleAddFriends}>+</Button>
             </div>
-            <div style={{textAlign: 'center'}}>
+            <div style={{textAlign: 'center'}} className="create-body">
                <img src={Link} alt="Link icon" className="link-icon" /> or generate sharing link
             </div>
             <div style={{textAlign: 'center'}}>
