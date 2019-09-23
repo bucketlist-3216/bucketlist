@@ -5,10 +5,12 @@
   src: url('/assets/fonts/Gloss_And_Bloom.ttf') format('truetype');
 }
 
-// @include font-face("GlossAndBloom", "/assets/fonts/Gloss_And_Bloom.ttf", 300, $file-formats: ttf);
-
-
 @font-face {
   font-family: 'JosefinSans-Regular';
   src: url('/assets/fonts/JosefinSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'JosefinSans-SemiBold';
+  src: url('/assets/fonts/JosefinSans-SemiBold.ttf') format('truetype');
 }
