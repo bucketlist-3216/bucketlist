@@ -1,35 +1,11 @@
 const mysql = require('mysql');
+const config = require('../config/settings');
 
-/***
- * Database client class. This will implement mysql operations.
- */
-class DBClient {
-    
-    constructor(dbConfig) {
-        this.config = dbConfig;
-        this.connection = mysql.createConnection(dbConfig);
-    }
+const knex = require('knex')({
+    client: 'mysql',
+    connection: config.database
+});
 
-    connect() {
-        this.connection.connect();
-    }
-
-    sanitize(queryString) {
-        // TODO: Sanitize the query
-        return queryString;
-    }
-
-    query(queryString) {
-        this.connection.query(queryString, function (err, rows, fields) {
-            if (err) throw err
-          
-            console.log('The solution is: ', rows[0].solution)
-          })
-    }
-
-    close() {
-        this.connection.end();
-    }
-}
-
-module.exports = DBClient;
+module.exports = {
+    knex
+};

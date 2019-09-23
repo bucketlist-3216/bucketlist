@@ -1,9 +1,12 @@
 const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
-const settings = require('../../config/settings.json')
+const settings = require('../../config/settings.json');
+const { PlaceQueryModel } = require('../query-models'); 
+const _ = require('underscore');
 
 const computeResource = new Compute();
+const placeQueryModel = new PlaceQueryModel();
 
 // Locations API router
 const router = express.Router();
@@ -13,20 +16,52 @@ if (settings.validate) {
 
 /**************** Update Places Store  ****************/
 
+// Get place from database
+router.get('/store', function (req, res) {
+    // Query mySQL using knex
+    const query = placeQueryModel.getMatchingPlaces(req.body.filters);
+
+    // Construct response using mySQL data
+    // TODO: Error handling to be done here.
+    query
+        .then(function (places) {
+            res.end(JSON.stringify({"places": places}));
+        })
+        .catch(function (err) {
+            throw new Error('Error querying server');
+        });
+});
+
+// Insert a location into database
 router.post('/store', function(req, res) {
-    console.log('Add a location to the database');
+    const toInsert = req.body.location;
+
+    // Insert into mySQL using knex
+    const insertion = placeQueryModel.insertPlace(toInsert);
+
+    // Construct response after insertion
+    insertion
+        .then(function (returnObject) {
+            res.end('Return object was ', JSON.stringify(returnObject));
+        });
 });
 
 router.delete('/store', function(req, res) {
-    console.log('Delete a location from database');
-});
+    const toDelete = req.body.location;
 
-router.get('/store', function (req, res) {
-    console.log('Get details of a location');
+    // Delete from mySQL using knex
+    const deletion = placeQueryModel.deletePlace(toDelete);
+
+    // Construct response after deletion
+    deletion
+        .then(function (returnObject) {
+            res.end('Return object was ', JSON.stringify(returnObject));
+        });
 });
 
 /**************** Place Search APIs  ****************/
 
+// TODO: Temporarily not needed?
 router.get('/search', function (req, res) {
     console.log('Search for a location based on params');
 });
