@@ -1,13 +1,13 @@
 const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
-const settings = require('../../config/settings.json')
+const settings = require('../../config/settings.js')
 const _ = require('underscore');
-const { 
+const {
     VotesQueryModel,
-    TripPlaceQueryModel, 
-    TripQueryModel, 
-    TripFriendQueryModel 
+    TripPlaceQueryModel,
+    TripQueryModel,
+    TripFriendQueryModel
 } = require('../query-models');
 
 // Trip API router
@@ -134,7 +134,7 @@ router.delete('/vote', function (req, res) {
 /**************** Trip Itinerary APIs  ****************/
 
 // These are the itineraries inside the trip
-// Are these being deferred for now? 
+// Are these being deferred for now?
 
 router.post('/itinerary', function (req, res) {
     console.log('You chose to add a trip')
@@ -216,7 +216,7 @@ router.get('/locations/top', function (req, res) {
 });
 
 // Get the votes for the chosen location
-// TODO: Need to implement this 
+// TODO: Need to implement this
 router.get('/locations/votes', function (req, res) {
     const getVotes = tripPlaceQueryModel.get
 });

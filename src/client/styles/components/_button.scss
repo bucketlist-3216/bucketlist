@@ -4,8 +4,8 @@
 //   color: $red;
 //   border-color: transparent;
 
-//   &:disabled, 
-//   &.disabled {  
+//   &:disabled,
+//   &.disabled {
 //     pointer-events: none;
 //   }
 // }
@@ -55,5 +55,26 @@
   // no fucking clue why this doesn't work. will come back to it
   &:active {
     color: #f18a7c;
+  }
+}
+
+.trip-button {
+  background: rgba(54, 54, 54, 0.78);
+  border: none;
+  height: 20px;
+  justify-content: center;
+  width: 90px;
+
+  span {
+    font-family: 'JosefinSans-Regular';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 15px;
+    display: block;
+    align-items: baseline;
+    text-align: center;
+
+    color: #FFFFFF;
   }
 }
