@@ -2,14 +2,12 @@ import React, {Component} from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import BucketListLogo from '../../../../assets/brand/brand-logo.png';
 
-import './Header.scss';
-
 class Header extends Component {
     render(){
         return (
-            <Navbar className="Header">
-                <Navbar.Brand href="#">
-                <div className="HeaderTitle">
+            <Navbar className="header">
+                <Navbar.Brand href="/">
+                <div className="headerTitle">
                   <img
                     alt="Bucketlist Logo"
                     src={BucketListLogo}
