@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
-const places_data = [ 
+import axios from 'axios'
+
+const places_data = [
   {city: 'Singapore', image: 'image1.png', name: 'Raffles Place'},
   {city: 'Singapore', image: 'image2.png', name: 'City Hall'},
 ];
@@ -21,11 +23,39 @@ class Swipe extends Component {
   };
 
   handleDislike(event) {
-    this.setState({index: this.state.index + 1});
+    let that = this;
+    axios
+      .post('http://localhost:3001/api/v1/trips/vote', {
+      	"vote": {
+      		"trip_place_id": "6",
+      		"trip_friend_id": "5",
+      		"vote": "DISLIKE"
+      	}
+      })
+      .then(function (response) {
+        that.setState({index: that.state.index + 1});
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
   }
 
   handleLike(event) {
-    this.setState({index: this.state.index + 1});
+    let that = this;
+    axios
+      .post('http://localhost:3001/api/v1/trips/vote', {
+        "vote": {
+          "trip_place_id": "6",
+          "trip_friend_id": "5",
+          "vote": "LIKE"
+        }
+      })
+      .then(function (response) {
+        that.setState({index: that.state.index + 1});
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
   }
 
   render() {

@@ -3,10 +3,10 @@ const { knex } = require('../../database');
 const _ = require('underscore');
 
 class TripQueryModel extends EntityQueryModel {
-    
+
     constructor(dbClient) {
         super(dbClient);
-        
+
         this.validFilters = ['trip_id'];
         this.nonInsertableProps = ['trip_id'];
         this.tableName = 'Trip';

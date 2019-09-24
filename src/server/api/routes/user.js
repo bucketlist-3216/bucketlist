@@ -1,11 +1,15 @@
 const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
-const settings = require('../../config/settings.json');
-const { UserQueryModel } = require('../query-models')
+const settings = require('../../config/settings.js');
+const {
+    UserQueryModel,
+    TripFriendQueryModel
+} = require('../query-models')
 
 const computeResource = new Compute();
 const userQueryModel = new UserQueryModel();
+const tripFriendQueryModel = new TripFriendQueryModel();
 
 // User API router
 const router = express.Router();
@@ -32,8 +36,17 @@ router.post('/', function(req, res) {
 /***
  * Get user profile
  */
-router.get('/profile', function(req, res) {
-    res.end();
+router.get('/:userId', function(req, res) {
+    const userProfile = userQueryModel.getUser({user_id: req.params.userId});
+
+    userProfile
+        .then(function (response) {
+            res.json(response);
+        })
+        .catch(function (err) {
+            res.status(500).end(`Could not get user because of the following error: ${err.message}`);
+            console.log(err);
+        });
 });
 
 /***
@@ -49,5 +62,24 @@ router.put('/profile', function(req, res) {
 router.delete('/', function(req, res) {
     res.end();
 });
+
+/**************** User trips end points ****************/
+
+/***
+ * Get user's trips
+ */
+router.get('/:userId/trips', function (req, res) {
+  const trips = tripFriendQueryModel.getUserTrips(req.params.userId);
+
+  trips
+      .then(function(queryResponse) {
+          res.json(queryResponse);
+      })
+      .catch(function(err) {
+          res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
+          console.log(err);
+      });
+});
+
 
 module.exports = router;
