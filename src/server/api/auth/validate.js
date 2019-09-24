@@ -1,4 +1,4 @@
-const listedKeys = require('../../config/settings.json').listedKeys;
+const listedKeys = require('../../config/settings.js').listedKeys;
 
 const validateRequest = function(req, res, next) {
     let isValid = false;

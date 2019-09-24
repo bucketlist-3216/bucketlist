@@ -10,7 +10,7 @@ const responseGoogle = (response) => {
   console.log(response);
 }
 
-const loginSecrets = require('../../../../config/login_secrets.json')
+import loginSecrets from '../../../../config/login_secrets.json';
 
 const responseFacebook = (response) => {
   console.log(response);

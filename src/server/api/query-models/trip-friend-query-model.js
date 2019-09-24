@@ -50,13 +50,13 @@ class TripFriendQueryModel extends EntityQueryModel {
             .then(function () {
                 return [
                     {
-                        "destination": "Sydney",
+                        "destination": "Singapore",
                         "start_date": "2019-11-29T16:00:00.000Z",
                         "end_date": "2019-12-07T16:00:00.000Z",
                         "trip_id": 1,
                         "members": [
-                          "a@b.com",
-                          "b@c.com"
+                          "hello@gmail.com",
+                          "ihatethis@gmail.com"
                         ]
                     }
                 ];
