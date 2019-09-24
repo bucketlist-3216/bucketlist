@@ -10,9 +10,14 @@ module.exports = {
     ],
     "validate": false,
     "database": {
-        "host": "127.0.0.1",
-        "user": "root",
-        "password": "",
-        "database": "bucketlist"
+        "host": "35.186.146.32",
+        "user": "bucketlist",
+        "password": "INSERT-PASSWORD-HERE",
+        "database": "bucketlist",
+        "ssl": {
+          "key": fs.readFileSync(`${configFolder}/client-key.pem`),
+          "cert": fs.readFileSync(`${configFolder}/client-cert.pem`),
+          "ca": fs.readFileSync(`${configFolder}/server-ca.pem`)
+        }
     }
 };

@@ -70,7 +70,7 @@ router.post('/', function (req, res) {
 
             tripMembershipUpdates.push(tripFriendQueryModel.addTripFriend({
                 "trip_id": returnedObject[0],
-                "user_id": toInsert.
+                "user_id": toInsert.authorId
             }));
 
             Promise.all(tripMembershipUpdates).then(function (result) {

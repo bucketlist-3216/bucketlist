@@ -1,13 +1,10 @@
 const EntityQueryModel = require('./entity');
 const UserQueryModel = require('./user-query-model');
+const TripQueryModel = require('./trip-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 
-const TripQueryModel = require('./trip-query-model');
 const tripQueryModel = new TripQueryModel();
-
-const UserQueryModel = require('./user-query-model');
-const userQueryModel = new UserQueryModel();
 
 class TripFriendQueryModel extends EntityQueryModel {
 
