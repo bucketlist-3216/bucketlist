@@ -7,11 +7,18 @@ class VotesQueryModel extends EntityQueryModel {
 
     constructor(dbClient) {
         super(dbClient);
-        this.validFilters = ['swipe_id', 'trip_friend_id', 'trip_place_id', 'vote'];
-        this.selectableProps = ['trip_place_id', 'vote', 'trip_friend_id'];
+        this.validFilters = ['swipe_id'];
+        this.selectableProps = []
         this.nonInsertableProps = ['swipe_id'];
         this.userMutable = false
         this.tableName = 'Swipe';
+    }
+
+    // Get the votes for the matching location entry
+    getVotesForLocation(filters) {
+        return knex(this.tableName)
+            .select(this.selectableProps)
+            .where(filters);
     }
 
     // Cast a vote for a location

@@ -57,9 +57,13 @@
     "prop-types": "^15.7.2",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-bootstrap-navbar": "^1.1.0",
+<<<<<<< HEAD
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.5",
     "react-promise": "^3.0.2",
+=======
+    "react-datepicker": "^2.9.6",
+>>>>>>> 85320b3bb03ca0e5dfa7d3b157da7ae4ac6e5046
     "react-router-dom": "^5.0.1",
     "react-select-search": "^0.9.6",
     "react-spring": "^8.0.27",

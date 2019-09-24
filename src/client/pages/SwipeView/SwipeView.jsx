@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import Header from "../../components/Header";
 import Swipe from "../../components/Swipe";
 
-import "./SwipeView.scss";
-
 class SwipeView extends Component {
   constructor(props) {
     super(props);

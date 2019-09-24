@@ -37,7 +37,7 @@ class TripFriendQueryModel extends EntityQueryModel {
     }
 
     deleteTripFriend (filter) {
-        // filter = _.omit(filter, ['trip_friend_id']);
+        filter = _.omit(filter, ['trip_friend_id']);
 
         return knex(this.tableName)
             .where(filter)

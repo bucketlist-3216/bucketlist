@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Button, Form } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import Link from './link.png';
 
-import './Create.scss'
+import "react-datepicker/dist/react-datepicker.css";
 
 class Create extends Component {
   constructor(props) {
     super(props);
-    this.state = {city: 'Select City',
-                  to: 'To',
-                  from: 'From'};
+    this.state = {
+      city: 'Select City',
+      to: new Date(),
+      from: new Date()
+    };
 
     this.handleChangeCity = this.handleChangeCity.bind(this);
     this.handleChangeTo = this.handleChangeTo.bind(this);
@@ -21,20 +24,20 @@ class Create extends Component {
     this.setState({city: event.target.city});
   }
 
-  handleChangeTo(event) {
-    this.setState({to: event.target.to});
+  handleChangeFrom(event) {
+    this.setState({from: event});
   }
 
-  handleChangeFrom(event) {
-    this.setState({from: event.target.from});
+  handleChangeTo(event) {
+    this.setState({to: event});
   }
 
   handleAddFriends(event) {
-    alert('Add friends!');
+    alert('To Implement: Add friends!');
   }
 
   handleSubmit(event) {
-    alert('Form submitted!');
+    alert('To Implement: Form submitted!');
   }
 
   render() {
@@ -42,45 +45,41 @@ class Create extends Component {
       <div style={{display: 'flex',  justifyContent:'center'}}>
         <form onSubmit={this.handleSubmit}>
           <label>
-            <div style={{textAlign: 'center'}} className="CreateTitle">
-              Bucketlist
+            <div style={{textAlign: 'center'}} className="create-title">
+              Create New Trip
             </div>
             <div style={{textAlign: 'center'}}>
-              <select value={this.state.city} onChange={this.handleChangeCity} className="InputCity">
-                <option value="Select City">Select City</option>
-                <option value="City 1">Singapore</option>
-                <option value="City 2">New York</option>
-                <option value="City 3">Thailand</option>
+              <select value={this.state.city} onChange={this.handleChangeCity} className="form-dropdown-button">
+                <option value="Select City" className="form-dropdown-button">Select City</option>
+                <option value="Singapore" className="form-dropdown-button">Singapore</option>
+                <option value="New York" className="form-dropdown-button">New York</option>
+                <option value="Thailand" className="form-dropdown-button">Thailand</option>
               </select>
             </div>
-            <div style={{textAlign: 'center'}} className="CreateBody">
+            <div style={{textAlign: 'center'}} className="create-body">
               Travel Dates
             </div>
             <div style={{textAlign: 'center'}}>
-              <select value={this.state.from} onChange={this.handleChangeFrom} className="InputFromTo">
-                <option value="Select From">From</option>
-                <option value="From 1">From 1</option>
-                <option value="From 2">From 2</option>
-                <option value="From 3">From 3</option>
-              </select>
-              <select value={this.state.to} onChange={this.handleChangeTo} className="InputFromTo">
-                <option value="Select To">To</option>
-                <option value="To 1">To 1</option>
-                <option value="To 2">To 2</option>
-                <option value="To 3">To 3</option>
-              </select>
+              <DatePicker className="form-date"
+                selected={this.state.from}
+                onChange={this.handleChangeFrom}
+              />
+              <DatePicker className="form-date"
+                selected={this.state.to}
+                onChange={this.handleChangeTo}
+              />
             </div>
-            <div style={{textAlign: 'center'}} className="CreateBody">
+            <div style={{textAlign: 'center'}} className="create-body">
               Add Friends
             </div>
             <div style={{textAlign: 'center'}}>
-              <Button variant="outline-primary" className="InputCity" onClick={this.handleAddFriends}>+</Button>
+              <Button variant="outline-primary" className="form-button" onClick={this.handleAddFriends}>+</Button>
+            </div>
+            <div style={{textAlign: 'center'}} className="create-body">
+               <img src={Link} alt="Link icon" className="link-icon" /> or generate sharing link
             </div>
             <div style={{textAlign: 'center'}}>
-               <img src={Link} alt="Link icon" className="Link-Icon" /> or generate sharing link
-            </div>
-            <div style={{textAlign: 'center'}}>
-              <input type="submit" value="Let's go!" className="InputSubmit"/>
+              <input type="submit" value="Let's go!" className="form-submit"/>
             </div>
           </label>
         </form>

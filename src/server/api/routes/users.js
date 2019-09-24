@@ -27,14 +27,9 @@ if (settings.validate) {
 router.post('/', function(req, res) {
     const insertion = userQueryModel.addUser(req.body.user);
 
-    insertion
-        .then(function (insertionResponse) {
-            res.end(JSON.stringify({"insertedId": insertionResponse}));
-        })
-        .catch(function (err) {
-            res.status(500).end(`Could not create user because of the following error: ${err.message}`);
-            console.log(JSON.stringify(err));
-        });
+    insertion.then(function (insertionResponse) {
+        res.end(JSON.stringify({"insertedId": insertionResponse}));
+    });
 });
 
 

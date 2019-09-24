@@ -4,15 +4,15 @@ const { knex } = require('../../database');
 const _ = require('underscore');
 
 class TripPlaceQueryModel extends EntityQueryModel {
-
+    
     constructor(dbClient) {
         super(dbClient);
-
+        
         this.validFilters = ['trip_place_id'];
         this.nonInsertableProps = ['trip_place_id'];
         this.tableName = 'Trip_Place';
         this.selectableProps = ['place_id', 'trip_id']
-
+        
         this.userMutable = false
         this.votingQueryModel = new VotingQueryModel();
     }
@@ -40,6 +40,19 @@ class TripPlaceQueryModel extends EntityQueryModel {
         return knex(this.tableName)
             .where(filters)
             .del();
+    }
+
+    // Get the top locations in this particular trip (in order)
+    getTopLocationInTrip (tripParticulars) {
+
+    }
+
+    //Get the number of votes of this location in this trip
+    // Incomplete
+    getLocationVotes (locationParticulars) {
+        return knex(this.tableName)
+            .select(this.selectableProps)
+            .where(locationParticulars);
     }
 }
 

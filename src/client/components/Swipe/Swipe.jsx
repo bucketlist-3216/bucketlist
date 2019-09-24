@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import './Swipe.scss'
-
 import axios from 'axios'
 
 const places_data = [
@@ -66,25 +64,25 @@ class Swipe extends Component {
 
       return (
         <div>
-          <div style={{display: 'flex',  justifyContent:'center'}} className="SwipeTitle">
+          <div style={{display: 'flex',  justifyContent:'center'}} className="swipe-title">
             {current.city}
           </div>
-          <div style={{display: 'flex',  justifyContent:'center'}} className="SwipeBody">
-            <img src={ require(`./images/${current.image}`) } className="SwipeImg"/>
+          <div style={{display: 'flex',  justifyContent:'center'}} className="swipe-body">
+            <img src={ require(`./images/${current.image}`) } className="img-card"/>
           </div>
-          <div style={{display: 'flex',  justifyContent:'center'}} className="SwipeBody">
+          <div style={{display: 'flex',  justifyContent:'center'}} className="swipe-body">
             {current.name}
           </div>
           <div style={{display: 'flex',  justifyContent:'center'}}>
-            <input type="submit" value="Dislike" className="SwipeInput" onClick={this.handleDislike}/>
-            <input type="submit" value="Like" className="SwipeInput" onClick={this.handleLike}/>
+            <input type="submit" value="Dislike" className="swipe-buttons" onClick={this.handleDislike}/>
+            <input type="submit" value="Like" className="swipe-buttons" onClick={this.handleLike}/>
           </div>
         </div>
       );
     }
     else {
       return (
-        <div style={{display: 'flex',  justifyContent:'center'}} className="SwipeBody">
+        <div style={{display: 'flex',  justifyContent:'center'}} className="swipe-body">
           {
             'Done swiping!'
           }
