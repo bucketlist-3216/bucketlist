@@ -7,7 +7,8 @@ const {
     VotesQueryModel,
     TripPlaceQueryModel,
     TripQueryModel,
-    TripFriendQueryModel
+    TripFriendQueryModel,
+    UserQueryModel
 } = require('../query-models');
 
 // Trip API router
@@ -16,10 +17,17 @@ if (settings.validate) {
     router.use(validateRequest);
 }
 
+/**************** Query Model Instantiation  ****************/
+
+const tripQueryModel = new TripQueryModel();
+const tripFriendQueryModel = new TripFriendQueryModel();
+const votesQueryModel = new VotesQueryModel();
+const tripPlaceQueryModel = new TripPlaceQueryModel();
+const userQueryModel = new UserQueryModel();
+
 /**************** Trip APIs  ****************/
 
 // These are the trips
-const tripQueryModel = new TripQueryModel();
 
 // TODO: Do we really need this?
 router.get('/:id', function (req, res) {
@@ -28,18 +36,48 @@ router.get('/:id', function (req, res) {
 
 // Create a trip
 router.post('/', function (req, res) {
+    const sampleTrip = {
+        "destination": "Singapore",
+        "start_date": "2019-01-01",
+        "end_date": "2019-01-02",
+        "creatingId": "",
+        "members": [
+            "email1@email.com",
+            "email2@email.com"
+        ]
+    };
+
     const toInsert = req.body.trip;
 
-    // Insert into mySQL using knex
-    const insertion = tripQueryModel.addTrip(toInsert);
+    // Insert trip into mySQL using knex
+    const tripInsertion = tripQueryModel.addTrip(toInsert);
 
-    // Construct response after insertion
-    insertion
-        .then(function (insertionResponse) {
-            res.json({"insertedId": insertionResponse});
+    return tripInsertion
+        .then(function (returnedObject) {
+            console.log('Trip insertion complete: ', returnedObject);
+
+            const tripMembershipUpdates = _.map(toInsert.members, emailId => {
+                let getUserId = userQueryModel.getUserId(emailId);
+                
+                return getUserId.then(function (userId) {
+                    return tripFriendQueryModel.addTripFriend({
+                        "trip_id": returnedObject[0],
+                        "user_id": userId[0]['user_id']
+                    });
+                });
+                
+            });
+
+            Promise.all(tripMembershipUpdates).then(function (result) {
+                console.log('promise.all is complete with result: ', result);
+                res.json({
+                    "tripId": returnedObject[0],
+                    "members": toInsert.members
+                });
+            });
         })
         .catch(function (err) {
-            res.status(500).end(`Unable to add trip because of the following error: ${err.message}`);
+            res.status(500).end('Could not create a trip due to', err);
             console.log(err);
         });
 });
@@ -85,7 +123,7 @@ router.put('/:toUpdate', function (req, res) {
 /**************** Trip Member APIs  ****************/
 
 // These are the people who are a part of this trip
-const tripFriendQueryModel = new TripFriendQueryModel();
+
 
 // Get the members of a given trip.
 router.get('/members/:tripFriend', function (req, res) {
@@ -128,7 +166,6 @@ router.delete('/members/:tripFriend', function (req, res) {
 /**************** Trip Voting APIs  ****************/
 
 // These are the votes that have been cast inside this trip
-const votesQueryModel = new VotesQueryModel();
 
 router.post('/vote', function (req, res) {
     // Cast the vote
@@ -210,7 +247,6 @@ router.delete('/itinerary', function (req, res) {
 /**************** Trip Locations APIs  ****************/
 
 // These are the locations inside the trip
-const tripPlaceQueryModel = new TripPlaceQueryModel();
 
 // View the locations in the trip.
 router.get('/locations', function (req, res) {

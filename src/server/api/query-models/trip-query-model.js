@@ -10,7 +10,7 @@ class TripQueryModel extends EntityQueryModel {
         this.validFilters = ['trip_id'];
         this.nonInsertableProps = ['trip_id'];
         this.tableName = 'Trip';
-        this.selectableProps = []
+        this.selectableProps = ['trip_id', 'destination', 'start_date', 'end_date'];
         this.userMutable = false;
     }
 
@@ -23,6 +23,7 @@ class TripQueryModel extends EntityQueryModel {
     // Create a new trip
     addTrip (toInsert) {
         toInsert = _.omit(toInsert, this.nonInsertableProps);
+        toInsert = _.pick(toInsert, this.selectableProps);
 
         return knex(this.tableName)
             .insert(toInsert);

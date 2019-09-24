@@ -19,6 +19,12 @@ class UserQueryModel extends EntityQueryModel {
         return knex(this.tableName)
             .insert(toInsert);
     }
+
+    getUserId (email) {
+        return knex(this.tableName)
+            .select(['user_id'])
+            .where({'email': email});
+    }
 }
 
 module.exports = UserQueryModel;
