@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   entry: path.join(__dirname, 'src/client', 'BucketList.jsx'),
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'src', 'server', 'build'),
     filename: 'bundle.js',
     publicPath: '/',
   },
