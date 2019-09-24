@@ -33,7 +33,7 @@ router.get('/store', function (req, res) {
 });
 
 // Get place from database based on city
-router.get('/city/:city', function (req, res) {
+router.get('/store/city/:city', function (req, res) {
     // Query mySQL using knex
     const query = placeQueryModel.getMatchingPlaces(req.params.city);
 
