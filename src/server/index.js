@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {
-    users,
-    trips,
-    places,
+    user: userRouter,
+    trip: tripRouter,
+    place: placeRouter,
     admin 
 } = require('./api/routes');
 const config = require('./config/settings');
@@ -27,9 +27,9 @@ app.use('/api/', function (req, res, next) {
 
 /************************** Routes **************************/
 
-app.use('/api/v1/trips', trips);
-app.use('/api/v1/places', places);
-app.use('/api/v1/user', users);
+app.use('/api/v1/trip', tripRouter);
+app.use('/api/v1/place', placeRouter);
+app.use('/api/v1/user', userRouter);
 
 app.use('/debug', admin);
 
