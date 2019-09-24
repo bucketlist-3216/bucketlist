@@ -1,8 +1,11 @@
 const express = require('express');
 const validateRequest = require('../auth');
+const settings = require('../../config/settings.js');
 const {
     UserQueryModel
 } = require('../query-models')
+
+const userQueryModel = new UserQueryModel();
 
 // Login API router
 const router = express.Router();
@@ -17,64 +20,21 @@ if (settings.validate) {
  */
 router.post('/', function(req, res) {
     let userData = req.body.userData;
-    let userId = userQueryModel.getUserId(userData.email);
+    let result = userQueryModel.getUserId(userData.email);
 
-    userId.then(function (userId) {
-        if(!userId) {
-            userQueryModel.addUser(userData);
+    result.then(function (result) {
+        if (result.length > 0) {
+            return [result[0].user_id];
         }
-        res.end(JSON.stringify({"insertedId": insertionResponse}));
+        return userQueryModel.addUser(userData);
+    })
+    .then(function (userId) {
+        res.json({"insertedId": userId});
+    })
+    .catch(function (err) {
+        res.status(500).end('Unable to login due to', err);
+        console.log(err);
     });
 });
-
-
-/***
- * Get user profile
- */
-router.get('/:userId', function(req, res) {
-    const userProfile = userQueryModel.getUser({user_id: req.params.userId});
-
-    userProfile
-        .then(function (response) {
-            res.json(response);
-        })
-        .catch(function (err) {
-            res.status(500).end(`Could not get user because of the following error: ${err.message}`);
-            console.log(err);
-        });
-});
-
-/***
- * Edit user profile
- */
-router.put('/profile', function(req, res) {
-    res.end();
-});
-
-/***
- * Remove user
- */
-router.delete('/', function(req, res) {
-    res.end();
-});
-
-/**************** User trips end points ****************/
-
-/***
- * Get user's trips
- */
-router.get('/:userId/trips', function (req, res) {
-  const trips = tripFriendQueryModel.getUserTrips(req.params.userId);
-
-  trips
-      .then(function(queryResponse) {
-          res.json(queryResponse);
-      })
-      .catch(function(err) {
-          res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
-          console.log(err);
-      });
-});
-
 
 module.exports = router;

@@ -15,6 +15,10 @@ class SingleSignOnButton extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      userId: 0
+    };
+
     this.handleResponse = this.handleResponse.bind(this);
     this.routeChange = this.routeChange.bind(this);
   }
@@ -39,18 +43,20 @@ class SingleSignOnButton extends Component {
       platform = 'facebook';
     }
 
+    let that = this;
     axios
-      .post(APIS.login[platform], {userData})
+      .post(APIS.login, {userData})
       .then(function (response) {
-        this.routeChange(response.user_id);
+        that.setState({userId: response.data.insertedId[0]});
+        that.routeChange();
       })
       .catch(function (error) {
         alert(error.message);
       });
   }
 
-  routeChange(userId) {
-    this.props.history.push(`/user/${userId}/trips`);
+  routeChange() {
+    window.location.href = `/user/${this.state.userId}/trips`;
   }
 
   render() {
