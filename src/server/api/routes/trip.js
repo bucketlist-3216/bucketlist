@@ -136,12 +136,12 @@ router.get('/members/:tripFriend', function (req, res) {
 });
 
 // Add a member to a trip (adding a member-trip association)
-router.post('/members/:tripFriend', function (req, res) {
-    const addTripFriend = tripFriendQueryModel.addTripFriend(req.params.tripFriend);
+router.post('/:tripId/members/:email', function (req, res) {
+    const addTripFriend = tripFriendQueryModel.addTripFriend(req.params.email, req.params.tripId);
 
     addTripFriend
         .then(function (insertionResponse) {
-            res.json({"insertedId": insertionResponse});
+            res.json({"inserted": insertionResponse});
         })
         .catch(function (err) {
             res.status(500).end(`Unable to add user to trip because of the following error: ${err.message}`);
