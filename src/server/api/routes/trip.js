@@ -1,7 +1,7 @@
 const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
-const settings = require('../../config/settings.json')
+const settings = require('../../config/settings.js/index.js')
 const _ = require('underscore');
 const { 
     VotesQueryModel,
@@ -40,7 +40,7 @@ router.post('/', function (req, res) {
         "destination": "Singapore",
         "start_date": "2019-01-01",
         "end_date": "2019-01-02",
-        "creatingId": "",
+        "authorId": "",
         "members": [
             "email1@email.com",
             "email2@email.com"
@@ -56,7 +56,7 @@ router.post('/', function (req, res) {
         .then(function (returnedObject) {
             console.log('Trip insertion complete: ', returnedObject);
 
-            const tripMembershipUpdates = _.map(toInsert.members, emailId => {
+            let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId(emailId);
                 
                 return getUserId.then(function (userId) {
@@ -68,11 +68,16 @@ router.post('/', function (req, res) {
                 
             });
 
+            tripMembershipUpdates.push(tripFriendQueryModel.addTripFriend({
+                "trip_id": returnedObject[0],
+                "user_id": toInsert.
+            }));
+
             Promise.all(tripMembershipUpdates).then(function (result) {
                 console.log('promise.all is complete with result: ', result);
                 res.json({
                     "tripId": returnedObject[0],
-                    "members": toInsert.members
+                    "members": toInsert.authorId
                 });
             });
         })
@@ -104,7 +109,12 @@ router.delete('/:toDelete', function (req, res) {
 // Replace an existing entry
 router.put('/:toUpdate', function (req, res) {
     // Update on mySQL using knex
-    const updating = tripQueryModel.updateTrip(req.params.toUpdate);
+    // sample object
+    const newTripObject = {
+        "field": "newValue"
+    };
+    
+    const updating = tripQueryModel.updateTrip(req.params.toUpdate, req.body.trip);
 
     // Construct response after updating
     updating
@@ -126,8 +136,8 @@ router.put('/:toUpdate', function (req, res) {
 
 
 // Get the members of a given trip.
-router.get('/members/:tripFriend', function (req, res) {
-    let getTripFriends = tripFriendQueryModel.getTripFriends(req.params.tripFriend);
+router.get('/:tripId/members', function (req, res) {
+    let getTripFriends = tripFriendQueryModel.getTripFriends(req.params.tripId);
 
     getTripFriends
         .then(function (queryResponse) {
@@ -136,8 +146,8 @@ router.get('/members/:tripFriend', function (req, res) {
 });
 
 // Add a member to a trip (adding a member-trip association)
-router.post('/:tripId/members/:email', function (req, res) {
-    const addTripFriend = tripFriendQueryModel.addTripFriend(req.params.email, req.params.tripId);
+router.post('/:tripId/members/', function (req, res) {
+    const addTripFriend = tripFriendQueryModel.addTripFriend(req.params.email, req.body.trip.email);
 
     addTripFriend
         .then(function (insertionResponse) {

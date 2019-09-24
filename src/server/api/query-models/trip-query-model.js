@@ -36,6 +36,14 @@ class TripQueryModel extends EntityQueryModel {
             .del();
     }
 
+    updateTrip (id, newObject) {
+        newObject = _.omit(this.nonInsertableProps);
+        
+        return knex(this.tableName)
+            .where({'trip_id': id})
+            .update(newObject);
+    }
+
 }
 
 module.exports = TripQueryModel;

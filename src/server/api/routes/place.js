@@ -1,7 +1,7 @@
 const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
-const settings = require('../../config/settings.json');
+const settings = require('../../config/settings.js/index.js');
 const { PlaceQueryModel } = require('../query-models'); 
 const _ = require('underscore');
 
@@ -35,7 +35,7 @@ router.get('/store', function (req, res) {
 // Get place from database based on city
 router.get('/store/city/:city', function (req, res) {
     // Query mySQL using knex
-    const query = placeQueryModel.getMatchingPlaces(req.params.city);
+    const query = placeQueryModel.getPlacesByCity(req.params.city);
 
     // Construct response using mySQL data
     // TODO: Error handling to be done here.
