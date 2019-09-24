@@ -10,6 +10,8 @@ const responseGoogle = (response) => {
   console.log(response);
 }
 
+const loginSecrets = require('../../../../config/login_secrets.json')
+
 const responseFacebook = (response) => {
   console.log(response);
 }
@@ -21,7 +23,7 @@ const SingleSignOnButton = props => {
   if (identity === 'google') {
     return (
       <GoogleLogin
-        clientId="INSERT_CLIENT_ID.apps.googleusercontent.com"
+        clientId={loginSecrets.google}
         render={renderProps => (
           <div>
             <button className="sso-button" onClick={renderProps.onClick} disabled={renderProps.disabled}>
@@ -39,8 +41,7 @@ const SingleSignOnButton = props => {
   } else if (identity === 'facebook') {
     return (
       <FacebookLogin
-        appId="INSERT_APP_ID"
-        autoLoad
+        appId={loginSecrets.facebook}
         callback={responseFacebook}
         render={renderProps => (
           <div>
