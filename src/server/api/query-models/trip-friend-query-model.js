@@ -3,15 +3,15 @@ const { knex } = require('../../database');
 const _ = require('underscore');
 
 class TripFriendQueryModel extends EntityQueryModel {
-    
+
     constructor(dbClient) {
         super(dbClient);
-        
+
         this.validFilters = ['trip_friend_id'];
         this.nonInsertableProps = ['trip_friend_id'];
         this.tableName = 'Trip_Friend';
         this.selectableProps = []
-        
+
         this.userMutable = false;
     }
 
@@ -31,8 +31,8 @@ class TripFriendQueryModel extends EntityQueryModel {
     }
 
     deleteTripFriend (filter) {
-        filter = _.omit(filter, ['trip_friend_id']);
-        
+        // filter = _.omit(filter, ['trip_friend_id']);
+
         return knex(this.tableName)
             .where(filter)
             .del();
