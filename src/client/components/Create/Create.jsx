@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button, Form } from "react-bootstrap";
 import Link from './link.png';
 
+import './Create.scss'
+
 class Create extends Component {
   constructor(props) {
     super(props);
