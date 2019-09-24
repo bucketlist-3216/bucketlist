@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios'
 
@@ -12,6 +14,12 @@ class TripsPage extends Component {
     this.state = {
       trips: []
     };
+
+    this.routeChange = this.routeChange.bind(this);
+  }
+
+  routeChange() {
+    this.props.history.push('../../createview');
   }
 
   componentDidMount() {
@@ -46,6 +54,15 @@ class TripsPage extends Component {
                 trip={trip}
               />
             ))}
+            <div className="trip" onClick={this.routeChange}>
+              <div className="trip-new">
+                <FontAwesomeIcon icon={faPlus} size="2x"/>
+                <br/>
+                <span>
+                  Create new trip
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       );
