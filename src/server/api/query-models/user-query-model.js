@@ -3,13 +3,13 @@ const { knex } = require('../../database');
 const _ = require('underscore');
 
 class UserQueryModel extends EntityQueryModel {
-    
+
     constructor(dbClient) {
         super(dbClient);
-        this.validFilters = ['user_id'];
+        this.validFilters = ['user_id', 'email'];
         this.nonInsertableProps = ['user_id', 'create_time'];
-        this.selectableProps = []
-        this.userMutable = false
+        this.selectableProps = ['username', 'email'];
+        this.userMutable = true;
         this.tableName = 'User';
     }
 
@@ -18,6 +18,15 @@ class UserQueryModel extends EntityQueryModel {
 
         return knex(this.tableName)
             .insert(toInsert);
+    }
+
+    getUser (filters) {
+        filters = _.pick(filters, this.validFilters);
+
+        return knex
+            .select(this.selectableProps)
+            .from(this.tableName)
+            .where(filters);
     }
 }
 

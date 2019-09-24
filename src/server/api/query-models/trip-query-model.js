@@ -10,7 +10,7 @@ class TripQueryModel extends EntityQueryModel {
         this.validFilters = ['trip_id'];
         this.nonInsertableProps = ['trip_id'];
         this.tableName = 'Trip';
-        this.selectableProps = []
+        this.selectableProps = ['destination', 'start_date', 'end_date']
         this.userMutable = false;
     }
 

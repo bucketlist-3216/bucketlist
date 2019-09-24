@@ -1,0 +1,16 @@
+.trips-page {
+  .header-container {
+  }
+  .trips-title {
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: center;
+    padding: 3%;
+
+    h1 {
+      font-family: 'GlossAndBloom';
+      text-align: center;
+      font-size: 36px;
+    }
+  }
+}

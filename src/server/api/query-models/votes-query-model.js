@@ -69,7 +69,6 @@ class VotesQueryModel extends EntityQueryModel {
                 votingResults.forEach(function (item) {
                     item = Object.assign({}, item);
 
-                    console.log(item);
                     let tripPlaceId = item.trip_place_id;
                     let vote = item.vote;
                     let count = item.count;
