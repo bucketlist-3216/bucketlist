@@ -1,12 +1,10 @@
 const EntityQueryModel = require('./entity');
+const UserQueryModel = require('./user-query-model');
+const TripQueryModel = require('./trip-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 
-const TripQueryModel = require('./trip-query-model');
 const tripQueryModel = new TripQueryModel();
-
-const UserQueryModel = require('./user-query-model');
-const userQueryModel = new UserQueryModel();
 
 class TripFriendQueryModel extends EntityQueryModel {
 
@@ -19,21 +17,28 @@ class TripFriendQueryModel extends EntityQueryModel {
         this.selectableProps = ['trip_id', 'user_id']
 
         this.userMutable = false;
+        this.userQueryModel = new UserQueryModel();
     }
 
-    // Get all the locations in this particular trip
-    getTripFriends (tripParticulars) {
+    // Get all the members in this particular trip
+    getTripFriends (tripId) {
         return knex(this.tableName)
             .select(this.selectableProps)
-            .where({trip_id: tripParticulars['trip_id']});
+            .where({trip_id: tripId});
     }
 
-    // Add a location to this trip
-    addTripFriend (toInsert) {
-        toInsert = _.omit(toInsert, this.nonInsertableProps);
-
-        return knex(this.tableName)
-            .insert(toInsert);
+    // Add a member to this trip by their email
+    addTripFriend (toInsertEmail, tripId) {
+        // Get the user's ID
+        let tableName = this.tableName;
+        return this.userQueryModel.getUserId(toInsertEmail)
+            .then(function (userId) {
+                return knex(tableName)
+                    .insert({
+                        "user_id": userId[0]['user_id'],
+                        "trip_id": tripId
+                    });
+            });
     }
 
     deleteTripFriend (filter) {

@@ -1,11 +1,11 @@
-const users = require('./users');
+const user = require('./user');
 const admin = require('./admin');
-const trips = require('./trips');
-const places = require('./places');
+const trip = require('./trip');
+const place = require('./place');
 
 module.exports = {
-    users,
-    trips,
-    places,
+    user,
+    trip,
+    place,
     admin
 };

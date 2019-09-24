@@ -10,7 +10,7 @@ class TripQueryModel extends EntityQueryModel {
         this.validFilters = ['trip_id'];
         this.nonInsertableProps = ['trip_id'];
         this.tableName = 'Trip';
-        this.selectableProps = ['destination', 'start_date', 'end_date']
+        this.selectableProps = ['trip_id', 'destination', 'start_date', 'end_date'];
         this.userMutable = false;
     }
 
@@ -23,6 +23,7 @@ class TripQueryModel extends EntityQueryModel {
     // Add a location to this trip
     addTrip (toInsert) {
         toInsert = _.omit(toInsert, this.nonInsertableProps);
+        toInsert = _.pick(toInsert, this.selectableProps);
 
         return knex(this.tableName)
             .insert(toInsert);
@@ -33,6 +34,14 @@ class TripQueryModel extends EntityQueryModel {
         return knex(this.tableName)
             .where(filters)
             .del();
+    }
+
+    updateTrip (id, newObject) {
+        newObject = _.omit(this.nonInsertableProps);
+        
+        return knex(this.tableName)
+            .where({'trip_id': id})
+            .update(newObject);
     }
 
 }
