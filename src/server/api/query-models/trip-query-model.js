@@ -3,14 +3,15 @@ const { knex } = require('../../database');
 const _ = require('underscore');
 
 class TripQueryModel extends EntityQueryModel {
-
+    
     constructor(dbClient) {
         super(dbClient);
-
+        
         this.validFilters = ['trip_id'];
         this.nonInsertableProps = ['trip_id'];
         this.tableName = 'Trip';
         this.selectableProps = []
+        
         this.userMutable = false;
     }
 
@@ -20,7 +21,7 @@ class TripQueryModel extends EntityQueryModel {
 
     }
 
-    // Create a new trip
+    // Add a location to this trip
     addTrip (toInsert) {
         toInsert = _.omit(toInsert, this.nonInsertableProps);
 
@@ -30,20 +31,11 @@ class TripQueryModel extends EntityQueryModel {
 
     // Delete a trip entirely
     deleteTrip (filter) {
-        filters = _.pick(filters, this.validFilters);
         return knex(this.tableName)
             .where(filters)
             .del();
     }
 
-    // Update the particulars of  a trip
-    updateTrip (toUpdate) {
-        const data = _.omit(toUpdate, this.nonInsertableProps);
-        const filters = _.pick(toUpdate, this.validFilters);
-        return knex(this.tableName)
-            .where(filters)
-            .update(data);
-    }
 }
 
 module.exports = TripQueryModel;

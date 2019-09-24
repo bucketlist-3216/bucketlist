@@ -1,0 +1,15 @@
+{
+    "port": 3001,
+    "listedKeys": [
+        "sampleKey1",
+        "sampleKey2",
+        "sampleKey3"
+    ],
+    "validate": false,
+    "database": {
+        "host": "127.0.0.1",
+        "user": "root",
+        "password": "",
+        "database": "bucketlist"
+    }
+}
