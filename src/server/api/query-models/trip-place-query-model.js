@@ -21,7 +21,6 @@ class TripPlaceQueryModel extends EntityQueryModel {
     getLocationsInTrip (tripParticulars) {
         const tripId = tripParticulars['trip_id'];
 
-        let that = this;
         return knex(this.tableName)
             .select(this.selectableProps)
             .where({"trip_id": tripId});
@@ -36,9 +35,10 @@ class TripPlaceQueryModel extends EntityQueryModel {
     }
 
     // Delete a location from this trip
-    deleteLocationFromTrip (filters) {
+    deleteLocationFromTrip (tripPlaceId) {
         return knex(this.tableName)
-            .where(filters)
+            .select(this.selectableProps)
+            .where({trip_id: tripPlaceId})
             .del();
     }
 }

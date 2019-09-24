@@ -24,6 +24,13 @@ class PlaceQueryModel extends EntityQueryModel {
             .where(filters);
     }
 
+    getPlacesByCity(cityName) {
+        return knex
+            .select(this.selectableProps)
+            .from(this.tableName)
+            .where({"city": cityName});
+    }
+
     insertPlace(toInsert) {
         toInsert = _.omit(toInsert, this.nonInsertableProps);
 
@@ -31,10 +38,16 @@ class PlaceQueryModel extends EntityQueryModel {
             .insert(toInsert);
     }
 
-    deletePlace(filters) {
+    deletePlace(toDelete) {
         return knex(this.tableName)
-            .where(filters)
+            .where({"place_id": toDelete})
             .del();
+    }
+
+    searchPlace(toSearch) {
+        return knex(this.tableName)
+            .select(this.selectableProps)
+            .where('description', 'like', '%' + toSearch + '%');
     }
 }
 
