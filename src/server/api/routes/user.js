@@ -1,7 +1,7 @@
 const express = require('express');
 const Compute = require('../../compute');
 const validateRequest = require('../auth');
-const settings = require('../../config/settings.js');
+const settings = require('../../config/settings.json');
 const { UserQueryModel } = require('../query-models')
 
 const computeResource = new Compute();
@@ -23,14 +23,9 @@ if (settings.validate) {
 router.post('/', function(req, res) {
     const insertion = userQueryModel.addUser(req.body.user);
 
-    insertion
-        .then(function (insertionResponse) {
-            res.end(JSON.stringify({"insertedId": insertionResponse}));
-        })
-        .catch(function (err) {
-            res.status(500).end(`Could not create user because of the following error: ${err.message}`);
-            console.log(JSON.stringify(err));
-        });
+    insertion.then(function (insertionResponse) {
+        res.end(JSON.stringify({"insertedId": insertionResponse}));
+    });
 });
 
 
