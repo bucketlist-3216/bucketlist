@@ -1,0 +1,42 @@
+.list-page {
+  .header-container {
+  }
+  .buttons-container {
+    display: flex;
+    max-width: 400px;
+    height: 20px;
+    margin: 0 20px 20px 20px;
+
+    position: relative;
+
+    button {
+      background-color: transparent;
+      border: 1px solid #333333;
+      box-sizing: border-box;
+
+      font-family: 'JosefinSans-Regular';
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 15px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+
+      color: #000000;
+    }
+
+    .swipe-button {
+      position: absolute;
+      left: 0;
+    }
+
+    .trips-button {
+      position: absolute;
+      right: 0;
+    }
+  }
+  .list-container {
+    max-width: 400px;
+  }
+}

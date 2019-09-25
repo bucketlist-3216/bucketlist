@@ -58,14 +58,14 @@ router.post('/', function (req, res) {
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId(emailId);
-                
+
                 return getUserId.then(function (userId) {
                     return tripFriendQueryModel.addTripFriend({
                         "trip_id": returnedObject[0],
                         "user_id": userId[0]['user_id']
                     });
                 });
-                
+
             });
 
             tripMembershipUpdates.push(tripFriendQueryModel.addTripFriend({
@@ -113,7 +113,7 @@ router.put('/:toUpdate', function (req, res) {
     const newTripObject = {
         "field": "newValue"
     };
-    
+
     const updating = tripQueryModel.updateTrip(req.params.toUpdate, req.body.trip);
 
     // Construct response after updating
@@ -197,6 +197,34 @@ router.delete('/vote', function (req, res) {
     deletion
         .then(function (returnObject) {
             res.json({"deletedId": returnObject});
+        });
+});
+
+// Get the votes for the chosen location
+router.get('/vote/location/:locationId', function (req, res) {
+    const votes = votesQueryModel.getVotes({trip_place_id: req.params.locationId});
+
+    votes
+        .then(function(queryResponse) {
+            res.json(queryResponse);
+        })
+        .catch(function(err) {
+            res.status(500).end('Unable to get votes for location');
+            console.log(err);
+        });
+});
+
+// Get locations sorted by votes
+router.get('/:tripId/vote/results', function (req, res) {
+    const votingResults = votesQueryModel.getVotingResults(req.params.tripId);
+
+    votingResults
+        .then(function(queryResponse) {
+            res.json(queryResponse);
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to get voting results due to ${err.message}`);
+            console.log(err);
         });
 });
 
