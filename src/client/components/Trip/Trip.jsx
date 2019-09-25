@@ -36,7 +36,7 @@ const Trip = props => {
         <div className="trip-members">
           {members.map((member, key) => (
             <div className="trip-member">
-              {member}
+              {member.username || member.email}
             </div>
           ))}
         </div>
