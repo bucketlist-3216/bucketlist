@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactGA from 'react-ga';
 
 import './styles/styles.scss';

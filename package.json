@@ -75,9 +75,8 @@
     "react-promise": "^3.0.2",
     "react-router-dom": "^5.0.1",
     "react-select-search": "^0.9.6",
-    "react-spring": "^8.0.27",
     "react-svg-loader": "^3.0.3",
-    "react-with-gesture": "^4.0.8",
+    "react-swipy": "0.0.6",
     "sass": "^1.22.12",
     "underscore": "^1.9.1",
     "url-loader": "^2.1.0"
