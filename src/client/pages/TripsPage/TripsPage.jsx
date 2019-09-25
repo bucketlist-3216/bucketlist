@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 
 import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 import Header from "../../components/Header";
 import Trip from "../../components/Trip";
 
@@ -21,7 +22,7 @@ class TripsPage extends Component {
   }
 
   routeChange() {
-    this.props.history.push('../../createview');
+    this.props.history.push(PATHS.createTrip());
   }
 
   componentDidMount() {
