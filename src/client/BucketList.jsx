@@ -7,21 +7,13 @@ import CreateView from './pages/CreateView';
 import LandingPage from './pages/LandingPage';
 import SwipeView from './pages/SwipeView';
 import TripsPage from './pages/TripsPage';
-
-// const BucketList = () => {
-//   return (
-//     <Switch>
-//       <Route exact path='/' component={LandingPage} />
-//     </Switch>
-//   )
-// };
-
-// export default BucketList;
+import SplashPage from './pages/SplashPage';
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={LandingPage} />
+      {/* <Route exact path="/" component={LandingPage} /> */}
+      <Route exact path="/" component={SplashPage} />
       <Route path='/createview' component={CreateView} />
       <Route path='/swipeview' component={SwipeView} />
       <Route path='/user/:userId/trips' component={TripsPage} />
