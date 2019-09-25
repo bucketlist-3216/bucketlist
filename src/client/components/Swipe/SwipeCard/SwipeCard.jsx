@@ -8,7 +8,7 @@ const SwipeCard = props => {
       <img className="card-image" src={place.image} />
       <div className="card-info">
         <div className="description">{place.name}, {place.price}</div>
-        <InfoIcon className="info-icon" onClick={() => alert('sup')}/>
+        <InfoIcon className="info-icon" onClick={() => alert('TODO: Modal appears')}/>
       </div>
       
     </div>

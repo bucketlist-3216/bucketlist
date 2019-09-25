@@ -84,7 +84,10 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        <div className="swipe-header">Swipe Title</div>
+        <div className="swipe-header">
+          <div className="city">{places[0].city || ''}</div>
+          <div className="place-name">{places[0].name || ''}</div>
+        </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );

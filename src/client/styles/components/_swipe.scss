@@ -1,4 +1,19 @@
 .swipe {
+  .swipe-header {
+    font-family: 'JosefinSans-Regular';
+    width: 412px;
+
+    .city {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .place-name {
+      font-size: 40px;
+      text-align: center;
+    }
+  }
+
   .swipe-container {
     position: relative;
     width: 412px;
@@ -11,7 +26,6 @@
     }
 
     .swipe-card {
-      border-radius: 3px;
       width: 412px;
       height: 544px;
       cursor: pointer;
@@ -27,6 +41,8 @@
         height: 100%;
         pointer-events: none;
         object-fit: cover;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1);
       }
 
       .card-info {
