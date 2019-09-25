@@ -6,6 +6,7 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 import loginSecrets from '../../../../config/login_secrets.json';
 import PROVIDERS from '../../constants/providers';
 import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
@@ -53,7 +54,7 @@ class Login extends Component {
   }
 
   routeChange() {
-    window.location.href = `/user/${this.state.userId}/trips`;
+    window.location.href = PATHS.trips(this.state.userId);
   }
 
   render() {

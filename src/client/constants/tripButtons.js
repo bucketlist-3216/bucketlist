@@ -1,15 +1,17 @@
+import PATHS from './paths'
+
 const TRIP_BUTTONS = [
   {
     text: 'view list',
-    url: '../../list'
+    url: PATHS.list
   },
   {
     text: 'swipe location',
-    url: '../../swipeview'
+    url: PATHS.swipe
   },
   {
     text: 'add friends',
-    url: 'addfriends'
+    url: (tripId) => 'addfriends'
   }
 ];
 

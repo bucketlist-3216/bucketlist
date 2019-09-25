@@ -4,6 +4,7 @@ import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios'
 
 import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 import Header from "../../components/Header";
 import PlaceCard from "../../components/PlaceCard";
 
@@ -45,10 +46,10 @@ class ListPage extends Component {
             <Header />
           </div>
           <div className="buttons-container">
-            <button className="swipe-button" onClick={() => this.routeChange('/swipeview')}>
+            <button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe())}>
               <span>continue swiping</span>
             </button>
-            <button className="trips-button" onClick={() => this.routeChange(`../../user/${userId}/trips`)}>
+            <button className="trips-button" onClick={() => this.routeChange(PATHS.trips(userId))}>
               <span>done</span>
             </button>
           </div>
