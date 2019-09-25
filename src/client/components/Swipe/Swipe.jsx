@@ -85,9 +85,11 @@ class Swipe extends Component {
     return (
       <div className="swipe">
         <div className="swipe-header">
+          <img className="icon-back" src="./assets/common/icon-leftarrow.png" />
           <div className="city">{places[0].city || ''}</div>
-          <div className="place-name">{places[0].name || ''}</div>
+          <img className="icon-list" src="./assets/common/icon-list.png" />
         </div>
+        <div className="place-name">{places[0].name || ''}</div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );

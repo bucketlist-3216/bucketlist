@@ -2,16 +2,27 @@
   .swipe-header {
     font-family: 'JosefinSans-Regular';
     width: 412px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+
+    .icon-back,
+    .icon-list {
+      width: 25px;
+      margin: 0px 5px;
+    }
 
     .city {
       font-size: 20px;
       text-align: center;
     }
+  }
 
-    .place-name {
-      font-size: 40px;
-      text-align: center;
-    }
+  .place-name {
+    font-family: 'JosefinSans-Regular';
+    width: 412px;
+    font-size: 40px;
+    text-align: center;
   }
 
   .swipe-container {
