@@ -1,3 +1,45 @@
+.create-container {
+  display: flex;
+  justify-content: center;
+
+  .title {
+    font-family: 'GlossAndBloom';
+    font-size: 45px;
+    text-align: center;
+  }
+
+  .select-city {
+    text-align: center;
+  }
+
+  .create-body {
+    font-family: 'JosefinSans-Regular';
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .select-date,
+  .add-friends {
+    text-align: center;
+  }
+
+  .submit-container {
+    text-align: center;
+
+    .form-submit {
+      width: 400px;
+      height: 40px;
+      color: #ffffff;
+      font-family: 'JosefinSans-Regular';
+      font-weight: 700;
+      font-size: 18px;
+      background-color: rgba(52, 52, 52, 0.78);
+      margin: 10px;
+    }
+  }
+}
+
 .form-dropdown-button {
   width: 400px;
   height: 40px;
@@ -6,11 +48,12 @@
   font-family: 'JosefinSans-Regular';
   font-weight: 700;
   font-size: 18px;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) 98% / 5% no-repeat #EEE;
+  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png)
+    98% / 5% no-repeat #eee;
   background-color: rgba(241, 138, 124, 0.24);
 }
 
@@ -30,28 +73,6 @@
   height: 40px;
   margin: 10px;
   background-color: rgba(241, 138, 124, 0.24);
-}
-
-.form-submit {
-  width: 400px;
-  height: 40px;
-  color: #ffffff;
-  font-family: 'JosefinSans-Regular';
-  font-weight: 700;
-  font-size: 18px;
-  background-color: rgba(52, 52, 52, 0.78);
-  margin: 10px;
-}
-
-.create-title {
-  font-family: 'GlossAndBloom';
-  font-size: 45px;
-}
-
-.create-body {
-  font-family: 'JosefinSans-Regular';
-  font-weight: 700;
-  font-size: 24px;
 }
 
 .link-icon {
