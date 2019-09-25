@@ -4,8 +4,6 @@ const TripQueryModel = require('./trip-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 
-const tripQueryModel = new TripQueryModel();
-
 class TripFriendQueryModel extends EntityQueryModel {
 
     constructor(dbClient) {
@@ -14,9 +12,10 @@ class TripFriendQueryModel extends EntityQueryModel {
         this.validFilters = ['trip_friend_id'];
         this.nonInsertableProps = ['trip_friend_id'];
         this.tableName = 'Trip_Friend';
-        this.selectableProps = ['trip_id', 'user_id']
+        this.selectableProps = ['trip_friend_id', 'trip_id', 'user_id']
 
         this.userMutable = false;
+        this.tripQueryModel = new TripQueryModel();
         this.userQueryModel = new UserQueryModel();
     }
 
@@ -51,72 +50,51 @@ class TripFriendQueryModel extends EntityQueryModel {
 
     // Get all the locations in this particular trip
     getUserTrips (userId) {
-        return new Promise(resolve => setTimeout(resolve, 300))
-            .then(function () {
-                return [
-                    {
-                        "destination": "Singapore",
-                        "start_date": "2019-11-29T16:00:00.000Z",
-                        "end_date": "2019-12-07T16:00:00.000Z",
-                        "trip_id": 1,
-                        "members": [
-                          "hello@gmail.com",
-                          "ihatethis@gmail.com"
-                        ]
-                    }
-                ];
-            });
-        // let tripFriends = knex
-        //     .select(this.selectableProps)
-        //     .from(this.tableName)
-        //     .where({user_id: userId});
-        //
-        // return tripFriends
-        //   .then(function (tripFriends) {
-        //       tripFriends = tripFriends.map(tripFriend => Object.assign({}, tripFriend));
-        //       // to change Row object to JSON object
-        //       let tripIds = tripFriends.map(tripFriend => tripFriend.trip_id);
-        //       let userIds = tripFriends.map(tripFriend => tripFriend.user_id);
-        //
-        //       let trips = knex
-        //           .select(tripQueryModel.selectableProps)
-        //           .from(tripQueryModel.tableName)
-        //           .whereIn('trip_id', tripIds);
-        //
-        //       let users = knex
-        //           .select(userQueryModel.selectableProps)
-        //           .from(userQueryModel.tableName)
-        //           .whereIn('user_id', userIds);
-        //       return Promise.all([tripFriends, trips, users])
-        //   })
-        //   .then(function (results) {
-        //       let [tripFriends, trips, users] = results;
-        //       let tripsMapping = {};
-        //       trips.forEach(function (trip) {
-        //           trip = Object.assign({}, trip);
-        //           tripsMapping[trip.trip_id] = trip;
-        //       });
-        //
-        //       let usersMapping = {}
-        //       users.forEach(function (user) {
-        //           user = Object.assign({}, user);
-        //           usersMapping[user.user_id] = user;
-        //       });
-        //
-        //       tripFriends.forEach(function(tripFriend) {
-        //           let trip = tripsMapping[tripFriend.trip_id];
-        //           let user = usersMapping[tripFriend.user_id];
-        //           if (!trip.members) {
-        //             trip.members = [];
-        //           }
-        //           trip.members.push(user.email);
-        //       });
-        //   })
-        //   .catch(function (err) {
-        //       throw err;
-        //   });
-    }
+        let tripProperties = this.tripQueryModel.selectableProps.filter((element) => element !== 'trip_id');
 
+        let selectedColumns = [`${this.tableName}.trip_id`].concat(
+            tripProperties,
+            this.userQueryModel.selectableProps
+        );
+
+        let filteringUserTrips = knex
+            .select(this.selectableProps)
+            .from(this.tableName)
+            .where({user_id: userId});
+
+        let queryingTrips = knex
+            .select(selectedColumns)
+            .from(this.tableName)
+            .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.trip_id`, '=', `${this.tableName}.trip_id`)
+            .innerJoin(this.userQueryModel.tableName, `${this.userQueryModel.tableName}.user_id`, '=', `${this.tableName}.user_id`)
+            .whereExists(filteringUserTrips.whereRaw(`${this.tripQueryModel.tableName}.trip_id = ${this.tableName}.trip_id`))
+            .whereRaw(`${this.tableName}.user_id <> ${userId}`)
+            .groupBy(...selectedColumns);
+
+        let instance = this;
+        return queryingTrips
+            .then(function (results) {
+                let tripResults = {};
+
+                results.forEach(function (row) {
+                    row = Object.assign({}, row);
+
+                    let tripId = row.trip_id;
+
+                    if (!tripResults[tripId]) {
+                        tripResults[tripId] = _.omit(row, instance.userQueryModel.selectableProps);
+                        tripResults[tripId].members = [];
+                    }
+                    tripResults[tripId].members.push(_.pick(row, instance.userQueryModel.selectableProps));
+                });
+
+                let array = Object.values(tripResults);
+                return array;
+            })
+            .catch(function (err) {
+                throw err;
+            });
+    }
 }
 
 module.exports = TripFriendQueryModel;

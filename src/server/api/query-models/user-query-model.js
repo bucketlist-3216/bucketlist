@@ -15,6 +15,7 @@ class UserQueryModel extends EntityQueryModel {
 
     addUser (toInsert) {
         toInsert = _.omit(toInsert, this.nonInsertableProps);
+        toInsert = _.pick(toInsert, this.selectableProps); // in case there are extra fields in toInsert
 
         return knex(this.tableName)
             .insert(toInsert);
@@ -25,7 +26,7 @@ class UserQueryModel extends EntityQueryModel {
             .select(['user_id'])
             .where({'email': email});
     }
-    
+
     getUser (filters) {
         filters = _.pick(filters, this.validFilters);
 

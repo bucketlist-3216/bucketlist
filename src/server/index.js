@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
+const process = require('process');
 const {
+    login: loginRouter,
     user: userRouter,
     trip: tripRouter,
     place: placeRouter,
-    admin 
+    admin
 } = require('./api/routes');
 const config = require('./config/settings');
 const cors = require('cors');
@@ -27,15 +30,22 @@ app.use('/api/', function (req, res, next) {
 
 /************************** Routes **************************/
 
+app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/trip', tripRouter);
 app.use('/api/v1/place', placeRouter);
 app.use('/api/v1/user', userRouter);
 
-app.use('/debug', admin);
+// Serve the static files from build
+console.log('Serving folder', path.join(__dirname, 'build'));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', function(req, res) {
+    res.sendFile('index.html', {root: path.join(__dirname, 'build')});
+});
 
 /************************** Start the server **************************/
 
-port = config.port || 3000;
+port = process.env.PORT || 5000;
 
 app.listen(port, () => {
     console.log('Listening on port ', port);

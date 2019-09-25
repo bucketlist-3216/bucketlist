@@ -35,6 +35,17 @@
     margin: auto;
     left: 10%;
     right: 90%px;
+
+    .login-title {
+      padding: 20px 50px;
+      font-family: 'JosefinSans-Regular';
+      font-weight: 700;
+
+      h1 {
+        color: black;
+        font-size: 30px;
+      }
+    }
   }
 
   .title {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import ReactGA from 'react-ga';
+
 import Login from '../../components/Login';
 import BucketListLogo from '../../../../assets/brand/brand-logo.png';
 
@@ -9,6 +11,8 @@ class LandingPage extends Component {
   }
 
   render() {
+    ReactGA.initialize('UA-148749594-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
     return (
       <div className="landing-page">
         <div className="brand">
@@ -16,7 +20,10 @@ class LandingPage extends Component {
           <span className="brand-title">bucketlist</span>
         </div>
         <div className="login-container">
-          <Login />
+          <div className="login-title">
+            <h1>Travel planning has never been easier</h1>
+          </div>
+          <Login {...this.props} />
         </div>
         <div className="title">
           <h1>Swipe. List. Go.</h1>

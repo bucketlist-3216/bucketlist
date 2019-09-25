@@ -1,5 +1,6 @@
 const EntityQueryModel = require('./entity');
-const UserQueryModel = require('./user-query-model');
+const TripFriendQueryModel = require('./trip-friend-query-model');
+const PlaceQueryModel = require('./place-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 
@@ -12,6 +13,9 @@ class VotesQueryModel extends EntityQueryModel {
         this.nonInsertableProps = ['swipe_id'];
         this.userMutable = false
         this.tableName = 'Swipe';
+
+        this.tripFriendQueryModel = new TripFriendQueryModel();
+        this.placeQueryModel = new PlaceQueryModel();
     }
 
     // Get the votes for the matching location entry
@@ -27,7 +31,7 @@ class VotesQueryModel extends EntityQueryModel {
 
         vote = _.omit(vote, this.nonInsertableProps);
         const filter = {
-            "trip_place_id": vote['trip_place_id'],
+            "place_id": vote['place_id'],
             "trip_friend_id": vote['trip_friend_id']
         };
 
@@ -62,45 +66,43 @@ class VotesQueryModel extends EntityQueryModel {
     }
 
     getVotingResults(tripId) {
-        const votingResults = knex
-            .select(knex.raw(`${this.tableName}.trip_place_id, vote, count(*) as count`))
+        let selectedColumns = [`${this.tableName}.place_id`, 'name', 'address', 'image_link', 'vote'];
+
+        let queryingVotes = knex
+            .select(knex.raw(`${selectedColumns.join()}, count(*) as count`))
             .from(this.tableName)
-            .innerJoin('Trip_Place', 'Trip_Place.trip_place_id', '=', `${this.tableName}.trip_place_id`)
+            .innerJoin(this.tripFriendQueryModel.tableName, `${this.tripFriendQueryModel.tableName}.trip_friend_id`, '=', `${this.tableName}.trip_friend_id`)
+            .innerJoin(this.placeQueryModel.tableName, `${this.placeQueryModel.tableName}.place_id`, '=', `${this.tableName}.place_id`)
             .where({trip_id: tripId})
-            .groupBy(`${this.tableName}.trip_place_id`, 'vote');
+            .groupBy(...selectedColumns);
 
-        return votingResults
-            .then(function (votingResults) {
-                let totalVotes = {};
+        return queryingVotes
+            .then(function (results) {
+                let votingResults = {};
 
-                votingResults.forEach(function (item) {
-                    item = Object.assign({}, item);
+                results.forEach(function (row) {
+                    row = Object.assign({}, row);
 
-                    let tripPlaceId = item.trip_place_id;
-                    let vote = item.vote;
-                    let count = item.count;
+                    let placeId = row.place_id;
+                    let vote = row.vote;
+                    let count = row.count;
 
-                    if (!totalVotes[tripPlaceId]) {
-                        totalVotes[tripPlaceId] = 0;
+                    if (!votingResults[placeId]) {
+                        votingResults[placeId] = _.omit(row, ['vote', 'count']);
+                        votingResults[placeId].voteCount = {
+                            LIKE: 0,
+                            DISLIKE: 0
+                        };
                     }
-
-                    if (vote === 'DISLIKE') {
-                        totalVotes[tripPlaceId] += 1/(count + 1) - 1;
-                        // 1/(count + 1) instead of count so that more DISLIKEs means less addition in voting results
-                        // -1 so that no DISLIKE is better than 1 DISLIKE
-                        // 1/(count + 1) instead of 1/count otherwise 1 DISLIKE equals to no DISLIKE (1/1 - 1 = 0 )
-                    } else {
-                        totalVotes[tripPlaceId] += count;
-                    }
+                    votingResults[placeId].voteCount[vote] += count;
                 });
 
-                let array = [];
-                for (const tripPlaceId in totalVotes) {
-                    array.push({tripPlaceId, votes: totalVotes[tripPlaceId]});
-                }
-
+                let array = Object.values(votingResults);
                 return array.sort(function (a, b) {
-                    return b.votes - a.votes;
+                    const countVotes = (result) => {
+                        return result.voteCount.LIKE / (result.voteCount.LIKE + result.voteCount.DISLIKE);
+                    };
+                    return countVotes(b) - countVotes(a);
                 });
             })
             .catch(function (err) {
