@@ -6,7 +6,7 @@ const APIS = {
     results: (tripId) => `${root}/api/v1/trip/${tripId}/vote/results/`
   },
   user: {
-    trips: (userId) => `http://localhost:3001/api/v1/user/${userId}/trips`
+    trips: (userId) => `${root}/api/v1/user/${userId}/trips`
   }
 };
 

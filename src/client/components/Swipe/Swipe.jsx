@@ -31,7 +31,7 @@ class Swipe extends Component {
       label: this.state.places[this.state.index].city +', ' + this.state.places[this.state.index].name
     });
     axios
-      .post('http://localhost:3001/api/v1/trips/vote', {
+      .post('https://bucketlist-pwa.herokuapp.com/api/v1/trips/vote', {
       	"vote": {
       		"trip_place_id": "6",
       		"trip_friend_id": "5",
@@ -54,7 +54,7 @@ class Swipe extends Component {
       label: this.state.places[this.state.index].city +', ' + this.state.places[this.state.index].name
     });
     axios
-      .post('http://localhost:3001/api/v1/trips/vote', {
+      .post('https://bucketlist-pwa.herokuapp.com/api/v1/trips/vote', {
         "vote": {
           "trip_place_id": "6",
           "trip_friend_id": "5",
