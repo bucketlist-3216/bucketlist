@@ -26,15 +26,15 @@ class Create extends Component {
   }
 
   handleChangeCity(event) {
-    this.setState({ city: event.target.city });
+    this.setState({ city: event.target.value });
   }
 
   handleChangeFrom(event) {
-    this.setState({ from: event });
+    this.setState({ from: event.target.value });
   }
 
   handleChangeTo(event) {
-    this.setState({ to: event });
+    this.setState({ to: event.target.value });
   }
 
   handleAddFriends(event) {
@@ -78,20 +78,6 @@ class Create extends Component {
                 selected={this.state.to}
                 onChange={this.handleChangeTo}
               />
-            </div>
-
-            <div className="create-body">Add Friends</div>
-            <Button
-              variant="outline-primary"
-              className="form-button"
-              onClick={this.handleAddFriends}
-            >
-              +
-            </Button>
-
-            <div className="create-body">
-              <img src={Link} alt="Link icon" className="link-icon" /> or
-              generate sharing link
             </div>
 
             <div className="submit-container">
