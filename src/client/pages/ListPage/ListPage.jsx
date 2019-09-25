@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import autoBindMethods from 'class-autobind-decorator';
 
 import axios from 'axios'
 
@@ -6,6 +7,7 @@ import APIS from '../../constants/apis';
 import Header from "../../components/Header";
 import PlaceCard from "../../components/PlaceCard";
 
+@autoBindMethods
 class ListPage extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,10 @@ class ListPage extends Component {
         places: [],
         isDoneFetching: false
     };
+  }
+
+  routeChange(path) {
+    this.props.history.push(path);
   }
 
   componentDidMount() {
@@ -32,16 +38,17 @@ class ListPage extends Component {
 
   render() {
     if (this.state.isDoneFetching) {
+      const userId = 1;
       return (
         <div className="list-page">
           <div className="header-container">
             <Header />
           </div>
           <div className="buttons-container">
-            <button className="swipe-button" onClick={() => this.redirect('/swipe')}>
+            <button className="swipe-button" onClick={() => this.routeChange('/swipe')}>
               <span>continue swiping</span>
             </button>
-            <button className="trips-button" onClick={() => this.redirect(`../../user/${userId}/trips`)}>
+            <button className="trips-button" onClick={() => this.routeChange(`../../user/${userId}/trips`)}>
               <span>done</span>
             </button>
           </div>
