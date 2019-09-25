@@ -18,7 +18,6 @@ class LandingPage extends Component {
         <div className="login-container">
           <div className="login-title">
             <h1>Travel planning has never been easier</h1>
-            <p>Continue with</p>
           </div>
           <Login />
         </div>
