@@ -4,6 +4,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios'
 
+import APIS from '../../constants/apis';
 import Header from "../../components/Header";
 import Trip from "../../components/Trip";
 
@@ -28,7 +29,7 @@ class TripsPage extends Component {
     let instance = this;
     const userId = this.props.match.params.userId;
     axios
-      .get(`http://localhost:3001/api/v1/user/${userId}/trips`)
+      .get(APIS.user.trips(userId))
       .then(function (response) {
         instance.setState({trips:response.data});
         instance.setState({isDoneFetching:true});
