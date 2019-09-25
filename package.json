@@ -22,6 +22,7 @@
   "homepage": "https://github.com/ChengSashankh/bucketlist#readme",
   "devDependencies": {
     "@babel/core": "^7.6.0",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",

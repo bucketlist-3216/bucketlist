@@ -16,6 +16,9 @@ class LandingPage extends Component {
           <span className="brand-title">bucketlist</span>
         </div>
         <div className="login-container">
+          <div className="login-title">
+            <h1>Travel planning has never been easier</h1>
+          </div>
           <Login />
         </div>
         <div className="title">

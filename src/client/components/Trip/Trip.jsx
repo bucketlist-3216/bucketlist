@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from 'axios'
 
 import TripButton from '../TripButton/TripButton';
 import TRIP_BUTTONS from '../../constants/tripButtons';

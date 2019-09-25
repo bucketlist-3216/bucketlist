@@ -2,23 +2,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 40px 50px;
-  height: 100%;
-
-  .login-title {
-    font-family: 'JosefinSans-Regular';
-    font-weight: 700;
-
-    h1 {
-      color: black;
-      font-size: 30px;
-    }
-  }
+  padding: 5px 50px;
 
   .sso-container {
     display: flex;
     flex-direction: row;
-    // justify-content: space-between;
   }
   
   .login-fields {

@@ -1,5 +1,6 @@
-const configFolder = `${__dirname}/../../../config/ssl_cert/`;
+const configFolder = `${__dirname}/../../../config/`;
 const fs = require('fs');
+const mysqlUser = require(`${configFolder}/mysql_user.json`);
 
 module.exports = {
     "port": 3001,
@@ -12,12 +13,12 @@ module.exports = {
     "database": {
         "host": "35.186.146.32",
         "user": "bucketlist",
-        "password": "INSERT-PASSWORD-HERE",
+        "password": mysqlUser.password,
         "database": "bucketlist",
         "ssl": {
-          "key": fs.readFileSync(`${configFolder}/client-key.pem`),
-          "cert": fs.readFileSync(`${configFolder}/client-cert.pem`),
-          "ca": fs.readFileSync(`${configFolder}/server-ca.pem`)
+          "key": fs.readFileSync(`${configFolder}/ssl_cert/client-key.pem`),
+          "cert": fs.readFileSync(`${configFolder}/ssl_cert/client-cert.pem`),
+          "ca": fs.readFileSync(`${configFolder}/ssl_cert/server-ca.pem`)
         }
     }
 };

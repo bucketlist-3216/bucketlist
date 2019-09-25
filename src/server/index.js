@@ -1,10 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {
+    login: loginRouter,
     user: userRouter,
     trip: tripRouter,
     place: placeRouter,
-    admin 
+    admin
 } = require('./api/routes');
 const config = require('./config/settings');
 const cors = require('cors');
@@ -27,6 +28,7 @@ app.use('/api/', function (req, res, next) {
 
 /************************** Routes **************************/
 
+app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/trip', tripRouter);
 app.use('/api/v1/place', placeRouter);
 app.use('/api/v1/user', userRouter);
