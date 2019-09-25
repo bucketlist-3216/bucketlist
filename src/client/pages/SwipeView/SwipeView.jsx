@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ReactGA from 'react-ga';
+
 import Header from "../../components/Header";
 import Swipe from "../../components/Swipe";
 

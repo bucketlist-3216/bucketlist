@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
+
 import { Button, Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import Link from './link.png';
 
+import Link from './link.png';
 import "react-datepicker/dist/react-datepicker.css";
 
 class Create extends Component {
@@ -11,7 +13,8 @@ class Create extends Component {
     this.state = {
       city: 'Select City',
       to: new Date(),
-      from: new Date()
+      from: new Date(),
+      numOfInvites: 0
     };
 
     this.handleChangeCity = this.handleChangeCity.bind(this);
@@ -32,15 +35,38 @@ class Create extends Component {
     this.setState({to: event});
   }
 
-  handleAddFriends(event) {
+  handleInvites(event) {
+    this.setState({numOfInvites: this.state.numOfInvites + 1});
     alert('To Implement: Add friends!');
   }
 
   handleSubmit(event) {
+    ReactGA.event({
+      category: 'User',
+      action: 'Created a New Trip',
+      label: this.state.city
+    });
+    ReactGA.event({
+      category: 'User',
+      action: 'Sent Invites',
+      value: this.state.numOfInvites
+    });
+
+    /* This is for future analytics like tracking peak periods for planned trips */
+    /* ReactGA.event({
+      category: 'Trip Start Date',
+      action: this.state.from
+    });
+    ReactGA.event({
+      category: 'Trip End Date',
+      action: this.state.to
+    });*/
+
     alert('To Implement: Form submitted!');
   }
 
   render() {
+    ReactGA.initialize('UA-148749594-1');
     return (
       <div style={{display: 'flex',  justifyContent:'center'}}>
         <form onSubmit={this.handleSubmit}>
@@ -73,7 +99,7 @@ class Create extends Component {
               Add Friends
             </div>
             <div style={{textAlign: 'center'}}>
-              <Button variant="outline-primary" className="form-button" onClick={this.handleAddFriends}>+</Button>
+              <Button variant="outline-primary" className="form-button" onClick={this.handleInvites}>+</Button>
             </div>
             <div style={{textAlign: 'center'}} className="create-body">
                <img src={Link} alt="Link icon" className="link-icon" /> or generate sharing link

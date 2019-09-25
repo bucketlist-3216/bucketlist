@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactGA from 'react-ga';
 
 import axios from 'axios'
 
@@ -24,6 +25,11 @@ class Swipe extends Component {
 
   handleDislike(event) {
     let that = this;
+    ReactGA.event({
+      category: 'User',
+      action: 'Disliked a Place',
+      label: this.state.places[this.state.index].city +', ' + this.state.places[this.state.index].name
+    });
     axios
       .post('http://localhost:3001/api/v1/trips/vote', {
       	"vote": {
@@ -42,6 +48,11 @@ class Swipe extends Component {
 
   handleLike(event) {
     let that = this;
+    ReactGA.event({
+      category: 'User',
+      action: 'Liked a Place',
+      label: this.state.places[this.state.index].city +', ' + this.state.places[this.state.index].name
+    });
     axios
       .post('http://localhost:3001/api/v1/trips/vote', {
         "vote": {
@@ -59,6 +70,8 @@ class Swipe extends Component {
   }
 
   render() {
+    ReactGA.initialize('UA-148749594-1');
+
     if (this.state.index < this.state.numberOfPlaces) {
       var current = this.state.places[this.state.index];
 

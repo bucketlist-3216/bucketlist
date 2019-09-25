@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactGA from 'react-ga';
 
 import Header from "../../components/Header";
 import Create from "../../components/Create";
