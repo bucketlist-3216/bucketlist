@@ -1,4 +1,30 @@
 .swipe {
+  .swipe-header {
+    font-family: 'JosefinSans-Regular';
+    width: 412px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+
+    .icon-back,
+    .icon-list {
+      width: 25px;
+      margin: 0px 5px;
+    }
+
+    .city {
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
+  .place-name {
+    font-family: 'JosefinSans-Regular';
+    width: 412px;
+    font-size: 40px;
+    text-align: center;
+  }
+
   .swipe-container {
     position: relative;
     width: 412px;
@@ -10,8 +36,7 @@
       margin-top: 12px;
     }
 
-    .swipe-cards {
-      border-radius: 3px;
+    .swipe-card {
       width: 412px;
       height: 544px;
       cursor: pointer;
@@ -26,21 +51,37 @@
         width: 100%;
         height: 100%;
         pointer-events: none;
+        object-fit: cover;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1);
       }
-    }
 
-    .empty-card {
-      background: whitesmoke;
-      border-radius: 3px;
-      width: 412px;
-      height: 544px;
-      cursor: pointer;
-      user-select: none;
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      top: 0;
+      .card-info {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+
+        .description {
+          font-family: 'JosefinSans-Regular';
+          float: left;
+          font-size: 25px;
+          color: white;
+          margin: 10px;
+        }
+
+        .info-icon {
+          width: 30px;
+          float: right;
+          margin: 10px;
+        }
+      }
+
+      .empty {
+        background-color: black;
+        color: white;
+        height: 100%;
+        width: 100%;
+      }
     }
 
     .swipe-button {
