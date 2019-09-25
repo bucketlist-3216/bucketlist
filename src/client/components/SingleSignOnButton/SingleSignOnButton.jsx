@@ -2,23 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
-<<<<<<< HEAD
-const SingleSignOnButton = props => {
-  const { providerName, logo, renderProps } = props;
-
-  return (
-    <div>
-      <button
-        className="sso-button"
-        onClick={renderProps.onClick}
-        disabled={renderProps.disabled}
-      >
-        {logo}
-        <span>{providerName}</span>
-      </button>
-    </div>
-  );
-=======
 import { Button } from 'react-bootstrap';
 
 import GoogleLogin from 'react-google-login';
@@ -84,7 +67,6 @@ const SingleSignOnButton = props => {
       />
     );
   }
->>>>>>> 53a7760... Set up GA trackers
 };
 
 SingleSignOnButton.propTypes = {
