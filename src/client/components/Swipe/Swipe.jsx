@@ -5,8 +5,17 @@ import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 
 const PLACES = [
-  { city: 'Singapore', image: 'image1.png', name: 'Raffles Place' },
-  { city: 'Singapore', image: 'image2.png', name: 'City Hall' }
+  {
+    city: 'Singapore',
+    image:
+      'https://www.visitsingapore.com/mice/en/plan-your-event/venues/raffles-city-centre/overview/_jcr_content/cardcontent/cardcontentpar/image_video/carousel/item_3.resize.carousel-img.0.0.jpg',
+    name: 'Raffles Place'
+  },
+  {
+    city: 'Singapore',
+    image: 'https://mapio.net/images-p/4200239.jpg',
+    name: 'City Hall'
+  }
 ];
 
 class Swipe extends Component {
@@ -18,18 +27,17 @@ class Swipe extends Component {
     };
   }
 
-  remove = () => {
-    this.setState(({ places }) => ({
-      places: places.slice(1, places.length)
-    }));
+  nextCard = () => {
+    const { places } = this.state;
+    const newPlaces = places.slice(1, places.length);
+    this.setState({ places: newPlaces });
   };
 
-  render() {
-    const { places } = this.state;
-
+  renderButtons({ left, right }) {
     return (
-      <div className="swipe">
-        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
+      <div className="swipe-buttons">
+        <SwipeButton onClick={left}>Reject</SwipeButton>
+        <SwipeButton onClick={right}>Accept</SwipeButton>
       </div>
     );
   }
@@ -38,24 +46,27 @@ class Swipe extends Component {
     const { places } = this.state;
     return (
       <div className="swipe-container">
-        <Swipeable
-          buttons={({ left, right }) => (
-            <div className="swipe-buttons">
-              <SwipeButton onClick={left}>Reject</SwipeButton>
-              <SwipeButton onClick={right}>Accept</SwipeButton>
-            </div>
-          )}
-          onAfterSwipe={this.remove}
-        >
-          <SwipeCard>{places[0].name}</SwipeCard>
+        <Swipeable buttons={this.renderButtons} onAfterSwipe={this.nextCard}>
+          <SwipeCard place={places[0]} />
         </Swipeable>
-        {places.length > 1 && <SwipeCard zIndex={-1}>{places[1].name}</SwipeCard>}
+        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
     );
   }
 
   renderSwipeComplete() {
-    return <SwipeCard zIndex={-2}>No more cards</SwipeCard>;
+    return <SwipeCard zIndex={-2} none>No more cards</SwipeCard>;
+  }
+
+  render() {
+    const { places } = this.state;
+
+    return (
+      <div className="swipe">
+        <div className="swipe-header">Swipe Title</div>
+        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
+      </div>
+    );
   }
 }
 
