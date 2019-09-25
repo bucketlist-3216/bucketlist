@@ -38,7 +38,6 @@ class TripsPage extends Component {
 
   render() {
     if (this.state.trips.length > 0) {
-      console.log(this.state.trips);
       return (
         <div className="trips-page">
           <div className="header-container">
