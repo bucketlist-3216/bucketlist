@@ -45,7 +45,7 @@ class ListPage extends Component {
             <Header />
           </div>
           <div className="buttons-container">
-            <button className="swipe-button" onClick={() => this.routeChange('/swipe')}>
+            <button className="swipe-button" onClick={() => this.routeChange('/swipeview')}>
               <span>continue swiping</span>
             </button>
             <button className="trips-button" onClick={() => this.routeChange(`../../user/${userId}/trips`)}>
