@@ -2,23 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
-<<<<<<< HEAD
-const SingleSignOnButton = props => {
-  const { providerName, logo, renderProps } = props;
-
-  return (
-    <div>
-      <button
-        className="sso-button"
-        onClick={renderProps.onClick}
-        disabled={renderProps.disabled}
-      >
-        {logo}
-        <span>{providerName}</span>
-      </button>
-    </div>
-  );
-=======
 import { Button } from 'react-bootstrap';
 
 import GoogleLogin from 'react-google-login';
@@ -37,7 +20,7 @@ const responseFacebook = (response) => {
 }
 
 const SingleSignOnButton = props => {
-  const { domain, providerName, logo } = props;
+  const { domain, providerName, logo, renderProps } = props;
   const identity = providerName.toLowerCase();
 
   if (identity === 'google') {
@@ -47,21 +30,12 @@ const SingleSignOnButton = props => {
       label: 'Google'
     });
     return (
-      <GoogleLogin
-        clientId={loginSecrets.google}
-        render={renderProps => (
-          <div>
-            <button className="sso-button" onClick={renderProps.onClick} disabled={renderProps.disabled}>
-              {logo}
-              <span>{providerName}</span>
-            </button>
-          </div>
-        )}
-        buttonText={providerName}
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-      />
+      <div>
+        <button className="sso-button" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+          {logo}
+          <span>{providerName}</span>
+        </button>
+      </div>
     );
   } else if (identity === 'facebook') {
     ReactGA.event({
@@ -70,21 +44,14 @@ const SingleSignOnButton = props => {
       label: 'Facebook'
     });
     return (
-      <FacebookLogin
-        appId={loginSecrets.facebook}
-        callback={responseFacebook}
-        render={renderProps => (
-          <div>
-            <button className="sso-button" onClick={renderProps.onClick}>
-              {logo}
-              <span>{providerName}</span>
-            </button>
-          </div>
-        )}
-      />
+      <div>
+        <button className="sso-button" onClick={renderProps.onClick}>
+          {logo}
+          <span>{providerName}</span>
+        </button>
+      </div>
     );
   }
->>>>>>> e97ba2d778e4ad8773e3a7ca144926557985ef1d
 };
 
 SingleSignOnButton.propTypes = {

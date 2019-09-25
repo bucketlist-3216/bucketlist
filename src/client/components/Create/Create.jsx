@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
+import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import autoBindMethods from 'class-autobind-decorator';
@@ -14,15 +14,6 @@ const CITIES = [
   { value: 'newyork', option: 'New York' },
   { value: 'thailand', option: 'Thailand' }
 ];
-=======
-import ReactGA from 'react-ga';
-
-import { Button, Form } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-
-import Link from './link.png';
-import "react-datepicker/dist/react-datepicker.css";
->>>>>>> e97ba2d778e4ad8773e3a7ca144926557985ef1d
 
 @autoBindMethods
 class Create extends Component {
@@ -34,15 +25,6 @@ class Create extends Component {
       from: new Date(),
       numOfInvites: 0
     };
-<<<<<<< HEAD
-=======
-
-    this.handleChangeCity = this.handleChangeCity.bind(this);
-    this.handleChangeTo = this.handleChangeTo.bind(this);
-    this.handleChangeFrom = this.handleChangeFrom.bind(this);
-    this.handleInvites = this.handleInvites.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
->>>>>>> e97ba2d778e4ad8773e3a7ca144926557985ef1d
   }
 
   handleChangeCity(event) {
@@ -122,23 +104,9 @@ class Create extends Component {
                 onChange={this.handleChangeTo}
               />
             </div>
-<<<<<<< HEAD
 
             <div className="submit-container">
               <input type="submit" value="Let's go!" className="form-submit" />
-=======
-            <div style={{textAlign: 'center'}} className="create-body">
-              Add Friends
-            </div>
-            <div style={{textAlign: 'center'}}>
-              <Button variant="outline-primary" className="form-button" onClick={this.handleInvites}>+</Button>
-            </div>
-            <div style={{textAlign: 'center'}} className="create-body">
-               <img src={Link} alt="Link icon" className="link-icon" /> or generate sharing link
-            </div>
-            <div style={{textAlign: 'center'}}>
-              <input type="submit" value="Let's go!" className="form-submit"/>
->>>>>>> e97ba2d778e4ad8773e3a7ca144926557985ef1d
             </div>
           </label>
         </form>

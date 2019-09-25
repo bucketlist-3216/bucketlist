@@ -23,7 +23,7 @@ class LandingPage extends Component {
           <div className="login-title">
             <h1>Travel planning has never been easier</h1>
           </div>
-          <Login />
+          <Login {...this.props} />
         </div>
         <div className="title">
           <h1>Swipe. List. Go.</h1>

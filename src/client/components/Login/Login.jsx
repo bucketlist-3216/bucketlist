@@ -41,12 +41,12 @@ class Login extends Component {
       platform = 'facebook';
     }
 
-    let that = this;
+    let instance = this;
     axios
       .post(APIS.login, { userData })
       .then(function(response) {
-        that.setState({ userId: response.data.insertedId[0] });
-        that.routeChange();
+        instance.setState({ userId: response.data.insertedId[0] });
+        instance.routeChange();
       })
       .catch(function(error) {
         alert(error.message);
@@ -54,7 +54,7 @@ class Login extends Component {
   }
 
   routeChange() {
-    window.location.href = PATHS.trips(this.state.userId);
+    this.props.history.push(PATHS.trips(this.state.userId));
   }
 
   render() {
