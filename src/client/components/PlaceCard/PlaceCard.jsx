@@ -2,12 +2,16 @@ import React, { Component } from "react";
 
 const PlaceCard = props => {
   let { place } = props;
-  let { place_id, name, address, voteCount } = place;
+  let { place_id, name, address, image_link, voteCount } = place;
+
+  if (!image_link || image_link === '<Null>') {
+      image_link = '../../../../assets/places/default.jpg'
+  }
 
   return (
     <div className="place-card">
       <div className="place-img-container">
-        <img src={`../../../../assets/places/default.jpg`} className="place-img"/>
+        <img src={image_link} className="place-img"/>
       </div>
       <div className="place-details">
         <div className="place-name">

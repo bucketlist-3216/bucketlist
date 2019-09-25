@@ -66,7 +66,7 @@ class VotesQueryModel extends EntityQueryModel {
     }
 
     getVotingResults(tripId) {
-        let selectedColumns = [`${this.tableName}.place_id`, 'name', 'address', 'vote'];
+        let selectedColumns = [`${this.tableName}.place_id`, 'name', 'address', 'image_link', 'vote'];
 
         let queryingVotes = knex
             .select(knex.raw(`${selectedColumns.join()}, count(*) as count`))
