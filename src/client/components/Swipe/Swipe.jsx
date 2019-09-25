@@ -1,95 +1,118 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import autoBindMethods from 'class-autobind-decorator';
+import axios from 'axios';
 
-import axios from 'axios'
-
-const places_data = [
-  {city: 'Singapore', image: 'image1.png', name: 'Raffles Place'},
-  {city: 'Singapore', image: 'image2.png', name: 'City Hall'},
+const PLACES = [
+  { city: 'Singapore', image: 'image1.png', name: 'Raffles Place' },
+  { city: 'Singapore', image: 'image2.png', name: 'City Hall' }
 ];
 
+@autoBindMethods
 class Swipe extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      places: places_data,
+      places: PLACES,
       likedPlaces: [],
       index: 0,
-      numberOfPlaces: places_data.length,
+      numberOfPlaces: PLACES.length
     };
-
-    this.handleDislike = this.handleDislike.bind(this);
-    this.handleLike = this.handleLike.bind(this);
-  };
+  }
 
   handleDislike(event) {
-    let that = this;
+    const { index } = this.state;
     axios
       .post('http://localhost:3001/api/v1/trips/vote', {
-      	"vote": {
-      		"trip_place_id": "6",
-      		"trip_friend_id": "5",
-      		"vote": "DISLIKE"
-      	}
+        vote: {
+          trip_place_id: '6',
+          trip_friend_id: '5',
+          vote: 'DISLIKE'
+        }
       })
-      .then(function (response) {
-        that.setState({index: that.state.index + 1});
+      .then(response => {
+        index += 1;
+        this.setState({ index });
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   }
 
   handleLike(event) {
-    let that = this;
+    const { index } = this.state;
     axios
       .post('http://localhost:3001/api/v1/trips/vote', {
-        "vote": {
-          "trip_place_id": "6",
-          "trip_friend_id": "5",
-          "vote": "LIKE"
+        vote: {
+          trip_place_id: '6',
+          trip_friend_id: '5',
+          vote: 'LIKE'
         }
       })
-      .then(function (response) {
-        that.setState({index: that.state.index + 1});
+      .then(response => {
+        index += 1;
+        this.setState({ index });
       })
-      .catch(function (error) {
+      .catch(error => {
         alert(error.message);
       });
   }
 
   render() {
-    if (this.state.index < this.state.numberOfPlaces) {
-      var current = this.state.places[this.state.index];
+    const { index, numberOfPlaces, places } = this.state;
+    if (index < numberOfPlaces) {
+      const current = places[index];
 
       return (
         <div>
-          <div style={{display: 'flex',  justifyContent:'center'}} className="swipe-title">
+          <div
+            style={{ display: 'flex', justifyContent: 'center' }}
+            className="swipe-title"
+          >
             {current.city}
           </div>
-          <div style={{display: 'flex',  justifyContent:'center'}} className="swipe-body">
-            <img src={ require(`./images/${current.image}`) } className="img-card"/>
+          <div
+            style={{ display: 'flex', justifyContent: 'center' }}
+            className="swipe-body"
+          >
+            <img
+              src={require(`./images/${current.image}`)}
+              className="img-card"
+            />
           </div>
-          <div style={{display: 'flex',  justifyContent:'center'}} className="swipe-body">
+          <div
+            style={{ display: 'flex', justifyContent: 'center' }}
+            className="swipe-body"
+          >
             {current.name}
           </div>
-          <div style={{display: 'flex',  justifyContent:'center'}}>
-            <input type="submit" value="Dislike" className="swipe-buttons" onClick={this.handleDislike}/>
-            <input type="submit" value="Like" className="swipe-buttons" onClick={this.handleLike}/>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <input
+              type="submit"
+              value="Dislike"
+              className="swipe-buttons"
+              onClick={this.handleDislike}
+            />
+            <input
+              type="submit"
+              value="Like"
+              className="swipe-buttons"
+              onClick={this.handleLike}
+            />
           </div>
         </div>
       );
-    }
-    else {
+    } else {
       return (
-        <div style={{display: 'flex',  justifyContent:'center'}} className="swipe-body">
-          {
-            'Done swiping!'
-          }
+        <div
+          style={{ display: 'flex', justifyContent: 'center' }}
+          className="swipe-body"
+        >
+          {'Done swiping!'}
         </div>
       );
     }
   }
-};
+}
 
 export default Swipe;
