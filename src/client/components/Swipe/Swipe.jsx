@@ -7,10 +7,10 @@ import EmptyCard from './EmptyCard';
 
 const PLACES = [
   {
-    city: 'Santorini',
+    city: 'Greece',
     image:
       'https://lonelyplanetwp.imgix.net/2016/02/Santorini-sunset_CS.jpg?fit=min&q=40&sharp=10&vib=20&w=1470',
-    name: 'Greece',
+    name: 'Santorini',
     price: '$$'
   },
   {

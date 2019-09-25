@@ -7,7 +7,7 @@ const SwipeCard = props => {
     <div className="swipe-card" style={{ zIndex }}>
       <img className="card-image" src={place.image} />
       <div className="card-info">
-        <div className="description">{place.name}, {place.price}</div>
+        <div className="description">{place.name}</div>
         <InfoIcon className="info-icon" onClick={() => alert('TODO: Modal appears')}/>
       </div>
       
