@@ -20,6 +20,7 @@ class Create extends Component {
     this.handleChangeCity = this.handleChangeCity.bind(this);
     this.handleChangeTo = this.handleChangeTo.bind(this);
     this.handleChangeFrom = this.handleChangeFrom.bind(this);
+    this.handleInvites = this.handleInvites.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
