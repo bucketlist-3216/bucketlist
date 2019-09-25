@@ -1,41 +1,108 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import _ from 'lodash';
+import axios from 'axios';
+import autoBindMethods from 'class-autobind-decorator';
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
+import APIS from '../../constants/apis';
+import loginSecrets from '../../../../config/login_secrets.json';
 import PROVIDERS from '../../constants/providers';
 import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
 
+@autoBindMethods
 class Login extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      userId: 0
+    };
+  }
+
+  handleResponse(response) {
+    let userData = {};
+    let platform = '';
+
+    if (response.hasOwnProperty('googleId')) {
+      userData = {
+        email: response.profileObj.email,
+        username: response.profileObj.name,
+        accessToken: response.accessToken
+      };
+      platform = 'google';
+    } else {
+      userData = {
+        email: response.email,
+        username: response.name,
+        accessToken: response.accessToken
+      };
+      platform = 'facebook';
+    }
+
+    let that = this;
+    axios
+      .post(APIS.login, { userData })
+      .then(function(response) {
+        that.setState({ userId: response.data.insertedId[0] });
+        that.routeChange();
+      })
+      .catch(function(error) {
+        alert(error.message);
+      });
+  }
+
+  routeChange() {
+    window.location.href = `/user/${this.state.userId}/trips`;
   }
 
   render() {
     return (
       <div className="login">
-        <div className="login-title">
-          <h1>Travel planning has never been easier</h1>
-          <p>Continue with</p>
-        </div>
-
         <div className="sso-container">
-          {PROVIDERS.map((provider, key) => (
-            <SingleSignOnButton
-              key={key}
-              domain={provider.id}
-              providerName={provider.providerName}
-              logo={provider.logo}
-            />
-          ))}
+          <GoogleLogin
+            clientId={loginSecrets.google}
+            render={renderProps => (
+              <SingleSignOnButton
+                providerName={PROVIDERS['google'].providerName}
+                logo={PROVIDERS['google'].logo}
+                renderProps={renderProps}
+              />
+            )}
+            buttonText={PROVIDERS['google'].providerName}
+            onSuccess={this.handleResponse}
+            onFailure={error => console.log(error)}
+            cookiePolicy={'single_host_origin'}
+          />
+          <FacebookLogin
+            appId={loginSecrets.facebook}
+            fields="name,email"
+            callback={this.handleResponse}
+            render={renderProps => (
+              <SingleSignOnButton
+                providerName={PROVIDERS['facebook'].providerName}
+                logo={PROVIDERS['facebook'].logo}
+                renderProps={renderProps}
+              />
+            )}
+          />
         </div>
         <div className="login-fields">
           <Form>
             <Form.Group controlId="formBasicEmail">
-              <Form.Control className="email-field" type="email" placeholder="Email" />
+              <Form.Control
+                className="email-field"
+                type="email"
+                placeholder="Email"
+              />
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
-              <Form.Control className="password-field" type="password" placeholder="Password" />
+              <Form.Control
+                className="password-field"
+                type="password"
+                placeholder="Password"
+              />
             </Form.Group>
             <Button className="submit-button" type="submit">
               Submit
