@@ -1,20 +1,18 @@
 import React from 'react';
+import InfoIcon from '../../../../../assets/common/icon-info.svg'
 
-const Card = props => {
-  const { zIndex, place, none } = props;
+const SwipeCard = props => {
+  const { zIndex, place } = props;
   return (
-    <div className="swipe-cards" style={{ zIndex }}>
-      {none ? renderEmptyCard() : renderImageCard(place)}
+    <div className="swipe-card" style={{ zIndex }}>
+      <img className="card-image" src={place.image} />
+      <div className="card-info">
+        <div className="description">{place.name}, {place.price}</div>
+        <InfoIcon className="info-icon" onClick={() => alert('sup')}/>
+      </div>
+      
     </div>
   );
 };
 
-const renderImageCard = place => {
-  return <img className="card-image" src={place.image} />;
-};
-
-const renderEmptyCard = () => {
-  return <div className="empty-card">No More Card</div>
-}
-
-export default Card;
+export default SwipeCard;

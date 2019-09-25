@@ -3,18 +3,35 @@ import Swipeable from 'react-swipy';
 
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
+import EmptyCard from './EmptyCard';
 
 const PLACES = [
   {
     city: 'Singapore',
     image:
       'https://www.visitsingapore.com/mice/en/plan-your-event/venues/raffles-city-centre/overview/_jcr_content/cardcontent/cardcontentpar/image_video/carousel/item_3.resize.carousel-img.0.0.jpg',
-    name: 'Raffles Place'
+    name: 'Raffles Place',
+    price: '$$'
   },
   {
     city: 'Singapore',
     image: 'https://mapio.net/images-p/4200239.jpg',
-    name: 'City Hall'
+    name: 'City Hall',
+    price: '$$'
+  },
+  {
+    city: 'Singapore',
+    image:
+      'https://s.yimg.com/ny/api/res/1.2/iVm.c1YQKUE.EwTdInbenw--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAw/https://img.huffingtonpost.com/asset/5cdbdd1c2100003500d0c8e4.jpeg',
+    name: 'Hawker Centre',
+    price: '$'
+  },
+  {
+    city: 'Singapore',
+    image:
+      'https://www.rwsentosa.com/-/media/project/non-gaming/rwsentosa/attractions/universal-studios-singapore/others/uss-entrance-globe_1366x666.jpg?h=268&la=en&w=550&hash=25DA89E7DBC4BCFF95D0A2CB7E24DC1B0F3F0B11',
+    name: 'Resort World',
+    price: '$$$'
   }
 ];
 
@@ -33,15 +50,6 @@ class Swipe extends Component {
     this.setState({ places: newPlaces });
   };
 
-  renderButtons({ left, right }) {
-    return (
-      <div className="swipe-buttons">
-        <SwipeButton onClick={left}>Reject</SwipeButton>
-        <SwipeButton onClick={right}>Accept</SwipeButton>
-      </div>
-    );
-  }
-
   renderSwiping() {
     const { places } = this.state;
     return (
@@ -55,7 +63,20 @@ class Swipe extends Component {
   }
 
   renderSwipeComplete() {
-    return <SwipeCard zIndex={-2} none>No more cards</SwipeCard>;
+    return (
+      <div className="swipe-container">
+        <EmptyCard zIndex={-2}>No more cards</EmptyCard>
+      </div>
+    );
+  }
+
+  renderButtons({ left, right }) {
+    return (
+      <div className="swipe-buttons">
+        <SwipeButton onClick={left}>Reject</SwipeButton>
+        <SwipeButton onClick={right}>Accept</SwipeButton>
+      </div>
+    );
   }
 
   render() {
