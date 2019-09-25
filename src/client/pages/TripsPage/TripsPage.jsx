@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ReactGA from 'react-ga';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
@@ -41,6 +43,9 @@ class TripsPage extends Component {
   }
 
   render() {
+    ReactGA.initialize('UA-148749594-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
+    
     if (this.state.isDoneFetching) {
       return (
         <div className="trips-page">
