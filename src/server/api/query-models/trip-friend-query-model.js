@@ -27,17 +27,25 @@ class TripFriendQueryModel extends EntityQueryModel {
     }
 
     // Add a member to this trip by their email
-    addTripFriend (toInsertEmail, tripId) {
+    addTripFriend ({user_id, email, trip_id}) {
         // Get the user's ID
         let tableName = this.tableName;
-        return this.userQueryModel.getUserId(toInsertEmail)
-            .then(function (userId) {
-                return knex(tableName)
-                    .insert({
-                        "user_id": userId[0]['user_id'],
-                        "trip_id": tripId
-                    });
-            });
+        if (user_id) {
+          return knex(tableName)
+              .insert({
+                  user_id,
+                  trip_id
+              });
+        } else {
+          return this.userQueryModel.getUserId(email)
+              .then(function (results) {
+                  return knex(tableName)
+                      .insert({
+                          user_id: results[0].user_id,
+                          trip_id
+                      });
+              });
+        }
     }
 
     deleteTripFriend (filter) {
@@ -68,7 +76,6 @@ class TripFriendQueryModel extends EntityQueryModel {
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.trip_id`, '=', `${this.tableName}.trip_id`)
             .innerJoin(this.userQueryModel.tableName, `${this.userQueryModel.tableName}.user_id`, '=', `${this.tableName}.user_id`)
             .whereExists(filteringUserTrips.whereRaw(`${this.tripQueryModel.tableName}.trip_id = ${this.tableName}.trip_id`))
-            .whereRaw(`${this.tableName}.user_id <> ${userId}`)
             .groupBy(...selectedColumns);
 
         let instance = this;
@@ -85,7 +92,10 @@ class TripFriendQueryModel extends EntityQueryModel {
                         tripResults[tripId] = _.omit(row, instance.userQueryModel.selectableProps);
                         tripResults[tripId].members = [];
                     }
-                    tripResults[tripId].members.push(_.pick(row, instance.userQueryModel.selectableProps));
+
+                    if (row.user_id !== userId) {
+                      tripResults[tripId].members.push(_.pick(row, instance.userQueryModel.selectableProps));
+                    }
                 });
 
                 let array = Object.values(tripResults);

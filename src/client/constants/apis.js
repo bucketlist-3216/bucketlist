@@ -1,4 +1,4 @@
-const root = 'https://bucketlist-pwa.herokuapp.com';
+const root = 'http://localhost:3001'// 'https://bucketlist-pwa.herokuapp.com';
 
 const APIS = {
   login: `${root}/api/v1/login`,
@@ -7,7 +7,8 @@ const APIS = {
   },
   user: {
     trips: (userId) => `${root}/api/v1/user/${userId}/trips`
-  }
+  },
+  trip: `${root}/api/v1/trip`
 };
 
 export default APIS;
