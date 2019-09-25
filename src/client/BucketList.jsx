@@ -8,16 +8,6 @@ import LandingPage from './pages/LandingPage';
 import SwipeView from './pages/SwipeView';
 import TripsPage from './pages/TripsPage';
 
-// const BucketList = () => {
-//   return (
-//     <Switch>
-//       <Route exact path='/' component={LandingPage} />
-//     </Switch>
-//   )
-// };
-
-// export default BucketList;
-
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
