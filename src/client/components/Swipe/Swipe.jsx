@@ -1,117 +1,61 @@
 import React, { Component } from 'react';
-import autoBindMethods from 'class-autobind-decorator';
-import axios from 'axios';
+import Swipeable from 'react-swipy';
+
+import SwipeCard from './SwipeCard/';
+import SwipeButton from './SwipeButton';
 
 const PLACES = [
   { city: 'Singapore', image: 'image1.png', name: 'Raffles Place' },
   { city: 'Singapore', image: 'image2.png', name: 'City Hall' }
 ];
 
-@autoBindMethods
 class Swipe extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      places: PLACES,
-      likedPlaces: [],
-      index: 0,
-      numberOfPlaces: PLACES.length
+      places: PLACES
     };
   }
 
-  handleDislike(event) {
-    const { index } = this.state;
-    axios
-      .post('http://localhost:3001/api/v1/trips/vote', {
-        vote: {
-          trip_place_id: '6',
-          trip_friend_id: '5',
-          vote: 'DISLIKE'
-        }
-      })
-      .then(response => {
-        index += 1;
-        this.setState({ index });
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  }
-
-  handleLike(event) {
-    const { index } = this.state;
-    axios
-      .post('http://localhost:3001/api/v1/trips/vote', {
-        vote: {
-          trip_place_id: '6',
-          trip_friend_id: '5',
-          vote: 'LIKE'
-        }
-      })
-      .then(response => {
-        index += 1;
-        this.setState({ index });
-      })
-      .catch(error => {
-        alert(error.message);
-      });
-  }
+  remove = () => {
+    this.setState(({ places }) => ({
+      places: places.slice(1, places.length)
+    }));
+  };
 
   render() {
-    const { index, numberOfPlaces, places } = this.state;
-    if (index < numberOfPlaces) {
-      const current = places[index];
+    const { places } = this.state;
 
-      return (
-        <div>
-          <div
-            style={{ display: 'flex', justifyContent: 'center' }}
-            className="swipe-title"
-          >
-            {current.city}
-          </div>
-          <div
-            style={{ display: 'flex', justifyContent: 'center' }}
-            className="swipe-body"
-          >
-            <img
-              src={require(`./images/${current.image}`)}
-              className="img-card"
-            />
-          </div>
-          <div
-            style={{ display: 'flex', justifyContent: 'center' }}
-            className="swipe-body"
-          >
-            {current.name}
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <input
-              type="submit"
-              value="Dislike"
-              className="swipe-buttons"
-              onClick={this.handleDislike}
-            />
-            <input
-              type="submit"
-              value="Like"
-              className="swipe-buttons"
-              onClick={this.handleLike}
-            />
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          style={{ display: 'flex', justifyContent: 'center' }}
-          className="swipe-body"
+    return (
+      <div className="swipe">
+        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
+      </div>
+    );
+  }
+
+  renderSwiping() {
+    const { places } = this.state;
+    return (
+      <div className="swipe-container">
+        <Swipeable
+          buttons={({ left, right }) => (
+            <div className="swipe-buttons">
+              <SwipeButton onClick={left}>Reject</SwipeButton>
+              <SwipeButton onClick={right}>Accept</SwipeButton>
+            </div>
+          )}
+          onAfterSwipe={this.remove}
         >
-          {'Done swiping!'}
-        </div>
-      );
-    }
+          <SwipeCard>{places[0].name}</SwipeCard>
+        </Swipeable>
+        {places.length > 1 && <SwipeCard zIndex={-1}>{places[1].name}</SwipeCard>}
+      </div>
+    );
+  }
+
+  renderSwipeComplete() {
+    return <SwipeCard zIndex={-2}>No more cards</SwipeCard>;
   }
 }
 

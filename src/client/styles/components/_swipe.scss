@@ -1,33 +1,36 @@
-.swipe-buttons {
-  font-family: 'JosefinSans-Regular';
-  font-weight: 700;
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
-  margin: 10px;
+.swipe,
+.swipe-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
 
+  .swipe-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .swipe-cards {
+    background: whitesmoke;
+    border-radius: 3px;
+    width: 250px;
+    height: 250px;
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+  }
+
+  .swipe-button {
+    padding: 16px 24px;
+    background: whitesmoke;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+  }
 }
 
-.swipe-title {
-  font-family: 'JosefinSans-Regular';
-  font-weight: 700;  
-  font-size: 48px;
-  display: flex;
-  justify-content: center;
-}
 
-.swipe-body {
-  font-family: 'JosefinSans-Regular';
-  font-weight: 700;  
-  font-size: 24px;
-  margin: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-.img-card {
-    height: auto; 
-    width: auto; 
-    max-width: 400px; 
-    max-height: 600px;
-}
