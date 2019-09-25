@@ -14,7 +14,7 @@ class TripFriendQueryModel extends EntityQueryModel {
         this.validFilters = ['trip_friend_id'];
         this.nonInsertableProps = ['trip_friend_id'];
         this.tableName = 'Trip_Friend';
-        this.selectableProps = ['trip_id', 'user_id']
+        this.selectableProps = ['trip_friend_id', 'trip_id', 'user_id']
 
         this.userMutable = false;
         this.userQueryModel = new UserQueryModel();
