@@ -37,6 +37,14 @@ class ListPage extends Component {
           <div className="header-container">
             <Header />
           </div>
+          <div className="buttons-container">
+            <button className="swipe-button" onClick={() => this.redirect('/swipe')}>
+              <span>continue swiping</span>
+            </button>
+            <button className="trips-button" onClick={() => this.redirect(`../../user/${userId}/trips`)}>
+              <span>done</span>
+            </button>
+          </div>
           <div className="places-container">
             {this.state.places.map((place, key) => (
               <PlaceCard
