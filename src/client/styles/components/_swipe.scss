@@ -1,14 +1,19 @@
 .swipe {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
   .swipe-header {
-    font-family: 'JosefinSans-Regular';
     width: 412px;
+    font-family: 'JosefinSans-Regular';
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 
     .icon-back,
     .icon-list {
-      width: 25px;
+      width: 28px;
       margin: 0px 5px;
     }
 
@@ -23,6 +28,7 @@
     width: 412px;
     font-size: 40px;
     text-align: center;
+    margin: 10px 0px;
   }
 
   .swipe-container {
@@ -33,7 +39,7 @@
     .swipe-buttons {
       display: flex;
       justify-content: space-between;
-      margin-top: 12px;
+      margin-top: 30px;
     }
 
     .swipe-card {
@@ -84,12 +90,20 @@
       }
     }
 
-    .swipe-button {
-      padding: 16px 24px;
-      background: whitesmoke;
+    .swipe-buttons {
       cursor: pointer;
-      border: none;
-      border-radius: 3px;
+      display: flex;
+      justify-content: space-evenly;
+      margin-bottom: 50px;
+
+      .action-button {
+        border-radius: 50%;
+        border-width: 3px;
+        height: 80px;
+        width: 80px;
+        // border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+      }
     }
   }
 }

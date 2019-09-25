@@ -9,31 +9,39 @@ import EmptyCard from './EmptyCard';
 
 const PLACES = [
   {
-    city: 'Singapore',
+    city: 'Santorini',
     image:
-      'https://www.visitsingapore.com/mice/en/plan-your-event/venues/raffles-city-centre/overview/_jcr_content/cardcontent/cardcontentpar/image_video/carousel/item_3.resize.carousel-img.0.0.jpg',
-    name: 'Raffles Place',
+      'https://lonelyplanetwp.imgix.net/2016/02/Santorini-sunset_CS.jpg?fit=min&q=40&sharp=10&vib=20&w=1470',
+    name: 'Greece',
     price: '$$'
   },
   {
-    city: 'Singapore',
-    image: 'https://mapio.net/images-p/4200239.jpg',
-    name: 'City Hall',
-    price: '$$'
-  },
-  {
-    city: 'Singapore',
+    city: 'New York',
     image:
-      'https://s.yimg.com/ny/api/res/1.2/iVm.c1YQKUE.EwTdInbenw--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAw/https://img.huffingtonpost.com/asset/5cdbdd1c2100003500d0c8e4.jpeg',
-    name: 'Hawker Centre',
-    price: '$'
-  },
-  {
-    city: 'Singapore',
-    image:
-      'https://www.rwsentosa.com/-/media/project/non-gaming/rwsentosa/attractions/universal-studios-singapore/others/uss-entrance-globe_1366x666.jpg?h=268&la=en&w=550&hash=25DA89E7DBC4BCFF95D0A2CB7E24DC1B0F3F0B11',
-    name: 'Resort World',
+      'https://www.nycgo.com/images/venues/152/tripadvisortimessquare_taggeryanceyiv_5912__x_large.jpg',
+    name: 'Times Square',
     price: '$$$'
+  },
+  {
+    city: 'Paris',
+    image:
+      'https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateParis_Heroshutterstock_112137761.jpg',
+    name: 'Eiffel Tower',
+    price: '$$'
+  },
+  {
+    city: 'Dubai',
+    image:
+      'https://images2.minutemediacdn.com/image/upload/c_crop,h_1192,w_2123,x_0,y_70/f_auto,q_auto,w_1100/v1559225783/shape/mentalfloss/584459-istock-183342824.jpg',
+    name: 'Burj Khalifa',
+    price: '$$$'
+  },
+  {
+    city: 'Rome',
+    image:
+      'https://www.roadaffair.com/wp-content/uploads/2017/09/colosseum-rome-italy-shutterstock_433413835-1024x683.jpg',
+    name: 'Colosseum',
+    price: '$'
   }
 ];
 
@@ -86,8 +94,8 @@ class Swipe extends Component {
   renderButtons({ left, right }) {
     return (
       <div className="swipe-buttons">
-        <SwipeButton onClick={left}>Reject</SwipeButton>
-        <SwipeButton onClick={right}>Accept</SwipeButton>
+        <SwipeButton onClick={left} type="reject" />
+        <SwipeButton onClick={right} type="approve" />
       </div>
     );
   }
@@ -150,12 +158,19 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        <div className="swipe-header">
-          <img className="icon-back" src="./assets/common/icon-leftarrow.png" />
-          <div className="city">{places[0].city || ''}</div>
-          <img className="icon-list" src="./assets/common/icon-list.png" />
-        </div>
-        <div className="place-name">{places[0].name || ''}</div>
+        {places.length > 0 && (
+          <div>
+            <div className="swipe-header">
+              <img
+                className="icon-back"
+                src="./assets/common/icon-leftarrow.png"
+              />
+              <div className="city">{places[0].city || ''}</div>
+              <img className="icon-list" src="./assets/common/icon-list.png" />
+            </div>
+            <div className="place-name">{places[0].name || ''}</div>
+          </div>
+        )}
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
