@@ -3,16 +3,23 @@ const { knex } = require('../../database');
 const _ = require('underscore');
 
 class PlaceQueryModel extends EntityQueryModel {
-    
+
     constructor(dbClient) {
         super(dbClient);
 
         this.validFilters = ['name', 'type'];
-        this.selectableProps = ['name', 'type', 'link_1', 'link_2', 'image_link', 'description'];
+        this.selectableProps = [];
         this.nonInsertableProps = ['place_id'];
         this.tableName = 'Place';
-        
+
         this.userMutable = false;
+    }
+
+    getPlaceData(placeId) {
+      return knex
+          .select(this.selectableProps)
+          .from(this.tableName)
+          .where({ place_id: placeId });
     }
 
     getMatchingPlaces(filters) {
