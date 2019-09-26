@@ -7,7 +7,8 @@ const APIS = {
   },
   user: {
     trips: (userId) => `${root}/api/v1/user/${userId}/trips`
-  }
+  },
+  trip: `${root}/api/v1/trip`
 };
 
 export default APIS;
