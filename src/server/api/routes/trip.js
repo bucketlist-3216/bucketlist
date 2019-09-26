@@ -4,7 +4,7 @@ const validateRequest = require('../auth');
 const settings = require('../../config/settings.js')
 const _ = require('underscore');
 const {
-    VotesQueryModel,
+    VoteQueryModel,
     TripPlaceQueryModel,
     TripQueryModel,
     TripFriendQueryModel,
@@ -21,7 +21,7 @@ if (settings.validate) {
 
 const tripQueryModel = new TripQueryModel();
 const tripFriendQueryModel = new TripFriendQueryModel();
-const votesQueryModel = new VotesQueryModel();
+const voteQueryModel = new VoteQueryModel();
 const tripPlaceQueryModel = new TripPlaceQueryModel();
 const userQueryModel = new UserQueryModel();
 
@@ -177,7 +177,7 @@ router.delete('/members/:tripFriend', function (req, res) {
 
 router.post('/vote', function (req, res) {
     // Cast the vote
-    const vote = votesQueryModel.castVote(req.body.vote);
+    const vote = voteQueryModel.castVote(req.body.vote);
 
     // Insert into database and return response
     vote.then(function (insertionResponse) {
@@ -189,7 +189,7 @@ router.delete('/vote', function (req, res) {
     const toDelete = req.body.vote;
 
     // Delete from mySQL using knex
-    const deletion = votesQueryModel.deleteVote(toDelete);
+    const deletion = voteQueryModel.deleteVote(toDelete);
 
     // Construct response after deletion
     deletion
@@ -200,7 +200,7 @@ router.delete('/vote', function (req, res) {
 
 // Get the votes for the chosen location
 router.get('/vote/location/:locationId', function (req, res) {
-    const votes = votesQueryModel.getVotes({trip_place_id: req.params.locationId});
+    const votes = voteQueryModel.getVotes({trip_place_id: req.params.locationId});
 
     votes
         .then(function(queryResponse) {
@@ -212,9 +212,23 @@ router.get('/vote/location/:locationId', function (req, res) {
         });
 });
 
+// Get locations to vote for the trip
+router.get('/:tripId/vote/user/:userId', function (req, res) {
+    const places = voteQueryModel.getPlacesToVote(req.params.tripId, req.params.userId);
+
+    places
+        .then(function(queryResponse) {
+            res.json(queryResponse);
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to get places to vote due to ${err.message}`);
+            console.log(err);
+        });
+});
+
 // Get locations sorted by votes
 router.get('/:tripId/vote/results', function (req, res) {
-    const votingResults = votesQueryModel.getVotingResults(req.params.tripId);
+    const votingResults = voteQueryModel.getVotingResults(req.params.tripId);
 
     votingResults
         .then(function(queryResponse) {
