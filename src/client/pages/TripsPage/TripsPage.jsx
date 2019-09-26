@@ -65,6 +65,7 @@ class TripsPage extends Component {
                 key={key}
                 trip={trip}
                 userId={this.props.match.params.userId}
+                history={this.props.history}
               />
             ))}
             <div className="trip" onClick={this.routeChange}>

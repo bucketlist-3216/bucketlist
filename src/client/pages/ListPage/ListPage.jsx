@@ -45,6 +45,7 @@ class ListPage extends Component {
         return (<Preloader />);
     } else if (this.state.isDoneFetching) {
       let userId = this.props.match.params.userId;
+      let tripId = this.props.match.params.userId;
       let places = (
         <div className="places-container">
           <span>
@@ -66,14 +67,13 @@ class ListPage extends Component {
         );
       }
 
-
       return (
         <div className="list-page">
           <div className="header-container">
             <Header />
           </div>
           <div className="buttons-container">
-            <button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe())}>
+            <button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(userId, tripId))}>
               <span>continue swiping</span>
             </button>
             <button className="trips-button" onClick={() => this.routeChange(PATHS.trips(userId))}>
