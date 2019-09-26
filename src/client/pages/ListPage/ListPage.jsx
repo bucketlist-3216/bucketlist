@@ -36,7 +36,7 @@ class ListPage extends Component {
         instance.setState({isLoading:false});
       })
       .catch(function (error) {
-        alert(error.message);
+        console.log(error.message);
       });
   }
 

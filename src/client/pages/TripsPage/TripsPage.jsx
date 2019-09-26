@@ -42,7 +42,7 @@ class TripsPage extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        alert(error.message);
+        console.log(error.message);
       });
     this.setState({ isLoading: true });
   }
