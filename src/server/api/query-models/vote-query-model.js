@@ -27,8 +27,9 @@ class VoteQueryModel extends EntityQueryModel {
             .where(filters);
     }
 
-    getPlacesToVote(userId, tripId, limit = 100) {
-        const query = knex
+    getPlacesToVote({tripId, userId, limit = 100}) {
+      console.log(userId, tripId);
+        return knex
             .select([`${this.placeQueryModel.tableName}.place_id`, 'name', 'city', 'image_link'])
             .from(this.placeQueryModel.tableName)
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
@@ -40,8 +41,6 @@ class VoteQueryModel extends EntityQueryModel {
                 .whereRaw(`${this.tableName}.place_id = ${this.placeQueryModel.tableName}.place_id`)
             )
             .limit(limit);
-        console.log(query);
-        return query;
     }
 
     // Cast a vote for a location
