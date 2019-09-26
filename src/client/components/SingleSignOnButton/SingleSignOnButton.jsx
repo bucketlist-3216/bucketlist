@@ -7,17 +7,9 @@ import { Button } from 'react-bootstrap';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
-ReactGA.initialize('UA-148749594-1');
-
-const responseGoogle = (response) => {
-  console.log(response);
-}
-
 import loginSecrets from '../../../../config/login_secrets.json';
 
-const responseFacebook = (response) => {
-  console.log(response);
-}
+ReactGA.initialize('UA-148749594-1');
 
 const SingleSignOnButton = props => {
   const { domain, providerName, logo, renderProps } = props;

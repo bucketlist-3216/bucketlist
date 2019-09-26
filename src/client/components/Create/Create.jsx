@@ -3,27 +3,23 @@ import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import autoBindMethods from 'class-autobind-decorator';
-import _ from 'lodash';
-
-import Link from './link.png';
 import 'react-datepicker/dist/react-datepicker.css';
+import _ from 'lodash';
+import axios from 'axios';
 
-const CITIES = [
-  { value: 'choose', option: 'Select City' },
-  { value: 'singapore', option: 'Singapore' },
-  { value: 'newyork', option: 'New York' },
-  { value: 'thailand', option: 'Thailand' }
-];
+import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
+import CITIES from '../../constants/cities';
+import Link from './link.png';
 
 @autoBindMethods
 class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      city: 'Select City',
+      city: '',
       to: new Date(),
-      from: new Date(),
-      numOfInvites: 0
+      from: new Date()
     };
   }
 
@@ -32,11 +28,11 @@ class Create extends Component {
   }
 
   handleChangeFrom(event) {
-    this.setState({ from: event.target.value });
+    this.setState({ from: event });
   }
 
   handleChangeTo(event) {
-    this.setState({ to: event.target.value });
+    this.setState({ to: event });
   }
 
   handleInvites(event) {
@@ -45,16 +41,17 @@ class Create extends Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
     ReactGA.event({
       category: 'User',
       action: 'Created a New Trip',
       label: this.state.city
     });
-    ReactGA.event({
-      category: 'User',
-      action: 'Sent Invites',
-      value: this.state.numOfInvites
-    });
+    // ReactGA.event({
+    //   category: 'User',
+    //   action: 'Sent Invites',
+    //   value: this.state.numOfInvites
+    // });
 
     /* This is for future analytics like tracking peak periods for planned trips */
     /* ReactGA.event({
@@ -66,7 +63,27 @@ class Create extends Component {
       action: this.state.to
     });*/
 
-    alert('To Implement: Form submitted!');
+    if (this.state.city === '') {
+      alert('Please select city of destination');
+    } else {
+      let userId = this.props.match.params.userId;
+      let trip = {
+        destination: this.state.city,
+        start_date: this.state.from.toISOString().slice(0,10),
+        end_date: this.state.to.toISOString().slice(0,10),
+        authorId: userId
+      };
+      let instance = this;
+      axios
+        .post(APIS.trip, {trip})
+        .then(function(response) {
+          instance.props.history.push(PATHS.trips(userId));
+        })
+        .catch(function(error) {
+          alert(error.message);
+          console.log(error);
+        });
+    }
   }
 
   render() {
@@ -75,17 +92,18 @@ class Create extends Component {
       <div className="create-container">
         <form onSubmit={this.handleSubmit}>
           <label>
-            <div className="title">Create New Trip</div>
-
             <div className="select-city">
               <select
                 value={this.state.city}
                 onChange={this.handleChangeCity}
                 className="form-dropdown-button"
               >
-                {_.map(CITIES, city => (
-                  <option value={city.value} className="form-dropdown-button">
-                    {city.option}
+                <option value="choose" className="form-dropdown-button">
+                  Select City
+                </option>
+                {_.map(CITIES, (city, key) => (
+                  <option key={key} value={city} className="form-dropdown-button">
+                    {city}
                   </option>
                 ))}
               </select>

@@ -73,16 +73,14 @@ router.post('/', function (req, res) {
                 "user_id": toInsert.authorId
             }));
 
-            Promise.all(tripMembershipUpdates).then(function (result) {
-                console.log('promise.all is complete with result: ', result);
-                res.json({
-                    "tripId": returnedObject[0],
-                    "members": toInsert.authorId
-                });
-            });
+            return Promise.all([returnedObject].concat(tripMembershipUpdates));
+        })
+        .then(function (result) {
+            console.log('promise.all is complete with result: ', result);
+            res.json({insertedId: result[0]});
         })
         .catch(function (err) {
-            res.status(500).end('Could not create a trip due to', err);
+            res.status(500).end(`Could not create a trip due to ${err})`);
             console.log(err);
         });
 });
@@ -125,7 +123,7 @@ router.put('/:toUpdate', function (req, res) {
             });
         })
         .catch(function (err) {
-            res.status(500).end(`Unable to update trip because of the following error: ${err.message}`);
+            res.status(500).end(`Unable to update trip due to ${err.message}`);
             console.log(err);
         });
 });

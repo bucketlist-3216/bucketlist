@@ -9,6 +9,7 @@ import axios from 'axios'
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import Header from "../../components/Header";
+import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 
 class TripsPage extends Component {
@@ -24,7 +25,7 @@ class TripsPage extends Component {
   }
 
   routeChange() {
-    this.props.history.push(PATHS.createTrip());
+    this.props.history.push(PATHS.createTrip(this.props.match.params.userId));
   }
 
   componentDidMount() {
@@ -45,16 +46,14 @@ class TripsPage extends Component {
   render() {
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
-    
+
     if (this.state.isDoneFetching) {
       return (
         <div className="trips-page">
           <div className="header-container">
             <Header />
           </div>
-          <div className="trips-title">
-            <h1>Upcoming Trips</h1>
-          </div>
+          <Title text="Upcoming Trips" />
           <div className="trips-container">
             {this.state.trips.map((trip, key) => (
               <Trip
