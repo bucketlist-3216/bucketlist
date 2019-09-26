@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Swipeable from 'react-swipy';
+import { Button, Modal } from 'react-bootstrap';
+import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 
 import APIS from '../../constants/apis';
@@ -14,7 +16,7 @@ const PLACES = [
     image:
       'https://lonelyplanetwp.imgix.net/2016/02/Santorini-sunset_CS.jpg?fit=min&q=40&sharp=10&vib=20&w=1470',
     name: 'Santorini',
-    price: '$$'
+    price: '$$$'
   },
   {
     city: 'New York',
@@ -46,6 +48,7 @@ const PLACES = [
   }
 ];
 
+@autoBindMethods
 class Swipe extends Component {
   constructor(props) {
     super(props);
@@ -107,6 +110,16 @@ class Swipe extends Component {
     }
   }
 
+  // Helper function for modal
+
+  handleShow(event) {
+    this.setState({ showModal: true });
+  }
+
+  handleClose(event) {
+    this.setState({ showModal: false });
+  }
+
   // Helper functions for swiping
 
   nextCard = () => {
@@ -140,6 +153,7 @@ class Swipe extends Component {
     );
   }
 
+
   renderButtons({ left, right }) {
     return (
       <div className="swipe-buttons">
@@ -147,6 +161,56 @@ class Swipe extends Component {
         <SwipeButton onClick={right} type="approve" />
       </div>
     );
+  }
+
+  renderModal() {
+    const { places } = this.state;
+    return (
+      <Modal
+        show={this.state.showModal}
+        onHide={this.handleClose}
+        animation={false}
+        size="xl"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title >
+            {places[0].city}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <img className="card-image" src={places[0].image} />
+          </div>
+          <div>
+            {places[0].name}
+          </div>
+          <div>
+            {places[0].price}
+          </div>
+          <div>
+            <div> Must Try: </div>
+            <div> - Lox & Cream Cheese Bagel </div>
+            <div> - Berry Bagel w Honey Cream Cheese </div>
+            <div> - Melbourne Magic Coffee </div>
+          </div>
+          <div>
+            <div> Reviews:</div>
+            <div> “The soft egg bagel with salmon breakfast was sensational! Sounded simply and hearty but packed a punch!”
+            - Jessica Crawford, Elite Yelp </div>
+            <div> “While my buddy opted for the strawberry bagel with pistachio sprinkles, I had the french toast with bananas and blueberries. Was instantly envious of her food. Have to come back.
+            - Pete Jose, Yelp Member </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    );
+  }
+
+  renderInfoButton() {
+    return (
+      <Button variant="primary" onClick={this.handleShow}>
+        Question Mark
+      </Button>
+    )
   }
 
   render() {
@@ -159,7 +223,8 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        {this.state.places.length > 0 && (
+        {this.renderInfoButton()}
+        {places.length > 0 ? this.renderModal() : <div></div>}
           <div>
             <div className="swipe-header">
               <img
