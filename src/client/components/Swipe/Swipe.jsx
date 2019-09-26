@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Swipeable from 'react-swipy';
+import axios from 'axios';
 
+import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
@@ -48,22 +51,81 @@ class Swipe extends Component {
     super(props);
 
     this.state = {
-      places: PLACES
+      places: [],
+      isFetching: true,
+      hasNext: true
     };
   }
 
+  componentDidMount() {
+    this.getPlacesToSwipe();
+  }
+
+  // Helper functions to communicate with backend
+
+  getPlacesToSwipe() {
+    this.setState({ isFetching: true });
+    this.props.setLoading(true);
+
+    const { tripId, userId } = this.props.match.params;
+    const instance = this;
+
+    axios
+      .get(APIS.placesToVote(tripId, userId))
+      .then(function (response) {
+        if (response.data.length == 0) {
+          instance.setState({ hasNext: false });
+        }
+        instance.setState({ places: response.data });
+        instance.setState({ isFetching: false });
+        instance.props.setLoading(false);
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
+  }
+
+  castVote(place) {
+    return (swipeDirection) => {
+      const { tripId, userId } = this.props.match.params;
+      const instance = this;
+      const vote = {
+        left: 'DISLIKE',
+        right: 'LIKE'
+      }
+
+      axios
+        .post(APIS.vote, {
+          vote: vote[swipeDirection],
+          user_id: userId,
+          trip_id: tripId,
+          place_id: place.place_id
+        })
+        .catch(function (error) {
+          alert(error.message);
+        });
+    }
+  }
+
+  // Helper functions for swiping
+
   nextCard = () => {
     const { places } = this.state;
-    const newPlaces = places.slice(1, places.length);
-    this.setState({ places: newPlaces });
+    if (places.length > 0) {
+      const newPlaces = places.slice(1, places.length);
+      this.setState({ places: newPlaces });
+    } else {
+      this.getPlacesToSwipe();
+    }
   };
 
   renderSwiping() {
     const { places } = this.state;
+    const currentPlace = places[0];
     return (
       <div className="swipe-container">
-        <Swipeable buttons={this.renderButtons} onAfterSwipe={this.nextCard}>
-          <SwipeCard place={places[0]} />
+        <Swipeable buttons={this.renderButtons} onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}>
+          <SwipeCard place={currentPlace} />
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -88,24 +150,37 @@ class Swipe extends Component {
   }
 
   render() {
+    if (this.state.isFetching) {
+      return null;
+    }
+
     const { places } = this.state;
+    const { userId, tripId } = this.props.match.params;
 
     return (
       <div className="swipe">
-        {places.length > 0 && (
+        {this.state.places.length > 0 && (
           <div>
             <div className="swipe-header">
               <img
                 className="icon-back"
-                src="./assets/common/icon-leftarrow.png"
+                src="/assets/common/icon-leftarrow.png"
+                onClick={() => {
+                  this.props.history.push(PATHS.trips(userId));
+                }}
               />
               <div className="city">{places[0].city || ''}</div>
-              <img className="icon-list" src="./assets/common/icon-list.png" />
+              <img
+                className="icon-list"
+                src="/assets/common/icon-list.png"
+                onClick={() => {
+                  this.props.history.push(PATHS.list(userId, tripId));
+                }}/>
             </div>
-            <div className="place-name">{places[0].name || ''}</div>
+            <div className="place-name"><span>{places[0].name || ''}</span></div>
           </div>
         )}
-        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
+        {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }

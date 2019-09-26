@@ -1,5 +1,5 @@
 const EntityQueryModel = require('./entity');
-const VotingQueryModel = require('./votes-query-model');
+const VotingQueryModel = require('./vote-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 

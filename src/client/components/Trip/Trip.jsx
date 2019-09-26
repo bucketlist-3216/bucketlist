@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
-import TripButton from '../TripButton/TripButton';
-import TRIP_BUTTONS from '../../constants/tripButtons';
+import TripButton from './TripButton';
+import PATHS from '../../constants/paths';
 
 const Trip = props => {
-  let { trip } = props;
+  let { trip, userId } = props;
   let { trip_id, destination, start_date, end_date, members } = trip;
   if (!members) {
     members = [];
@@ -41,13 +41,17 @@ const Trip = props => {
           ))}
         </div>
         <div className="trip-button-containers">
-          {TRIP_BUTTONS.map((content, key) => (
-            <TripButton
-              key={key}
-              text={content.text}
-              url={content.url(trip_id)}
-            />
-          ))}
+          <TripButton
+            text="view list"
+            onClick={() => props.history.push(PATHS.list(userId, trip_id))}
+          />
+          <TripButton
+            text="swipe location"
+            onClick={() => props.history.push(PATHS.swipe(userId, trip_id))}
+          />
+          <TripButton
+            text="add friends"
+          />
         </div>
       </div>
     </div>

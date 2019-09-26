@@ -4,7 +4,7 @@ const validateRequest = require('../auth');
 const settings = require('../../config/settings.js')
 const _ = require('underscore');
 const {
-    VotesQueryModel,
+    VoteQueryModel,
     TripPlaceQueryModel,
     TripQueryModel,
     TripFriendQueryModel,
@@ -21,7 +21,7 @@ if (settings.validate) {
 
 const tripQueryModel = new TripQueryModel();
 const tripFriendQueryModel = new TripFriendQueryModel();
-const votesQueryModel = new VotesQueryModel();
+const voteQueryModel = new VoteQueryModel();
 const tripPlaceQueryModel = new TripPlaceQueryModel();
 const userQueryModel = new UserQueryModel();
 
@@ -176,20 +176,30 @@ router.delete('/members/:tripFriend', function (req, res) {
 // These are the votes that have been cast inside this trip
 
 router.post('/vote', function (req, res) {
-    // Cast the vote
-    const vote = votesQueryModel.castVote(req.body.vote);
+    const { vote, user_id, trip_id, place_id } = req.body;
 
-    // Insert into database and return response
-    vote.then(function (insertionResponse) {
-        res.end('Vote cast');
-    });
+    const queryingTripFriendId = tripFriendQueryModel.getTripFriendId(trip_id, user_id);
+    queryingTripFriendId
+        .then(function (response) {
+            const { trip_friend_id } = Object.assign({}, response[0]);
+            console.log(response);
+            return voteQueryModel.castVote({ trip_friend_id, place_id, vote });
+        })
+        .then(function (voteId) {
+            console.log(voteId);
+            res.json({ insertedId: voteId });
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to get cast vote due to ${err.message}`);
+            console.log(err);
+        });
 });
 
 router.delete('/vote', function (req, res) {
     const toDelete = req.body.vote;
 
     // Delete from mySQL using knex
-    const deletion = votesQueryModel.deleteVote(toDelete);
+    const deletion = voteQueryModel.deleteVote(toDelete);
 
     // Construct response after deletion
     deletion
@@ -200,7 +210,7 @@ router.delete('/vote', function (req, res) {
 
 // Get the votes for the chosen location
 router.get('/vote/location/:locationId', function (req, res) {
-    const votes = votesQueryModel.getVotes({trip_place_id: req.params.locationId});
+    const votes = voteQueryModel.getVotes({trip_place_id: req.params.locationId});
 
     votes
         .then(function(queryResponse) {
@@ -212,9 +222,24 @@ router.get('/vote/location/:locationId', function (req, res) {
         });
 });
 
+// Get locations to vote for the trip
+router.get('/:tripId/vote/user/:userId', function (req, res) {
+    const params = Object.assign({}, req.params, req.body);
+    const places = voteQueryModel.getPlacesToVote(params);
+
+    places
+        .then(function(queryResponse) {
+            res.json(queryResponse);
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to get places to vote due to ${err.message}`);
+            console.log(err);
+        });
+});
+
 // Get locations sorted by votes
 router.get('/:tripId/vote/results', function (req, res) {
-    const votingResults = votesQueryModel.getVotingResults(req.params.tripId);
+    const votingResults = voteQueryModel.getVotingResults(req.params.tripId);
 
     votingResults
         .then(function(queryResponse) {

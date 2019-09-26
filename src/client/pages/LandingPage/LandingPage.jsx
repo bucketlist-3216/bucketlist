@@ -2,17 +2,32 @@ import React, { Component } from 'react';
 
 import ReactGA from 'react-ga';
 
+import autoBindMethods from 'class-autobind-decorator';
+
 import Login from '../../components/Login';
+import Preloader from '../../components/Preloader';
 import BucketListLogo from '../../../../assets/brand/brand-logo.png';
 
+@autoBindMethods
 class LandingPage extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isLoading: false
+    };
+  }
+
+  setLoading(isLoading) {
+    this.setState({ isLoading });
   }
 
   render() {
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
+    if (this.state.isLoading) {
+        return (<Preloader />);
+    } 
     return (
       <div className="landing-page">
         <div className="brand">
@@ -23,7 +38,7 @@ class LandingPage extends Component {
           <div className="login-title">
             <h1>Travel planning has never been easier</h1>
           </div>
-          <Login {...this.props} />
+          <Login {...this.props} setLoading={this.setLoading} />
         </div>
         <div className="title">
           <h1>Swipe. List. Go.</h1>

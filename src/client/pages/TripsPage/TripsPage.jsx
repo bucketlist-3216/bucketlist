@@ -9,6 +9,7 @@ import axios from 'axios'
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import Header from "../../components/Header";
+import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 
@@ -18,7 +19,8 @@ class TripsPage extends Component {
 
     this.state = {
       trips: [],
-      isDoneFetching: false
+      isDoneFetching: false,
+      isLoading: true
     };
 
     this.routeChange = this.routeChange.bind(this);
@@ -33,21 +35,24 @@ class TripsPage extends Component {
     let instance = this;
     const userId = this.props.match.params.userId;
     axios
-      .get(APIS.user.trips(userId))
+      .get(APIS.userTrips(userId))
       .then(function (response) {
-        instance.setState({trips:response.data});
-        instance.setState({isDoneFetching:true});
+        instance.setState({ trips: response.data });
+        instance.setState({ isDoneFetching: true });
+        instance.setState({ isLoading: false });
       })
       .catch(function (error) {
         alert(error.message);
       });
+    this.setState({ isLoading: true });
   }
 
   render() {
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
-
-    if (this.state.isDoneFetching) {
+    if (this.state.isLoading) {
+      return (<Preloader />);
+    } else if (this.state.isDoneFetching) {
       return (
         <div className="trips-page">
           <div className="header-container">
@@ -59,6 +64,8 @@ class TripsPage extends Component {
               <Trip
                 key={key}
                 trip={trip}
+                userId={this.props.match.params.userId}
+                history={this.props.history}
               />
             ))}
             <div className="trip" onClick={this.routeChange}>

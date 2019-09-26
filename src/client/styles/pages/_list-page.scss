@@ -37,7 +37,18 @@
       right: 20px;
     }
   }
-  .list-container {
-    max-width: 400px;
+  .places-container {
+    margin: auto;
+    max-width: 440px;
+    padding: 0 20px;
+    text-align: center;
+
+    span {
+      font-family: 'JosefinSans-Regular';
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 15px;
+    }
   }
 }
