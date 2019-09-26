@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactGA from 'react-ga';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 import './styles/styles.scss';
 
@@ -21,7 +22,7 @@ ReactGA.pageview(window.location.pathname + window.location.search)
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route exact path={PATHS.landingPage()} component={Preloader} />
+      <Route exact path={PATHS.landingPage()} component={LandingPage} />
       <Route path={PATHS.createTrip()} component={CreateView} />
       <Route path={PATHS.swipe()} component={SwipeView} />
       <Route path={PATHS.trips()} component={TripsPage} />
@@ -30,3 +31,7 @@ ReactDOM.render(
   </BrowserRouter>,
   document.querySelector('#root')
 );
+ 
+if ('serviceWorker' in navigator) {
+  const registration = runtime.register();
+}

@@ -78,11 +78,13 @@ class Create extends Component {
         .post(APIS.trip, {trip})
         .then(function(response) {
           instance.props.history.push(PATHS.trips(userId));
+          instance.props.setLoading(false);
         })
         .catch(function(error) {
           alert(error.message);
           console.log(error);
         });
+      this.props.setLoading(true);
     }
   }
 

@@ -1,10 +1,11 @@
 const EntityQueryModel = require('./entity');
+const TripQueryModel = require('./trip-query-model');
 const TripFriendQueryModel = require('./trip-friend-query-model');
 const PlaceQueryModel = require('./place-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 
-class VotesQueryModel extends EntityQueryModel {
+class VoteQueryModel extends EntityQueryModel {
 
     constructor(dbClient) {
         super(dbClient);
@@ -14,6 +15,7 @@ class VotesQueryModel extends EntityQueryModel {
         this.userMutable = false
         this.tableName = 'Swipe';
 
+        this.tripQueryModel = new TripQueryModel();
         this.tripFriendQueryModel = new TripFriendQueryModel();
         this.placeQueryModel = new PlaceQueryModel();
     }
@@ -23,6 +25,23 @@ class VotesQueryModel extends EntityQueryModel {
         return knex(this.tableName)
             .select(this.selectableProps)
             .where(filters);
+    }
+
+    getPlacesToVote({tripId, userId, limit = 100}) {
+      console.log(userId, tripId);
+        return knex
+            .select([`${this.placeQueryModel.tableName}.place_id`, 'name', 'city', 'image_link'])
+            .from(this.placeQueryModel.tableName)
+            .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
+            .where({trip_id: tripId})
+            .whereNot({image_link: ''})
+            .whereNotExists(knex
+                .from(this.tableName)
+                .innerJoin(this.tripFriendQueryModel.tableName, `${this.tripFriendQueryModel.tableName}.trip_friend_id`, '=', `${this.tableName}.trip_friend_id`)
+                .where({user_id: userId, trip_id: tripId})
+                .whereRaw(`${this.tableName}.place_id = ${this.placeQueryModel.tableName}.place_id`)
+            )
+            .limit(limit);
     }
 
     // Cast a vote for a location
@@ -99,10 +118,11 @@ class VotesQueryModel extends EntityQueryModel {
 
                 let array = Object.values(votingResults);
                 return array.sort(function (a, b) {
-                    const countVotes = (result) => {
-                        return result.voteCount.LIKE / (result.voteCount.LIKE + result.voteCount.DISLIKE);
-                    };
-                    return countVotes(b) - countVotes(a);
+                    if (b.voteCount.LIKE != a.voteCount.LIKE) {
+                        return b.voteCount.LIKE - a.voteCount.LIKE;
+                    } else {
+                        return a.voteCount.DISLIKE - b.voteCount.DISLIKE;
+                    }
                 });
             })
             .catch(function (err) {
@@ -111,4 +131,4 @@ class VotesQueryModel extends EntityQueryModel {
     }
 }
 
-module.exports = VotesQueryModel;
+module.exports = VoteQueryModel;

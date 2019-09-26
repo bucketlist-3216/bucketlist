@@ -28,24 +28,56 @@ app.use('/api/', function (req, res, next) {
     next();
 });
 
-/************************** Routes **************************/
+/****************** Redirection from HTTP to HTTPS ******************/
+
+var sslRedirect = require('heroku-ssl-redirect');
+app.use(sslRedirect());
+
+
+/****************** BACK FOR HTTPS REDIRECTION ******************/
+/*
+const util = require('util');
+
+const redirectionFilter = function (req, res, next) {
+  const theDate = new Date();
+  const receivedUrl = `${req.protocol}:\/\/${req.hostname}:${port}${req.url}`;
+
+  if (req.get('X-Forwarded-Proto') === 'http') {
+    const redirectTo = `https:\/\/${req.hostname}${req.url}`;
+    console.log(`${theDate} Redirecting ${receivedUrl} --> ${redirectTo}`);
+    res.redirect(301, redirectTo);
+  } else {
+    next();
+  }
+}; 
+
+app.get('/*', redirectionFilter); 
+*/
+
+/*************************** Service Worker ***************************/
+
+app.get("/sw.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "sw.js"));
+});
+
+/******************************* Routes *******************************/
 
 app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/trip', tripRouter);
 app.use('/api/v1/place', placeRouter);
 app.use('/api/v1/user', userRouter);
 
-// Serve the static files from build
-console.log('Serving folder', path.join(__dirname, 'build'));
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('*', function(req, res) {
-    res.sendFile('index.html', {root: path.join(__dirname, 'build')});
-});
+// // Serve the static files from build
+// console.log('Serving folder', path.join(__dirname, 'build'));
+// app.use(express.static(path.join(__dirname, 'build')));
+//
+// app.get('*', function(req, res) {
+//     res.sendFile('index.html', {root: path.join(__dirname, 'build')});
+// });
 
 /************************** Start the server **************************/
 
-port = process.env.PORT || 5000;
+port = process.env.PORT || 3001;
 
 app.listen(port, () => {
     console.log('Listening on port ', port);

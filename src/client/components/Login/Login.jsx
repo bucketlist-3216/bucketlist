@@ -5,9 +5,9 @@ import autoBindMethods from 'class-autobind-decorator';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
+import loginSecrets from '../../../../config/login_secrets.json';
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
-import loginSecrets from '../../../../config/login_secrets.json';
 import PROVIDERS from '../../constants/providers';
 import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
 
@@ -44,13 +44,14 @@ class Login extends Component {
     let instance = this;
     axios
       .post(APIS.login, { userData })
-      .then(function(response) {
+      .then(function (response) {
         instance.setState({ userId: response.data.insertedId[0] });
         instance.routeChange();
       })
-      .catch(function(error) {
+      .catch(function (error) {
         alert(error.message);
       });
+    //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
   }
 
   routeChange() {

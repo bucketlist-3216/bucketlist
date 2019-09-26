@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src/client', 'BucketList.jsx'),
@@ -62,7 +63,10 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: './assets', to: 'assets' }
-    ])
+    ]),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'src/sw.js'),
+    }),
   ],
   devServer: {
     inline: true,
