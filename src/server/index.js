@@ -28,6 +28,33 @@ app.use('/api/', function (req, res, next) {
     next();
 });
 
+/************************** Redirection from HTTP to HTTPS **************************/
+/*
+const util = require('util');
+//var sslRedirect = require('heroku-ssl-redirect');
+//app.use(sslRedirect());
+
+const redirectionFilter = function (req, res, next) {
+  const theDate = new Date();
+  const receivedUrl = `${req.protocol}:\/\/${req.hostname}:${port}${req.url}`;
+
+  if (req.get('X-Forwarded-Proto') === 'http') {
+    const redirectTo = `https:\/\/${req.hostname}${req.url}`;
+    console.log(`${theDate} Redirecting ${receivedUrl} --> ${redirectTo}`);
+    res.redirect(301, redirectTo);
+  } else {
+    next();
+  }
+}; */
+/*
+app.get("/sw.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "sw.js"));
+});
+app.get('/*', redirectionFilter); */
+app.get("/sw.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "sw.js"));
+});
+
 /************************** Routes **************************/
 
 app.use('/api/v1/login', loginRouter);
