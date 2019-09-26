@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import Swipeable from 'react-swipy';
 import { Button, Modal } from 'react-bootstrap';
 import autoBindMethods from 'class-autobind-decorator';
@@ -6,6 +7,7 @@ import axios from 'axios';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
+import Header from "../../components/Header";
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
@@ -55,8 +57,8 @@ class Swipe extends Component {
 
     this.state = {
       places: [],
-      isFetching: true,
-      hasNext: true
+      hasNext: true,
+      isLoading: true
     };
   }
 
@@ -67,8 +69,7 @@ class Swipe extends Component {
   // Helper functions to communicate with backend
 
   getPlacesToSwipe() {
-    this.setState({ isFetching: true });
-    this.props.setLoading(true);
+    this.setState({ isLoading: true });
 
     const { tripId, userId } = this.props.match.params;
     const instance = this;
@@ -80,8 +81,7 @@ class Swipe extends Component {
           instance.setState({ hasNext: false });
         }
         instance.setState({ places: response.data });
-        instance.setState({ isFetching: false });
-        instance.props.setLoading(false);
+        instance.setState({ isLoading: false });
       })
       .catch(function (error) {
         alert(error.message);
@@ -206,7 +206,10 @@ class Swipe extends Component {
   }
 
   render() {
-    if (this.state.isFetching) {
+    ReactGA.initialize('UA-148749594-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
+
+    if (this.state.isLoading) {
       return null;
     }
 
@@ -214,28 +217,31 @@ class Swipe extends Component {
     const { userId, tripId } = this.props.match.params;
 
     return (
-      <div className="swipe">
-        {places.length > 0 ? this.renderModal() : <div></div>}
-          <div>
-            <div className="swipe-header">
-              <img
-                className="icon-back"
-                src="/assets/common/icon-leftarrow.png"
-                onClick={() => {
-                  this.props.history.push(PATHS.trips(userId));
-                }}
-              />
-              <div className="city">{places[0].city || ''}</div>
-              <img
-                className="icon-list"
-                src="/assets/common/icon-list.png"
-                onClick={() => {
-                  this.props.history.push(PATHS.list(userId, tripId));
-                }}/>
+      <div>
+        <Header />
+        <div className="swipe">
+          {places.length > 0 ? this.renderModal() : <div></div>}
+            <div>
+              <div className="swipe-header">
+                <img
+                  className="icon-back"
+                  src="/assets/common/icon-leftarrow.png"
+                  onClick={() => {
+                    this.props.history.push(PATHS.trips(userId));
+                  }}
+                />
+                <div className="city">{places[0].city || ''}</div>
+                <img
+                  className="icon-list"
+                  src="/assets/common/icon-list.png"
+                  onClick={() => {
+                    this.props.history.push(PATHS.list(userId, tripId));
+                  }}/>
+              </div>
+              <div className="place-name"><span>{places[0].name || ''}</span></div>
             </div>
-            <div className="place-name"><span>{places[0].name || ''}</span></div>
-          </div>
-        {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
+          {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
+        </div>
       </div>
     );
   }
