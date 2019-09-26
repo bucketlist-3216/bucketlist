@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Swipeable from 'react-swipy';
-import { Button, Modal } from 'react-bootstrap';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 
@@ -9,44 +8,7 @@ import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
-
-const PLACES = [
-  {
-    city: 'Greece',
-    image:
-      'https://lonelyplanetwp.imgix.net/2016/02/Santorini-sunset_CS.jpg?fit=min&q=40&sharp=10&vib=20&w=1470',
-    name: 'Santorini',
-    price: '$$$'
-  },
-  {
-    city: 'New York',
-    image:
-      'https://www.nycgo.com/images/venues/152/tripadvisortimessquare_taggeryanceyiv_5912__x_large.jpg',
-    name: 'Times Square',
-    price: '$$$'
-  },
-  {
-    city: 'Paris',
-    image:
-      'https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateParis_Heroshutterstock_112137761.jpg',
-    name: 'Eiffel Tower',
-    price: '$$'
-  },
-  {
-    city: 'Dubai',
-    image:
-      'https://images2.minutemediacdn.com/image/upload/c_crop,h_1192,w_2123,x_0,y_70/f_auto,q_auto,w_1100/v1559225783/shape/mentalfloss/584459-istock-183342824.jpg',
-    name: 'Burj Khalifa',
-    price: '$$$'
-  },
-  {
-    city: 'Rome',
-    image:
-      'https://www.roadaffair.com/wp-content/uploads/2017/09/colosseum-rome-italy-shutterstock_433413835-1024x683.jpg',
-    name: 'Colosseum',
-    price: '$'
-  }
-];
+import PlaceInfo from './PlaceInfo/';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -55,8 +17,9 @@ class Swipe extends Component {
 
     this.state = {
       places: [],
+      hasNext: true,
       isLoading: true,
-      hasNext: true
+      isModalShown: false
     };
   }
 
@@ -110,12 +73,12 @@ class Swipe extends Component {
 
   // Helper function for modal
 
-  handleShow(event) {
-    this.setState({ showModal: true });
+  showModal(event) {
+    this.setState({ isModalShown: true });
   }
 
-  handleClose(event) {
-    this.setState({ showModal: false });
+  closeModal(event) {
+    this.setState({ isModalShown: false });
   }
 
   // Helper functions for swiping
@@ -136,7 +99,7 @@ class Swipe extends Component {
     return (
       <div className="swipe-container">
         <Swipeable buttons={this.renderButtons} onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}>
-          <SwipeCard place={currentPlace} showModal={this.handleShow}/>
+          <SwipeCard place={currentPlace} showModal={this.showModal}/>
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -161,48 +124,6 @@ class Swipe extends Component {
     );
   }
 
-  renderModal() {
-    const { places } = this.state;
-    return (
-      <Modal
-        show={this.state.showModal}
-        onHide={this.handleClose}
-        animation={false}
-        size="xl"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title >
-            {places[0].city}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-            <img className="card-image" src={places[0].image} />
-          </div>
-          <div>
-            {places[0].name}
-          </div>
-          <div>
-            {places[0].price}
-          </div>
-          <div>
-            <div> Must Try: </div>
-            <div> - Lox & Cream Cheese Bagel </div>
-            <div> - Berry Bagel w Honey Cream Cheese </div>
-            <div> - Melbourne Magic Coffee </div>
-          </div>
-          <div>
-            <div> Reviews:</div>
-            <div> “The soft egg bagel with salmon breakfast was sensational! Sounded simply and hearty but packed a punch!”
-            - Jessica Crawford, Elite Yelp </div>
-            <div> “While my buddy opted for the strawberry bagel with pistachio sprinkles, I had the french toast with bananas and blueberries. Was instantly envious of her food. Have to come back.
-            - Pete Jose, Yelp Member </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-    );
-  }
-
   render() {
     if (this.state.isLoading) {
       return null;
@@ -210,11 +131,13 @@ class Swipe extends Component {
 
     const { places } = this.state;
     const { userId, tripId } = this.props.match.params;
+    const currentPlace = places[0];
 
     return (
       <div className="swipe">
-        {places.length > 0 ? this.renderModal() : <div></div>}
+        {places.length > 0 && (
           <div>
+            <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/>
             <div className="swipe-header">
               <img
                 className="icon-back"
@@ -233,6 +156,7 @@ class Swipe extends Component {
             </div>
             <div className="place-name"><span>{places[0].name || ''}</span></div>
           </div>
+        )}
         {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );

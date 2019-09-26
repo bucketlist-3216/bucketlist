@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator'
 
-import Preloader from "../../components/Preloader";
 import Header from "../../components/Header";
 import Swipe from "../../components/Swipe";
 
