@@ -29,7 +29,7 @@ class ListPage extends Component {
     let instance = this;
     const tripId = this.props.match.params.tripId;
     axios
-      .get(APIS.vote.results(1))
+      .get(APIS.vote.results(tripId))
       .then(function (response) {
         instance.setState({places:response.data});
         instance.setState({isDoneFetching:true});
@@ -44,7 +44,29 @@ class ListPage extends Component {
     if (this.state.isLoading) {
         return (<Preloader />);
     } else if (this.state.isDoneFetching) {
-      const userId = 1;
+      let userId = this.props.match.params.userId;
+      let places = (
+        <div className="places-container">
+          <span>
+            Let's start swiping! <br />
+            We'll show you your top places here.
+          </span>
+        </div>
+      );
+      if (this.state.places.length > 0) {
+         places = (
+           <div className="places-container">
+            {this.state.places.map((place, key) => (
+              <PlaceCard
+                key={key}
+                place={place}
+              />
+            ))}
+          </div>
+        );
+      }
+
+
       return (
         <div className="list-page">
           <div className="header-container">
@@ -58,14 +80,7 @@ class ListPage extends Component {
               <span>done</span>
             </button>
           </div>
-          <div className="places-container">
-            {this.state.places.map((place, key) => (
-              <PlaceCard
-                key={key}
-                place={place}
-              />
-            ))}
-          </div>
+          {places}
         </div>
       );
     } else {
