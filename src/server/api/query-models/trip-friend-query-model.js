@@ -60,7 +60,7 @@ class TripFriendQueryModel extends EntityQueryModel {
     getUserTrips (userId) {
         let tripProperties = this.tripQueryModel.selectableProps.filter((element) => element !== 'trip_id');
 
-        let selectedColumns = [`${this.tableName}.trip_id`].concat(
+        let selectedColumns = [`${this.tableName}.trip_id`,`${this.tableName}.user_id`].concat(
             tripProperties,
             this.userQueryModel.selectableProps
         );
@@ -93,7 +93,7 @@ class TripFriendQueryModel extends EntityQueryModel {
                         tripResults[tripId].members = [];
                     }
 
-                    if (row.user_id !== userId) {
+                    if (row.user_id != userId) {
                       tripResults[tripId].members.push(_.pick(row, instance.userQueryModel.selectableProps));
                     }
                 });
