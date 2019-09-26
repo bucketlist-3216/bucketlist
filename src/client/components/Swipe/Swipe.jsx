@@ -138,7 +138,7 @@ class Swipe extends Component {
     return (
       <div className="swipe-container">
         <Swipeable buttons={this.renderButtons} onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}>
-          <SwipeCard place={currentPlace} />
+          <SwipeCard place={currentPlace} showModal={this.handleShow}/>
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -205,14 +205,6 @@ class Swipe extends Component {
     );
   }
 
-  renderInfoButton() {
-    return (
-      <Button variant="primary" onClick={this.handleShow}>
-        Question Mark
-      </Button>
-    )
-  }
-
   render() {
     if (this.state.isFetching) {
       return null;
@@ -223,7 +215,6 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        {this.renderInfoButton()}
         {places.length > 0 ? this.renderModal() : <div></div>}
           <div>
             <div className="swipe-header">
