@@ -94,7 +94,7 @@ self.addEventListener('fetch', event => {
   const requestUrl = new URL(request.url)
 
   // Ignore difference origin.
-  if (location.origin !== location.origin) {
+  if (requestUrl.origin !== location.origin) {
     if (DEBUG) {
       console.log(`[SW] Ignore difference origin ${requestUrl.origin}`)
     }
