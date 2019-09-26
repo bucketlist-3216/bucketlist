@@ -33,7 +33,7 @@ class ListPage extends Component {
         instance.setState({isDoneFetching:true});
       })
       .catch(function (error) {
-        alert(error.message);
+        console.log(error.message);
       });
   }
 

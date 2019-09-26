@@ -1,7 +1,7 @@
 // @flow weak
 /* eslint-disable no-console */
 
-const DEBUG = false
+const DEBUG = true
 
 // When the user navigates to your site,
 // the browser tries to redownload the script file that defined the service
@@ -94,7 +94,7 @@ self.addEventListener('fetch', event => {
   const requestUrl = new URL(request.url)
 
   // Ignore difference origin.
-  if (requestUrl.origin !== location.origin) {
+  if (location.origin !== location.origin) {
     if (DEBUG) {
       console.log(`[SW] Ignore difference origin ${requestUrl.origin}`)
     }
