@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Swipeable from 'react-swipy';
+import axios from 'axios';
 
+import APIS from '../../constants/apis';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
@@ -48,14 +50,33 @@ class Swipe extends Component {
     super(props);
 
     this.state = {
-      places: PLACES
+      places: [],
+      isDoneSwiping: false
     };
   }
 
   nextCard = () => {
     const { places } = this.state;
-    const newPlaces = places.slice(1, places.length);
-    this.setState({ places: newPlaces });
+    if (places.length > 0) {
+      const newPlaces = places.slice(1, places.length);
+      this.setState({ places: newPlaces });
+    } else {
+      instance.props.setLoading(true);
+      let instance = this;
+      axios
+        .get(APIS.vote.places)
+        .get(APIS.vote.results(tripId))
+        .then(function (response) {
+          if (response.data.length == 0) {
+            instance.setState({ isDoneSwiping: true });
+          }
+          instance.setState({ places: response.data });
+          instance.props.setLoading(false);
+        })
+        .catch(function (error) {
+          alert(error.message);
+        });
+    }
   };
 
   renderSwiping() {
@@ -105,7 +126,7 @@ class Swipe extends Component {
             <div className="place-name">{places[0].name || ''}</div>
           </div>
         )}
-        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
+        {this.state.isDoneSwiping ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }
