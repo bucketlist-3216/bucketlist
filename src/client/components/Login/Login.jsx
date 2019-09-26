@@ -92,6 +92,7 @@ class Login extends Component {
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Control
+                disabled
                 className="email-field"
                 type="email"
                 placeholder="Email"
@@ -100,12 +101,13 @@ class Login extends Component {
 
             <Form.Group controlId="formBasicPassword">
               <Form.Control
+                disabled
                 className="password-field"
                 type="password"
                 placeholder="Password"
               />
             </Form.Group>
-            <Button className="submit-button" type="submit">
+            <Button className="submit-button" type="submit" disabled>
               Submit
             </Button>
           </Form>
