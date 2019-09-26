@@ -45,7 +45,7 @@ class ListPage extends Component {
         return (<Preloader />);
     } else if (this.state.isDoneFetching) {
       let userId = this.props.match.params.userId;
-      let tripId = this.props.match.params.userId;
+      let tripId = this.props.match.params.tripId;
       let places = (
         <div className="places-container">
           <span>
