@@ -158,7 +158,8 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        {places.length > 0 && (
+        {this.renderInfoButton()}
+        {places.length > 0 ? this.renderModal() : <div></div>}
           <div>
             <div className="swipe-header">
               <img
