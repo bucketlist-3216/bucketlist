@@ -1,12 +1,12 @@
 import React from 'react';
 import BucketListLogo from '../../../../assets/brand/brand-logo.png';
 
-const SplashPage = () => {
+const Preloader = () => {
   return (
-    <div className="splash-bg">
+    <div className="preloader">
       <img className="brand-logo" src={BucketListLogo} />
     </div>
   )
 }
 
-export default SplashPage;
+export default Preloader;
