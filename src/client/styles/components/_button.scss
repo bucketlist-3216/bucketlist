@@ -15,7 +15,7 @@
 //   color: $blue;
 // }
 .sso-button {
-  background-color: rgba(255, 255, 255 ,1.0);
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 5px;
   text-align: center;
   display: flex;
@@ -42,14 +42,14 @@
   margin-top: 10px;
   border-radius: 0;
   border: 0;
-  background-color: rgba(241,138,124, 0.62);
+  background-color: rgba(241, 138, 124, 0.62);
   color: #353839;
   font-family: 'JosefinSans-Regular';
 
   &:hover {
     background-color: #f18a7c;
     opacity: 1;
-    color: #353839
+    color: #353839;
   }
 
   // no fucking clue why this doesn't work. will come back to it
@@ -75,6 +75,6 @@
     align-items: baseline;
     text-align: center;
 
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }

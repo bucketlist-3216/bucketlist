@@ -46,6 +46,12 @@
         font-size: 30px;
       }
     }
+    .btn-primary:disabled,
+    .btn-primary:active {
+      background-color: #f18a7c;
+      opacity: 1;
+      color: #353839;
+    }
   }
 
   .title {
