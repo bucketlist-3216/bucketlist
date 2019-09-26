@@ -34,6 +34,7 @@ class VoteQueryModel extends EntityQueryModel {
             .from(this.placeQueryModel.tableName)
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
             .where({trip_id: tripId})
+            .whereNot({image_link: ''})
             .whereNotExists(knex
                 .from(this.tableName)
                 .innerJoin(this.tripFriendQueryModel.tableName, `${this.tripFriendQueryModel.tableName}.trip_friend_id`, '=', `${this.tableName}.trip_friend_id`)
