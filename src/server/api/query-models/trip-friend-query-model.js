@@ -20,10 +20,16 @@ class TripFriendQueryModel extends EntityQueryModel {
     }
 
     // Get all the members in this particular trip
-    getTripFriends (tripId) {
+    getTripFriends (trip_id) {
         return knex(this.tableName)
             .select(this.selectableProps)
-            .where({trip_id: tripId});
+            .where({ trip_id });
+    }
+
+    getTripFriendId (trip_id, user_id) {
+        return knex(this.tableName)
+            .select('trip_friend_id')
+            .where({ trip_id, user_id });
     }
 
     // Add a member to this trip by their email

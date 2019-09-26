@@ -60,15 +60,17 @@ class Swipe extends Component {
     this.getPlacesToSwipe();
   }
 
+  // Helper functions to communicate with backend
+
   getPlacesToSwipe() {
     this.setState({ isFetching: true });
     this.props.setLoading(true);
 
-    const instance = this;
     const { tripId, userId } = this.props.match.params;
+    const instance = this;
 
     axios
-      .get(APIS.vote.places(tripId, userId))
+      .get(APIS.placesToVote(tripId, userId))
       .then(function (response) {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
@@ -82,6 +84,30 @@ class Swipe extends Component {
       });
   }
 
+  castVote(place) {
+    return (swipeDirection) => {
+      const { tripId, userId } = this.props.match.params;
+      const instance = this;
+      const vote = {
+        left: 'DISLIKE',
+        right: 'LIKE'
+      }
+
+      axios
+        .post(APIS.vote, {
+          vote: vote[swipeDirection],
+          user_id: userId,
+          trip_id: tripId,
+          place_id: place.place_id
+        })
+        .catch(function (error) {
+          alert(error.message);
+        });
+    }
+  }
+
+  // Helper functions for swiping
+
   nextCard = () => {
     const { places } = this.state;
     if (places.length > 0) {
@@ -94,10 +120,11 @@ class Swipe extends Component {
 
   renderSwiping() {
     const { places } = this.state;
+    const currentPlace = places[0];
     return (
       <div className="swipe-container">
-        <Swipeable buttons={this.renderButtons} onAfterSwipe={this.nextCard}>
-          <SwipeCard place={places[0]} />
+        <Swipeable buttons={this.renderButtons} onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}>
+          <SwipeCard place={currentPlace} />
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -127,7 +154,7 @@ class Swipe extends Component {
     }
 
     const { places } = this.state;
-
+    
     return (
       <div className="swipe">
         {this.state.places.length > 0 && (
@@ -140,7 +167,7 @@ class Swipe extends Component {
               <div className="city">{places[0].city || ''}</div>
               <img className="icon-list" src="/assets/common/icon-list.png" />
             </div>
-            <div className="place-name">{places[0].name || ''}</div>
+            <div className="place-name"><span>{places[0].name || ''}</span></div>
           </div>
         )}
         {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}

@@ -176,13 +176,23 @@ router.delete('/members/:tripFriend', function (req, res) {
 // These are the votes that have been cast inside this trip
 
 router.post('/vote', function (req, res) {
-    // Cast the vote
-    const vote = voteQueryModel.castVote(req.body.vote);
+    const { vote, user_id, trip_id, place_id } = req.body;
 
-    // Insert into database and return response
-    vote.then(function (insertionResponse) {
-        res.end('Vote cast');
-    });
+    const queryingTripFriendId = tripFriendQueryModel.getTripFriendId(trip_id, user_id);
+    queryingTripFriendId
+        .then(function (response) {
+            const { trip_friend_id } = Object.assign({}, response[0]);
+            console.log(response);
+            return voteQueryModel.castVote({ trip_friend_id, place_id, vote });
+        })
+        .then(function (voteId) {
+            console.log(voteId);
+            res.json({ insertedId: voteId });
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to get cast vote due to ${err.message}`);
+            console.log(err);
+        });
 });
 
 router.delete('/vote', function (req, res) {

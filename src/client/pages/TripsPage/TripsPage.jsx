@@ -35,7 +35,7 @@ class TripsPage extends Component {
     let instance = this;
     const userId = this.props.match.params.userId;
     axios
-      .get(APIS.user.trips(userId))
+      .get(APIS.userTrips(userId))
       .then(function (response) {
         instance.setState({ trips: response.data });
         instance.setState({ isDoneFetching: true });

@@ -29,7 +29,7 @@ class ListPage extends Component {
     let instance = this;
     const tripId = this.props.match.params.tripId;
     axios
-      .get(APIS.vote.results(tripId))
+      .get(APIS.voteResults(tripId))
       .then(function (response) {
         instance.setState({places:response.data});
         instance.setState({isDoneFetching:true});
