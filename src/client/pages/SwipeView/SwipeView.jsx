@@ -25,7 +25,7 @@ class SwipeView extends Component {
     return (
       <div>
         <Header />
-        <Swipe setLoading={this.setLoading} match={this.props.match}/>
+        <Swipe setLoading={this.setLoading} {...this.props}/>
       </div>
     );
   }

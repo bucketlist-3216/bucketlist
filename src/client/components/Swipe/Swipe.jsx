@@ -3,6 +3,7 @@ import Swipeable from 'react-swipy';
 import axios from 'axios';
 
 import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
@@ -154,7 +155,8 @@ class Swipe extends Component {
     }
 
     const { places } = this.state;
-    
+    const { userId, tripId } = this.props.match.params;
+
     return (
       <div className="swipe">
         {this.state.places.length > 0 && (
@@ -163,9 +165,17 @@ class Swipe extends Component {
               <img
                 className="icon-back"
                 src="/assets/common/icon-leftarrow.png"
+                onClick={() => {
+                  this.props.history.push(PATHS.trips(userId));
+                }}
               />
               <div className="city">{places[0].city || ''}</div>
-              <img className="icon-list" src="/assets/common/icon-list.png" />
+              <img
+                className="icon-list"
+                src="/assets/common/icon-list.png"
+                onClick={() => {
+                  this.props.history.push(PATHS.list(userId, tripId));
+                }}/>
             </div>
             <div className="place-name"><span>{places[0].name || ''}</span></div>
           </div>
