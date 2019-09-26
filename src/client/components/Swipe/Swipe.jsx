@@ -13,6 +13,7 @@ const PLACES = [
     image:
       'https://lonelyplanetwp.imgix.net/2016/02/Santorini-sunset_CS.jpg?fit=min&q=40&sharp=10&vib=20&w=1470',
     name: 'Santorini',
+    price: '$$$'
   },
   {
     city: 'New York',
@@ -121,10 +122,7 @@ class Swipe extends Component {
             {places[0].name}
           </div>
           <div>
-            Price: $$$$
-          </div>
-          <div>
-            Location: 8 Rankins Ln
+            {places[0].price}
           </div>
           <div>
             <div> Must Try: </div>
