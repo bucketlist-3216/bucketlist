@@ -28,11 +28,15 @@ app.use('/api/', function (req, res, next) {
     next();
 });
 
-/************************** Redirection from HTTP to HTTPS **************************/
+/****************** Redirection from HTTP to HTTPS ******************/
+
+var sslRedirect = require('heroku-ssl-redirect');
+app.use(sslRedirect());
+
+
+/****************** BACK FOR HTTPS REDIRECTION ******************/
 /*
 const util = require('util');
-//var sslRedirect = require('heroku-ssl-redirect');
-//app.use(sslRedirect());
 
 const redirectionFilter = function (req, res, next) {
   const theDate = new Date();
@@ -45,17 +49,18 @@ const redirectionFilter = function (req, res, next) {
   } else {
     next();
   }
-}; */
-/*
-app.get("/sw.js", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "build", "sw.js"));
-});
-app.get('/*', redirectionFilter); */
+}; 
+
+app.get('/*', redirectionFilter); 
+*/
+
+/*************************** Service Worker ***************************/
+
 app.get("/sw.js", (req, res) => {
   res.sendFile(path.resolve(__dirname, "build", "sw.js"));
 });
 
-/************************** Routes **************************/
+/******************************* Routes *******************************/
 
 app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/trip', tripRouter);
