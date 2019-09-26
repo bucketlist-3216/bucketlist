@@ -35,17 +35,17 @@ app.use('/api/v1/trip', tripRouter);
 app.use('/api/v1/place', placeRouter);
 app.use('/api/v1/user', userRouter);
 
-// Serve the static files from build
-console.log('Serving folder', path.join(__dirname, 'build'));
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('*', function(req, res) {
-    res.sendFile('index.html', {root: path.join(__dirname, 'build')});
-});
+// // Serve the static files from build
+// console.log('Serving folder', path.join(__dirname, 'build'));
+// app.use(express.static(path.join(__dirname, 'build')));
+//
+// app.get('*', function(req, res) {
+//     res.sendFile('index.html', {root: path.join(__dirname, 'build')});
+// });
 
 /************************** Start the server **************************/
 
-port = process.env.PORT || 5000;
+port = process.env.PORT || 3000;
 
 app.listen(port, () => {
     console.log('Listening on port ', port);

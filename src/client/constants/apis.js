@@ -1,4 +1,4 @@
-const root = 'https://bucketlist-pwa.herokuapp.com';
+const root = 'http://localhost:3000' //'https://bucketlist-pwa.herokuapp.com';
 
 const APIS = {
   login: `${root}/api/v1/login`,

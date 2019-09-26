@@ -7,6 +7,7 @@ import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import Header from "../../components/Header";
 import PlaceCard from "../../components/PlaceCard";
+import Preloader from "../../components/Preloader";
 
 @autoBindMethods
 class ListPage extends Component {
@@ -15,7 +16,8 @@ class ListPage extends Component {
 
     this.state = {
         places: [],
-        isDoneFetching: false
+        isDoneFetching: false,
+        isLoading: true
     };
   }
 
@@ -31,6 +33,7 @@ class ListPage extends Component {
       .then(function (response) {
         instance.setState({places:response.data});
         instance.setState({isDoneFetching:true});
+        instance.setState({isLoading:false});
       })
       .catch(function (error) {
         alert(error.message);
@@ -38,7 +41,9 @@ class ListPage extends Component {
   }
 
   render() {
-    if (this.state.isDoneFetching) {
+    if (this.state.isLoading) {
+        return (<Preloader />);
+    } else if (this.state.isDoneFetching) {
       const userId = 1;
       return (
         <div className="list-page">

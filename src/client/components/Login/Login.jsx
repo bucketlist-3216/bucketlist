@@ -5,9 +5,9 @@ import autoBindMethods from 'class-autobind-decorator';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
+import loginSecrets from '../../../../config/login_secrets.json';
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
-import loginSecrets from '../../../../config/login_secrets.json';
 import PROVIDERS from '../../constants/providers';
 import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
 
@@ -47,10 +47,12 @@ class Login extends Component {
       .then(function(response) {
         instance.setState({ userId: response.data.insertedId[0] });
         instance.routeChange();
+        instance.props.setLoading(false);
       })
       .catch(function(error) {
         alert(error.message);
       });
+    this.props.setLoading(true);
   }
 
   routeChange() {
