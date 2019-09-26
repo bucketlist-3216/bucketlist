@@ -13,30 +13,15 @@ import LandingPage from './pages/LandingPage';
 import SwipeView from './pages/SwipeView';
 import TripsPage from './pages/TripsPage';
 import ListPage from './pages/ListPage';
+import Preloader from './components/Preloader';
 
 ReactGA.initialize('UA-148749594-1');
 ReactGA.pageview(window.location.pathname + window.location.search)
 
-// const BucketList = () => {
-//   return (
-//     <Switch>
-//       <Route exact path='/' component={LandingPage} />
-//     </Switch>
-//   )
-// };
-
-// export default BucketList;
-
-
-// function initializeReactGA() {
-//   ReactGA.initialize('UA-148749594-1');
-//   ReactGA.pageview('/homepage');
-// }
-
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route exact path={PATHS.landingPage()} component={LandingPage} />
+      <Route exact path={PATHS.landingPage()} component={Preloader} />
       <Route path={PATHS.createTrip()} component={CreateView} />
       <Route path={PATHS.swipe()} component={SwipeView} />
       <Route path={PATHS.trips()} component={TripsPage} />
