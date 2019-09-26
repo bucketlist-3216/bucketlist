@@ -2,6 +2,22 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
 const PlaceInfo = ({ place, state, closeModal }) => {
+  const place = {
+    "place_id": 203,
+    "name": "Thian Hock Keng Temple, Singapore",
+    "description": "Beautifully restored, Thian Hock Keng Temple is the oldest Chinese temple in Singapore and dedicated to Mazu, the Goddess of the Sea.",
+    "type": "ATTRACTION",
+    "longitude": 103.84763,
+    "latitude": 1.28094,
+    "image_link": "http://www.yoursingapore.com/content/dam/desktop/global/see-do-singapore/culture-heritage/thian-hock-kheng-temple-carousel01-rect.jpg",
+    "link_1": "http://www.thianhockkeng.com.sg",
+    "link_2": "http://www.yoursingapore.com/en/see-do-singapore/culture-heritage/places-of-worship/thian-hock-keng-temple.html",
+    "opening_hours": "Daily, 7.30am – 5.30pm",
+    "image_credits": "Joel Chua DY",
+    "image_cap": "The Thian Hock Keng Temple in Singapore is dedicated to Mazu, the Goddess of the Sea.",
+    "address": "158 Telok Ayer Street",
+    "city": "Singapore"
+  };
 
   return (
     <Modal
