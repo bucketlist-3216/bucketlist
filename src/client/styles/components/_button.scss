@@ -15,13 +15,22 @@
 //   color: $blue;
 // }
 .sso-button {
+  // if screen width > 555px, apply this
+  @media screen and (min-width: 555px) {
+    margin-right: 20px;
+    width: 120px;
+  }
   background-color: rgba(255, 255, 255, 1);
   border-radius: 5px;
   text-align: center;
   display: flex;
   vertical-align: middle;
-  margin-right: 20px;
-  width: 120px;
+  // width: 120px;
+  width: 100%;
+
+  &:last-child {
+    margin-top: 10px;
+  }
 
   svg {
     width: 20px;
@@ -55,6 +64,11 @@
   // no fucking clue why this doesn't work. will come back to it
   &:active {
     color: #f18a7c;
+  }
+  // if screen width < 555px, apply this
+  @media screen and (max-width: 555px) {
+    float: none;
+    width: 100%;
   }
 }
 
