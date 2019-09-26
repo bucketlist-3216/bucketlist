@@ -5,7 +5,7 @@ import TRIP_BUTTONS from '../../constants/tripButtons';
 
 const Trip = props => {
   let { trip } = props;
-  let { destination, start_date, end_date, members } = trip;
+  let { trip_id, destination, start_date, end_date, members } = trip;
   if (!members) {
     members = [];
   }
@@ -36,7 +36,7 @@ const Trip = props => {
         <div className="trip-members">
           {members.map((member, key) => (
             <div className="trip-member">
-              {member}
+              {member.username || member.email}
             </div>
           ))}
         </div>
@@ -45,7 +45,7 @@ const Trip = props => {
             <TripButton
               key={key}
               text={content.text}
-              url={content.url}
+              url={content.url(trip_id)}
             />
           ))}
         </div>

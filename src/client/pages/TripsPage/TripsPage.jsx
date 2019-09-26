@@ -1,9 +1,13 @@
 import React, { Component } from "react";
+import ReactGA from 'react-ga';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios'
 
+import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 import Header from "../../components/Header";
 import Trip from "../../components/Trip";
 
@@ -12,14 +16,15 @@ class TripsPage extends Component {
     super(props);
 
     this.state = {
-      trips: []
+      trips: [],
+      isDoneFetching: false
     };
 
     this.routeChange = this.routeChange.bind(this);
   }
 
   routeChange() {
-    this.props.history.push('../../createview');
+    this.props.history.push(PATHS.createTrip());
   }
 
   componentDidMount() {
@@ -27,9 +32,10 @@ class TripsPage extends Component {
     let instance = this;
     const userId = this.props.match.params.userId;
     axios
-      .get(`http://localhost:3001/api/v1/user/${userId}/trips`)
+      .get(APIS.user.trips(userId))
       .then(function (response) {
         instance.setState({trips:response.data});
+        instance.setState({isDoneFetching:true});
       })
       .catch(function (error) {
         alert(error.message);
@@ -37,7 +43,10 @@ class TripsPage extends Component {
   }
 
   render() {
-    if (this.state.trips.length > 0) {
+    ReactGA.initialize('UA-148749594-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
+    
+    if (this.state.isDoneFetching) {
       return (
         <div className="trips-page">
           <div className="header-container">

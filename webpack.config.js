@@ -1,11 +1,12 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src/client', 'BucketList.jsx'),
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'src/server/build'),
     filename: 'bundle.js',
     publicPath: '/',
   },
@@ -59,6 +60,9 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
+    new CopyWebpackPlugin([
+      { from: './assets', to: 'assets' }
+    ])
   ],
   devServer: {
     inline: true,

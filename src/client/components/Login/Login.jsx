@@ -6,6 +6,7 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 import loginSecrets from '../../../../config/login_secrets.json';
 import PROVIDERS from '../../constants/providers';
 import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
@@ -40,12 +41,12 @@ class Login extends Component {
       platform = 'facebook';
     }
 
-    let that = this;
+    let instance = this;
     axios
       .post(APIS.login, { userData })
       .then(function(response) {
-        that.setState({ userId: response.data.insertedId[0] });
-        that.routeChange();
+        instance.setState({ userId: response.data.insertedId[0] });
+        instance.routeChange();
       })
       .catch(function(error) {
         alert(error.message);
@@ -53,7 +54,7 @@ class Login extends Component {
   }
 
   routeChange() {
-    window.location.href = `/user/${this.state.userId}/trips`;
+    this.props.history.push(PATHS.trips(this.state.userId));
   }
 
   render() {
@@ -91,6 +92,7 @@ class Login extends Component {
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Control
+                disabled
                 className="email-field"
                 type="email"
                 placeholder="Email"
@@ -99,12 +101,13 @@ class Login extends Component {
 
             <Form.Group controlId="formBasicPassword">
               <Form.Control
+                disabled
                 className="password-field"
                 type="password"
                 placeholder="Password"
               />
             </Form.Group>
-            <Button className="submit-button" type="submit">
+            <Button className="submit-button" type="submit" disabled>
               Submit
             </Button>
           </Form>
