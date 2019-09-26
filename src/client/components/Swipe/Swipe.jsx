@@ -55,7 +55,7 @@ class Swipe extends Component {
 
     this.state = {
       places: [],
-      isFetching: true,
+      isLoading: true,
       hasNext: true
     };
   }
@@ -67,8 +67,7 @@ class Swipe extends Component {
   // Helper functions to communicate with backend
 
   getPlacesToSwipe() {
-    this.setState({ isFetching: true });
-    this.props.setLoading(true);
+    this.setState({ isLoading: true });
 
     const { tripId, userId } = this.props.match.params;
     const instance = this;
@@ -80,8 +79,7 @@ class Swipe extends Component {
           instance.setState({ hasNext: false });
         }
         instance.setState({ places: response.data });
-        instance.setState({ isFetching: false });
-        instance.props.setLoading(false);
+        instance.setState({ isLoading: false });
       })
       .catch(function (error) {
         alert(error.message);
@@ -206,7 +204,7 @@ class Swipe extends Component {
   }
 
   render() {
-    if (this.state.isFetching) {
+    if (this.state.isLoading) {
       return null;
     }
 

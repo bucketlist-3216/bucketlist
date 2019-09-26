@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator'
 
+import Preloader from "../../components/Preloader";
 import Header from "../../components/Header";
 import Swipe from "../../components/Swipe";
 
@@ -9,13 +10,6 @@ import Swipe from "../../components/Swipe";
 class SwipeView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: false
-    }
-  }
-
-  setLoading(isLoading) {
-    this.setState({ isLoading });
   }
 
   render() {
@@ -25,7 +19,7 @@ class SwipeView extends Component {
     return (
       <div>
         <Header />
-        <Swipe setLoading={this.setLoading} {...this.props}/>
+        <Swipe {...this.props}/>
       </div>
     );
   }
