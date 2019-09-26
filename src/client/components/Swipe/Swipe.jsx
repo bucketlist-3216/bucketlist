@@ -51,8 +51,35 @@ class Swipe extends Component {
 
     this.state = {
       places: [],
-      isDoneSwiping: false
+      isFetching: true,
+      hasNext: true
     };
+  }
+
+  componentDidMount() {
+    this.getPlacesToSwipe();
+  }
+
+  getPlacesToSwipe() {
+    this.setState({ isFetching: true });
+    this.props.setLoading(true);
+
+    const instance = this;
+    const { tripId, userId } = this.props.match.params;
+
+    axios
+      .get(APIS.vote.places(tripId, userId))
+      .then(function (response) {
+        if (response.data.length == 0) {
+          instance.setState({ hasNext: false });
+        }
+        instance.setState({ places: response.data });
+        instance.setState({ isFetching: false });
+        instance.props.setLoading(false);
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
   }
 
   nextCard = () => {
@@ -61,21 +88,7 @@ class Swipe extends Component {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
     } else {
-      instance.props.setLoading(true);
-      let instance = this;
-      axios
-        .get(APIS.vote.places)
-        .get(APIS.vote.results(tripId))
-        .then(function (response) {
-          if (response.data.length == 0) {
-            instance.setState({ isDoneSwiping: true });
-          }
-          instance.setState({ places: response.data });
-          instance.props.setLoading(false);
-        })
-        .catch(function (error) {
-          alert(error.message);
-        });
+      this.getPlacesToSwipe();
     }
   };
 
@@ -109,24 +122,28 @@ class Swipe extends Component {
   }
 
   render() {
+    if (this.state.isFetching) {
+      return null;
+    }
+
     const { places } = this.state;
 
     return (
       <div className="swipe">
-        {places.length > 0 && (
+        {this.state.places.length > 0 && (
           <div>
             <div className="swipe-header">
               <img
                 className="icon-back"
-                src="./assets/common/icon-leftarrow.png"
+                src="/assets/common/icon-leftarrow.png"
               />
               <div className="city">{places[0].city || ''}</div>
-              <img className="icon-list" src="./assets/common/icon-list.png" />
+              <img className="icon-list" src="/assets/common/icon-list.png" />
             </div>
             <div className="place-name">{places[0].name || ''}</div>
           </div>
         )}
-        {this.state.isDoneSwiping ? this.renderSwiping() : this.renderSwipeComplete()}
+        {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }

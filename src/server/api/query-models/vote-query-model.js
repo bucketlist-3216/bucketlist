@@ -27,7 +27,7 @@ class VoteQueryModel extends EntityQueryModel {
             .where(filters);
     }
 
-    getPlacesToVote(userId, tripId, limit = 15) {
+    getPlacesToVote(userId, tripId, limit = 100) {
         return knex
             .select(['name', 'city', 'image_link'])
             .from(this.placeQueryModel.tableName)
