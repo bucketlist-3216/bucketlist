@@ -26,8 +26,13 @@ class TripsPage extends Component {
     this.routeChange = this.routeChange.bind(this);
   }
 
-  routeChange() {
-    this.props.history.push(PATHS.createTrip(this.props.match.params.userId));
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname: PATHS.createTrip(this.props.match.params.userId),
+      state: {
+        token: this.props.location.state.token
+      }
+    });
   }
 
   componentDidMount() {

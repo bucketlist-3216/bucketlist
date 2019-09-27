@@ -17,7 +17,8 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      userId: 0
+      userId: 0,
+      token: ''
     };
   }
 
@@ -33,6 +34,7 @@ class Login extends Component {
           token: response.Zi.id_token,
           platform
         };
+        this.setState({ token: response.Zi.id_token });
       } else if (platform === 'facebook') {
         userData = {
           email: response.email,
@@ -40,6 +42,7 @@ class Login extends Component {
           token: response.accessToken,
           platform
         };
+        this.setState({ token: response.accessToken });
       }
       console.log(userData);
 
@@ -57,7 +60,12 @@ class Login extends Component {
   }
 
   routeChange() {
-    this.props.history.push(PATHS.trips(this.state.userId));
+    this.props.history.push({
+      pathname: PATHS.trips(this.state.userId),
+      state: {
+        token: this.state.token
+      }
+    });
   }
 
   render() {

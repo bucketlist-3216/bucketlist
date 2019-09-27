@@ -29,6 +29,16 @@ class Swipe extends Component {
     this.getPlacesToSwipe(placeId);
   }
 
+  // Helper function for redirecting
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname,
+      state: {
+        token: this.props.location.state.token
+      }
+    });
+  }
+
   // Helper functions to communicate with backend
 
   getPlacesToSwipe(placeId) {
@@ -146,15 +156,16 @@ class Swipe extends Component {
             <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/>
             <div className="swipe-header">
               <BackButton onClick={() => {
-                this.props.history.push(PATHS.trips(userId));
+                this.routeChange(PATHS.trips(userId));
               }}/>
               <div className="city">{places[0].city || ''}</div>
               <img
                 className="icon-list"
                 src="/assets/common/icon-list.png"
                 onClick={() => {
-                  this.props.history.push(PATHS.list(userId, tripId));
-                }}/>
+                  this.routeChange(PATHS.list(userId, tripId));
+                }}
+              />
             </div>
             <div className="place-name"><span>{places[0].name || ''}</span></div>
           </div>

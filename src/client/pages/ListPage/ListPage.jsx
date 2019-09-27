@@ -21,8 +21,14 @@ class ListPage extends Component {
     };
   }
 
-  routeChange(path) {
-    this.props.history.push(path);
+  routeChange(pathname, placeId) {
+    this.props.history.push({
+      pathname,
+      state: {
+        token: this.props.location.state.token,
+        placeId
+      }
+    });
   }
 
   componentDidMount() {
@@ -61,12 +67,7 @@ class ListPage extends Component {
               <PlaceCard
                 key={key}
                 place={place}
-                onClick={() => this.props.history.push({
-                  pathname: PATHS.swipe(userId, tripId),
-                  state: {
-                    placeId: place.place_id
-                  }
-                })}
+                onClick={() => this.routeChange(PATHS.swipe(userId, tripId), place.place_id)}
               />
             ))}
           </div>
