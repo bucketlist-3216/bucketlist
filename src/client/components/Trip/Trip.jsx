@@ -22,10 +22,7 @@ const Trip = props => {
 
   function routeChange(pathname) {
     this.props.history.push({
-      pathname,
-      state: {
-        token: this.props.location.state.token
-      }
+      pathname
     });
   }
 

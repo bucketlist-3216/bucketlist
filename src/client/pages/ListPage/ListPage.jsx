@@ -25,7 +25,6 @@ class ListPage extends Component {
     this.props.history.push({
       pathname,
       state: {
-        token: this.props.location.state.token,
         placeId
       }
     });

@@ -52,7 +52,7 @@ class Login extends Component {
         .post(APIS.login, { userData })
         .then(function (response) {
           instance.setState({ userId: response.data.insertedId[0] });
-          instance.routeChange();
+          instance.routeChange(PATHS.trips(this.state.userId));
         })
         .catch(function (error) {
           alert(error.message);
@@ -61,12 +61,9 @@ class Login extends Component {
     }
   }
 
-  routeChange() {
+  routeChange(pathname) {
     this.props.history.push({
-      pathname: PATHS.trips(this.state.userId),
-      state: {
-        token: this.state.token
-      }
+      pathname
     });
   }
 

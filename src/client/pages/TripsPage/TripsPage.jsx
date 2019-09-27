@@ -28,15 +28,11 @@ class TripsPage extends Component {
 
   routeChange(pathname) {
     this.props.history.push({
-      pathname: PATHS.createTrip(this.props.match.params.userId),
-      state: {
-        token: this.props.location.state.token
-      }
+      pathname: PATHS.createTrip(this.props.match.params.userId)
     });
   }
 
   componentDidMount() {
-    // TODO: check that logged in user === owner of the trips, otherwise deny access
     let instance = this;
     const userId = this.props.match.params.userId;
     axios

@@ -32,10 +32,7 @@ class Swipe extends Component {
   // Helper function for redirecting
   routeChange(pathname) {
     this.props.history.push({
-      pathname,
-      state: {
-        token: this.props.location.state.token
-      }
+      pathname
     });
   }
 
@@ -51,7 +48,7 @@ class Swipe extends Component {
       .request({
         url: APIS.placesToVote(tripId, userId),
         method: 'get',
-        headers: { token: this.props.location.state.token },
+        headers: {},
         data: { placeId }
       })
       .then(function (response) {
@@ -79,7 +76,7 @@ class Swipe extends Component {
         .request({
           url: APIS.vote,
           method: 'post',
-          headers: { token: this.props.location.state.token },
+          headers: {},
           data: {
             vote: vote[swipeDirection],
             user_id: userId,
