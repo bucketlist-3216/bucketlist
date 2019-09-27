@@ -9,13 +9,6 @@ import Swipe from "../../components/Swipe";
 class SwipeView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: false
-    }
-  }
-
-  setLoading(isLoading) {
-    this.setState({ isLoading });
   }
 
   render() {
@@ -25,7 +18,7 @@ class SwipeView extends Component {
     return (
       <div>
         <Header />
-        <Swipe setLoading={this.setLoading} {...this.props}/>
+        <Swipe {...this.props}/>
       </div>
     );
   }

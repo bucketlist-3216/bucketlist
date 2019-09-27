@@ -14,6 +14,18 @@ if (settings.validate) {
     router.use(validateRequest);
 }
 
+router.get('/:placeId', function (req, res) {
+    const queryingPlace = placeQueryModel.getPlaceData(req.params.placeId);
+    queryingPlace
+        .then(function (results) {
+            res.json(results[0]);
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to get place data due to ${err.message}`);
+            console.log(err);
+        });
+});
+
 /**************** Update Places Store  ****************/
 
 // Get place from database based on given filters

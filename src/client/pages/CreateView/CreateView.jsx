@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
+import PATHS from '../../constants/paths';
 import Header from "../../components/Header";
+import BackButton from "../../components/BackButton";
 import Title from "../../components/Title";
 import Create from "../../components/Create";
 import Preloader from '../../components/Preloader';
@@ -29,8 +31,13 @@ class CreateView extends Component {
     }
 
     return (
-      <div>
+      <div className="create-page">
         <Header />
+        <div className="create-header">
+          <BackButton onClick={() => {
+            this.props.history.push(PATHS.trips(this.props.match.params.userId));
+          }}/>
+        </div>
         <Title text="Create New Trip" />
         <Create {...this.props} setLoading={this.setLoading}/>
       </div>
