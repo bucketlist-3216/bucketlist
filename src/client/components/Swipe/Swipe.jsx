@@ -175,7 +175,7 @@ class Swipe extends Component {
         {places.length > 0 && (
           <div>
             {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
-            {this.renderModal()}
+            {this.renderModal(places[0].place_id)}
             <div className="swipe-header">
               <BackButton
                 onClick={() => {
@@ -201,7 +201,7 @@ class Swipe extends Component {
     );
   }
 
-  renderModal() {
+  renderModal(placeId) {
     const { isModalShown } = this.state;
     const isMobile = window.innerWidth < 555;
     return (
@@ -209,6 +209,7 @@ class Swipe extends Component {
         isModalShown={isModalShown}
         closeModal={this.closeModal}
         isMobile={isMobile}
+        placeId={placeId}
       />
     );
   }
