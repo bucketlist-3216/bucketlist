@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const process = require('process');
+const helmet = require('helmet');
 const {
     login: loginRouter,
     user: userRouter,
@@ -33,6 +34,12 @@ app.use('/api/', function (req, res, next) {
 var sslRedirect = require('heroku-ssl-redirect');
 app.use(sslRedirect());
 
+
+/****************** Enforce everytime (HSTS): HTTPS ******************/
+
+app.use(helmet.hsts({
+  maxAge: 5184000
+}));
 
 /****************** BACK FOR HTTPS REDIRECTION ******************/
 /*
