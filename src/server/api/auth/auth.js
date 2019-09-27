@@ -7,6 +7,8 @@ const userQueryModel = new UserQueryModel();
 module.exports = (req, res, next) => {
   if (req.path === '/login') {
     next();
+  } else if (!req.headers.token) {
+    res.status(401).end('User not logged in');
   } else {
     const { token, platform } = req.headers;
     verify({ token, platform })
