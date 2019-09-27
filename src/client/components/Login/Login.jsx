@@ -34,7 +34,7 @@ class Login extends Component {
           token: response.Zi.id_token,
           platform
         };
-        this.setState({ token: response.Zi.id_token });
+        instance.setState({ token: response.Zi.id_token });
       } else if (platform === 'facebook') {
         userData = {
           email: response.email,
@@ -42,7 +42,7 @@ class Login extends Component {
           token: response.accessToken,
           platform
         };
-        this.setState({ token: response.accessToken });
+        instance.setState({ token: response.accessToken });
       }
       console.log(userData);
 

@@ -23,6 +23,15 @@ class Create extends Component {
     };
   }
 
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname,
+      state: {
+        token: this.props.location.state.token
+      }
+    });
+  }
+
   handleChangeCity(event) {
     this.setState({ city: event.target.value });
   }
@@ -77,7 +86,7 @@ class Create extends Component {
       axios
         .post(APIS.trip, {trip})
         .then(function(response) {
-          instance.props.history.push(PATHS.trips(userId));
+          instance.routeChange(PATHS.trips(userId));
           instance.props.setLoading(false);
         })
         .catch(function(error) {
