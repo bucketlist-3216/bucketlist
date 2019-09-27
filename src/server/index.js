@@ -54,6 +54,16 @@ const redirectionFilter = function (req, res, next) {
 app.get('/*', redirectionFilter); 
 */
 
+/************************ Miscellaneous Files *************************/
+
+app.get("/robots.txt", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../", "robots.txt"));
+});
+
+app.get("/manifest.json", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../", "manifest.json"));
+});
+
 /*************************** Service Worker ***************************/
 
 app.get("/sw.js", (req, res) => {
@@ -67,13 +77,13 @@ app.use('/api/v1/trip', tripRouter);
 app.use('/api/v1/place', placeRouter);
 app.use('/api/v1/user', userRouter);
 
-// // Serve the static files from build
-// console.log('Serving folder', path.join(__dirname, 'build'));
-// app.use(express.static(path.join(__dirname, 'build')));
-//
-// app.get('*', function(req, res) {
-//     res.sendFile('index.html', {root: path.join(__dirname, 'build')});
-// });
+// Serve the static files from build
+console.log('Serving folder', path.join(__dirname, 'build'));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: path.join(__dirname, 'build')});
+});
 
 /************************** Start the server **************************/
 
