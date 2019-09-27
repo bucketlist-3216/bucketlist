@@ -6,7 +6,8 @@ const APIS = {
   vote: `${root}/trip/vote`,
   voteResults: (tripId) => `${root}/trip/${tripId}/vote/results/`,
   placesToVote: (tripId, userId) => `${root}/trip/${tripId}/vote/user/${userId}`,
-  userTrips: (userId) => `${root}/user/${userId}/trips`
+  userTrips: (userId) => `${root}/user/${userId}/trips`,
+  place: (placeId) => `${root}/place/${placeId}`
 };
 
 export default APIS;

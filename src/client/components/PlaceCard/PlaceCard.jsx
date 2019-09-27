@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 const PlaceCard = props => {
-  let { place } = props;
+  let { place, onClick } = props;
   let { place_id, name, address, image_link, voteCount } = place;
 
   if (!image_link || image_link === '<Null>') {
@@ -9,7 +9,7 @@ const PlaceCard = props => {
   }
 
   return (
-    <div className="place-card">
+    <div className="place-card" onClick={onClick}>
       <div className="place-img-container">
         <img src={image_link} className="place-img"/>
       </div>
