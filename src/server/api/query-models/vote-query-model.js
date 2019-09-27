@@ -49,7 +49,7 @@ class VoteQueryModel extends EntityQueryModel {
 
     // Cast a vote for a location
     castVote(vote) {
-        console.log(vote);
+        // console.log(vote);
 
         vote = _.omit(vote, this.nonInsertableProps);
         const filter = {
@@ -57,7 +57,7 @@ class VoteQueryModel extends EntityQueryModel {
             "trip_friend_id": vote['trip_friend_id']
         };
 
-        console.log(filter);
+        // console.log(filter);
 
         // Delete any older votes for the same thing
         const deleteOldVotes = this.deleteVote(filter);

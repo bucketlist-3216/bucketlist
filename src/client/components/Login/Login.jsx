@@ -17,46 +17,58 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      userId: 0
+      userId: 0,
+      token: ''
     };
   }
 
-  handleResponse(response) {
-    this.props.setLoading(true);
-    let userData = {};
-    let platform = '';
-
-    if (response.hasOwnProperty('googleId')) {
-      userData = {
-        email: response.profileObj.email,
-        username: response.profileObj.name,
-        accessToken: response.accessToken
-      };
-      platform = 'google';
-    } else {
-      userData = {
-        email: response.email,
-        username: response.name,
-        accessToken: response.accessToken
-      };
-      platform = 'facebook';
-    }
-
+  handleResponse(platform) {
     let instance = this;
-    axios
-      .post(APIS.login, { userData })
-      .then(function(response) {
-        instance.setState({ userId: response.data.insertedId[0] });
-        instance.routeChange();
-      })
-      .catch(function(error) {
-        alert(error.message);
-      });
-    //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
+    return function (response) {
+      instance.props.setLoading(true);
+      let userData = {};
+
+      if (platform === 'google') {
+        userData = {
+          email: response.profileObj.email,
+          username: response.profileObj.name,
+          token: response.Zi.id_token,
+          platform
+        };
+        instance.setState({ token: response.Zi.id_token });
+      } else if (platform === 'facebook') {
+        userData = {
+          email: response.email,
+          username: response.name,
+          token: response.accessToken,
+          platform
+        };
+        instance.setState({ token: response.accessToken });
+      }
+      localStorage.setItem('token', userData.token);
+      localStorage.setItem('platform', userData.platform);
+
+      axios
+        .post(APIS.login, { userData })
+        .then(function (response) {
+          instance.setState({ userId: response.data.insertedId[0] });
+          instance.routeChange(PATHS.trips(instance.state.userId));
+        })
+        .catch(function (error) {
+          if (error.response.status == 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
+          alert(error.message);
+        });
+      //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
+    }
   }
 
-  routeChange() {
-    this.props.history.push(PATHS.trips(this.state.userId));
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname
+    });
   }
 
   render() {
@@ -72,15 +84,16 @@ class Login extends Component {
                 renderProps={renderProps}
               />
             )}
+            responseType="id_token"
             buttonText={PROVIDERS['google'].providerName}
-            onSuccess={this.handleResponse}
+            onSuccess={this.handleResponse('google')}
             onFailure={error => console.log(error)}
             cookiePolicy={'single_host_origin'}
           />
           <FacebookLogin
             appId={loginSecrets.facebook}
             fields="name,email"
-            callback={this.handleResponse}
+            callback={this.handleResponse('facebook')}
             render={renderProps => (
               <SingleSignOnButton
                 providerName={PROVIDERS['facebook'].providerName}
@@ -89,6 +102,7 @@ class Login extends Component {
                 disabled
               />
             )}
+            responseType="token"
           />
         </div>
         <div className="login-fields">

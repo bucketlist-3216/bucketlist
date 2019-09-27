@@ -1,6 +1,6 @@
 const express = require('express');
 const Compute = require('../../compute');
-const validateRequest = require('../auth');
+const validateRequest = require('../validate');
 const settings = require('../../config/settings.js')
 const _ = require('underscore');
 const {
@@ -46,18 +46,19 @@ router.post('/', function (req, res) {
             "email2@email.com"
         ]
     };
-
     const toInsert = req.body.trip;
+    toInsert.authorId = req.headers.verifiedUserId;
+    console.log(toInsert.authorId );
 
     // Insert trip into mySQL using knex
     const tripInsertion = tripQueryModel.addTrip(toInsert);
 
     return tripInsertion
         .then(function (returnedObject) {
-            console.log('Trip insertion complete: ', returnedObject);
+            // console.log('Trip insertion complete: ', returnedObject);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
-                let getUserId = userQueryModel.getUserId(emailId);
+                let getUserId = userQueryModel.getUserId({ email: emailId });
 
                 return getUserId.then(function (userId) {
                     return tripFriendQueryModel.addTripFriend({
@@ -76,7 +77,7 @@ router.post('/', function (req, res) {
             return Promise.all([returnedObject].concat(tripMembershipUpdates));
         })
         .then(function (result) {
-            console.log('promise.all is complete with result: ', result);
+            // console.log('promise.all is complete with result: ', result);
             res.json({insertedId: result[0]});
         })
         .catch(function (err) {
@@ -176,17 +177,19 @@ router.delete('/members/:tripFriend', function (req, res) {
 // These are the votes that have been cast inside this trip
 
 router.post('/vote', function (req, res) {
-    const { vote, user_id, trip_id, place_id } = req.body;
+    let { vote, user_id, trip_id, place_id } = req.body;
+    user_id = req.headers.verifiedUserId;
+    console.log(user_id);
 
     const queryingTripFriendId = tripFriendQueryModel.getTripFriendId(trip_id, user_id);
     queryingTripFriendId
         .then(function (response) {
             const { trip_friend_id } = Object.assign({}, response[0]);
-            console.log(response);
+            // console.log(response);
             return voteQueryModel.castVote({ trip_friend_id, place_id, vote });
         })
         .then(function (voteId) {
-            console.log(voteId);
+            // console.log(voteId);
             res.json({ insertedId: voteId });
         })
         .catch(function (err) {
@@ -225,6 +228,8 @@ router.get('/vote/location/:locationId', function (req, res) {
 // Get locations to vote for the trip
 router.get('/:tripId/vote/user/:userId', function (req, res) {
     const params = Object.assign({}, req.params, req.query);
+    params.userId = req.headers.verifiedUserId;
+    console.log(params.userId);
     const places = voteQueryModel.getPlacesToVote(params);
 
     places

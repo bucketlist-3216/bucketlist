@@ -21,21 +21,37 @@ class ListPage extends Component {
     };
   }
 
-  routeChange(path) {
-    this.props.history.push(path);
+  routeChange(pathname, placeId) {
+    this.props.history.push({
+      pathname,
+      state: {
+        placeId
+      }
+    });
   }
 
   componentDidMount() {
     let instance = this;
     const tripId = this.props.match.params.tripId;
     axios
-      .get(APIS.voteResults(tripId))
+      .request({
+        url: APIS.voteResults(tripId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
       .then(function (response) {
         instance.setState({places:response.data});
         instance.setState({isDoneFetching:true});
         instance.setState({isLoading:false});
       })
       .catch(function (error) {
+        if (error.response.status == 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
         alert(error.message);
       });
   }
@@ -61,12 +77,7 @@ class ListPage extends Component {
               <PlaceCard
                 key={key}
                 place={place}
-                onClick={() => this.props.history.push({
-                  pathname: PATHS.swipe(userId, tripId),
-                  state: {
-                    placeId: place.place_id
-                  }
-                })}
+                onClick={() => this.routeChange(PATHS.swipe(userId, tripId), place.place_id)}
               />
             ))}
           </div>

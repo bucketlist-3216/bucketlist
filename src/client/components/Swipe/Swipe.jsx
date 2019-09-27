@@ -32,6 +32,13 @@ class Swipe extends Component {
     this.getPlacesToSwipe(placeId);
   }
 
+  // Helper function for redirecting
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname
+    });
+  }
+
   // Helper functions to communicate with backend
 
   getPlacesToSwipe(placeId) {
@@ -41,10 +48,14 @@ class Swipe extends Component {
     const instance = this;
 
     axios
-      .get(APIS.placesToVote(tripId, userId), {
-        params: {
-          placeId: placeId
-        }
+      .request({
+        url: APIS.placesToVote(tripId, userId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        },
+        params: { placeId }
       })
       .then(function(response) {
         if (response.data.length == 0) {
@@ -53,7 +64,11 @@ class Swipe extends Component {
         instance.setState({ places: response.data });
         instance.setState({ isLoading: false });
       })
-      .catch(function(error) {
+      .catch(function (error) {
+        if (error.response.status == 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
         alert(error.message);
       });
   }
@@ -68,13 +83,25 @@ class Swipe extends Component {
       };
 
       axios
-        .post(APIS.vote, {
-          vote: vote[swipeDirection],
-          user_id: userId,
-          trip_id: tripId,
-          place_id: place.place_id
+        .request({
+          url: APIS.vote,
+          method: 'post',
+          headers: {
+            token: localStorage.getItem('token'),
+            platform: localStorage.getItem('platform')
+          },
+          data: {
+            vote: vote[swipeDirection],
+            user_id: userId,
+            trip_id: tripId,
+            place_id: place.place_id
+          }
         })
-        .catch(function(error) {
+        .catch(function (error) {
+          if (error.esponse.status == 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
           alert(error.message);
         });
     };
@@ -152,7 +179,7 @@ class Swipe extends Component {
             <div className="swipe-header">
               <BackButton
                 onClick={() => {
-                  this.props.history.push(PATHS.trips(userId));
+                  this.routeChange(PATHS.trips(userId));
                 }}
               />
               <div className="city">{places[0].city || ''}</div>
@@ -160,7 +187,7 @@ class Swipe extends Component {
                 className="icon-list"
                 src="/assets/common/icon-list.png"
                 onClick={() => {
-                  this.props.history.push(PATHS.list(userId, tripId));
+                  this.routeChange(PATHS.list(userId, tripId));
                 }}
               />
             </div>
