@@ -46,7 +46,6 @@ router.post('/', function (req, res) {
             "email2@email.com"
         ]
     };
-
     const toInsert = req.body.trip;
 
     // Insert trip into mySQL using knex

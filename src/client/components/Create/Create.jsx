@@ -84,7 +84,15 @@ class Create extends Component {
       };
       let instance = this;
       axios
-        .post(APIS.trip, {trip})
+        .request({
+          url: APIS.trip,
+          method: 'post',
+          headers: {
+            token: localStorage.getItem('token'),
+            platform: localStorage.getItem('platform')
+          },
+          data: { trip }
+        })
         .then(function(response) {
           instance.routeChange(PATHS.trips(userId));
           instance.props.setLoading(false);

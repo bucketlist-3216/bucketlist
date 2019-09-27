@@ -48,10 +48,11 @@ class Swipe extends Component {
     const instance = this;
 
     axios
-      .get(APIS.placesToVote(tripId, userId), {
-        params: {
-          placeId: placeId
-        }
+      .request({
+        url: APIS.placesToVote(tripId, userId),
+        method: 'get',
+        headers: { token: this.props.location.state.token },
+        data: { placeId }
       })
       .then(function (response) {
         if (response.data.length == 0) {
@@ -75,11 +76,16 @@ class Swipe extends Component {
       }
 
       axios
-        .post(APIS.vote, {
-          vote: vote[swipeDirection],
-          user_id: userId,
-          trip_id: tripId,
-          place_id: place.place_id
+        .request({
+          url: APIS.vote,
+          method: 'post',
+          headers: { token: this.props.location.state.token },
+          data: {
+            vote: vote[swipeDirection],
+            user_id: userId,
+            trip_id: tripId,
+            place_id: place.place_id
+          }
         })
         .catch(function (error) {
           alert(error.message);

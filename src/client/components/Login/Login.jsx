@@ -44,6 +44,8 @@ class Login extends Component {
         };
         instance.setState({ token: response.accessToken });
       }
+      localStorage.setItem('token', userData.token);
+      localStorage.setItem('platform', userData.platform);
       console.log(userData);
 
       axios
