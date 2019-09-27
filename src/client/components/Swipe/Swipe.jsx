@@ -10,6 +10,7 @@ import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
 import PlaceInfo from './PlaceInfo/';
 import BackButton from '../BackButton';
+import Preloader from '../Preloader';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -25,7 +26,9 @@ class Swipe extends Component {
   }
 
   componentDidMount() {
-    const placeId = this.props.location.state ? this.props.location.state.placeId : null;
+    const placeId = this.props.location.state
+      ? this.props.location.state.placeId
+      : null;
     this.getPlacesToSwipe(placeId);
   }
 
@@ -43,26 +46,26 @@ class Swipe extends Component {
           placeId: placeId
         }
       })
-      .then(function (response) {
+      .then(function(response) {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
         instance.setState({ places: response.data });
         instance.setState({ isLoading: false });
       })
-      .catch(function (error) {
+      .catch(function(error) {
         alert(error.message);
       });
   }
 
   castVote(place) {
-    return (swipeDirection) => {
+    return swipeDirection => {
       const { tripId, userId } = this.props.match.params;
       const instance = this;
       const vote = {
         left: 'DISLIKE',
         right: 'LIKE'
-      }
+      };
 
       axios
         .post(APIS.vote, {
@@ -71,10 +74,10 @@ class Swipe extends Component {
           trip_id: tripId,
           place_id: place.place_id
         })
-        .catch(function (error) {
+        .catch(function(error) {
           alert(error.message);
         });
-    }
+    };
   }
 
   // Helper function for modal
@@ -104,8 +107,12 @@ class Swipe extends Component {
     const currentPlace = places[0];
     return (
       <div className="swipe-container">
-        <Swipeable buttons={this.renderButtons} onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}>
-          <SwipeCard place={currentPlace} showModal={this.showModal}/>
+        <Swipeable
+          buttons={this.renderButtons}
+          onSwipe={this.castVote(currentPlace)}
+          onAfterSwipe={this.nextCard}
+        >
+          <SwipeCard place={currentPlace} showModal={this.showModal} />
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -120,7 +127,6 @@ class Swipe extends Component {
     );
   }
 
-
   renderButtons({ left, right }) {
     return (
       <div className="swipe-buttons">
@@ -131,13 +137,11 @@ class Swipe extends Component {
   }
 
   render() {
-    if (this.state.isLoading) {
-      return null;
-    }
-
-    const { places } = this.state;
+    const { places, isLoading } = this.state;
     const { userId, tripId } = this.props.match.params;
     const currentPlace = places[0];
+
+    if (isLoading) return null;
 
     return (
       <div className="swipe">
@@ -146,18 +150,23 @@ class Swipe extends Component {
             {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
             {this.renderModal()}
             <div className="swipe-header">
-              <BackButton onClick={() => {
-                this.props.history.push(PATHS.trips(userId));
-              }}/>
+              <BackButton
+                onClick={() => {
+                  this.props.history.push(PATHS.trips(userId));
+                }}
+              />
               <div className="city">{places[0].city || ''}</div>
               <img
                 className="icon-list"
                 src="/assets/common/icon-list.png"
                 onClick={() => {
                   this.props.history.push(PATHS.list(userId, tripId));
-                }}/>
+                }}
+              />
             </div>
-            <div className="place-name"><span>{places[0].name || ''}</span></div>
+            <div className="place-name">
+              <span>{places[0].name || ''}</span>
+            </div>
           </div>
         )}
         {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
@@ -167,7 +176,14 @@ class Swipe extends Component {
 
   renderModal() {
     const { isModalShown } = this.state;
-    return <PlaceInfo isModalShown={isModalShown} closeModal={this.closeModal}/>
+    const isMobile = window.innerWidth < 555;
+    return (
+      <PlaceInfo
+        isModalShown={isModalShown}
+        closeModal={this.closeModal}
+        isMobile={isMobile}
+      />
+    );
   }
 }
 

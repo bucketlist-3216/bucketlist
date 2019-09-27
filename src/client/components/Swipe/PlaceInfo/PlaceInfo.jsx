@@ -44,8 +44,8 @@ const PLACES = {
   ]
 };
 
-const PlaceInfo = (props) => {
-  const { isModalShown, closeModal } = props;
+const PlaceInfo = props => {
+  const { isModalShown, closeModal, isMobile } = props;
   return (
     <Modal
       show={isModalShown}
@@ -59,15 +59,18 @@ const PlaceInfo = (props) => {
       <Modal.Body>
         <div className="info-body">
           <div className="image-row">
-            {_.map(PLACES.images, (image, key) => {
-              console.log(image);
+            {/* {_.map(PLACES.images, (image, key) => {
               return <img key={key} className="image" src={image} />;
-            })}
+            })} */}
+            {renderImages(isMobile)}
           </div>
           <div className="info-content">
             <h1 className="name">{PLACES.name}</h1>
             <p className="description">{PLACES.description}</p>
-            <p className="location"><span className="word">Location: </span>{PLACES.location}</p>
+            <p className="location">
+              <span className="word">Location: </span>
+              {PLACES.location}
+            </p>
             <div className="review-container">
               <p className="section-title">Reviews:</p>
               {_.map(PLACES.reviews, (review, key) => {
@@ -86,6 +89,19 @@ const PlaceInfo = (props) => {
       </Modal.Body>
     </Modal>
   );
+};
+
+const renderImages = isMobile => {
+  // if isMobile, render only one image
+  if (isMobile) {
+    return (
+        <img className="image" src={PLACES.images[0]} />
+    );
+  } else {
+    _.map(PLACES.images, (image, key) => {
+      return <img key={key} className="image" src={image} />;
+    });
+  }
 };
 
 export default PlaceInfo;

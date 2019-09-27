@@ -16,7 +16,7 @@ class SwipeView extends Component {
     ReactGA.pageview(window.location.pathname + window.location.search);
 
     return (
-      <div>
+      <div className="swipe-view">
         <Header />
         <Swipe {...this.props}/>
       </div>

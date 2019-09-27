@@ -11,6 +11,11 @@
     justify-content: space-between;
     margin-bottom: 20px;
 
+    // if screen width < 555px, apply this
+    @media screen and (max-width: 555px) {
+      width: 350px;
+    }
+
     .icon-back,
     .icon-list {
       width: 28px;
@@ -27,16 +32,23 @@
   .place-name {
     height: 120px; // To ensure that card stays in place when place name has more than 1 line
     position: relative;
-    margin: 10px 0px;
 
     span {
-      width: 412px;
       font-family: 'JosefinSans-Regular';
-      font-size: 40px;
+      font-size: 35px;
       line-height: 40px;
       text-align: center;
       position: absolute;
       bottom: 0;
+    }
+
+    // if screen width < 555px, apply this
+    @media screen and (max-width: 555px) {
+      height: 70px;
+      span {
+        font-size: 25px;
+        line-height: 30px;
+      }
     }
   }
 
@@ -45,15 +57,19 @@
     width: 412px;
     height: 544px;
 
-    .swipe-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
+    @media screen and (max-width: 555px) {
+      width: 300px;
+      height: 396px;
     }
 
+    .wrapper{}
+
     .swipe-card {
-      width: 412px;
-      height: 544px;
+      // width: 412px;
+      // height: 544px;
+      width: 100%;
+      height: 100%;
+      
       cursor: pointer;
       user-select: none;
       position: absolute;
@@ -103,7 +119,7 @@
       cursor: pointer;
       display: flex;
       justify-content: space-evenly;
-      margin-bottom: 50px;
+      margin-top: 50px;
 
       .action-button {
         border-radius: 50%;
