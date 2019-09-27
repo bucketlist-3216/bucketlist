@@ -195,7 +195,7 @@ class Swipe extends Component {
             </div>
           </div>
         )}
-        {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
+        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }
