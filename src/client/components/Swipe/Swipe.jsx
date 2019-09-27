@@ -143,7 +143,8 @@ class Swipe extends Component {
       <div className="swipe">
         {places.length > 0 && (
           <div>
-            <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/>
+            {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
+            {this.renderModal()}
             <div className="swipe-header">
               <BackButton onClick={() => {
                 this.props.history.push(PATHS.trips(userId));
@@ -162,6 +163,11 @@ class Swipe extends Component {
         {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
+  }
+
+  renderModal() {
+    const { isModalShown } = this.state;
+    return <PlaceInfo isModalShown={isModalShown} closeModal={this.closeModal}/>
   }
 }
 
