@@ -1,6 +1,11 @@
 .placeinfo {
   width: 1200px;
 
+  // if screen width < 555px, apply this
+  @media screen and (max-width: 580px) {
+    width:95%; top:0;
+  }
+
   .info-title {
     font-family: 'JosefinSans-Regular';
     font-size: 40px;
