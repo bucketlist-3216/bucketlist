@@ -8,21 +8,13 @@ const loadingText = 'Taking you around the world';
 const Preloader = () => {
   return (
     <div className="preloader">
-      <Animated
-        className="logo-container"
-        animationIn="zoomIn"
-        animationInDelay="1000"
-        animationInDuration="500"
-        // isVisible={false}
-      >
+      <div className="logo-container">
         <img className="logo" src={BucketListLogo} />
-      </Animated>
+      </div>
       <Animated
         className="logo-container"
         animationIn="fadeIn"
-        animationInDelay="2000"
-        animationInDuration="500"
-        // isVisible={false}
+        animationInDelay="0"
       >
         <div className="loading">
           <div className="loader-text">{loadingText}</div>

@@ -18,16 +18,15 @@ class LandingPage extends Component {
     };
   }
 
-  setLoading(isLoading) {
-    this.setState({ isLoading });
+  setLoading(loadingStatus) {
+    this.setState({ isLoading: loadingStatus });
   }
 
   render() {
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
-    if (this.state.isLoading) {
-        return (<Preloader />);
-    } 
+    if (this.state.isLoading) return <Preloader />;
+  
     return (
       <div className="landing-page">
         <div className="brand">
@@ -38,7 +37,7 @@ class LandingPage extends Component {
           <div className="login-title">
             <h1>Travel planning has never been easier</h1>
           </div>
-          <Login {...this.props} setLoading={this.setLoading} />
+          <Login {...this.props} setLoading={() => this.setLoading} />
         </div>
         <div className="title">
           <h1>Swipe. List. Go.</h1>
