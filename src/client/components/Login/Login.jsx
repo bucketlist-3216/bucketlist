@@ -25,6 +25,7 @@ class Login extends Component {
   handleResponse(platform) {
     let instance = this;
     return function (response) {
+      instance.props.setLoading(true);
       let userData = {};
 
       if (platform === 'google') {
@@ -98,6 +99,7 @@ class Login extends Component {
                 providerName={PROVIDERS['facebook'].providerName}
                 logo={PROVIDERS['facebook'].logo}
                 renderProps={renderProps}
+                disabled
               />
             )}
             responseType="token"

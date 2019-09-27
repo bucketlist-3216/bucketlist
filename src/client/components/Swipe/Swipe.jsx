@@ -10,6 +10,7 @@ import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
 import PlaceInfo from './PlaceInfo/';
 import BackButton from '../BackButton';
+import Preloader from '../Preloader';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -25,7 +26,9 @@ class Swipe extends Component {
   }
 
   componentDidMount() {
-    const placeId = this.props.location.state ? this.props.location.state.placeId : null;
+    const placeId = this.props.location.state
+      ? this.props.location.state.placeId
+      : null;
     this.getPlacesToSwipe(placeId);
   }
 
@@ -54,7 +57,7 @@ class Swipe extends Component {
         },
         params: { placeId }
       })
-      .then(function (response) {
+      .then(function(response) {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
@@ -71,13 +74,13 @@ class Swipe extends Component {
   }
 
   castVote(place) {
-    return (swipeDirection) => {
+    return swipeDirection => {
       const { tripId, userId } = this.props.match.params;
       const instance = this;
       const vote = {
         left: 'DISLIKE',
         right: 'LIKE'
-      }
+      };
 
       axios
         .request({
@@ -101,7 +104,7 @@ class Swipe extends Component {
           }
           alert(error.message);
         });
-    }
+    };
   }
 
   // Helper function for modal
@@ -131,8 +134,12 @@ class Swipe extends Component {
     const currentPlace = places[0];
     return (
       <div className="swipe-container">
-        <Swipeable buttons={this.renderButtons} onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}>
-          <SwipeCard place={currentPlace} showModal={this.showModal}/>
+        <Swipeable
+          buttons={this.renderButtons}
+          onSwipe={this.castVote(currentPlace)}
+          onAfterSwipe={this.nextCard}
+        >
+          <SwipeCard place={currentPlace} showModal={this.showModal} />
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -147,7 +154,6 @@ class Swipe extends Component {
     );
   }
 
-
   renderButtons({ left, right }) {
     return (
       <div className="swipe-buttons">
@@ -158,23 +164,24 @@ class Swipe extends Component {
   }
 
   render() {
-    if (this.state.isLoading) {
-      return null;
-    }
-
-    const { places } = this.state;
+    const { places, isLoading } = this.state;
     const { userId, tripId } = this.props.match.params;
     const currentPlace = places[0];
+
+    if (isLoading) return null;
 
     return (
       <div className="swipe">
         {places.length > 0 && (
           <div>
-            <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/>
+            {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
+            {this.renderModal()}
             <div className="swipe-header">
-              <BackButton onClick={() => {
-                this.routeChange(PATHS.trips(userId));
-              }}/>
+              <BackButton
+                onClick={() => {
+                  this.routeChange(PATHS.trips(userId));
+                }}
+              />
               <div className="city">{places[0].city || ''}</div>
               <img
                 className="icon-list"
@@ -184,11 +191,25 @@ class Swipe extends Component {
                 }}
               />
             </div>
-            <div className="place-name"><span>{places[0].name || ''}</span></div>
+            <div className="place-name">
+              <span>{places[0].name || ''}</span>
+            </div>
           </div>
         )}
         {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
+    );
+  }
+
+  renderModal() {
+    const { isModalShown } = this.state;
+    const isMobile = window.innerWidth < 555;
+    return (
+      <PlaceInfo
+        isModalShown={isModalShown}
+        closeModal={this.closeModal}
+        isMobile={isMobile}
+      />
     );
   }
 }
