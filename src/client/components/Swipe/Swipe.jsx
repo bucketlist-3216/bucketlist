@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Swipeable from 'react-swipy';
+import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 
 import APIS from '../../constants/apis';
@@ -7,78 +8,47 @@ import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
+import PlaceInfo from './PlaceInfo/';
+import BackButton from '../BackButton';
 
-const PLACES = [
-  {
-    city: 'Greece',
-    image:
-      'https://lonelyplanetwp.imgix.net/2016/02/Santorini-sunset_CS.jpg?fit=min&q=40&sharp=10&vib=20&w=1470',
-    name: 'Santorini',
-    price: '$$'
-  },
-  {
-    city: 'New York',
-    image:
-      'https://www.nycgo.com/images/venues/152/tripadvisortimessquare_taggeryanceyiv_5912__x_large.jpg',
-    name: 'Times Square',
-    price: '$$$'
-  },
-  {
-    city: 'Paris',
-    image:
-      'https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateParis_Heroshutterstock_112137761.jpg',
-    name: 'Eiffel Tower',
-    price: '$$'
-  },
-  {
-    city: 'Dubai',
-    image:
-      'https://images2.minutemediacdn.com/image/upload/c_crop,h_1192,w_2123,x_0,y_70/f_auto,q_auto,w_1100/v1559225783/shape/mentalfloss/584459-istock-183342824.jpg',
-    name: 'Burj Khalifa',
-    price: '$$$'
-  },
-  {
-    city: 'Rome',
-    image:
-      'https://www.roadaffair.com/wp-content/uploads/2017/09/colosseum-rome-italy-shutterstock_433413835-1024x683.jpg',
-    name: 'Colosseum',
-    price: '$'
-  }
-];
-
+@autoBindMethods
 class Swipe extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       places: [],
-      isFetching: true,
-      hasNext: true
+      hasNext: true,
+      isLoading: true,
+      isModalShown: false
     };
   }
 
   componentDidMount() {
-    this.getPlacesToSwipe();
+    const placeId = this.props.location.state ? this.props.location.state.placeId : null;
+    this.getPlacesToSwipe(placeId);
   }
 
   // Helper functions to communicate with backend
 
-  getPlacesToSwipe() {
-    this.setState({ isFetching: true });
-    this.props.setLoading(true);
+  getPlacesToSwipe(placeId) {
+    this.setState({ isLoading: true });
 
     const { tripId, userId } = this.props.match.params;
     const instance = this;
 
     axios
-      .get(APIS.placesToVote(tripId, userId))
+      .get(APIS.placesToVote(tripId, userId), {
+        params: {
+          placeId: placeId
+        }
+      })
       .then(function (response) {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
         instance.setState({ places: response.data });
-        instance.setState({ isFetching: false });
-        instance.props.setLoading(false);
+        instance.setState({ isLoading: false });
       })
       .catch(function (error) {
         alert(error.message);
@@ -107,6 +77,16 @@ class Swipe extends Component {
     }
   }
 
+  // Helper function for modal
+
+  showModal(event) {
+    this.setState({ isModalShown: true });
+  }
+
+  closeModal(event) {
+    this.setState({ isModalShown: false });
+  }
+
   // Helper functions for swiping
 
   nextCard = () => {
@@ -125,7 +105,7 @@ class Swipe extends Component {
     return (
       <div className="swipe-container">
         <Swipeable buttons={this.renderButtons} onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}>
-          <SwipeCard place={currentPlace} />
+          <SwipeCard place={currentPlace} showModal={this.showModal}/>
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -140,6 +120,7 @@ class Swipe extends Component {
     );
   }
 
+
   renderButtons({ left, right }) {
     return (
       <div className="swipe-buttons">
@@ -150,25 +131,23 @@ class Swipe extends Component {
   }
 
   render() {
-    if (this.state.isFetching) {
+    if (this.state.isLoading) {
       return null;
     }
 
     const { places } = this.state;
     const { userId, tripId } = this.props.match.params;
+    const currentPlace = places[0];
 
     return (
       <div className="swipe">
-        {this.state.places.length > 0 && (
+        {places.length > 0 && (
           <div>
+            <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/>
             <div className="swipe-header">
-              <img
-                className="icon-back"
-                src="/assets/common/icon-leftarrow.png"
-                onClick={() => {
-                  this.props.history.push(PATHS.trips(userId));
-                }}
-              />
+              <BackButton onClick={() => {
+                this.props.history.push(PATHS.trips(userId));
+              }}/>
               <div className="city">{places[0].city || ''}</div>
               <img
                 className="icon-list"

@@ -3,8 +3,41 @@ import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 
 const PLACES = [
-  { city: 'Singapore', image: 'image1.png', name: 'Raffles Place' },
-  { city: 'Singapore', image: 'image2.png', name: 'City Hall' }
+  {
+    city: 'Greece',
+    image:
+      'https://lonelyplanetwp.imgix.net/2016/02/Santorini-sunset_CS.jpg?fit=min&q=40&sharp=10&vib=20&w=1470',
+    name: 'Santorini',
+    price: '$$$'
+  },
+  {
+    city: 'New York',
+    image:
+      'https://www.nycgo.com/images/venues/152/tripadvisortimessquare_taggeryanceyiv_5912__x_large.jpg',
+    name: 'Times Square',
+    price: '$$$'
+  },
+  {
+    city: 'Paris',
+    image:
+      'https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateParis_Heroshutterstock_112137761.jpg',
+    name: 'Eiffel Tower',
+    price: '$$'
+  },
+  {
+    city: 'Dubai',
+    image:
+      'https://images2.minutemediacdn.com/image/upload/c_crop,h_1192,w_2123,x_0,y_70/f_auto,q_auto,w_1100/v1559225783/shape/mentalfloss/584459-istock-183342824.jpg',
+    name: 'Burj Khalifa',
+    price: '$$$'
+  },
+  {
+    city: 'Rome',
+    image:
+      'https://www.roadaffair.com/wp-content/uploads/2017/09/colosseum-rome-italy-shutterstock_433413835-1024x683.jpg',
+    name: 'Colosseum',
+    price: '$'
+  }
 ];
 
 @autoBindMethods
