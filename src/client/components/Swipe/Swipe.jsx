@@ -166,7 +166,6 @@ class Swipe extends Component {
   render() {
     const { places, isLoading } = this.state;
     const { userId, tripId } = this.props.match.params;
-    const currentPlace = places[0];
 
     if (isLoading) return null;
 
