@@ -48,7 +48,10 @@ class Swipe extends Component {
       .request({
         url: APIS.placesToVote(tripId, userId),
         method: 'get',
-        headers: {},
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        },
         data: { placeId }
       })
       .then(function (response) {
@@ -76,7 +79,10 @@ class Swipe extends Component {
         .request({
           url: APIS.vote,
           method: 'post',
-          headers: {},
+          headers: {
+            token: localStorage.getItem('token'),
+            platform: localStorage.getItem('platform')
+          },
           data: {
             vote: vote[swipeDirection],
             user_id: userId,

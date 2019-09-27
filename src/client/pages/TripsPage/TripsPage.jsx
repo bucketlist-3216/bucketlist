@@ -36,7 +36,14 @@ class TripsPage extends Component {
     let instance = this;
     const userId = this.props.match.params.userId;
     axios
-      .get(APIS.userTrips(userId))
+      .request({
+        url: APIS.userTrips(userId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
       .then(function (response) {
         instance.setState({ trips: response.data });
         instance.setState({ isDoneFetching: true });

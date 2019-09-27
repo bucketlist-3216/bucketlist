@@ -34,7 +34,14 @@ class ListPage extends Component {
     let instance = this;
     const tripId = this.props.match.params.tripId;
     axios
-      .get(APIS.voteResults(tripId))
+      .request({
+        url: APIS.voteResults(tripId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
       .then(function (response) {
         instance.setState({places:response.data});
         instance.setState({isDoneFetching:true});
