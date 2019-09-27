@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
             next();
         })
         .catch(function(err) {
-            res.status(500).end(`Unable to authenticate user due to ${err.message}`);
+            res.status(401).end(`Unable to authenticate user due to ${err.message}`);
             console.log(err);
         });
     }
