@@ -11,16 +11,12 @@ const Preloader = () => {
       <div className="logo-container">
         <img className="logo" src={BucketListLogo} />
       </div>
-      <Animated
-        className="logo-container"
-        animationIn="fadeIn"
-        animationInDelay="0"
-      >
+      <div className="logo-container">
         <div className="loading">
           <div className="loader-text">{loadingText}</div>
           {renderEllipsisAnimation()}
         </div>
-      </Animated>
+      </div>
     </div>
   );
 };
