@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ReactGA from 'react-ga';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 import './styles/styles.scss';
 
@@ -31,3 +32,7 @@ ReactDOM.render(
   </BrowserRouter>,
   document.querySelector('#root')
 );
+ 
+if ('serviceWorker' in navigator) {
+  const registration = runtime.register();
+}
