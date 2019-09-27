@@ -4,7 +4,7 @@ import TripButton from './TripButton';
 import PATHS from '../../constants/paths';
 
 const Trip = props => {
-  let { trip, userId } = props;
+  let { trip, userId, showModal } = props;
   let { trip_id, destination, start_date, end_date, members } = trip;
   if (!members) {
     members = [];
@@ -57,6 +57,7 @@ const Trip = props => {
           />
           <TripButton
             text="add friends"
+            onClick={showModal}
           />
         </div>
       </div>
