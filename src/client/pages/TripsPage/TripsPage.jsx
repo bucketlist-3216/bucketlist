@@ -35,7 +35,6 @@ class TripsPage extends Component {
   componentDidMount() {
     let instance = this;
     const userId = this.props.match.params.userId;
-    console.log(localStorage.getItem('token'));
     axios
       .request({
         url: APIS.userTrips(userId),

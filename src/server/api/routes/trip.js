@@ -185,11 +185,11 @@ router.post('/vote', function (req, res) {
     queryingTripFriendId
         .then(function (response) {
             const { trip_friend_id } = Object.assign({}, response[0]);
-            console.log(response);
+            // console.log(response);
             return voteQueryModel.castVote({ trip_friend_id, place_id, vote });
         })
         .then(function (voteId) {
-            console.log(voteId);
+            // console.log(voteId);
             res.json({ insertedId: voteId });
         })
         .catch(function (err) {
