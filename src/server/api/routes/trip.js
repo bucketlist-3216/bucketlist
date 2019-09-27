@@ -47,6 +47,8 @@ router.post('/', function (req, res) {
         ]
     };
     const toInsert = req.body.trip;
+    toInsert.authorId = req.headers.verifiedUserId;
+    console.log(toInsert.authorId );
 
     // Insert trip into mySQL using knex
     const tripInsertion = tripQueryModel.addTrip(toInsert);
@@ -175,7 +177,9 @@ router.delete('/members/:tripFriend', function (req, res) {
 // These are the votes that have been cast inside this trip
 
 router.post('/vote', function (req, res) {
-    const { vote, user_id, trip_id, place_id } = req.body;
+    let { vote, user_id, trip_id, place_id } = req.body;
+    user_id = req.headers.verifiedUserId;
+    console.log(user_id);
 
     const queryingTripFriendId = tripFriendQueryModel.getTripFriendId(trip_id, user_id);
     queryingTripFriendId
@@ -224,6 +228,8 @@ router.get('/vote/location/:locationId', function (req, res) {
 // Get locations to vote for the trip
 router.get('/:tripId/vote/user/:userId', function (req, res) {
     const params = Object.assign({}, req.params, req.query);
+    params.userId = req.headers.verifiedUserId;
+    console.log(params.userId);
     const places = voteQueryModel.getPlacesToVote(params);
 
     places

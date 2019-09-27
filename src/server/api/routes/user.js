@@ -69,7 +69,9 @@ router.delete('/', function(req, res) {
  * Get user's trips
  */
 router.get('/:userId/trips', function (req, res) {
-  const trips = tripFriendQueryModel.getUserTrips(req.params.userId);
+  const userId = req.headers.verifiedUserId;
+  console.log(userId);
+  const trips = tripFriendQueryModel.getUserTrips(userId);
 
   trips
       .then(function(queryResponse) {
