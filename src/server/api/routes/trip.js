@@ -53,7 +53,7 @@ router.post('/', function (req, res) {
 
     return tripInsertion
         .then(function (returnedObject) {
-            console.log('Trip insertion complete: ', returnedObject);
+            // console.log('Trip insertion complete: ', returnedObject);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId({ email: emailId });
@@ -75,7 +75,7 @@ router.post('/', function (req, res) {
             return Promise.all([returnedObject].concat(tripMembershipUpdates));
         })
         .then(function (result) {
-            console.log('promise.all is complete with result: ', result);
+            // console.log('promise.all is complete with result: ', result);
             res.json({insertedId: result[0]});
         })
         .catch(function (err) {

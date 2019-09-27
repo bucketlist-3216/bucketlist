@@ -19,7 +19,7 @@ if (settings.validate) {
 router.post('/', function (req, res) {
     // body parameter is of the form: {userData: {email, username, token, platform}}
     const userData = req.body.userData;
-    const { email, username, platform } = userData;
+    const { email, username, token, platform } = userData;
     const gettingUser = userQueryModel.getUser({ email });
     const gettingPlatformId = verify({ token, platform });
 

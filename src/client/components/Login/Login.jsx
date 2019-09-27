@@ -46,13 +46,12 @@ class Login extends Component {
       }
       localStorage.setItem('token', userData.token);
       localStorage.setItem('platform', userData.platform);
-      console.log(userData);
 
       axios
         .post(APIS.login, { userData })
         .then(function (response) {
           instance.setState({ userId: response.data.insertedId[0] });
-          instance.routeChange(PATHS.trips(this.state.userId));
+          instance.routeChange(PATHS.trips(instance.state.userId));
         })
         .catch(function (error) {
           alert(error.message);
