@@ -23,6 +23,12 @@ class Create extends Component {
     };
   }
 
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname
+    });
+  }
+
   handleChangeCity(event) {
     this.setState({ city: event.target.value });
   }
@@ -65,6 +71,8 @@ class Create extends Component {
 
     if (this.state.city === '') {
       alert('Please select city of destination');
+    } else if (this.state.from > this.state.to) {
+      alert('Start date should be before end date!');
     } else {
       let userId = this.props.match.params.userId;
       let trip = {
@@ -75,12 +83,24 @@ class Create extends Component {
       };
       let instance = this;
       axios
-        .post(APIS.trip, {trip})
+        .request({
+          url: APIS.trip,
+          method: 'post',
+          headers: {
+            token: localStorage.getItem('token'),
+            platform: localStorage.getItem('platform')
+          },
+          data: { trip }
+        })
         .then(function(response) {
-          instance.props.history.push(PATHS.trips(userId));
+          instance.routeChange(PATHS.trips(userId));
           instance.props.setLoading(false);
         })
         .catch(function(error) {
+          if (error.response.status == 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
           alert(error.message);
           console.log(error);
         });

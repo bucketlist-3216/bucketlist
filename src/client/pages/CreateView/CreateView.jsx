@@ -19,6 +19,12 @@ class CreateView extends Component {
     };
   }
 
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname
+    });
+  }
+
   setLoading(isLoading) {
     this.setState({ isLoading });
   }
@@ -35,7 +41,7 @@ class CreateView extends Component {
         <Header />
         <div className="create-header">
           <BackButton onClick={() => {
-            this.props.history.push(PATHS.trips(this.props.match.params.userId));
+            this.routeChange(PATHS.trips(this.props.match.params.userId));
           }}/>
         </div>
         <Title text="Create New Trip" />

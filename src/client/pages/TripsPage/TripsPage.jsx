@@ -26,23 +26,35 @@ class TripsPage extends Component {
     this.routeChange = this.routeChange.bind(this);
   }
 
-  routeChange() {
-    this.props.history.push(PATHS.createTrip(this.props.match.params.userId));
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname
+    });
   }
 
   componentDidMount() {
-    // TODO: check that logged in user === owner of the trips, otherwise deny access
     let instance = this;
     const userId = this.props.match.params.userId;
     axios
-      .get(APIS.userTrips(userId))
+      .request({
+        url: APIS.userTrips(userId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
       .then(function (response) {
         instance.setState({ trips: response.data });
         instance.setState({ isDoneFetching: true });
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        console.log(error.message);
+        if (error.response.status == 401) {
+          instance.routeChange(PATHS.landingPage());
+          return;
+        }
+        alert(error.message);
       });
     this.setState({ isLoading: true });
   }
@@ -68,7 +80,7 @@ class TripsPage extends Component {
                 history={this.props.history}
               />
             ))}
-            <div className="trip" onClick={this.routeChange}>
+            <div className="trip" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
               <div className="trip-new">
                 <FontAwesomeIcon icon={faPlus} size="2x"/>
                 <br/>

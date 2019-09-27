@@ -32,7 +32,8 @@ ReactDOM.render(
   </BrowserRouter>,
   document.querySelector('#root')
 );
- 
+
+// Install a service worker if allowed in browser
 if ('serviceWorker' in navigator) {
   const registration = runtime.register();
 }

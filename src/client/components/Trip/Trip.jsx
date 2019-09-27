@@ -20,10 +20,16 @@ const Trip = props => {
     new Date(date).toLocaleDateString('default', options)
   );
 
+  function routeChange(pathname) {
+    props.history.push({
+      pathname
+    });
+  }
+
   return (
     <div className="trip">
       <div className="trip-img-container">
-        <img src={`../../../../assets/trips/${destination}.jpg`} className="trip-img"/>
+        <img src={`../../../../assets/trips/${destination}.jpg`} alt={destination} className="trip-img"/>
       </div>
       <div className="trip-details">
         <div className="trip-destination">
@@ -43,11 +49,11 @@ const Trip = props => {
         <div className="trip-button-containers">
           <TripButton
             text="view list"
-            onClick={() => props.history.push(PATHS.list(userId, trip_id))}
+            onClick={() => routeChange(PATHS.list(userId, trip_id))}
           />
           <TripButton
             text="swipe location"
-            onClick={() => props.history.push(PATHS.swipe(userId, trip_id))}
+            onClick={() => routeChange(PATHS.swipe(userId, trip_id))}
           />
           <TripButton
             text="add friends"

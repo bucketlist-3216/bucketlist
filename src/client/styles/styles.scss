@@ -9,7 +9,8 @@ body {
 }
 
 #root {
-  height: 100%
+  height: 100%;
+  overflow-y: scroll;
 }
 
 //Abstracts
@@ -23,3 +24,8 @@ body {
 
 //Pages
 @import "pages/__pages-dir";
+
+// Custom
+.modal {
+  opacity: 1;
+}

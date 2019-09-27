@@ -1,6 +1,6 @@
 const express = require('express');
 const Compute = require('../../compute');
-const validateRequest = require('../auth');
+const validateRequest = require('../validate');
 const settings = require('../../config/settings.js');
 const { PlaceQueryModel } = require('../query-models');
 const _ = require('underscore');

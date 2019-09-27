@@ -43,7 +43,7 @@ class TripFriendQueryModel extends EntityQueryModel {
                   trip_id
               });
         } else {
-          return this.userQueryModel.getUserId(email)
+          return this.userQueryModel.getUserId({ email })
               .then(function (results) {
                   return knex(tableName)
                       .insert({
@@ -65,15 +65,14 @@ class TripFriendQueryModel extends EntityQueryModel {
     // Get all the locations in this particular trip
     getUserTrips (userId) {
         let tripProperties = this.tripQueryModel.selectableProps.filter((element) => element !== 'trip_id');
+        let userProperties = this.userQueryModel.selectableProps.filter((element) => element !== 'user_id');
 
         let selectedColumns = [`${this.tableName}.trip_id`,`${this.tableName}.user_id`].concat(
             tripProperties,
-            this.userQueryModel.selectableProps
+            userProperties
         );
 
-        let filteringUserTrips = knex
-            .select(this.selectableProps)
-            .from(this.tableName)
+        let filteringUserTrips = knex(this.tableName)
             .where({user_id: userId});
 
         let queryingTrips = knex
