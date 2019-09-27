@@ -20,7 +20,9 @@ class TripsPage extends Component {
     this.state = {
       trips: [],
       isDoneFetching: false,
-      isLoading: true
+      isLoading: true,
+      isModalShown: false,
+      modalTripId: null
     };
 
     this.routeChange = this.routeChange.bind(this);
@@ -79,6 +81,7 @@ class TripsPage extends Component {
                 trip={trip}
                 userId={this.props.match.params.userId}
                 history={this.props.history}
+                showModal={this.showModal}
               />
             ))}
             <div className="trip" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
@@ -96,6 +99,33 @@ class TripsPage extends Component {
     } else {
       return null;
     }
+  }
+
+  // Helper function for modal
+
+  showModal(event) {
+    this.setState({ isModalShown: true });
+  }
+
+  closeModal(event) {
+    this.setState({ isModalShown: false });
+  }
+
+  getTripId() {
+    return this.state.modalTripId;
+  }
+
+  renderModal(tripId) {
+    const { isModalShown } = this.state;
+    const isMobile = window.innerWidth < 555;
+    return (
+      <EmailField
+        isModalShown={isModalShown}
+        closeModal={this.closeModal}
+        isMobile={isMobile}
+        getTripId={this.getTripId}
+      />
+    );
   }
 }
 
