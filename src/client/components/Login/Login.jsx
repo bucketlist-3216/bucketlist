@@ -113,6 +113,7 @@ class Login extends Component {
                 className="email-field"
                 type="email"
                 placeholder="Email"
+                aria-label="Email"
               />
             </Form.Group>
 
@@ -122,6 +123,7 @@ class Login extends Component {
                 className="password-field"
                 type="password"
                 placeholder="Password"
+                aria-label="Password"
               />
             </Form.Group>
             <Button className="submit-button" type="submit" disabled>

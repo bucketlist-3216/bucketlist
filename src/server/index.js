@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const process = require('process');
+const auth = require('./api/auth');
 const {
     login: loginRouter,
     user: userRouter,
@@ -9,7 +10,6 @@ const {
     place: placeRouter,
     admin
 } = require('./api/routes');
-const auth = require('./api/auth');
 const config = require('./config/settings');
 const cors = require('cors');
 
@@ -29,6 +29,45 @@ app.use('/api/', function (req, res, next) {
     next();
 });
 
+/****************** Redirection from HTTP to HTTPS ******************/
+
+var sslRedirect = require('heroku-ssl-redirect');
+app.use(sslRedirect());
+
+
+/****************** BACK FOR HTTPS REDIRECTION ******************/
+/*
+const util = require('util');
+const redirectionFilter = function (req, res, next) {
+  const theDate = new Date();
+  const receivedUrl = `${req.protocol}:\/\/${req.hostname}:${port}${req.url}`;
+  if (req.get('X-Forwarded-Proto') === 'http') {
+    const redirectTo = `https:\/\/${req.hostname}${req.url}`;
+    console.log(`${theDate} Redirecting ${receivedUrl} --> ${redirectTo}`);
+    res.redirect(301, redirectTo);
+  } else {
+    next();
+  }
+}; 
+app.get('/*', redirectionFilter); 
+*/
+
+/************************ Miscellaneous Files *************************/
+
+app.get("/robots.txt", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../", "robots.txt"));
+});
+
+app.get("/manifest.json", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../", "manifest.json"));
+});
+
+/*************************** Service Worker ***************************/
+
+app.get("/sw.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "sw.js"));
+});
+
 /********************** Authentication **********************/
 
 app.use('/api/v1/', auth, function (req, res, next) {
@@ -36,20 +75,20 @@ app.use('/api/v1/', auth, function (req, res, next) {
     next();
 });
 
-/************************** Routes **************************/
+/******************************* Routes *******************************/
 
 app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/trip', tripRouter);
 app.use('/api/v1/place', placeRouter);
 app.use('/api/v1/user', userRouter);
 
-// // Serve the static files from build
-// console.log('Serving folder', path.join(__dirname, 'build'));
-// app.use(express.static(path.join(__dirname, 'build')));
-//
-// app.get('*', function(req, res) {
-//     res.sendFile('index.html', {root: path.join(__dirname, 'build')});
-// });
+// Serve the static files from build
+console.log('Serving folder', path.join(__dirname, 'build'));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: path.join(__dirname, 'build')});
+});
 
 /************************** Start the server **************************/
 

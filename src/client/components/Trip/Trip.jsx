@@ -29,7 +29,7 @@ const Trip = props => {
   return (
     <div className="trip">
       <div className="trip-img-container">
-        <img src={`../../../../assets/trips/${destination}.jpg`} className="trip-img"/>
+        <img src={`../../../../assets/trips/${destination}.jpg`} alt={destination} className="trip-img"/>
       </div>
       <div className="trip-details">
         <div className="trip-destination">

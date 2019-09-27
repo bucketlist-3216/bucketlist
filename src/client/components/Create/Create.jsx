@@ -71,6 +71,8 @@ class Create extends Component {
 
     if (this.state.city === '') {
       alert('Please select city of destination');
+    } else if (this.state.from > this.state.to) {
+      alert('Start date should be before end date!');
     } else {
       let userId = this.props.match.params.userId;
       let trip = {

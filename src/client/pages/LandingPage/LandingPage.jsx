@@ -30,7 +30,7 @@ class LandingPage extends Component {
     return (
       <div className="landing-page">
         <div className="brand">
-          <img className="brand-logo" src={BucketListLogo} />
+          <img className="brand-logo" alt="Bucket List Logo" src={BucketListLogo} />
           <span className="brand-title">bucketlist</span>
         </div>
         <div className="login-container">
