@@ -32,6 +32,10 @@
     margin-top: 10px;
   }
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+
   svg {
     width: 20px;
     height: 20px;
@@ -42,6 +46,8 @@
     font-family: 'JosefinSans-Regular';
     margin: 8px 0px 2px 5px;
   }
+
+
 }
 
 .submit-button {

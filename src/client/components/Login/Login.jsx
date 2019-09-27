@@ -86,6 +86,7 @@ class Login extends Component {
                 providerName={PROVIDERS['facebook'].providerName}
                 logo={PROVIDERS['facebook'].logo}
                 renderProps={renderProps}
+                disabled
               />
             )}
           />
