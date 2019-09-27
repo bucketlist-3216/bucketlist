@@ -228,8 +228,8 @@ router.get('/vote/location/:locationId', function (req, res) {
 // Get locations to vote for the trip
 router.get('/:tripId/vote/user/:userId', function (req, res) {
     const params = Object.assign({}, req.params, req.query);
-    params.userId = req.headers.verifiedUserId;
-    console.log(params.userId);
+    // params.userId = req.headers.verifiedUserId;
+    // console.log(params.userId);
     const places = voteQueryModel.getPlacesToVote(params);
 
     places
