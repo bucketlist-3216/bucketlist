@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactGA from 'react-ga';
+import autoBindMethods from 'class-autobind-decorator';
+import _ from 'lodash';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -13,6 +15,7 @@ import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 
+@autoBindMethods
 class TripsPage extends Component {
   constructor(props) {
     super(props);
@@ -105,6 +108,7 @@ class TripsPage extends Component {
 
   showModal(event) {
     this.setState({ isModalShown: true });
+    alert(JSON.stringify(_.omit(this.state, ['trips'])));
   }
 
   closeModal(event) {
@@ -120,10 +124,9 @@ class TripsPage extends Component {
     const isMobile = window.innerWidth < 555;
     return (
       <EmailField
-        isModalShown={isModalShown}
+        state={this.state}
         closeModal={this.closeModal}
         isMobile={isMobile}
-        getTripId={this.getTripId}
       />
     );
   }

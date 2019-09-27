@@ -47,7 +47,7 @@ class EmailField extends Component {
       return null;
     }
 
-    const { isModalShown, closeModal, isMobile, getTripId } = this.props;
+    const { state: { isModalShown, modalTripId }, closeModal, isMobile } = this.props;
     return (
       <Modal
         show={isModalShown}
