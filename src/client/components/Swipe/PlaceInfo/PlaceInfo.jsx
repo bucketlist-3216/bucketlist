@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
 const PlaceInfo = ({ place, state, closeModal }) => {
-  const place = {
+  place = {
     "place_id": 203,
     "name": "Thian Hock Keng Temple, Singapore",
     "description": "Beautifully restored, Thian Hock Keng Temple is the oldest Chinese temple in Singapore and dedicated to Mazu, the Goddess of the Sea.",

@@ -24,19 +24,24 @@ class Swipe extends Component {
   }
 
   componentDidMount() {
-    this.getPlacesToSwipe();
+    const placeId = this.props.location.state.placeId;
+    this.getPlacesToSwipe(placeId);
   }
 
   // Helper functions to communicate with backend
 
-  getPlacesToSwipe() {
+  getPlacesToSwipe(placeId) {
     this.setState({ isLoading: true });
 
     const { tripId, userId } = this.props.match.params;
     const instance = this;
 
     axios
-      .get(APIS.placesToVote(tripId, userId))
+      .get(APIS.placesToVote(tripId, userId), {
+        params: {
+          placeId: placeId
+        }
+      })
       .then(function (response) {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });

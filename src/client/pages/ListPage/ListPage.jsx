@@ -61,6 +61,12 @@ class ListPage extends Component {
               <PlaceCard
                 key={key}
                 place={place}
+                onClick={() => this.props.history.push({
+                  pathname: PATHS.swipe(userId, tripId),
+                  state: {
+                    placeId: place.place_id
+                  }
+                })}
               />
             ))}
           </div>
