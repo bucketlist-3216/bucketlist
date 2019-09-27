@@ -52,7 +52,7 @@ class Swipe extends Component {
           token: localStorage.getItem('token'),
           platform: localStorage.getItem('platform')
         },
-        data: { placeId }
+        params: { placeId }
       })
       .then(function (response) {
         if (response.data.length == 0) {
