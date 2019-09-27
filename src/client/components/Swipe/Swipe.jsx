@@ -55,6 +55,10 @@ class Swipe extends Component {
         data: { placeId }
       })
       .then(function (response) {
+        if (response.status == 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
@@ -88,6 +92,11 @@ class Swipe extends Component {
             user_id: userId,
             trip_id: tripId,
             place_id: place.place_id
+          }
+        })
+        .then(function (response) {
+          if (response.status == 401) {
+            instance.routeChange(PATHS.landingPage);
           }
         })
         .catch(function (error) {

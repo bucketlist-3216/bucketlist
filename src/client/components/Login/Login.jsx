@@ -50,6 +50,10 @@ class Login extends Component {
       axios
         .post(APIS.login, { userData })
         .then(function (response) {
+          if (response.status == 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
           instance.setState({ userId: response.data.insertedId[0] });
           instance.routeChange(PATHS.trips(instance.state.userId));
         })

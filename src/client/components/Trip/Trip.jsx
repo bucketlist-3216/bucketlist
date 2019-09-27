@@ -21,7 +21,7 @@ const Trip = props => {
   );
 
   function routeChange(pathname) {
-    this.props.history.push({
+    props.history.push({
       pathname
     });
   }

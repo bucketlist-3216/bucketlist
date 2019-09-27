@@ -43,6 +43,10 @@ class ListPage extends Component {
         }
       })
       .then(function (response) {
+        if (response.status == 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
         instance.setState({places:response.data});
         instance.setState({isDoneFetching:true});
         instance.setState({isLoading:false});
