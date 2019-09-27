@@ -100,6 +100,7 @@ function verify (userData) {
 
         return request(options)
             .then(response => {
+                response = JSON.parse(response);
                 if (response.data.app_id !== loginSecrets.facebook) {
                     throw new Error("Unauthorized");// res.status(401).end('Unauthorized');
                 }
