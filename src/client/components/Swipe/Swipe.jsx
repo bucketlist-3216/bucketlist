@@ -9,6 +9,7 @@ import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
 import PlaceInfo from './PlaceInfo/';
+import BackButton from '../BackButton';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -24,7 +25,7 @@ class Swipe extends Component {
   }
 
   componentDidMount() {
-    const placeId = this.props.location.state.placeId;
+    const placeId = this.props.location.state ? this.props.location.state.placeId : null;
     this.getPlacesToSwipe(placeId);
   }
 
@@ -144,13 +145,9 @@ class Swipe extends Component {
           <div>
             <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/>
             <div className="swipe-header">
-              <img
-                className="icon-back"
-                src="/assets/common/icon-leftarrow.png"
-                onClick={() => {
-                  this.props.history.push(PATHS.trips(userId));
-                }}
-              />
+              <BackButton onClick={() => {
+                this.props.history.push(PATHS.trips(userId));
+              }}/>
               <div className="city">{places[0].city || ''}</div>
               <img
                 className="icon-list"
