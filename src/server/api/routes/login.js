@@ -1,19 +1,9 @@
 const express = require('express');
-const validateRequest = require('../auth');
+const validateRequest = require('../validate');
 const settings = require('../../config/settings.js');
-const {
-    UserQueryModel
-} = require('../query-models')
-
+const { UserQueryModel } = require('../query-models');
 const userQueryModel = new UserQueryModel();
-
-// For Google Login authentication
-const loginSecrets = require('../../../../config/login_secrets.json');
-const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client(loginSecrets.google);
-
-// For Facebook Login authentication
-const request = require('request-promise');
+const verify = require('../auth/verify');
 
 // Login API router
 const router = express.Router();
@@ -29,10 +19,9 @@ if (settings.validate) {
 router.post('/', function (req, res) {
     // body parameter is of the form: {userData: {email, username, token, platform}}
     const userData = req.body.userData;
-    console.log(userData);
     const { email, username, platform } = userData;
     const gettingUser = userQueryModel.getUser({ email });
-    const gettingPlatformId = verify(userData);
+    const gettingPlatformId = verify({ token, platform });
 
     Promise.all([gettingUser, gettingPlatformId])
         .then(function (result) {
@@ -49,14 +38,12 @@ router.post('/', function (req, res) {
             }
 
             const user = Object.assign({}, users[0]);
-            console.log(users);
-            console.log(user);
             const userId = user.user_id;
             if (!users[`${platform}_id`]) {
-                return userQueryModel.updateUser({
-                    user_id: userId,
-                    [`${platform}_id`]: platformId
-                })
+                return userQueryModel.updateUser(
+                    { user_id: userId },
+                    { [`${platform}_id`]: platformId }
+                )
                     .then(function (updatedId) {
                         return [userId];
                     })
@@ -75,42 +62,5 @@ router.post('/', function (req, res) {
             console.log(err);
         });
 });
-
-function verify (userData) {
-    if (userData.platform === 'google') {
-        const ticket = client.verifyIdToken({
-            idToken: userData.token,
-            audience: loginSecrets.google
-        });
-        return ticket
-            .then((response) => response.getPayload())
-            .then((payload) => {
-                return payload.sub;
-            })
-            .catch((error) => {
-                throw error;
-            });
-    } else if (userData.platform === 'facebook') {
-        const options = {
-            method: 'GET',
-            uri: `https\://graph.facebook.com/debug_token?\
-                input_token=${userData.token}\
-                &access_token=${loginSecrets.facebook}|${loginSecrets.facebook_app_secret}`
-        };
-
-        return request(options)
-            .then(response => {
-                response = JSON.parse(response);
-                if (response.data.app_id !== loginSecrets.facebook) {
-                    throw new Error("Unauthorized");// res.status(401).end('Unauthorized');
-                }
-                return response.data.user_id;
-            })
-            .catch((error) => {
-                throw error;
-            });
-    }
-    // TODO: get user email from token
-}
 
 module.exports = router;

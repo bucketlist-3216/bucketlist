@@ -1,1 +1,1 @@
-module.exports = require('./validate');
+module.exports = require('./auth');

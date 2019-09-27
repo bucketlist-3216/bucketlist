@@ -6,9 +6,9 @@ class UserQueryModel extends EntityQueryModel {
 
     constructor(dbClient) {
         super(dbClient);
-        this.validFilters = ['user_id', 'email'];
+        this.validFilters = ['user_id', 'email', 'google_id', 'facebook_id'];
         this.nonInsertableProps = ['user_id', 'create_time'];
-        this.selectableProps = ['user_id', 'username', 'email', 'google_id'];
+        this.selectableProps = ['user_id', 'username', 'email', 'google_id', 'facebook_id'];
         this.userMutable = true;
         this.tableName = 'User';
     }
@@ -21,27 +21,25 @@ class UserQueryModel extends EntityQueryModel {
             .insert(toInsert);
     }
 
-    getUserId (email) {
-        return knex(this.tableName)
+    getUserId (filters) {
+        filters = _.pick(filters, this.validFilters);
+        return knex
             .select(['user_id'])
-            .where({'email': email});
+            .from(this.tableName)
+            .where(filters);
     }
 
     getUser (filters) {
-        console.log(filters);
         filters = _.pick(filters, this.validFilters);
-        console.log(filters);
-
         return knex
             .select(this.selectableProps)
             .from(this.tableName)
             .where(filters);
     }
 
-    updateUser (userData) {
-        const filters = _.pick(userData, this.validFilters);
-        const data = _.omit(userData, this.nonInsertableProps);
-        console.log(userData);
+    updateUser (filters, data) {
+        filters = _.pick(filters, this.validFilters);
+        data = _.omit(data, this.nonInsertableProps);
 
         return knex(this.tableName)
             .where(filters)

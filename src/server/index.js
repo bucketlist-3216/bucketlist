@@ -9,6 +9,7 @@ const {
     place: placeRouter,
     admin
 } = require('./api/routes');
+const auth = require('./api/auth');
 const config = require('./config/settings');
 const cors = require('cors');
 
@@ -25,6 +26,13 @@ app.use('/api/', function (req, res, next) {
     next();
 }, function (req, res, next) {
     console.log('Request Type:', req.method);
+    next();
+});
+
+/********************** Authentication **********************/
+
+app.use('/api/v1/', auth, function (req, res, next) {
+    console.log(req.headers.verifiedUserId);
     next();
 });
 

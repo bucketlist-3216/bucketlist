@@ -1,6 +1,6 @@
 const express = require('express');
 const Compute = require('../../compute');
-const validateRequest = require('../auth');
+const validateRequest = require('../validate');
 const settings = require('../../config/settings.js')
 const _ = require('underscore');
 const {
@@ -56,7 +56,7 @@ router.post('/', function (req, res) {
             console.log('Trip insertion complete: ', returnedObject);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
-                let getUserId = userQueryModel.getUserId(emailId);
+                let getUserId = userQueryModel.getUserId({ email: emailId });
 
                 return getUserId.then(function (userId) {
                     return tripFriendQueryModel.addTripFriend({

@@ -43,7 +43,7 @@ class TripFriendQueryModel extends EntityQueryModel {
                   trip_id
               });
         } else {
-          return this.userQueryModel.getUserId(email)
+          return this.userQueryModel.getUserId({ email })
               .then(function (results) {
                   return knex(tableName)
                       .insert({
