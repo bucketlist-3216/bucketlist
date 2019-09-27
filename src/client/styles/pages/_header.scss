@@ -1,11 +1,13 @@
 .header {
   background-color: #343434;
   height: 60px;
-}
+  width: 100%;
+  border-radius: 0;
 
-.headerTitle {
-  font-family: 'JosefinSans-Regular';
-  color: white;
-  font-weight: 700;  
-  font-size: 24px;
+  .headerTitle {
+    font-family: 'JosefinSans-Regular';
+    color: white;
+    font-weight: 700;
+    font-size: 24px;
+  }
 }
