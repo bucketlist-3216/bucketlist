@@ -104,7 +104,10 @@ class Swipe extends Component {
     const currentPlace = places[0];
     return (
       <div className="swipe-container">
-        <Swipeable buttons={this.renderButtons} onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}>
+        <Swipeable
+          buttons={this.renderButtons}
+          onSwipe={this.castVote(currentPlace)}
+          onAfterSwipe={this.nextCard}>
           <SwipeCard place={currentPlace} showModal={this.showModal}/>
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
