@@ -50,6 +50,7 @@ class TripsPage extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
+        alert(error.response.status);
         if (error.response.status == 401) {
           instance.routeChange(PATHS.landingPage());
           return;
