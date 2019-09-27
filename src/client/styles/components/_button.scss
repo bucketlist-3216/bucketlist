@@ -42,6 +42,16 @@
     font-family: 'JosefinSans-Regular';
     margin: 8px 0px 2px 5px;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    // svg,
+    // span {
+    //   opacity: 0.5;
+    // }
+    // -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    // filter: grayscale(100%);
+  }
 }
 
 .submit-button {
@@ -75,9 +85,9 @@
 .trip-button {
   background: rgba(54, 54, 54, 0.78);
   border: none;
-  height: 20px;
   justify-content: center;
-  width: 90px;
+  width: 100%;
+  border-radius: 5px;
 
   span {
     font-family: 'JosefinSans-Regular';

@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const process = require('process');
-const helmet = require('helmet');
+const auth = require('./api/auth');
 const {
     login: loginRouter,
     user: userRouter,
@@ -35,20 +35,12 @@ var sslRedirect = require('heroku-ssl-redirect');
 app.use(sslRedirect());
 
 
-/****************** Enforce everytime (HSTS): HTTPS ******************/
-
-app.use(helmet.hsts({
-  maxAge: 5184000
-}));
-
 /****************** BACK FOR HTTPS REDIRECTION ******************/
 /*
 const util = require('util');
-
 const redirectionFilter = function (req, res, next) {
   const theDate = new Date();
   const receivedUrl = `${req.protocol}:\/\/${req.hostname}:${port}${req.url}`;
-
   if (req.get('X-Forwarded-Proto') === 'http') {
     const redirectTo = `https:\/\/${req.hostname}${req.url}`;
     console.log(`${theDate} Redirecting ${receivedUrl} --> ${redirectTo}`);
@@ -57,14 +49,30 @@ const redirectionFilter = function (req, res, next) {
     next();
   }
 }; 
-
 app.get('/*', redirectionFilter); 
 */
+
+/************************ Miscellaneous Files *************************/
+
+app.get("/robots.txt", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../", "robots.txt"));
+});
+
+app.get("/manifest.json", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../", "manifest.json"));
+});
 
 /*************************** Service Worker ***************************/
 
 app.get("/sw.js", (req, res) => {
   res.sendFile(path.resolve(__dirname, "build", "sw.js"));
+});
+
+/********************** Authentication **********************/
+
+app.use('/api/v1/', auth, function (req, res, next) {
+    console.log(req.headers.verifiedUserId);
+    next();
 });
 
 /******************************* Routes *******************************/
@@ -74,13 +82,13 @@ app.use('/api/v1/trip', tripRouter);
 app.use('/api/v1/place', placeRouter);
 app.use('/api/v1/user', userRouter);
 
-// // Serve the static files from build
-// console.log('Serving folder', path.join(__dirname, 'build'));
-// app.use(express.static(path.join(__dirname, 'build')));
-//
-// app.get('*', function(req, res) {
-//     res.sendFile('index.html', {root: path.join(__dirname, 'build')});
-// });
+// Serve the static files from build
+console.log('Serving folder', path.join(__dirname, 'build'));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: path.join(__dirname, 'build')});
+});
 
 /************************** Start the server **************************/
 
