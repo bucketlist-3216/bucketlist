@@ -50,14 +50,14 @@ class Login extends Component {
       axios
         .post(APIS.login, { userData })
         .then(function (response) {
-          if (response.status == 401) {
-            instance.routeChange(PATHS.landingPage);
-            return;
-          }
           instance.setState({ userId: response.data.insertedId[0] });
           instance.routeChange(PATHS.trips(instance.state.userId));
         })
         .catch(function (error) {
+          if (error.response.status == 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
           alert(error.message);
         });
       //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.

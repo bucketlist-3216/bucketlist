@@ -7,11 +7,14 @@ const userQueryModel = new UserQueryModel();
 module.exports = (req, res, next) => {
   if (req.path === '/login') {
     next();
-  } else if (!req.headers.token) {
-    res.status(401).end('User not logged in');
   } else {
     const { token, platform } = req.headers;
-    verify({ token, platform })
+    const gettingVerifiedUserId = verify({ token, platform });
+
+    if (!gettingVerifiedUserId) {
+      res.status(401).end('User not logged in');
+    } else {
+      gettingVerifiedUserId
         .then(function (platformId) {
             return userQueryModel.getUserId({ [`${platform}_id`]: platformId });
         })
@@ -24,5 +27,6 @@ module.exports = (req, res, next) => {
             res.status(500).end(`Unable to authenticate user due to ${err.message}`);
             console.log(err);
         });
+    }
   }
 };

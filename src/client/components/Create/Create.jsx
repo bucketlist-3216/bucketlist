@@ -91,14 +91,14 @@ class Create extends Component {
           data: { trip }
         })
         .then(function(response) {
-          if (response.status == 401) {
-            instance.routeChange(PATHS.landingPage);
-            return;
-          }
           instance.routeChange(PATHS.trips(userId));
           instance.props.setLoading(false);
         })
         .catch(function(error) {
+          if (error.response.status == 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
           alert(error.message);
           console.log(error);
         });

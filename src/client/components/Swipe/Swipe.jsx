@@ -55,10 +55,6 @@ class Swipe extends Component {
         data: { placeId }
       })
       .then(function (response) {
-        if (response.status == 401) {
-          instance.routeChange(PATHS.landingPage);
-          return;
-        }
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
@@ -66,6 +62,10 @@ class Swipe extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
+        if (error.response.status == 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
         alert(error.message);
       });
   }
@@ -94,12 +94,11 @@ class Swipe extends Component {
             place_id: place.place_id
           }
         })
-        .then(function (response) {
-          if (response.status == 401) {
-            instance.routeChange(PATHS.landingPage);
-          }
-        })
         .catch(function (error) {
+          if (error.esponse.status == 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
           alert(error.message);
         });
     }

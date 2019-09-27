@@ -28,13 +28,14 @@ class TripsPage extends Component {
 
   routeChange(pathname) {
     this.props.history.push({
-      pathname: PATHS.createTrip(this.props.match.params.userId)
+      pathname
     });
   }
 
   componentDidMount() {
     let instance = this;
     const userId = this.props.match.params.userId;
+    console.log(localStorage.getItem('token'));
     axios
       .request({
         url: APIS.userTrips(userId),
@@ -45,15 +46,15 @@ class TripsPage extends Component {
         }
       })
       .then(function (response) {
-        if (response.status == 401) {
-          instance.routeChange(PATHS.landingPage);
-          return;
-        }
         instance.setState({ trips: response.data });
         instance.setState({ isDoneFetching: true });
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
+        if (error.response.status == 401) {
+          instance.routeChange(PATHS.landingPage());
+          return;
+        }
         alert(error.message);
       });
     this.setState({ isLoading: true });
@@ -80,7 +81,7 @@ class TripsPage extends Component {
                 history={this.props.history}
               />
             ))}
-            <div className="trip" onClick={this.routeChange}>
+            <div className="trip" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
               <div className="trip-new">
                 <FontAwesomeIcon icon={faPlus} size="2x"/>
                 <br/>
