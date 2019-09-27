@@ -21,37 +21,39 @@ class Login extends Component {
     };
   }
 
-  handleResponse(response) {
-    let userData = {};
-    let platform = '';
-
-    if (response.hasOwnProperty('googleId')) {
-      userData = {
-        email: response.profileObj.email,
-        username: response.profileObj.name,
-        accessToken: response.accessToken
-      };
-      platform = 'google';
-    } else {
-      userData = {
-        email: response.email,
-        username: response.name,
-        accessToken: response.accessToken
-      };
-      platform = 'facebook';
-    }
-
+  handleResponse(platform) {
     let instance = this;
-    axios
-      .post(APIS.login, { userData })
-      .then(function (response) {
-        instance.setState({ userId: response.data.insertedId[0] });
-        instance.routeChange();
-      })
-      .catch(function (error) {
-        alert(error.message);
-      });
-    //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
+    return function (response) {
+      let userData = {};
+
+      if (platform === 'google') {
+        userData = {
+          email: response.profileObj.email,
+          username: response.profileObj.name,
+          token: response.Zi.id_token,
+          platform
+        };
+      } else if (platform === 'facebook') {
+        userData = {
+          email: response.email,
+          username: response.name,
+          token: response.accessToken,
+          platform
+        };
+      }
+      console.log(userData);
+
+      axios
+        .post(APIS.login, { userData })
+        .then(function (response) {
+          instance.setState({ userId: response.data.insertedId[0] });
+          instance.routeChange();
+        })
+        .catch(function (error) {
+          alert(error.message);
+        });
+      //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
+    }
   }
 
   routeChange() {
@@ -71,15 +73,16 @@ class Login extends Component {
                 renderProps={renderProps}
               />
             )}
+            responseType="id_token"
             buttonText={PROVIDERS['google'].providerName}
-            onSuccess={this.handleResponse}
+            onSuccess={this.handleResponse('google')}
             onFailure={error => console.log(error)}
             cookiePolicy={'single_host_origin'}
           />
           <FacebookLogin
             appId={loginSecrets.facebook}
             fields="name,email"
-            callback={this.handleResponse}
+            callback={this.handleResponse('facebook')}
             render={renderProps => (
               <SingleSignOnButton
                 providerName={PROVIDERS['facebook'].providerName}
@@ -87,6 +90,7 @@ class Login extends Component {
                 renderProps={renderProps}
               />
             )}
+            responseType="token"
           />
         </div>
         <div className="login-fields">

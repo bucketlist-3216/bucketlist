@@ -8,7 +8,7 @@ class UserQueryModel extends EntityQueryModel {
         super(dbClient);
         this.validFilters = ['user_id', 'email'];
         this.nonInsertableProps = ['user_id', 'create_time'];
-        this.selectableProps = ['username', 'email'];
+        this.selectableProps = ['user_id', 'username', 'email', 'google_id'];
         this.userMutable = true;
         this.tableName = 'User';
     }
@@ -28,12 +28,24 @@ class UserQueryModel extends EntityQueryModel {
     }
 
     getUser (filters) {
+        console.log(filters);
         filters = _.pick(filters, this.validFilters);
+        console.log(filters);
 
         return knex
             .select(this.selectableProps)
             .from(this.tableName)
             .where(filters);
+    }
+
+    updateUser (userData) {
+        const filters = _.pick(userData, this.validFilters);
+        const data = _.omit(userData, this.nonInsertableProps);
+        console.log(userData);
+
+        return knex(this.tableName)
+            .where(filters)
+            .update(data);
     }
 }
 
