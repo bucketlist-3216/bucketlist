@@ -62,6 +62,10 @@ app.get("/manifest.json", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../../", "manifest.json"));
 });
 
+app.get("/icons/:icon", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "icons", req.params.icon));
+});
+
 /*************************** Service Worker ***************************/
 
 app.get("/sw.js", (req, res) => {
