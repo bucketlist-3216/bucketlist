@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 import TripButton from './TripButton';
 import PATHS from '../../constants/paths';
@@ -42,7 +44,8 @@ const Trip = props => {
         <div className="trip-members">
           {members.map((member, key) => (
             <div className="trip-member" key={key}>
-              {member.username || member.email}
+              <FontAwesomeIcon icon={faUserAlt}/>
+              <span>{member.username || member.email}</span>
             </div>
           ))}
         </div>
@@ -56,7 +59,7 @@ const Trip = props => {
             onClick={() => routeChange(PATHS.swipe(userId, trip_id))}
           />
           <TripButton
-            text="add friends"
+            text="add friend"
             onClick={() => showModal(trip_id)}
           />
         </div>

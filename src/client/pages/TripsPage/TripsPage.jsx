@@ -14,7 +14,7 @@ import Header from "../../components/Header";
 import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
-import EmailField from "../../components/EmailField";
+import AddFriendModal from "../../components/AddFriendModal";
 
 @autoBindMethods
 class TripsPage extends Component {
@@ -123,7 +123,7 @@ class TripsPage extends Component {
   renderModal() {
     const { isModalShown, modalTripId } = this.state;
     return (
-      <EmailField
+      <AddFriendModal
         isModalShown={isModalShown}
         closeModal={this.closeModal}
         tripId={modalTripId}
