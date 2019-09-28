@@ -106,7 +106,7 @@ class PlaceInfo extends Component {
               {/* {_.map(PLACE.images, (image, key) => {
                 return <img key={key} className="image" src={image} />;
               })} */}
-              {renderImages(places.img_src, isMobile)}
+              {renderImages(PLACE.img_src, isMobile)}
             </div>
             <div className="info-content">
               <h1 className="name">{PLACE.name}</h1>
