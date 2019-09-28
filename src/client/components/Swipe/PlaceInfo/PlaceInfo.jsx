@@ -140,7 +140,7 @@ const renderImages = (PLACE, isMobile) => {
   // if isMobile, render only one image
   if (isMobile) {
     return (
-        <img className="image" src={PLACE.img_src} />
+        <img className="image" src={PLACE.image_link} />
     );
   } else {
     _.map(PLACE.images, (image, key) => {
