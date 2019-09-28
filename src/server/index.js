@@ -9,7 +9,6 @@ const {
     place: placeRouter,
     admin
 } = require('./api/routes');
-const auth = require('./api/auth');
 const config = require('./config/settings');
 const cors = require('cors');
 
