@@ -8,7 +8,7 @@ import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
-import PlaceInfo from './PlaceInfo/';
+import PlaceInfo from '../PlaceInfo/';
 import BackButton from '../BackButton';
 import Preloader from '../Preloader';
 
