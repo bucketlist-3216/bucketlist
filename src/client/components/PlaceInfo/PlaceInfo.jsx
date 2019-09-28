@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
+import Preloader from '../Preloader';
 
 const SAMPLE_PLACE = {
   place_id: 203,
@@ -54,7 +55,8 @@ class PlaceInfo extends Component {
   }
 
   render() {
-    const { isModalShown, closeModal, isMobile, placeData: PLACE } = this.props;
+    const { isModalShown, closeModal, isMobile, placeData: place } = this.props;
+
     return (
       <Modal
         show={isModalShown}
@@ -63,38 +65,40 @@ class PlaceInfo extends Component {
         dialogClassName="placeinfo"
       >
         <Modal.Header closeButton>
-          <Modal.Title className="info-title">{PLACE.city}</Modal.Title>
+          <Modal.Title className="info-title">{place.city}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="info-body">
-            <div className="image-row">
-              {/* {_.map(PLACE.images, (image, key) => {
-                return <img key={key} className="image" src={image} />;
-              })} */}
-              {PLACE.images && renderImages(PLACE.images, isMobile)}
+          { _.isEmpty(place) ? <Preloader /> :
+            <div className="info-body">
+              <div className="image-row">
+                {/* {_.map(place.images, (image, key) => {
+                  return <img key={key} className="image" src={image} />;
+                })} */}
+                {place.images && renderImages(place.images, isMobile)}
+              </div>
+              <div className="info-content">
+                <h1 className="name">{place.name}</h1>
+                <p className="description">{place.description}</p>
+                <p className="location">
+                  <span className="word">Location: </span>
+                  {place.address}
+                </p>
+                {/*<div className="review-container">
+                  <p className="section-title">Reviews:</p>
+                  {_.map(place.reviews, (review, key) => {
+                    return (
+                      <div className="review" key={key}>
+                        <p className="message">"{review.message}"</p>
+                        <p className="reviewer">
+                          - {review.reviewer.name}, {review.reviewer.status}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>*/}
+              </div>
             </div>
-            <div className="info-content">
-              <h1 className="name">{PLACE.name}</h1>
-              <p className="description">{PLACE.description}</p>
-              <p className="location">
-                <span className="word">Location: </span>
-                {PLACE.address}
-              </p>
-              {/*<div className="review-container">
-                <p className="section-title">Reviews:</p>
-                {_.map(PLACE.reviews, (review, key) => {
-                  return (
-                    <div className="review" key={key}>
-                      <p className="message">"{review.message}"</p>
-                      <p className="reviewer">
-                        - {review.reviewer.name}, {review.reviewer.status}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>*/}
-            </div>
-          </div>
+          }
         </Modal.Body>
       </Modal>
     );

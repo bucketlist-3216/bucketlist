@@ -150,6 +150,7 @@ class Swipe extends Component {
     if (places.length > 0) {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
+      this.setState({ placeData: {} });
     } else {
       this.getPlacesToSwipe();
     }

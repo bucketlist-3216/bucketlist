@@ -48,8 +48,8 @@ const redirectionFilter = function (req, res, next) {
   } else {
     next();
   }
-}; 
-app.get('/*', redirectionFilter); 
+};
+app.get('/*', redirectionFilter);
 */
 
 /************************ Miscellaneous Files *************************/
@@ -63,7 +63,7 @@ app.get("/manifest.json", (req, res) => {
 });
 
 app.get("/icons/:icon", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "icons", req.params.icon), 
+  res.sendFile(path.resolve(__dirname, "icons", req.params.icon),
     function (err, data) {
       res.sendFile('index.html', {root: path.join(__dirname, 'build')});
     }
