@@ -138,9 +138,9 @@ class PlaceInfo extends Component {
 
 const renderImages = (PLACE, isMobile) => {
   // if isMobile, render only one image
-  if (isMobile) {
+  if (isMobile & PLACE.images.length > 0) {
     return (
-        <img className="image" src={PLACE.img_src} />
+        <img className="image" src={PLACE.images[0]} />
     );
   } else {
     _.map(PLACE.images, (image, key) => {

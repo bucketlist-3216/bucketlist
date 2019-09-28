@@ -18,7 +18,9 @@ router.get('/:placeId', function (req, res) {
     const queryingPlace = placeQueryModel.getPlaceData(req.params.placeId);
     queryingPlace
         .then(function (results) {
-            res.json(results[0]);
+            const placeData = Object.assign({}, results[0]);
+            placeData.images = [placeData.image_link];
+            res.json(placeData);
         })
         .catch(function (err) {
             res.status(500).end(`Unable to get place data due to ${err.message}`);
