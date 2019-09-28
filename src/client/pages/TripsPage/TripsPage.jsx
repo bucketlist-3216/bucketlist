@@ -14,6 +14,7 @@ import Header from "../../components/Header";
 import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
+import EmailField from "../../components/EmailField";
 
 @autoBindMethods
 class TripsPage extends Component {
@@ -55,7 +56,7 @@ class TripsPage extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        if (error.response.status == 401) {
+        if (error.response && error.response.status == 401) {
           instance.routeChange(PATHS.landingPage());
           return;
         }
@@ -76,6 +77,7 @@ class TripsPage extends Component {
             <Header />
           </div>
           <Title text="Upcoming Trips" />
+          {this.renderModal()}
           <div className="trips-container">
             {this.state.trips.map((trip, key) => (
               <Trip
@@ -105,9 +107,9 @@ class TripsPage extends Component {
 
   // Helper function for modal
 
-  showModal(event) {
+  showModal(tripId) {
     this.setState({ isModalShown: true });
-    alert(JSON.stringify(_.omit(this.state, ['trips'])));
+    this.setState({ modalTripId: tripId });
   }
 
   closeModal(event) {
@@ -118,14 +120,13 @@ class TripsPage extends Component {
     return this.state.modalTripId;
   }
 
-  renderModal(tripId) {
-    const { isModalShown } = this.state;
-    const isMobile = window.innerWidth < 555;
+  renderModal() {
+    const { isModalShown, modalTripId } = this.state;
     return (
       <EmailField
-        state={this.state}
+        isModalShown={isModalShown}
         closeModal={this.closeModal}
-        isMobile={isMobile}
+        tripId={modalTripId}
       />
     );
   }

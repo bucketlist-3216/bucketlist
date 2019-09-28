@@ -41,7 +41,7 @@ const Trip = props => {
         </div>
         <div className="trip-members">
           {members.map((member, key) => (
-            <div className="trip-member">
+            <div className="trip-member" key={key}>
               {member.username || member.email}
             </div>
           ))}
@@ -57,7 +57,7 @@ const Trip = props => {
           />
           <TripButton
             text="add friends"
-            onClick={showModal}
+            onClick={() => showModal(trip_id)}
           />
         </div>
       </div>

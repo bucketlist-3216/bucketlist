@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const process = require('process');
-const auth = require('./api/auth');
 const {
     login: loginRouter,
     user: userRouter,
@@ -69,10 +68,9 @@ app.get("/sw.js", (req, res) => {
   res.sendFile(path.resolve(__dirname, "build", "sw.js"));
 });
 
-/********************** Authentication **********************/
+/*************************** Authentication ***************************/
 
 app.use('/api/v1/', auth, function (req, res, next) {
-    console.log(req.headers.verifiedUserId);
     next();
 });
 

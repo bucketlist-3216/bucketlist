@@ -65,7 +65,7 @@ class Swipe extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        if (error.response.status == 401) {
+        if (error.response && error.response.status == 401) {
           instance.routeChange(PATHS.landingPage);
           return;
         }

@@ -146,7 +146,7 @@ router.get('/:tripId/members', function (req, res) {
 
 // Add a member to a trip (adding a member-trip association)
 router.post('/:tripId/members/', function (req, res) {
-    const addTripFriend = tripFriendQueryModel.addTripFriend(req.params.email, req.body.trip.email);
+    const addTripFriend = tripFriendQueryModel.addTripFriend({ trip_id: req.params.tripId, email: req.body.email});
 
     addTripFriend
         .then(function (insertionResponse) {

@@ -1,53 +1,22 @@
 import React, { Component } from "react";
 import { Button, Modal, Form } from 'react-bootstrap';
-import _ from 'lodash';
 import axios from 'axios';
+import autoBindMethods from 'class-autobind-decorator';
 
-import APIS from '../../../constants/apis';
-import PATHS from '../../../constants/paths';
+import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 
+@autoBindMethods
 class EmailField extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      place: {},
-      isLoading: true
-    };
-  }
-
-  componentDidMount() {
-    const instance = this;
-    axios
-      .request({
-        url: APIS.place(this.props.placeId),
-        method: 'get',
-        headers: {
-          token: localStorage.getItem('token'),
-          platform: localStorage.getItem('platform')
-        }
-      })
-      .then(function (response) {
-        instance.setState({ place: response.data });
-        instance.setState({ isLoading: false });
-      })
-      .catch(function (error) {
-        if (error.response.status == 401) {
-          instance.routeChange(PATHS.landingPage());
-          return;
-        }
-        alert(error.message);
-      });
-      instance.setState({ isLoading: true });
+      email: ''
+    }
   }
 
   render() {
-    const PLACE = this.state.place;
-    if (this.state.isLoading || !PLACE) {
-      return null;
-    }
-
-    const { state: { isModalShown, modalTripId }, closeModal, isMobile } = this.props;
+    const { isModalShown, tripId, closeModal } = this.props;
     return (
       <Modal
         show={isModalShown}
@@ -56,19 +25,19 @@ class EmailField extends Component {
         dialogClassName="placeinfo"
       >
         <Modal.Header closeButton>
-          <Modal.Title className="info-title">{PLACE.city}</Modal.Title>
+          <Modal.Title className="info-title">Add Friend</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={this.addFriend}>
             <Form.Group controlId="formBasicEmail">
               <Form.Control
-                disabled
+                onChange={this.handleChangeEmail}
                 className="email-field"
                 type="email"
                 placeholder="Type your friend's email"
               />
             </Form.Group>
-            <Button className="submit-button" type="submit" disabled>
+            <Button className="submit-button" type="submit">
               Add Friend
             </Button>
           </Form>
@@ -76,19 +45,36 @@ class EmailField extends Component {
       </Modal>
     );
   }
-};
 
-const renderImages = (PLACE, isMobile) => {
-  // if isMobile, render only one image
-  if (isMobile) {
-    return (
-        <img className="image" src={PLACE.images[0]} />
-    );
-  } else {
-    _.map(PLACE.images, (image, key) => {
-      return <img key={key} className="image" src={image} />;
-    });
+  handleChangeEmail(event) {
+    this.setState({ email: event.target.value });
+  }
+
+  addFriend(event) {
+    event.preventDefault();
+    const instance = this;
+    axios
+      .request({
+        url: APIS.tripFriend(this.props.tripId),
+        method: 'post',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        },
+        data: { email: this.state.email }
+      })
+      .then(function(response) {
+        window.location.reload();
+      })
+      .catch(function(error) {
+        if (error.response && error.response.status == 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
+        alert(error.message);
+        console.log(error);
+      });
   }
 };
 
-export default PlaceInfo;
+export default EmailField;
