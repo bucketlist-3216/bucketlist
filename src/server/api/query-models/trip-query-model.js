@@ -14,10 +14,10 @@ class TripQueryModel extends EntityQueryModel {
         this.userMutable = false;
     }
 
-    // This shouldn't be here right? Isn't this covered under TripPlace?
-    // Get all the locations in this particular trip
-    getTrip (tripParticulars) {
-
+    // Get details of this trip
+    getTrip (tripId) {
+        return knex(this.tableName)
+            .where({ trip_id : tripId });
     }
 
     // Add a location to this trip
@@ -38,7 +38,7 @@ class TripQueryModel extends EntityQueryModel {
 
     updateTrip (id, newObject) {
         newObject = _.omit(this.nonInsertableProps);
-        
+
         return knex(this.tableName)
             .where({'trip_id': id})
             .update(newObject);

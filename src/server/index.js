@@ -48,8 +48,8 @@ const redirectionFilter = function (req, res, next) {
   } else {
     next();
   }
-}; 
-app.get('/*', redirectionFilter); 
+};
+app.get('/*', redirectionFilter);
 */
 
 /************************ Miscellaneous Files *************************/
@@ -71,7 +71,6 @@ app.get("/sw.js", (req, res) => {
 /********************** Authentication **********************/
 
 app.use('/api/v1/', auth, function (req, res, next) {
-    console.log(req.headers.verifiedUserId);
     next();
 });
 

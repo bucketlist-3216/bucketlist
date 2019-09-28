@@ -18,6 +18,7 @@ class Swipe extends Component {
     super(props);
 
     this.state = {
+      city: '',
       places: [],
       hasNext: true,
       isLoading: true,
@@ -30,6 +31,7 @@ class Swipe extends Component {
       ? this.props.location.state.placeId
       : null;
     this.getPlacesToSwipe(placeId);
+    this.getCity(this.props.match.params.tripId);
   }
 
   // Helper function for redirecting
@@ -40,6 +42,29 @@ class Swipe extends Component {
   }
 
   // Helper functions to communicate with backend
+  getCity(tripId) {
+    const instance = this;
+
+    axios
+      .request({
+        url: APIS.trip(tripId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
+      .then(function(response) {
+        instance.setState({ city: response.data.destination });
+      })
+      .catch(function (error) {
+        if (error.response.status == 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
+        alert(error.message);
+      });
+  }
 
   getPlacesToSwipe(placeId) {
     this.setState({ isLoading: true });
@@ -172,31 +197,30 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
+        <div className="swipe-header">
+          <BackButton
+            onClick={() => {
+              this.routeChange(PATHS.trips(userId));
+            }}
+          />
+          <div className="city">{this.state.city}</div>
+          <img
+            className="icon-list"
+            src="/assets/common/icon-list.png"
+            onClick={() => {
+              this.routeChange(PATHS.list(userId, tripId));
+            }}
+          />
+        </div>
         {places.length > 0 && (
           <div>
-            {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
             {this.renderModal()}
-            <div className="swipe-header">
-              <BackButton
-                onClick={() => {
-                  this.routeChange(PATHS.trips(userId));
-                }}
-              />
-              <div className="city">{places[0].city || ''}</div>
-              <img
-                className="icon-list"
-                src="/assets/common/icon-list.png"
-                onClick={() => {
-                  this.routeChange(PATHS.list(userId, tripId));
-                }}
-              />
-            </div>
             <div className="place-name">
               <span>{places[0].name || ''}</span>
             </div>
           </div>
         )}
-        {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
+        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }
