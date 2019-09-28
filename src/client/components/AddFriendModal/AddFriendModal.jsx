@@ -7,7 +7,7 @@ import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 
 @autoBindMethods
-class EmailField extends Component {
+class AddFriendModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,11 +21,11 @@ class EmailField extends Component {
       <Modal
         show={isModalShown}
         onHide={closeModal}
-        size="xl"
-        dialogClassName="placeinfo"
+        size="sm"
+        dialogClassName="add-friend-modal"
       >
         <Modal.Header closeButton>
-          <Modal.Title className="info-title">Add Friend</Modal.Title>
+          <Modal.Title className="title">Add Friend</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.addFriend}>
@@ -77,4 +77,4 @@ class EmailField extends Component {
   }
 };
 
-export default EmailField;
+export default AddFriendModal;
