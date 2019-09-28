@@ -65,7 +65,7 @@ class Swipe extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        if (error.response.status == 401) {
+        if (error.response && error.response.status == 401) {
           instance.routeChange(PATHS.landingPage);
           return;
         }
@@ -166,7 +166,6 @@ class Swipe extends Component {
   render() {
     const { places, isLoading } = this.state;
     const { userId, tripId } = this.props.match.params;
-    const currentPlace = places[0];
 
     if (isLoading) return null;
 
@@ -175,7 +174,7 @@ class Swipe extends Component {
         {places.length > 0 && (
           <div>
             {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
-            {this.renderModal()}
+            {this.renderModal(places[0].place_id)}
             <div className="swipe-header">
               <BackButton
                 onClick={() => {
@@ -196,12 +195,12 @@ class Swipe extends Component {
             </div>
           </div>
         )}
-        {this.state.hasNext ? this.renderSwiping() : this.renderSwipeComplete()}
+        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }
 
-  renderModal() {
+  renderModal(placeId) {
     const { isModalShown } = this.state;
     const isMobile = window.innerWidth < 555;
     return (
@@ -209,6 +208,7 @@ class Swipe extends Component {
         isModalShown={isModalShown}
         closeModal={this.closeModal}
         isMobile={isMobile}
+        placeId={placeId}
       />
     );
   }

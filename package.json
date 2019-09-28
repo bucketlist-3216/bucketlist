@@ -82,6 +82,7 @@
     "react-select-search": "^0.9.6",
     "react-svg-loader": "^3.0.3",
     "react-swipy": "0.0.6",
+    "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "sass": "^1.22.12",
     "serviceworker-webpack-plugin": "^1.0.1",
