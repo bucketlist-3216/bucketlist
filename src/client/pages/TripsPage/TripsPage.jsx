@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactGA from 'react-ga';
+import autoBindMethods from 'class-autobind-decorator';
+import _ from 'lodash';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -13,6 +15,7 @@ import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 
+@autoBindMethods
 class TripsPage extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +23,9 @@ class TripsPage extends Component {
     this.state = {
       trips: [],
       isDoneFetching: false,
-      isLoading: true
+      isLoading: true,
+      isModalShown: false,
+      modalTripId: null
     };
 
     this.routeChange = this.routeChange.bind(this);
@@ -78,6 +83,7 @@ class TripsPage extends Component {
                 trip={trip}
                 userId={this.props.match.params.userId}
                 history={this.props.history}
+                showModal={this.showModal}
               />
             ))}
             <div className="trip" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
@@ -95,6 +101,33 @@ class TripsPage extends Component {
     } else {
       return null;
     }
+  }
+
+  // Helper function for modal
+
+  showModal(event) {
+    this.setState({ isModalShown: true });
+    alert(JSON.stringify(_.omit(this.state, ['trips'])));
+  }
+
+  closeModal(event) {
+    this.setState({ isModalShown: false });
+  }
+
+  getTripId() {
+    return this.state.modalTripId;
+  }
+
+  renderModal(tripId) {
+    const { isModalShown } = this.state;
+    const isMobile = window.innerWidth < 555;
+    return (
+      <EmailField
+        state={this.state}
+        closeModal={this.closeModal}
+        isMobile={isMobile}
+      />
+    );
   }
 }
 
