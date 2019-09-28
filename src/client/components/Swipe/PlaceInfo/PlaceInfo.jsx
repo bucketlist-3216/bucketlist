@@ -106,7 +106,7 @@ class PlaceInfo extends Component {
               {/* {_.map(PLACE.images, (image, key) => {
                 return <img key={key} className="image" src={image} />;
               })} */}
-              {renderImages(PLACE.img_src, isMobile)}
+              {renderImages(PLACE, isMobile)}
             </div>
             <div className="info-content">
               <h1 className="name">{PLACE.name}</h1>
@@ -140,7 +140,7 @@ const renderImages = (PLACE, isMobile) => {
   // if isMobile, render only one image
   if (isMobile) {
     return (
-        <img className="image" src={PLACE.image_link} />
+        <img className="image" src={PLACE.img_src} />
     );
   } else {
     _.map(PLACE.images, (image, key) => {
