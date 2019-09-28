@@ -106,7 +106,7 @@ class PlaceInfo extends Component {
               {/* {_.map(PLACE.images, (image, key) => {
                 return <img key={key} className="image" src={image} />;
               })} */}
-              {renderImages(PLACE, isMobile)}
+              {PLACE.images && renderImages(PLACE.images, isMobile)}
             </div>
             <div className="info-content">
               <h1 className="name">{PLACE.name}</h1>
@@ -136,14 +136,14 @@ class PlaceInfo extends Component {
   }
 };
 
-const renderImages = (PLACE, isMobile) => {
+const renderImages = (images, isMobile) => {
   // if isMobile, render only one image
-  if (isMobile & PLACE.images.length > 0) {
+  if (isMobile && images.length > 0) {
     return (
-        <img className="image" src={PLACE.images[0]} />
+        <img className="image" src={images[0]} />
     );
   } else {
-    _.map(PLACE.images, (image, key) => {
+    _.map(images, (image, key) => {
       return <img key={key} className="image" src={image} />;
     });
   }
