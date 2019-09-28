@@ -51,45 +51,10 @@ const SAMPLE_PLACE = {
 class PlaceInfo extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      place: {},
-      isLoading: true
-    };
-  }
-
-  componentDidMount() {
-    const instance = this;
-    axios
-      .request({
-        url: APIS.place(this.props.placeId),
-        method: 'get',
-        headers: {
-          token: localStorage.getItem('token'),
-          platform: localStorage.getItem('platform')
-        }
-      })
-      .then(function (response) {
-        instance.setState({ place: response.data });
-        instance.setState({ isLoading: false });
-      })
-      .catch(function (error) {
-        if (error.response && error.response.status == 401) {
-          instance.routeChange(PATHS.landingPage());
-          return;
-        }
-        alert(error.message);
-      });
-      instance.setState({ isLoading: true });
   }
 
   render() {
-    const PLACE = this.state.place;
-    if (this.state.isLoading || !PLACE) {
-      return null;
-    }
-
-    const { isModalShown, closeModal, isMobile } = this.props;
+    const { isModalShown, closeModal, isMobile, placeData: PLACE } = this.props;
     return (
       <Modal
         show={isModalShown}

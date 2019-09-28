@@ -19,6 +19,7 @@ class Swipe extends Component {
 
     this.state = {
       places: [],
+      placeData: {},
       hasNext: true,
       isLoading: true,
       isModalShown: false
@@ -107,9 +108,34 @@ class Swipe extends Component {
     };
   }
 
+  getPlaceData(placeId) {
+    const instance = this;
+    axios
+      .request({
+        url: APIS.place(placeId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
+      .then(function (response) {
+        console.log(response);
+        instance.setState({ placeData: response.data });
+      })
+      .catch(function (error) {
+        if (error.response && error.response.status == 401) {
+          instance.routeChange(PATHS.landingPage());
+          return;
+        }
+        alert(error.message);
+      });
+  }
+
   // Helper function for modal
 
-  showModal(event) {
+  showModal(placeId) {
+    this.getPlaceData(placeId);
     this.setState({ isModalShown: true });
   }
 
@@ -200,7 +226,7 @@ class Swipe extends Component {
     );
   }
 
-  renderModal(placeId) {
+  renderModal() {
     const { isModalShown } = this.state;
     const isMobile = window.innerWidth < 555;
     return (
@@ -208,7 +234,7 @@ class Swipe extends Component {
         isModalShown={isModalShown}
         closeModal={this.closeModal}
         isMobile={isMobile}
-        placeId={placeId}
+        placeData={this.state.placeData}
       />
     );
   }
