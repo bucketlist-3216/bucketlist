@@ -9,7 +9,7 @@ module.exports = {
   devtool: 'source-map',
   entry: path.join(__dirname, '../src/client', 'BucketList.jsx'),
   output: {
-    path: path.join(__dirname, '../','src/server/build'),
+    path: path.join(__dirname, '../', 'src/server/build'),
     filename: 'bundle.js',
     publicPath: '/',
   },
