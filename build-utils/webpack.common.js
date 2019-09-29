@@ -2,8 +2,6 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -55,7 +53,6 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: path.join(__dirname, '../index.html'),
       filename: './index.html',
@@ -67,9 +64,6 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: './assets', to: 'assets' }
     ]),
-    new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, '../src/sw.js'),
-    }),
   ],
   devServer: {
     inline: true,
