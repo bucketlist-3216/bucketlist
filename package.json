@@ -9,11 +9,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build & npm run start:back",
-    "start:front": "webpack-dev-server --hot --config ./webpack.config.js --mode development",
-    "start:front:dev": "webpack-dev-server --hot --config build-utils/webpack.config.js --env.env=dev",
-    "start:front:prod": "webpack --config build-utils/webpack.config.js --env.env=prod",
+    "start:front": "webpack-dev-server --hot --config build-utils/webpack.config.js --env.env=dev",
     "start:back": "nodemon src/server/index.js",
-    "build": "webpack --config ./webpack.config.js --mode production"
+    "build": "webpack --config build-utils/webpack.config.js --env.env=prod"
   },
   "repository": {
     "type": "git",
