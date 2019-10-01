@@ -1,13 +1,14 @@
 const _ = require('lodash');
 const path = require('path');
-const dotenv = require('dotenv');
+
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
-dotenv.config();
+
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const VARIABLES = [
   "MYSQL_PASSWORD",
