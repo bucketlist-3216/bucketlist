@@ -9,24 +9,29 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 
-const VARIABLES = [
+const SECRETS = [
   "MYSQL_PASSWORD",
   "GOOGLE_LOGIN_SECRET",
   "FACEBOOK_LOGIN_SECRET",
   "FACEBOOK_APP"
 ];
 
+// we cannot use dotenv in production mode
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-// here we add each SECRET as environment variables;
+// here we add each SECRET as environment variables to the front-end;
 const envs = {}
-VARIABLES.forEach((varName) => {
-  if (!process.env[varName]) {
-    throw new Error(`[build] environment variable "${varName}" not found`);
+SECRETS.forEach((secret) => {
+  if (!process.env[secret]) {
+    throw new Error(`[build] environment variable "${secret}" not found`);
   }
-  envs[varName] = process.env[varName];
+  envs[secret] = process.env[secret];
 });
-envs["APP_NAME"] = process.env.HEROKU_APP_NAME;
+
+// here we get the app name from heroku dyno metadata
+// and expose it for the front-end via Webpack
+// https://devcenter.heroku.com/articles/dyno-metadata#usage
+envs["HEROKU_APP_NAME"] = process.env.HEROKU_APP_NAME;
 
 
 console.log('in webpack commons');
@@ -99,8 +104,6 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(envs),
-      "APP_NAME_COMMENT": JSON.stringify('damn this thing'),
-      "HEROKU_APP_NAME": process.env.HEROKU_APP_NAME
     })
   ],
   devServer: {
