@@ -98,7 +98,8 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(envs),
-      "API_URL": process.env.API_URL
+      "API_URL": process.env.API_URL,
+      "HEROKU_APP_NAME": process.env.HEROKU_APP_NAME
     })
   ],
   devServer: {
