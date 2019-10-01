@@ -90,7 +90,7 @@ class Swipe extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        if (error.response && error.response.status == 401) {
+        if (error.response && error.response.status === 401) {
           instance.routeChange(PATHS.landingPage);
           return;
         }
@@ -123,7 +123,7 @@ class Swipe extends Component {
           }
         })
         .catch(function (error) {
-          if (error.esponse.status == 401) {
+          if (error.esponse.status === 401) {
             instance.routeChange(PATHS.landingPage);
             return;
           }
@@ -206,9 +206,7 @@ class Swipe extends Component {
           <img
             className="icon-list"
             src="/assets/common/icon-list.png"
-            onClick={() => {
-              this.routeChange(PATHS.list(userId, tripId));
-            }}
+            onClick={() => this.routeChange(PATHS.list(userId, tripId))}
           />
         </div>
         {places.length > 0 && (
