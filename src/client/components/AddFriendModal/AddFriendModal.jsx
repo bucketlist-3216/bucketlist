@@ -69,12 +69,15 @@ class AddFriendModal extends Component {
         window.location.reload();
       })
       .catch(function(error) {
-        if (error.response && error.response.status == 401) {
+        if (error.response && error.response.status === 401) {
           instance.routeChange(PATHS.landingPage);
-          return;
+        } else if (error.response && error.response.status === 404) {
+          // TODO: Make this error message sound and look nicer
+          alert(`Could not find user with email '${email}'.`);
+        } else {
+          alert(error.message);
+          console.log(error);
         }
-        alert(error.message);
-        console.log(error);
       });
   }
 };

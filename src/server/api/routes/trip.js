@@ -151,15 +151,30 @@ router.get('/:tripId/members', function (req, res) {
 
 // Add a member to a trip (adding a member-trip association)
 router.post('/:tripId/members/', function (req, res) {
-    const addTripFriend = tripFriendQueryModel.addTripFriend({ trip_id: req.params.tripId, email: req.body.email});
+    const { tripId } = req.params;
+    const { email } = req.body;
+    const userNotFoundMessage = `Could not find user with email '${email}'`;
 
-    addTripFriend
+    userQueryModel.getUserId({ email })
+        .then(function (results) {
+            if (results.length === 0) {
+              throw new Error(userNotFoundMessage);
+            } else {
+              const { user_id } = results[0];
+              return addTripFriend({ user_id, trip_id: tripId });
+            }
+        })
         .then(function (insertionResponse) {
-            res.json({"inserted": insertionResponse});
+            res.json({"insertedId": insertionResponse});
         })
         .catch(function (err) {
-            res.status(500).end('Could not add user to trip');
-            console.log (JSON.stringify(err));
+            if (err.message === userNotFoundMessage) {
+                res.status(404).end(userNotFoundMessage);
+                console.log(err);
+            } else {
+                res.status(500).end('Could not add user to trip');
+                console.log(err);
+            }
         });
 });
 
