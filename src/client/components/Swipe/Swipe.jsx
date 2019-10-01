@@ -58,7 +58,7 @@ class Swipe extends Component {
         instance.setState({ city: response.data.destination });
       })
       .catch(function (error) {
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           instance.routeChange(PATHS.landingPage);
           return;
         }
