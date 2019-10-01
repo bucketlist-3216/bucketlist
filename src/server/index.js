@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const process = require('process');
-const auth = require('./api/auth');
 const {
     login: loginRouter,
     user: userRouter,
@@ -10,6 +9,7 @@ const {
     place: placeRouter,
     admin
 } = require('./api/routes');
+const auth = require('./api/auth');
 const config = require('./config/settings');
 const cors = require('cors');
 
@@ -48,8 +48,8 @@ const redirectionFilter = function (req, res, next) {
   } else {
     next();
   }
-}; 
-app.get('/*', redirectionFilter); 
+};
+app.get('/*', redirectionFilter);
 */
 
 /************************ Miscellaneous Files *************************/
@@ -76,10 +76,9 @@ app.get("/sw.js", (req, res) => {
   res.sendFile(path.resolve(__dirname, "build", "sw.js"));
 });
 
-/********************** Authentication **********************/
+/*************************** Authentication ***************************/
 
 app.use('/api/v1/', auth, function (req, res, next) {
-    console.log(req.headers.verifiedUserId);
     next();
 });
 

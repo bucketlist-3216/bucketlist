@@ -3,8 +3,8 @@ import { Button, Modal } from 'react-bootstrap';
 import _ from 'lodash';
 import axios from 'axios';
 
-import APIS from '../../../constants/apis';
-import PATHS from '../../../constants/paths';
+import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 
 const SAMPLE_PLACE = {
   place_id: 203,
@@ -140,7 +140,7 @@ const renderImages = (PLACE, isMobile) => {
   // if isMobile, render only one image
   if (isMobile) {
     return (
-        <img className="image" src={PLACE.img_src} />
+        <img className="image" src={PLACE.image_link} />
     );
   } else {
     _.map(PLACE.images, (image, key) => {

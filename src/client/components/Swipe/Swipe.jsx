@@ -8,7 +8,7 @@ import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
-import PlaceInfo from './PlaceInfo/';
+import PlaceInfo from '../PlaceInfo/';
 import BackButton from '../BackButton';
 import Preloader from '../Preloader';
 
@@ -173,7 +173,6 @@ class Swipe extends Component {
       <div className="swipe">
         {places.length > 0 && (
           <div>
-            {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
             {this.renderModal(places[0].place_id)}
             <div className="swipe-header">
               <BackButton
