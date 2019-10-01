@@ -20,6 +20,7 @@ class Swipe extends Component {
     this.state = {
       city: '',
       places: [],
+      placeData: {},
       hasNext: true,
       isLoading: true,
       isModalShown: false
@@ -132,14 +133,18 @@ class Swipe extends Component {
     };
   }
 
-  // Helper function for modal
+  // Helper function to set state
 
-  showModal(event) {
+  showModal(placeId) {
     this.setState({ isModalShown: true });
   }
 
   closeModal(event) {
     this.setState({ isModalShown: false });
+  }
+
+  setPlaceData(placeData) {
+    this.setState({ placeData });
   }
 
   // Helper functions for swiping
@@ -149,6 +154,7 @@ class Swipe extends Component {
     if (places.length > 0) {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
+      this.setState({ placeData: {} });
     } else {
       this.getPlacesToSwipe();
     }
@@ -164,7 +170,7 @@ class Swipe extends Component {
           onSwipe={this.castVote(currentPlace)}
           onAfterSwipe={this.nextCard}
         >
-          <SwipeCard place={currentPlace} showModal={this.showModal} />
+          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} showModal={this.showModal} />
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -189,7 +195,7 @@ class Swipe extends Component {
   }
 
   render() {
-    const { places, isLoading } = this.state;
+    const { places, isLoading, city } = this.state;
     const { userId, tripId } = this.props.match.params;
 
     if (isLoading) return null;
@@ -200,7 +206,7 @@ class Swipe extends Component {
           <BackButton
             onClick={() => this.routeChange(PATHS.trips(userId))}
           />
-          <div className="city">{this.state.city}</div>
+          <div className="city">{city}</div>
           <img
             className="icon-list"
             src="/assets/common/icon-list.png"
@@ -220,15 +226,15 @@ class Swipe extends Component {
     );
   }
 
-  renderModal(placeId) {
-    const { isModalShown } = this.state;
+  renderModal() {
+    const { isModalShown, placeData } = this.state;
     const isMobile = window.innerWidth < 555;
     return (
       <PlaceInfo
         isModalShown={isModalShown}
         closeModal={this.closeModal}
         isMobile={isMobile}
-        placeId={placeId}
+        placeData={placeData}
       />
     );
   }
