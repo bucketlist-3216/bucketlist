@@ -71,6 +71,7 @@ class Login extends Component {
   }
 
   render() {
+    console.log(process.env.API_URL);
     return (
       <div className="login">
         <div className="sso-container">

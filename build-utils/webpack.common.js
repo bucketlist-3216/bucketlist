@@ -94,7 +94,8 @@ module.exports = {
       entry: path.join(__dirname, '../src/sw.js'),
     }),
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify(envs)
+      "process.env": JSON.stringify(envs),
+      "API_URL": process.env.API_URL
     })
   ],
   devServer: {
