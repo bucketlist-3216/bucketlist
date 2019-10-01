@@ -23,7 +23,7 @@ router.get('/:placeId', function (req, res) {
             res.json(placeData);
         })
         .catch(function (err) {
-            res.status(500).end(`Unable to get place data due to ${err.message}`);
+            res.status(500).end(`Unable to get place data`);
             console.log(err);
         });
 });
