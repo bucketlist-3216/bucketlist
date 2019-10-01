@@ -28,8 +28,6 @@ class TripsPage extends Component {
       isModalShown: false,
       modalTripId: null
     };
-
-    this.routeChange = this.routeChange.bind(this);
   }
 
   routeChange(pathname) {
@@ -108,8 +106,10 @@ class TripsPage extends Component {
   // Helper function for modal
 
   showModal(tripId) {
-    this.setState({ isModalShown: true });
-    this.setState({ modalTripId: tripId });
+    this.setState({
+      isModalShown: true,
+      modalTripId: tripId
+    });
   }
 
   closeModal(event) {

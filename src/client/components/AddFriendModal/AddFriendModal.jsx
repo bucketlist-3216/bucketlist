@@ -16,7 +16,7 @@ class AddFriendModal extends Component {
   }
 
   render() {
-    const { isModalShown, tripId, closeModal } = this.props;
+    const { isModalShown, closeModal } = this.props;
     return (
       <Modal
         show={isModalShown}
@@ -53,15 +53,17 @@ class AddFriendModal extends Component {
   addFriend(event) {
     event.preventDefault();
     const instance = this;
+    const { tripId } = this.props;
+    const { email } = this.state;
     axios
       .request({
-        url: APIS.tripFriend(this.props.tripId),
+        url: APIS.tripFriend(tripId),
         method: 'post',
         headers: {
           token: localStorage.getItem('token'),
           platform: localStorage.getItem('platform')
         },
-        data: { email: this.state.email }
+        data: { email }
       })
       .then(function(response) {
         window.location.reload();

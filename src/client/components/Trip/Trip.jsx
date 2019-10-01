@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -6,8 +6,8 @@ import TripButton from './TripButton';
 import PATHS from '../../constants/paths';
 
 const Trip = props => {
-  let { trip, userId, showModal } = props;
-  let { trip_id, destination, start_date, end_date, members } = trip;
+  const { trip, userId, showModal } = props;
+  const { trip_id, destination, start_date, end_date, members } = trip;
   if (!members) {
     members = [];
   }
