@@ -71,7 +71,7 @@ class Login extends Component {
   }
 
   render() {
-    console.log(process.env.API_URL);
+    console.log(process.env.HEROKU_APP_NAME);
     return (
       <div className="login">
         <div className="sso-container">

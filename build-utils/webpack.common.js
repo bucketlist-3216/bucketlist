@@ -17,6 +17,8 @@ const VARIABLES = [
 ];
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+console.log('in commons');
+console.log(process.env.HEROKU_APP_NAME);
 
 
 // here we add each SECRET as environment variables;
