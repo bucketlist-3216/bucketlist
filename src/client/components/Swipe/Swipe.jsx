@@ -133,39 +133,18 @@ class Swipe extends Component {
     };
   }
 
-  getPlaceData(placeId) {
-    const instance = this;
-    axios
-      .request({
-        url: APIS.place(placeId),
-        method: 'get',
-        headers: {
-          token: localStorage.getItem('token'),
-          platform: localStorage.getItem('platform')
-        }
-      })
-      .then(function (response) {
-        console.log(response);
-        instance.setState({ placeData: response.data });
-      })
-      .catch(function (error) {
-        if (error.response && error.response.status == 401) {
-          instance.routeChange(PATHS.landingPage());
-          return;
-        }
-        alert(error.message);
-      });
-  }
-
-  // Helper function for modal
+  // Helper function to set state
 
   showModal(placeId) {
-    this.getPlaceData(placeId);
     this.setState({ isModalShown: true });
   }
 
   closeModal(event) {
     this.setState({ isModalShown: false });
+  }
+
+  setPlaceData(placeData) {
+    this.setState({ placeData });
   }
 
   // Helper functions for swiping
@@ -191,7 +170,7 @@ class Swipe extends Component {
           onSwipe={this.castVote(currentPlace)}
           onAfterSwipe={this.nextCard}
         >
-          <SwipeCard place={currentPlace} showModal={this.showModal} />
+          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} showModal={this.showModal} />
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -216,7 +195,7 @@ class Swipe extends Component {
   }
 
   render() {
-    const { places, isLoading } = this.state;
+    const { places, isLoading, city } = this.state;
     const { userId, tripId } = this.props.match.params;
 
     if (isLoading) return null;
@@ -227,7 +206,7 @@ class Swipe extends Component {
           <BackButton
             onClick={() => this.routeChange(PATHS.trips(userId))}
           />
-          <div className="city">{this.state.city}</div>
+          <div className="city">{city}</div>
           <img
             className="icon-list"
             src="/assets/common/icon-list.png"
@@ -248,14 +227,14 @@ class Swipe extends Component {
   }
 
   renderModal() {
-    const { isModalShown } = this.state;
+    const { isModalShown, placeData } = this.state;
     const isMobile = window.innerWidth < 555;
     return (
       <PlaceInfo
         isModalShown={isModalShown}
         closeModal={this.closeModal}
         isMobile={isMobile}
-        placeData={this.state.placeData}
+        placeData={placeData}
       />
     );
   }
