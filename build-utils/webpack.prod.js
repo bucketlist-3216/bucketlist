@@ -7,6 +7,7 @@ module.exports = {
     new DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
+        "API_URL": JSON.stringify('https://bucketlist-pwa/api/v1')
       }
     }),
   ],

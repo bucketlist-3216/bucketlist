@@ -1,12 +1,5 @@
-let root;
-switch (process.env.NODE_ENV) {
-  case 'development':
-    root = `http://localhost:3001/api/v1`
-    break;
-  case 'production':
-    root = `https://bucketlist-pwa/api/v1`
-    break;
-}
+
+const root = process.env.API_URL;
 
 const APIS = {
   login: `${root}/login`,
