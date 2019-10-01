@@ -7,7 +7,7 @@ import PATHS from '../../constants/paths';
 
 const Trip = props => {
   const { trip, userId, showModal } = props;
-  const { trip_id, destination, start_date, end_date, members } = trip;
+  let { trip_id, destination, start_date, end_date, members } = trip;
   if (!members) {
     members = [];
   }
