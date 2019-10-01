@@ -97,7 +97,7 @@ class Create extends Component {
           instance.props.setLoading(false);
         })
         .catch(function(error) {
-          if (error.response && error.response.status == 401) {
+          if (error.response && error.response.status === 401) {
             instance.routeChange(PATHS.landingPage);
             return;
           }

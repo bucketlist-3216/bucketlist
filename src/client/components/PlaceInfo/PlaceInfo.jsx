@@ -74,7 +74,7 @@ class PlaceInfo extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        if (error.response && error.response.status == 401) {
+        if (error.response && error.response.status === 401) {
           instance.routeChange(PATHS.landingPage());
           return;
         }
