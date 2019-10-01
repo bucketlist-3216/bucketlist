@@ -84,7 +84,7 @@ class Create extends Component {
       let instance = this;
       axios
         .request({
-          url: APIS.trip,
+          url: APIS.trip(),
           method: 'post',
           headers: {
             token: localStorage.getItem('token'),
