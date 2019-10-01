@@ -1,9 +1,29 @@
+const _ = require('lodash');
 const path = require('path');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+dotenv.config();
+
+const VARIABLES = [
+  "MYSQL_PASSWORD",
+  "GOOGLE_LOGIN_SECRET",
+  "FACEBOOK_LOGIN_SECRET",
+  "FACEBOOK_APP"
+];
+
+const envs = {}
+// here we add each SECRET as environment variables;
+VARIABLES.forEach((varName) => {
+  if (!process.env[varName]) {
+    throw new Error(`[build] environment variable "${varName}" not found`);
+  }
+  envs[varName] = process.env[varName];
+})
 
 module.exports = {
   devtool: 'source-map',
@@ -55,7 +75,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: path.join(__dirname, '../index.html'),
       filename: './index.html',
@@ -70,10 +90,13 @@ module.exports = {
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, '../src/sw.js'),
     }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(envs)
+    })
   ],
   devServer: {
     inline: true,
     port: 5000,
     historyApiFallback: true
   },
-};
+}
