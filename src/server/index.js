@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const process = require('process');
-const auth = require('./api/auth');
 const {
     login: loginRouter,
     user: userRouter,
@@ -10,6 +9,7 @@ const {
     place: placeRouter,
     admin
 } = require('./api/routes');
+const auth = require('./api/auth');
 const config = require('./config/settings');
 const cors = require('cors');
 
@@ -62,13 +62,21 @@ app.get("/manifest.json", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../../", "manifest.json"));
 });
 
+app.get("/icons/:icon", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "icons", req.params.icon), 
+    function (err, data) {
+      res.sendFile('index.html', {root: path.join(__dirname, 'build')});
+    }
+  )
+});
+
 /*************************** Service Worker ***************************/
 
 app.get("/sw.js", (req, res) => {
   res.sendFile(path.resolve(__dirname, "build", "sw.js"));
 });
 
-/********************** Authentication **********************/
+/*************************** Authentication ***************************/
 
 app.use('/api/v1/', auth, function (req, res, next) {
     next();

@@ -6,7 +6,6 @@ ReactGA.initialize('UA-148749594-1');
 
 const SingleSignOnButton = props => {
   const { domain, providerName, logo, renderProps } = props;
-  console.log(props);
 
   ReactGA.event({
     category: 'User',

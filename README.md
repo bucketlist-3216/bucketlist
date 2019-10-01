@@ -1,33 +1,5 @@
-# bucketlist
+# BucketList Developer Site
 
-Project Config:
-- React + Webpack + Babel for front-end (in `./src/client`)
-- Node + Express for back-end ( in `./src/server`)
+Bucketlist is a Progressive Web Application that helps your discover attractions and plan your travel. This submission serves as a minimum viable product for the Final Project, where we will develop this application to its full potential.
 
-## Getting Started
-
-Clone project into your local repo and run:
-```js
-npm install
-```
-This will ensure you have the appropriate dependencies
-
-### Running Front-End and Back-End on Dev
-
-Front end will be hosted on port `5000`. To run:
-```js
-npm run start:front
-```
-it will be accessible on `http://localhost:5000/`
-
-Back end will be hosted on port `8080`. To run:
-```js
-npm run start:back
-```
-API queries will be called through `http://localhost:8080`
-
-
-To run both front- and back-end in one shell window (not recommended as it's difficult to debug):
-```js
-npm start
-```
+![image](https://user-images.githubusercontent.com/15785697/65824322-154ca780-e235-11e9-88e0-6b8ba74000d4.png)
