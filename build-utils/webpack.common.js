@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
-const envs = {}
+
 const VARIABLES = [
   "MYSQL_PASSWORD",
   "GOOGLE_LOGIN_SECRET",
@@ -16,17 +16,17 @@ const VARIABLES = [
   "FACEBOOK_APP"
 ];
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-  // here we add each SECRET as environment variables;
-  VARIABLES.forEach((varName) => {
-    if (!process.env[varName]) {
-      throw new Error(`[build] environment variable "${varName}" not found`);
-    }
-    envs[varName] = process.env[varName];
-  })
-}
+
+// here we add each SECRET as environment variables;
+const envs = {}
+VARIABLES.forEach((varName) => {
+  if (!process.env[varName]) {
+    throw new Error(`[build] environment variable "${varName}" not found`);
+  }
+  envs[varName] = process.env[varName];
+})
 
 module.exports = {
   devtool: 'source-map',
