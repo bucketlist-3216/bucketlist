@@ -1,5 +1,6 @@
 const configFolder = `${__dirname}/../../../config/`;
 const fs = require('fs');
+const dotenv = require('dotenv').config();
 
 module.exports = {
     "port": 3001,
