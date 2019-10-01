@@ -27,11 +27,16 @@ const userQueryModel = new UserQueryModel();
 
 /**************** Trip APIs  ****************/
 
-// These are the trips
-
-// TODO: Do we really need this?
-router.get('/:id', function (req, res) {
-    res.end('Get all trips');
+// Get trip details
+router.get('/:tripId', function (req, res) {
+    return tripQueryModel.getTrip(req.params.tripId)
+        .then(function(queryResponse) {
+            res.json(queryResponse[0]);
+        })
+        .catch(function(err) {
+            res.status(500).end('Unable to get trip details');
+            console.log(err);
+        });
 });
 
 // Create a trip
@@ -146,7 +151,7 @@ router.get('/:tripId/members', function (req, res) {
 
 // Add a member to a trip (adding a member-trip association)
 router.post('/:tripId/members/', function (req, res) {
-    const addTripFriend = tripFriendQueryModel.addTripFriend(req.params.email, req.body.trip.email);
+    const addTripFriend = tripFriendQueryModel.addTripFriend({ trip_id: req.params.tripId, email: req.body.email});
 
     addTripFriend
         .then(function (insertionResponse) {

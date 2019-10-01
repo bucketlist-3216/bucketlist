@@ -37,14 +37,17 @@
       color: #000000;
     }
     .trip-members {
-      margin-top: 10px;
+      margin-top: 5px;
       .trip-member {
-        font-family: 'JosefinSans-Regular';
-        font-style: normal;
-        font-weight: normal;
-        font-size: 10px;
-        line-height: 15px;
-        color: #000000;
+        span {
+          margin-left: 3px;
+          font-family: 'JosefinSans-Regular';
+          font-style: normal;
+          font-weight: normal;
+          font-size: 10px;
+          line-height: 15px;
+          color: #000000;
+        }
       }
     }
     .trip-button-containers {
@@ -54,7 +57,7 @@
       width: 80px;
 
       button {
-        height: 28px;
+        height: 15px;
         margin-top: 5px;
       }
     }
