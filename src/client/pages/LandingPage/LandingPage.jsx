@@ -23,9 +23,6 @@ class LandingPage extends Component {
   }
 
   render() {
-    console.log(process.env.NODE_ENV);
-    console.log(process.env);
-    console.log(process.env.API_URL);
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
     if (this.state.isLoading) return <Preloader />;

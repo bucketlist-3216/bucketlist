@@ -71,7 +71,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log(process.env.GOOGLE_LOGIN_SECRET);
     return (
       <div className="login">
         <div className="sso-container">
