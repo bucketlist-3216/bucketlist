@@ -7,7 +7,7 @@ module.exports = {
     new DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
-        "API_URL": JSON.stringify('https://bucketlist-testing/api/v1')
+        "API_URL": JSON.stringify('https://bucketlist-testing.herokuapp.com/api/v1')
       }
     }),
   ],
