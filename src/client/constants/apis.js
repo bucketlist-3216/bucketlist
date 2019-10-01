@@ -1,6 +1,12 @@
+let root;
+const baseURL = process.env.APP_NAME;
 
-const baseURL = process.env.HEROKU_APP_NAME;
-const root = `https://${baseURL}.herokuapp.com/api/v1`;
+if (process.env.IS_HEROKU === 'true') {
+  root = `https://${baseURL}.herokuapp.com/api/v1`;
+}
+else {
+  root = `http://${baseURL}/api/v1`;
+}
 
 const APIS = {
   login: `${root}/login`,

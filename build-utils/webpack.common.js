@@ -31,11 +31,10 @@ SECRETS.forEach((secret) => {
 // here we get the app name from heroku dyno metadata
 // and expose it for the front-end via Webpack
 // https://devcenter.heroku.com/articles/dyno-metadata#usage
-envs["HEROKU_APP_NAME"] = process.env.HEROKU_APP_NAME;
+envs["APP_NAME"] = process.env.HEROKU_APP_NAME;
 
-
-console.log('in webpack commons');
-console.log(process.env.HEROKU_APP_NAME);
+// check if http security. if on heroku, enfore https via envs
+envs["IS_HEROKU"] = (process.env.HEROKU_APP_NAME) ? true : false;
 
 module.exports = {
   devtool: 'source-map',
