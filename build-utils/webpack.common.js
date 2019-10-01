@@ -26,6 +26,7 @@ VARIABLES.forEach((varName) => {
   }
   envs[varName] = process.env[varName];
 });
+envs["APP_NAME"] = process.env.HEROKU_APP_NAME;
 
 
 console.log('in webpack commons');
@@ -98,7 +99,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(envs),
-      "API_URL": process.env.API_URL,
+      "APP_NAME_COMMENT": JSON.stringify('damn this thing'),
       "HEROKU_APP_NAME": process.env.HEROKU_APP_NAME
     })
   ],
