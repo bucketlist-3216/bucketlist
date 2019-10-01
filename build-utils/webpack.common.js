@@ -25,7 +25,11 @@ VARIABLES.forEach((varName) => {
     throw new Error(`[build] environment variable "${varName}" not found`);
   }
   envs[varName] = process.env[varName];
-})
+});
+
+
+console.log('in webpack commons');
+console.log(process.env.HEROKU_APP_NAME);
 
 module.exports = {
   devtool: 'source-map',

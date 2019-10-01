@@ -23,6 +23,8 @@ class LandingPage extends Component {
   }
 
   render() {
+    console.log('in front-end');
+    console.log(process.env)
     console.log(process.env.HEROKU_APP_NAME);
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
