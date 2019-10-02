@@ -34,8 +34,6 @@ else {
   console.log(`[build] HEROKU_APP_NAME=${herokuAppName}`);
 }
 
-
-
 // here we add each SECRET as environment variables to the front-end;
 // build will fail if we're missing any secrets in the .env file
 SECRETS.forEach((secret) => {
@@ -46,7 +44,9 @@ SECRETS.forEach((secret) => {
 });
 
 // here we expose the API_URL as env variable; and to be build specific
-envs["API_URL"] = (isHeroku()) ? `https://${herokuAppName}.herokuapp.com/api/v1` : `http://localhost:3001/api/v1`;
+envs["API_URL"] = (isHeroku())
+  ? `https://${herokuAppName}.herokuapp.com/api/v1`
+  : `http://localhost:3001/api/v1`;
 
 module.exports = {
   devtool: 'source-map',
