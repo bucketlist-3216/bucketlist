@@ -84,7 +84,7 @@ class Create extends Component {
       let instance = this;
       axios
         .request({
-          url: APIS.trip,
+          url: APIS.trip(),
           method: 'post',
           headers: {
             token: localStorage.getItem('token'),
@@ -97,7 +97,7 @@ class Create extends Component {
           instance.props.setLoading(false);
         })
         .catch(function(error) {
-          if (error.response && error.response.status == 401) {
+          if (error.response && error.response.status === 401) {
             instance.routeChange(PATHS.landingPage);
             return;
           }

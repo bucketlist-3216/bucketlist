@@ -8,7 +8,7 @@ import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
-import PlaceInfo from './PlaceInfo/';
+import PlaceInfo from '../PlaceInfo/';
 import BackButton from '../BackButton';
 import Preloader from '../Preloader';
 
@@ -18,7 +18,9 @@ class Swipe extends Component {
     super(props);
 
     this.state = {
+      city: '',
       places: [],
+      placeData: {},
       hasNext: true,
       isLoading: true,
       isModalShown: false
@@ -30,6 +32,7 @@ class Swipe extends Component {
       ? this.props.location.state.placeId
       : null;
     this.getPlacesToSwipe(placeId);
+    this.getCity(this.props.match.params.tripId);
   }
 
   // Helper function for redirecting
@@ -40,6 +43,29 @@ class Swipe extends Component {
   }
 
   // Helper functions to communicate with backend
+  getCity(tripId) {
+    const instance = this;
+
+    axios
+      .request({
+        url: APIS.trip(tripId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
+      .then(function(response) {
+        instance.setState({ city: response.data.destination });
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
+        alert(error.message);
+      });
+  }
 
   getPlacesToSwipe(placeId) {
     this.setState({ isLoading: true });
@@ -65,7 +91,7 @@ class Swipe extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        if (error.response && error.response.status == 401) {
+        if (error.response && error.response.status === 401) {
           instance.routeChange(PATHS.landingPage);
           return;
         }
@@ -98,7 +124,7 @@ class Swipe extends Component {
           }
         })
         .catch(function (error) {
-          if (error.esponse.status == 401) {
+          if (error.esponse.status === 401) {
             instance.routeChange(PATHS.landingPage);
             return;
           }
@@ -107,14 +133,18 @@ class Swipe extends Component {
     };
   }
 
-  // Helper function for modal
+  // Helper function to set state
 
-  showModal(event) {
+  showModal(placeId) {
     this.setState({ isModalShown: true });
   }
 
   closeModal(event) {
     this.setState({ isModalShown: false });
+  }
+
+  setPlaceData(placeData) {
+    this.setState({ placeData });
   }
 
   // Helper functions for swiping
@@ -124,6 +154,7 @@ class Swipe extends Component {
     if (places.length > 0) {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
+      this.setState({ placeData: {} });
     } else {
       this.getPlacesToSwipe();
     }
@@ -139,7 +170,7 @@ class Swipe extends Component {
           onSwipe={this.castVote(currentPlace)}
           onAfterSwipe={this.nextCard}
         >
-          <SwipeCard place={currentPlace} showModal={this.showModal} />
+          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} showModal={this.showModal} />
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -164,32 +195,27 @@ class Swipe extends Component {
   }
 
   render() {
-    const { places, isLoading } = this.state;
+    const { places, isLoading, city } = this.state;
     const { userId, tripId } = this.props.match.params;
 
     if (isLoading) return null;
 
     return (
       <div className="swipe">
+        <div className="swipe-header">
+          <BackButton
+            onClick={() => this.routeChange(PATHS.trips(userId))}
+          />
+          <div className="city">{city}</div>
+          <img
+            className="icon-list"
+            src="/assets/common/icon-list.png"
+            onClick={() => this.routeChange(PATHS.list(userId, tripId))}
+          />
+        </div>
         {places.length > 0 && (
           <div>
-            {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
-            {this.renderModal(places[0].place_id)}
-            <div className="swipe-header">
-              <BackButton
-                onClick={() => {
-                  this.routeChange(PATHS.trips(userId));
-                }}
-              />
-              <div className="city">{places[0].city || ''}</div>
-              <img
-                className="icon-list"
-                src="/assets/common/icon-list.png"
-                onClick={() => {
-                  this.routeChange(PATHS.list(userId, tripId));
-                }}
-              />
-            </div>
+            {this.renderModal()}
             <div className="place-name">
               <span>{places[0].name || ''}</span>
             </div>
@@ -200,15 +226,15 @@ class Swipe extends Component {
     );
   }
 
-  renderModal(placeId) {
-    const { isModalShown } = this.state;
+  renderModal() {
+    const { isModalShown, placeData } = this.state;
     const isMobile = window.innerWidth < 555;
     return (
       <PlaceInfo
         isModalShown={isModalShown}
         closeModal={this.closeModal}
         isMobile={isMobile}
-        placeId={placeId}
+        placeData={placeData}
       />
     );
   }

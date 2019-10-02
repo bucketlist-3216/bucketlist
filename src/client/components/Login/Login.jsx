@@ -54,7 +54,7 @@ class Login extends Component {
           instance.routeChange(PATHS.trips(instance.state.userId));
         })
         .catch(function (error) {
-          if (error.response && error.response.status == 401) {
+          if (error.response && error.response.status === 401) {
             instance.routeChange(PATHS.landingPage);
             return;
           }

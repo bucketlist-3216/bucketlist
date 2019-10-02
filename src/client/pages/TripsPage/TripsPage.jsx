@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactGA from 'react-ga';
+import autoBindMethods from 'class-autobind-decorator';
+import _ from 'lodash';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +14,9 @@ import Header from "../../components/Header";
 import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
+import AddFriendModal from "../../components/AddFriendModal";
 
+@autoBindMethods
 class TripsPage extends Component {
   constructor(props) {
     super(props);
@@ -20,10 +24,10 @@ class TripsPage extends Component {
     this.state = {
       trips: [],
       isDoneFetching: false,
-      isLoading: true
+      isLoading: true,
+      isModalShown: false,
+      modalTripId: null
     };
-
-    this.routeChange = this.routeChange.bind(this);
   }
 
   routeChange(pathname) {
@@ -50,8 +54,8 @@ class TripsPage extends Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        if (error.response && error.response.status == 401) {
-          instance.routeChange(PATHS.landingPage());
+        if (error.response && error.response.status === 401) {
+          instance.routeChange(PATHS.landingPage);
           return;
         }
         alert(error.message);
@@ -71,6 +75,7 @@ class TripsPage extends Component {
             <Header />
           </div>
           <Title text="Upcoming Trips" />
+          {this.renderModal()}
           <div className="trips-container">
             {this.state.trips.map((trip, key) => (
               <Trip
@@ -78,6 +83,7 @@ class TripsPage extends Component {
                 trip={trip}
                 userId={this.props.match.params.userId}
                 history={this.props.history}
+                showModal={this.showModal}
               />
             ))}
             <div className="trip" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
@@ -95,6 +101,34 @@ class TripsPage extends Component {
     } else {
       return null;
     }
+  }
+
+  // Helper function for modal
+
+  showModal(tripId) {
+    this.setState({
+      isModalShown: true,
+      modalTripId: tripId
+    });
+  }
+
+  closeModal(event) {
+    this.setState({ isModalShown: false });
+  }
+
+  getTripId() {
+    return this.state.modalTripId;
+  }
+
+  renderModal() {
+    const { isModalShown, modalTripId } = this.state;
+    return (
+      <AddFriendModal
+        isModalShown={isModalShown}
+        closeModal={this.closeModal}
+        tripId={modalTripId}
+      />
+    );
   }
 }
 
