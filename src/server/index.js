@@ -79,7 +79,7 @@ app.get("/sw.js", (req, res) => {
 /********************** Authentication **********************/
 
 app.use('/api/v1/', auth, function (req, res, next) {
-    console.log(req.headers.verifiedUserId);
+    console.log('Verified User Id: ', req.headers.verifiedUserId);
     next();
 });
 

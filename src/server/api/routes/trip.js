@@ -48,14 +48,13 @@ router.post('/', function (req, res) {
     };
     const toInsert = req.body.trip;
     toInsert.authorId = req.headers.verifiedUserId;
-    console.log(toInsert.authorId );
 
     // Insert trip into mySQL using knex
     const tripInsertion = tripQueryModel.addTrip(toInsert);
 
     return tripInsertion
         .then(function (returnedObject) {
-            // console.log('Trip insertion complete: ', returnedObject);
+            console.log('Trip insertion complete: ', returnedObject);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId({ email: emailId });
@@ -179,7 +178,6 @@ router.delete('/members/:tripFriend', function (req, res) {
 router.post('/vote', function (req, res) {
     let { vote, user_id, trip_id, place_id } = req.body;
     user_id = req.headers.verifiedUserId;
-    console.log(user_id);
 
     const queryingTripFriendId = tripFriendQueryModel.getTripFriendId(trip_id, user_id);
     queryingTripFriendId
@@ -189,7 +187,6 @@ router.post('/vote', function (req, res) {
             return voteQueryModel.castVote({ trip_friend_id, place_id, vote });
         })
         .then(function (voteId) {
-            // console.log(voteId);
             res.json({ insertedId: voteId });
         })
         .catch(function (err) {
@@ -229,7 +226,6 @@ router.get('/vote/location/:locationId', function (req, res) {
 router.get('/:tripId/vote/user/:userId', function (req, res) {
     const params = Object.assign({}, req.params, req.query);
     params.userId = req.headers.verifiedUserId;
-    console.log(params.userId);
     const places = voteQueryModel.getPlacesToVote(params);
 
     places

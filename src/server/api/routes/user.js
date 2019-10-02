@@ -70,7 +70,6 @@ router.delete('/', function(req, res) {
  */
 router.get('/:userId/trips', function (req, res) {
   const userId = req.headers.verifiedUserId;
-  console.log(userId);
   const trips = tripFriendQueryModel.getUserTrips(userId);
 
   trips
