@@ -26,15 +26,15 @@ let herokuAppName = null;
 if (!isHeroku()) {
   console.log(`[build] We're running locally, picking variables from .env file`);
   const result = require('dotenv').config();
-  if (result.error) {
-    throw result.error;
-  }
-  else {
-    herokuAppName = process.env.HEROKU_APP_NAME;
-    // we cannot use dotenv in production mode, so we pick them from heroku's config vars
-    console.log(`[build] HEROKU_APP_NAME=${herokuAppName}`);
-  }
+  if (result.error) throw result.error;
 }
+else {
+  herokuAppName = process.env.HEROKU_APP_NAME;
+  // we cannot use dotenv in production mode, so we pick them from heroku's config vars
+  console.log(`[build] HEROKU_APP_NAME=${herokuAppName}`);
+}
+
+
 
 // here we add each SECRET as environment variables to the front-end;
 // build will fail if we're missing any secrets in the .env file
