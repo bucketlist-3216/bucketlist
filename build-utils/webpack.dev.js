@@ -7,7 +7,6 @@ module.exports = {
     new DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development'),
-        "APP_NAME": JSON.stringify('localhost:3001')
       }
     }),
   ],

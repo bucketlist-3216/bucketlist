@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const path = require('path');
-
-const webpack = require('webpack');
+const { DefinePlugin } = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -15,11 +14,30 @@ const SECRETS = [
   "FACEBOOK_APP_SECRET"
 ];
 
-// we cannot use dotenv in production mode
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+// Figure out if we're on Heroku or local
+const isHeroku = () => {
+  if (process.env.HEROKU_APP_NAME) return true;
+  return false;
+}
+
+const envs = {}
+let herokuAppName = null;
+
+if (!isHeroku()) {
+  console.log(`[build] We're running locally, picking variables from .env file`);
+  const result = require('dotenv').config();
+  if (result.error) {
+    throw result.error;
+  }
+  else {
+    herokuAppName = process.env.HEROKU_APP_NAME;
+    // we cannot use dotenv in production mode, so we pick them from heroku's config vars
+    console.log(`[build] HEROKU_APP_NAME=${herokuAppName}`);
+  }
+}
 
 // here we add each SECRET as environment variables to the front-end;
-const envs = {}
+// build will fail if we're missing any secrets in the .env file
 SECRETS.forEach((secret) => {
   if (!process.env[secret]) {
     throw new Error(`[build] environment variable "${secret}" not found`);
@@ -27,13 +45,8 @@ SECRETS.forEach((secret) => {
   envs[secret] = process.env[secret];
 });
 
-// here we get the app name from heroku dyno metadata
-// and expose it for the front-end via Webpack
-// https://devcenter.heroku.com/articles/dyno-metadata#usage
-envs["APP_NAME"] = process.env.HEROKU_APP_NAME;
-
-// check if http security. if on heroku, enfore https via envs
-envs["IS_HEROKU"] = (process.env.HEROKU_APP_NAME) ? true : false;
+// here we expose the API_URL as env variable; and to be build specific
+envs["API_URL"] = (isHeroku()) ? `https://${herokuAppName}.herokuapp.com/api/v1` : `http://localhost:3001/api/v1`;
 
 module.exports = {
   devtool: 'source-map',
@@ -99,7 +112,7 @@ module.exports = {
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, '../src/sw.js'),
     }),
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       "process.env": JSON.stringify(envs),
     })
   ],
