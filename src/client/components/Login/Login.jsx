@@ -75,7 +75,7 @@ class Login extends Component {
       <div className="login">
         <div className="sso-container">
           <GoogleLogin
-            clientId={process.env.GOOGLE_LOGIN_SECRET}
+            clientId={process.env.GOOGLE_CLIENT_ID}
             render={renderProps => (
               <SingleSignOnButton
                 providerName={PROVIDERS['google'].providerName}
@@ -90,7 +90,7 @@ class Login extends Component {
             cookiePolicy={'single_host_origin'}
           />
           <FacebookLogin
-            appId={process.env.FACEBOOK_LOGIN_SECRET}
+            appId={process.env.FACEBOOK_APP_ID}
             fields="name,email"
             callback={this.handleResponse('facebook')}
             render={renderProps => (

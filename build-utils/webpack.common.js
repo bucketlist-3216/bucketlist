@@ -5,15 +5,14 @@ const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 
 const SECRETS = [
   "MYSQL_PASSWORD",
-  "GOOGLE_LOGIN_SECRET",
-  "FACEBOOK_LOGIN_SECRET",
-  "FACEBOOK_APP"
+  "GOOGLE_CLIENT_ID",
+  "FACEBOOK_APP_ID",
+  "FACEBOOK_APP_SECRET"
 ];
 
 // we cannot use dotenv in production mode
@@ -38,9 +37,9 @@ envs["IS_HEROKU"] = (process.env.HEROKU_APP_NAME) ? true : false;
 
 module.exports = {
   devtool: 'source-map',
-  entry: path.join(__dirname, '../src/client', 'BucketList.jsx'),
+  entry: path.join(__dirname, '../src/client/BucketList.jsx'),
   output: {
-    path: path.join(__dirname, '../', 'src/server/build'),
+    path: path.join(__dirname, '../src/server/build'),
     filename: 'bundle.js',
     publicPath: '/',
   },
@@ -86,7 +85,6 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
-    // new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: path.join(__dirname, '../index.html'),
       filename: './index.html',
