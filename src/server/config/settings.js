@@ -15,10 +15,5 @@ module.exports = {
         "user": "bucketlist",
         "password": process.env.MYSQL_PASSWORD,
         "database": "bucketlist",
-        "ssl": {
-          "key": fs.readFileSync(`${configFolder}/ssl_cert/client-key.pem`),
-          "cert": fs.readFileSync(`${configFolder}/ssl_cert/client-cert.pem`),
-          "ca": fs.readFileSync(`${configFolder}/ssl_cert/server-ca.pem`)
-        }
     }
 };
