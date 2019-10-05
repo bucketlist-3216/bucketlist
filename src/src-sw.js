@@ -1,9 +1,9 @@
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 workbox.routing.registerRoute(
-  /https:\/\/bucketlist-pwa\.herokuapp\.com\/api\/v1/,
+  /https:\/\/bucketlist-pwa\.herokuapp\.com/,
   new workbox.strategies.NetworkFirst({
-    cacheName: "api-cache",
+    cacheName: "bucketlist-cache",
     plugins: [
       new workbox.expiration.Plugin({
         maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
@@ -13,22 +13,21 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  /http:\/\/localhost\:5000\/user/,
+  /localhost\:5000/,
   new workbox.strategies.NetworkFirst({
-    cacheName: "user-cache",
+    cacheName: "localhost-cache",
     plugins: [
       new workbox.expiration.Plugin({
-        maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
+        maxAgeSeconds: 24 * 60 * 60 // 1 day
       })
     ]
   })
 );
 
 workbox.routing.registerRoute(
-  new RegExp('/\.(?:png|gif|jpg|jpeg|webp|svg)$'),
-  //\.(?:png|gif|jpg|jpeg|webp|svg)$/,
+  /https:\/\//,
   new workbox.strategies.NetworkFirst({
-    cacheName: 'image-cache',
+    cacheName: 'misc1-cache',
     plugins: [
       new workbox.expiration.Plugin({
         statuses: [0, 200],
@@ -38,6 +37,18 @@ workbox.routing.registerRoute(
   })
 );
 
+workbox.routing.registerRoute(
+  /http:\/\//,
+  new workbox.strategies.NetworkFirst({
+    cacheName: 'misc2-cache',
+    plugins: [
+      new workbox.expiration.Plugin({
+        statuses: [0, 200],
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+      }),
+    ],
+  })
+);
 
 addEventListener("message", event => {
   if (event.data && event.data.type === "SKIP_WAITING") {
