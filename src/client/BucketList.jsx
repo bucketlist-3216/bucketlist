@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ReactGA from 'react-ga';
-import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+import { Workbox } from "workbox-window";
 
 import './styles/styles.scss';
 
@@ -33,7 +33,23 @@ ReactDOM.render(
   document.querySelector('#root')
 );
 
-// Install a service worker if allowed in browser
-if ('serviceWorker' in navigator) {
-  const registration = runtime.register();
-}
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    const wb = new Workbox("/sw.js"); 
+    const updateButton = document.querySelector("#app-update");
+    // Fires when the registered service worker has installed but is waiting to activate.
+    wb.addEventListener("waiting", event => {
+        updateButton.classList.add("show");
+        updateButton.addEventListener("click", () => {
+        // Set up a listener that will reload the page as soon as the previously waiting service worker has taken control.
+        wb.addEventListener("controlling", event => {
+            window.location.reload();
+        });
+        // Send a message telling the service worker to skip waiting.
+        // This will trigger the `controlling` event handler above.
+        wb.messageSW({ type: "SKIP_WAITING" });
+        });
+    });
+    wb.register();
+  });
+};

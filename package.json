@@ -85,8 +85,8 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "sass": "^1.22.12",
-    "serviceworker-webpack-plugin": "^1.0.1",
     "underscore": "^1.9.1",
-    "url-loader": "^2.1.0"
+    "url-loader": "^2.1.0",
+    "workbox-window": "^4.3.1"
   }
 }

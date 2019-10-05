@@ -34,24 +34,6 @@ app.use('/api/', function (req, res, next) {
 var sslRedirect = require('heroku-ssl-redirect');
 app.use(sslRedirect());
 
-
-/****************** BACK FOR HTTPS REDIRECTION ******************/
-/*
-const util = require('util');
-const redirectionFilter = function (req, res, next) {
-  const theDate = new Date();
-  const receivedUrl = `${req.protocol}:\/\/${req.hostname}:${port}${req.url}`;
-  if (req.get('X-Forwarded-Proto') === 'http') {
-    const redirectTo = `https:\/\/${req.hostname}${req.url}`;
-    console.log(`${theDate} Redirecting ${receivedUrl} --> ${redirectTo}`);
-    res.redirect(301, redirectTo);
-  } else {
-    next();
-  }
-}; 
-app.get('/*', redirectionFilter); 
-*/
-
 /************************ Miscellaneous Files *************************/
 
 app.get("/robots.txt", (req, res) => {
@@ -100,7 +82,7 @@ app.get('*', function(req, res) {
 
 /************************** Start the server **************************/
 
-port = process.env.PORT || 3001;
+port = process.env.PORT || 5000;
 
 app.listen(port, () => {
     console.log('Listening on port ', port);
