@@ -203,7 +203,8 @@ class Swipe extends Component {
     return (
       <div className="swipe">
         <div className="swipe-header">
-          <BackButton
+          <BackButton 
+            className="icon-back"
             onClick={() => this.routeChange(PATHS.trips(userId))}
           />
           <div className="city">{city}</div>
