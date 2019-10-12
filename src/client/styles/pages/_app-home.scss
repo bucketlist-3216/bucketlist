@@ -9,6 +9,51 @@
 
     .title {
         color: #FFFFFF;
+        font-size: 6vh;
         display: inline-block;
+    }
+
+    hr {
+        color: gray;
+    }
+
+    p {
+        color: gray;
+    }
+
+    .row {
+        display: inline-block;
+        margin-top: 2vh;
+    }
+
+    .half-row {
+        border: 1px solid red;
+        width: 40%;
+    }
+
+    .social-logins {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        .row {
+            display: inline-block;
+            margin-top: 2vh;
+        }
+
+        .input-login {
+            text-align: center;
+            border: none ;
+            border-radius: 10px;
+            width: 30%;
+        }
+
+        .login-button {
+            background: gray;
+        }
+
+        .signup {
+            margin-top: 2vh;
+        }
     }
 }

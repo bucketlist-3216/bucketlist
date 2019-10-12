@@ -2,10 +2,16 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
-// Import paths
+import loginSecrets from '../../../../config/login_secrets.json';
+
+import PROVIDERS from '../../constants/providers';
 import PATHS from '../../constants/paths';
 
 // Import components
+import SingleSignOnButton from '../../components/SingleSignOnButton';
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+
 @autoBindMethods
 class AppHome extends Component {
   constructor(props) {
@@ -26,6 +32,49 @@ class AppHome extends Component {
     this.setState({ isLoading });
   }
 
+  handleResponse(platform) {
+    let instance = this;
+    return function (response) {
+      instance.props.setLoading(true);
+      let userData = {};
+
+      if (platform === 'google') {
+        userData = {
+          email: response.profileObj.email,
+          username: response.profileObj.name,
+          token: response.Zi.id_token,
+          platform
+        };
+        instance.setState({ token: response.Zi.id_token });
+      } else if (platform === 'facebook') {
+        userData = {
+          email: response.email,
+          username: response.name,
+          token: response.accessToken,
+          platform
+        };
+        instance.setState({ token: response.accessToken });
+      }
+      localStorage.setItem('token', userData.token);
+      localStorage.setItem('platform', userData.platform);
+
+      axios
+        .post(APIS.login, { userData })
+        .then(function (response) {
+          instance.setState({ userId: response.data.insertedId[0] });
+          instance.routeChange(PATHS.trips(instance.state.userId));
+        })
+        .catch(function (error) {
+          if (error.response && error.response.status === 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
+          alert(error.message);
+        });
+      //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
+    }
+  }
+
   render() {
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
@@ -34,8 +83,51 @@ class AppHome extends Component {
     }
 
     return (
-      <div className="app-home" onClick={() => this.routeChange(PATHS.createTrip)}>
+      <div className="app-home">
         <h1 className="title">bucketlist</h1>
+        {/* <div className="login-inputs">
+
+        </div> */}
+        <div className="social-logins">
+          <div className="row"><input type="text" className="input-login" placeholder="email"></input></div>
+          <div className="row"><input type="password" className="input-login" placeholder="password"></input></div>
+          <div className="row"><button className="login-button input-login">Login</button></div>
+          <p className="signup">Don't have an account? Sign up <a href="">here</a></p>
+        </div>
+        <div className="row">
+          <GoogleLogin
+            className="half-row"
+            clientId={loginSecrets.google}
+            render={renderProps => (
+              <SingleSignOnButton
+                providerName={PROVIDERS['google'].providerName}
+                logo={PROVIDERS['google'].logo}
+                renderProps={renderProps}
+              />
+            )}
+            responseType="id_token"
+            buttonText={PROVIDERS['google'].providerName}
+            onSuccess={this.handleResponse('google')}
+            onFailure={error => console.log(error)}
+            cookiePolicy={'single_host_origin'}
+          />
+          <FacebookLogin
+            className="half-row"
+            appId={loginSecrets.facebook}
+            fields="name,email"
+            callback={this.handleResponse('facebook')}
+            render={renderProps => (
+              <SingleSignOnButton
+                providerName={PROVIDERS['facebook'].providerName}
+                logo={PROVIDERS['facebook'].logo}
+                renderProps={renderProps}
+                disabled
+              />
+            )}
+            responseType="token"
+          />
+          </div>
+        <p onClick={() => this.routeChange(PATHS.createTrip)}>continue as guest</p>
       </div>
     );
   }
