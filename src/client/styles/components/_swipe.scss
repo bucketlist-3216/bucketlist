@@ -3,16 +3,22 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
+
+  // if screen width < 555px, apply this
+  @media screen and (max-width: 555px) {
+    width: 100vw;
+  }
 
   .swipe-header-primary {
-    width: 412px;
+    width: 320px;
     font-family: 'JosefinSans-Regular';
     margin: auto;
     margin-top: 20px;
 
     // if screen width < 555px, apply this
     @media screen and (max-width: 555px) {
-      width: 320px;
+      width: 100vw;
     }
 
     .city {
@@ -24,7 +30,7 @@
   }
 
   .swipe-header-secondary {
-    width: 412px;
+    width: 320px;
     font-family: 'JosefinSans-Regular';
     display: flex;
     justify-content: space-between;
@@ -32,7 +38,7 @@
 
     // if screen width < 555px, apply this
     @media screen and (max-width: 555px) {
-      width: 320px;
+      width: 100vw;
     }
 
     .icon-back,
@@ -94,12 +100,13 @@
   }
 
   .swipe-container {
+    flex: 2 1 0;
     position: relative;
-    width: 375px;
+    width: 320px;
     height: 712px;
 
     @media screen and (max-width: 555px) {
-      width: 320px;
+      width: 100vw;
       height: 480px;
     }
 
@@ -155,7 +162,8 @@
         width: 100%;
         position: absolute;
         bottom: 5px;
-        left: 45%;
+        display: flex;
+        justify-content: center;
 
         .description {
           font-family: 'JosefinSans-Regular';
@@ -165,8 +173,62 @@
           margin: 10px;
         }
 
-        .info-icon {
-          width: 30px;
+        .info-button-open {
+          background-color: rgba(0, 0, 0, 0.0);
+          color: white;
+          border-width: 0px;
+        }
+      }
+
+      .info-panel {
+        //height: 100%;
+        width: 320px;
+        background-color: #272727;
+        color: white;
+
+        @media screen and (max-width: 555px) {
+          width: 100vw;
+        }
+
+        .info-content {
+          background-color: #272727;
+          color: white;
+          width: 320px;
+          height: 100%;
+
+          @media screen and (max-width: 555px) {
+            width: 100vw;
+          }
+
+
+          .card-info-content {
+            background-color: rgba(0, 0, 0, 0.0);
+            display: flex;
+            justify-content: center;
+
+            .info-button-close {
+              background-color: rgba(0, 0, 0, 0.0);
+              color: white;
+              border-width: 0px;
+              margin: 10px;
+            }
+          }
+
+          .info-title {
+            font-size: 28px;
+            margin: 8px;
+          }
+
+          .info-intro {
+            font-size: 13px;
+            margin: 8px;
+          }
+
+          .info-address,
+          .info-reviews {
+            font-size: 11px;
+            margin: 22px;
+          }
         }
       }
 

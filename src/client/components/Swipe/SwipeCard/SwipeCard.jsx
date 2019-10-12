@@ -7,7 +7,7 @@ import InfoIcon from '../../../../../assets/common/icon-info.svg';
 import SwipeButton from '../SwipeButton';
 
 const SwipeCard = props => {
-  const { zIndex, place, setPlaceData, showModal } = props;
+  const { zIndex, place, setPlaceData, setIsOpen } = props;
   const { image_link, place_id } = place;
 
   const getPlaceData = (placeId) => {
@@ -32,9 +32,8 @@ const SwipeCard = props => {
       });
   };
 
-  const handleClick = (placeId) => {
-      showModal();
-      //getPlaceData(placeId);
+  const handleClick = (showInfo) => {
+      setIsOpen(showInfo);
   };
 
   return (
@@ -53,10 +52,8 @@ const SwipeCard = props => {
         <SwipeButton type="approve" />
       </div>
       <div className="card-info">
-        <InfoIcon className="info-icon" onClick={() => handleClick(place_id)}/>
+        <button className="info-button-open" onClick={() => handleClick(true)}>tap here for more info</button>
       </div>
-
-
     </div>
   );
 };
