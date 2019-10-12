@@ -2,28 +2,28 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
+// Import paths
 import PATHS from '../../constants/paths';
-import Title from "../../components/Title";
-import Create from "../../components/Create";
-import Preloader from '../../components/Preloader';
+
+// Import components
 
 
 @autoBindMethods
-class CreateView extends Component {
+class AppHome extends Component {
   constructor(props) {
-    super (props);
-    
+    super(props);
+
     this.state = {
       isLoading: false
     };
   }
-  
+
   routeChange(pathname) {
     this.props.history.push({
       pathname
     });
   }
-  
+
   setLoading(isLoading) {
     this.setState({ isLoading });
   }
@@ -37,16 +37,9 @@ class CreateView extends Component {
 
     return (
       <div className="create-page">
-        <Header />
-        <div className="create-header">
-          <BackButton onClick={() => {
-            this.routeChange(PATHS.trips(this.props.match.params.userId));
-          }}/>
-        </div>
-        <Title text="Create New Trip" />
-        <Create {...this.props} setLoading={this.setLoading}/>
       </div>
     );
   }
-  
 }
+
+export default AppHome;
