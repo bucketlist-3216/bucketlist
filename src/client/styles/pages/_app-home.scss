@@ -1,0 +1,14 @@
+.app-home {
+    width: 100vw;
+    height: 100vh;
+    background-color: #272727;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .title {
+        color: #FFFFFF;
+        display: inline-block;
+    }
+}

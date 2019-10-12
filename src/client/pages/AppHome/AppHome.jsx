@@ -6,8 +6,6 @@ import autoBindMethods from 'class-autobind-decorator';
 import PATHS from '../../constants/paths';
 
 // Import components
-
-
 @autoBindMethods
 class AppHome extends Component {
   constructor(props) {
@@ -36,7 +34,8 @@ class AppHome extends Component {
     }
 
     return (
-      <div className="create-page">
+      <div className="app-home" onClick={() => this.routeChange(PATHS.createTrip)}>
+        <h1 className="title">bucketlist</h1>
       </div>
     );
   }
