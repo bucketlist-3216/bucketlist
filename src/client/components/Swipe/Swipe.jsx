@@ -13,47 +13,8 @@ import EmptyCard from './EmptyCard';
 import PlaceInfo from '../PlaceInfo/';
 import BackButton from '../BackButton';
 
-const SAMPLE_PLACE = [{
-  place_id: 203,
-  name: 'Thian Hock Keng Temple, Singapore',
-  description:
-    'Beautifully restored, Thian Hock Keng Temple is the oldest Chinese temple in Singapore and dedicated to Mazu, the Goddess of the Sea.',
-  type: 'ATTRACTION',
-  longitude: 103.84763,
-  latitude: 1.28094,
-  images: [
-    'http://www.yoursingapore.com/content/dam/desktop/global/see-do-singapore/culture-heritage/thian-hock-kheng-temple-carousel01-rect.jpg',
-    'http://www.yoursingapore.com/content/dam/desktop/global/see-do-singapore/culture-heritage/thian-hock-kheng-temple-carousel01-rect.jpg',
-    'http://www.yoursingapore.com/content/dam/desktop/global/see-do-singapore/culture-heritage/thian-hock-kheng-temple-carousel01-rect.jpg'
-  ],
-  location: '8 Sample Location Drive, SG 378921',
-  link_1: 'http://www.thianhockkeng.com.sg',
-  link_2:
-    'http://www.yoursingapore.com/en/see-do-singapore/culture-heritage/places-of-worship/thian-hock-keng-temple.html',
-  opening_hours: 'Daily, 7.30am – 5.30pm',
-  image_credits: 'Joel Chua DY',
-  image_cap:
-    'The Thian Hock Keng Temple in Singapore is dedicated to Mazu, the Goddess of the Sea.',
-  address: '158 Telok Ayer Street',
-  city: 'Singapore',
-  reviews: [
-    {
-      reviewer: {
-        name: 'Jessica Crawford',
-        status: 'Elite Reviewer, Reviews.com'
-      },
-      message:
-        "This is the best review ever, I just can't possibly think of anything bad to say. The entire experience was phenomenal."
-    },
-    {
-      reviewer: {
-        name: 'Thomas Shelby',
-        status: 'Legend Reviewer, The Birmingham Reviews'
-      },
-      message: 'Terrible place. Not a single joy.'
-    }
-  ]
-}];
+
+import { SAMPLE_PLACES } from './sample_data';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -62,8 +23,8 @@ class Swipe extends Component {
 
     this.state = {
       city: 'Singapore',
-      places: SAMPLE_PLACE,
-      placeData: SAMPLE_PLACE[0],
+      places: SAMPLE_PLACES,
+      placeData: {},
       swipeList: 1,
       hasNext: true,
       isModalShown: false
@@ -141,7 +102,8 @@ class Swipe extends Component {
 
   renderSwiping() {
     const { places } = this.state;
-    const currentPlace = SAMPLE_PLACE[0];
+    const currentPlace = places[0];
+
     return (
       <div className="swipe-container">
         <Swipeable
@@ -221,8 +183,9 @@ class Swipe extends Component {
   }
 
   renderModal() {
-    const { isModalShown } = this.state;
+    const { isModalShown, places } = this.state;
     const isMobile = window.innerWidth < 555;
+    const place = places[0];
 
     return (
       <div className="info-panel">
@@ -236,16 +199,15 @@ class Swipe extends Component {
               <button className="info-button-close" onClick={() => this.setIsOpen(false)}>tap here to close</button>
             </div>
             <div  className="info-title">
-              {"Marina Bay Sands, $$$"}
+              { place.name + ", " + place.price }
             </div>
             <div  className="info-intro">
-              {"Singapore’s most iconic hotel for the world’s largest rooftop Infinity Pool, award-winning dining, and a wide range of shopping and entertainment options."}
+              { place.desc }
             </div>
             <div className="info-address">
-              <div>{"Location: 10 Bayfront Ave, Singapore 018956"}</div>
-              <div>{"Hours: 7:30AM - 9PM"}</div>
-              <div>{"Phone: 6463 0527"}</div>
-              <div>{"Yelp Rating: 4.5/5"}</div>
+              <div>{ "Location: " + place.location }</div>
+              <div>{ "Opening Hours: " + place.hours }</div>
+              <div>{ "Phone: " + place.number }</div>
             </div>
             <div  className="info-reviews">
               {"Reviews:"}
