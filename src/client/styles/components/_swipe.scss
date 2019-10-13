@@ -3,9 +3,34 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
 
-  .swipe-header {
-    width: 412px;
+  // if screen width < 555px, apply this
+  @media screen and (max-width: 555px) {
+    width: 100vw;
+  }
+
+  .swipe-header-primary {
+    width: 320px;
+    font-family: 'JosefinSans-Regular';
+    margin: auto;
+    margin-top: 20px;
+
+    // if screen width < 555px, apply this
+    @media screen and (max-width: 555px) {
+      width: 100vw;
+    }
+
+    .city {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #FFFFFF;
+    }
+  }
+
+  .swipe-header-secondary {
+    width: 320px;
     font-family: 'JosefinSans-Regular';
     display: flex;
     justify-content: space-between;
@@ -13,25 +38,46 @@
 
     // if screen width < 555px, apply this
     @media screen and (max-width: 555px) {
-      width: 350px;
+      width: 100vw;
     }
 
     .icon-back,
     .icon-list {
-      width: 28px;
+      height: 36px;
+      width: 36px;
       margin: 0px 5px;
       cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #272727;
+      border-radius: 50%;
+      border-width: 3px;
     }
 
-    .city {
-      font-size: 20px;
-      text-align: center;
+    .list-buttons {
+      background-color: #3B3B3B;
+      border-radius: 25px;
+
+      .list-button-unselected {
+        width: 70px !important;
+        background-color:#3B3B3B !important;
+        font-size: 16px !important;
+        border-radius: 25px !important;
+        border-width: 0px;
+      }
+
+      .list-button-selected {
+        width: 80px !important;
+        background-color: #4D4D4D !important;
+        color: #FFFFFF !important;
+        font-size: 16px !important;
+        border-radius: 25px !important;
+        border-width: 0px;
+      }
     }
   }
 
   .place-name {
     height: 120px; // To ensure that card stays in place when place name has more than 1 line
-    width: 412px;
     position: relative;
 
     span {
@@ -54,13 +100,14 @@
   }
 
   .swipe-container {
+    flex: 2 1 0;
     position: relative;
-    width: 412px;
-    height: 544px;
+    width: 320px;
+    height: 712px;
 
     @media screen and (max-width: 555px) {
-      width: 300px;
-      height: 396px;
+      width: 100vw;
+      height: 480px;
     }
 
     .wrapper{}
@@ -70,7 +117,7 @@
       // height: 544px;
       width: 100%;
       height: 100%;
-
+      
       cursor: pointer;
       user-select: none;
       position: absolute;
@@ -78,6 +125,29 @@
       align-items: center;
       justify-content: center;
       top: 0;
+
+      .info-container {
+        width: 100%;
+        height: 285px;
+        position: absolute;
+        bottom: 0;
+        background-color: rgba(39, 39, 39, 0.6);
+
+        .info-title {
+          margin: 15px;
+          margin-bottom: 0px;
+          color: white;
+          font-size: 28px;
+          font-weight: bold;
+        }
+
+        .info-desc {
+          margin: 15px;
+          margin-top: 0px;
+          color: white;
+          font-size: 13px;
+        }
+      }
 
       .card-image {
         width: 100%;
@@ -91,7 +161,9 @@
       .card-info {
         width: 100%;
         position: absolute;
-        bottom: 0;
+        bottom: 5px;
+        display: flex;
+        justify-content: center;
 
         .description {
           font-family: 'JosefinSans-Regular';
@@ -101,10 +173,62 @@
           margin: 10px;
         }
 
-        .info-icon {
-          width: 30px;
-          float: right;
-          margin: 10px;
+        .info-button-open {
+          background-color: rgba(0, 0, 0, 0.0);
+          color: white;
+          border-width: 0px;
+        }
+      }
+
+      .info-panel {
+        //height: 100%;
+        width: 320px;
+        background-color: #272727;
+        color: white;
+
+        @media screen and (max-width: 555px) {
+          width: 100vw;
+        }
+
+        .info-content {
+          background-color: #272727;
+          color: white;
+          width: 320px;
+          height: 100%;
+
+          @media screen and (max-width: 555px) {
+            width: 100vw;
+          }
+
+
+          .card-info-content {
+            background-color: rgba(0, 0, 0, 0.0);
+            display: flex;
+            justify-content: center;
+
+            .info-button-close {
+              background-color: rgba(0, 0, 0, 0.0);
+              color: white;
+              border-width: 0px;
+              margin: 10px;
+            }
+          }
+
+          .info-title {
+            font-size: 28px;
+            margin: 8px;
+          }
+
+          .info-intro {
+            font-size: 13px;
+            margin: 8px;
+          }
+
+          .info-address,
+          .info-reviews {
+            font-size: 11px;
+            margin: 22px;
+          }
         }
       }
 
@@ -117,17 +241,23 @@
     }
 
     .swipe-buttons {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
       cursor: pointer;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       margin-top: 50px;
 
       .action-button {
         border-radius: 50%;
         border-width: 3px;
+        margin: 21px;
         height: 80px;
         width: 80px;
-        // border: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.3);
+        color: white;
+        border: 0px;
         box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
       }
     }

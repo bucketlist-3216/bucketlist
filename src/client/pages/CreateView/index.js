@@ -1,2 +1,2 @@
 import CreateView from './CreateView';
-export default CreateView
+export default CreateView;

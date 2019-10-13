@@ -1,13 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+import { Modal } from 'react-bootstrap';
 
 import APIS from '../../../constants/apis';
 import InfoIcon from '../../../../../assets/common/icon-info.svg';
+import SwipeButton from '../SwipeButton';
 
 const SwipeCard = props => {
-  const { zIndex, place, setPlaceData, showModal } = props;
+  const { zIndex, place, setPlaceData, setIsOpen } = props;
   const { image_link, place_id } = place;
-  // const https_image_link = image_link.startsWith("http:") ? image_link.replace("http", "https") : image_link;
 
   const getPlaceData = (placeId) => {
     axios
@@ -31,18 +32,28 @@ const SwipeCard = props => {
       });
   };
 
-  const handleClick = (placeId) => {
-      showModal();
-      getPlaceData(placeId);
+  const handleClick = (showInfo) => {
+      setIsOpen(showInfo);
   };
 
   return (
     <div className="swipe-card" style={{ zIndex }}>
-      <img className="card-image" src={image_link} />
-      <div className="card-info">
-        <InfoIcon className="info-icon" onClick={() => handleClick(place_id)}/>
+      <img className="card-image" src='http://www.yoursingapore.com/content/dam/desktop/global/see-do-singapore/places-to-see/marina-bay-area-carousel01-rect.jpg' />
+      <div className="info-container">
+        <div className="info-title">
+          {"Marina Bay Sands, $$$"}
+        </div>
+        <div className="info-desc">
+          {"Singapore’s most iconic hotel for the world’s largest rooftop Infinity Pool, award-winning dining, and a wide range of shopping and entertainment options."}
+        </div>
       </div>
-
+      <div className="swipe-buttons">
+        <SwipeButton type="reject" />
+        <SwipeButton type="approve" />
+      </div>
+      <div className="card-info">
+        <button className="info-button-open" onClick={() => handleClick(true)}>tap here for more info</button>
+      </div>
     </div>
   );
 };
