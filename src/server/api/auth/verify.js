@@ -2,6 +2,7 @@
 const loginSecrets = require('../../../../config/login_secrets.json');
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(loginSecrets.google);
+let jwt = require('jsonwebtoken');
 
 // For Facebook Login authentication
 const request = require('request-promise');
@@ -39,6 +40,21 @@ module.exports = ({ token, platform }) => {
             .catch((error) => {
                 throw error;
             });
+    } else if (platform === 'jwt') {
+        if (token.startsWith('Bearer ')) {
+            token = token.slice(7, token.length);
+        } else if (!token) 
+            res.status(403).json({ "success": failed, message: "No auth token provided"});
+        else {
+            jwt.verify(token, loginSecrets.jwtSecret, (err, payload) => {
+                if (err) {
+                    throw err;
+                } else {
+                    console.log('Decoded to ', JSON.stringify(payload));
+                    return payload.userID;
+                }
+            })
+        }
     }
     // TODO: get user email from token
 };

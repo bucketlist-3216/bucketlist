@@ -13,7 +13,6 @@ if (settings.validate) {
     router.use(validateRequest);
 }
 
-let guestCount = 0;
 
 /**************** Login end points ****************/
 
@@ -72,12 +71,8 @@ router.post('/guest', function (req, res) {
     // Add a user to table with temporary as true
     let toAdd = {
         "username": "_GUEST_USER",
-        "email": "_GUEST_USER@bucketlist.com",
         "temporary": true
     };
-
-    toAdd['email'] = toAdd['email'] + guestCount;
-    guestCount += 1;
 
     userQueryModel
         .addUser(toAdd, true)
