@@ -88,12 +88,13 @@ class Home extends Component {
         {/* <div className="login-inputs">
 
         </div> */}
-        <div className="social-logins">
+        {// TODO: implement normal login
+        /*<div className="social-logins">
           <div className="row"><input type="text" className="input-login" placeholder="email"></input></div>
           <div className="row"><input type="password" className="input-login" placeholder="password"></input></div>
           <div className="row"><button className="login-button input-login">Login</button></div>
           <p className="signup">Don't have an account? Sign up <a href="">here</a></p>
-        </div>
+        </div>*/}
         <div className="row">
           <GoogleLogin
             className="half-row"
@@ -111,7 +112,8 @@ class Home extends Component {
             onFailure={error => console.log(error)}
             cookiePolicy={'single_host_origin'}
           />
-          <FacebookLogin
+          {// TODO: implement FacebookLogin
+          /*<FacebookLogin
             className="half-row"
             appId={loginSecrets.facebook}
             fields="name,email"
@@ -125,9 +127,14 @@ class Home extends Component {
               />
             )}
             responseType="token"
-          />
-          </div>
-        <p onClick={() => this.routeChange(PATHS.createTrip)}>continue as guest</p>
+          />*/}
+        </div>
+      	<div className="or">
+      		<div className="line"></div>
+      		<span>or</span>
+        	<div className="line"></div>
+      	</div>
+        <span className="guest" onClick={() => this.routeChange(PATHS.createTrip)}>continue as guest</span>
       </div>
     );
   }
