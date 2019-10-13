@@ -145,6 +145,7 @@ class Swipe extends Component {
     return (
       <div className="swipe-container">
         <Swipeable
+          buttons={this.renderButtons}
           onSwipe={this.castVote(currentPlace)}
           onAfterSwipe={this.nextCard}
         >
@@ -223,55 +224,36 @@ class Swipe extends Component {
     const { isModalShown } = this.state;
     const isMobile = window.innerWidth < 555;
 
-      return (
-        <div className="swipe-card">
-          <img className="card-image" src='http://www.yoursingapore.com/content/dam/desktop/global/see-do-singapore/places-to-see/marina-bay-area-carousel01-rect.jpg' />
-          <div className="info-container">
-            <div className="info-title">
+    return (
+      <div className="info-panel">
+        <SlidingPanel
+          type={"bottom"}
+          isOpen={isModalShown}
+          closeFunc={() => this.setIsOpen(false)}
+        >
+          <div className="info-content">
+            <div className="card-info-content">
+              <button className="info-button-close" onClick={() => this.setIsOpen(false)}>tap here to close</button>
+            </div>
+            <div  className="info-title">
               {"Marina Bay Sands, $$$"}
             </div>
-            <div className="info-desc">
+            <div  className="info-intro">
               {"Singapore’s most iconic hotel for the world’s largest rooftop Infinity Pool, award-winning dining, and a wide range of shopping and entertainment options."}
             </div>
+            <div className="info-address">
+              <div>{"Location: 10 Bayfront Ave, Singapore 018956"}</div>
+              <div>{"Hours: 7:30AM - 9PM"}</div>
+              <div>{"Phone: 6463 0527"}</div>
+              <div>{"Yelp Rating: 4.5/5"}</div>
+            </div>
+            <div  className="info-reviews">
+              {"Reviews:"}
+            </div>
           </div>
-          <div className="swipe-buttons">
-            <SwipeButton type="reject" />
-            <SwipeButton type="approve" />
-          </div>
-          <div className="card-info">
-            <button className="info-button-open" onClick={() => this.setIsOpen(true)}>tap here for more info</button>
-          </div>
-
-          <div className="info-panel">
-            <SlidingPanel
-              type={"bottom"}
-              isOpen={isModalShown}
-              closeFunc={() => this.setIsOpen(false)}
-            >
-              <div className="info-content">
-                <div className="card-info-content">
-                  <button className="info-button-close" onClick={() => this.setIsOpen(false)}>tap here to close</button>
-                </div>
-                <div  className="info-title">
-                  {"Marina Bay Sands, $$$"}
-                </div>
-                <div  className="info-intro">
-                  {"Singapore’s most iconic hotel for the world’s largest rooftop Infinity Pool, award-winning dining, and a wide range of shopping and entertainment options."}
-                </div>
-                <div className="info-address">
-                  <div>{"Location: 10 Bayfront Ave, Singapore 018956"}</div>
-                  <div>{"Hours: 7:30AM - 9PM"}</div>
-                  <div>{"Phone: 6463 0527"}</div>
-                  <div>{"Yelp Rating: 4.5/5"}</div>
-                </div>
-                <div  className="info-reviews">
-                  {"Reviews:"}
-                </div>
-              </div>
-            </SlidingPanel>
-          </div>
-        </div>
-      );
+        </SlidingPanel>
+      </div>
+    );
   }
 }
 

@@ -47,10 +47,6 @@ const SwipeCard = props => {
           {"Singapore’s most iconic hotel for the world’s largest rooftop Infinity Pool, award-winning dining, and a wide range of shopping and entertainment options."}
         </div>
       </div>
-      <div className="swipe-buttons">
-        <SwipeButton type="reject" />
-        <SwipeButton type="approve" />
-      </div>
       <div className="card-info">
         <button className="info-button-open" onClick={() => handleClick(true)}>tap here for more info</button>
       </div>

@@ -117,7 +117,7 @@
       // height: 544px;
       width: 100%;
       height: 100%;
-      
+
       cursor: pointer;
       user-select: none;
       position: absolute;
@@ -180,58 +180,6 @@
         }
       }
 
-      .info-panel {
-        //height: 100%;
-        width: 320px;
-        background-color: #272727;
-        color: white;
-
-        @media screen and (max-width: 555px) {
-          width: 100vw;
-        }
-
-        .info-content {
-          background-color: #272727;
-          color: white;
-          width: 320px;
-          height: 100%;
-
-          @media screen and (max-width: 555px) {
-            width: 100vw;
-          }
-
-
-          .card-info-content {
-            background-color: rgba(0, 0, 0, 0.0);
-            display: flex;
-            justify-content: center;
-
-            .info-button-close {
-              background-color: rgba(0, 0, 0, 0.0);
-              color: white;
-              border-width: 0px;
-              margin: 10px;
-            }
-          }
-
-          .info-title {
-            font-size: 28px;
-            margin: 8px;
-          }
-
-          .info-intro {
-            font-size: 13px;
-            margin: 8px;
-          }
-
-          .info-address,
-          .info-reviews {
-            font-size: 11px;
-            margin: 22px;
-          }
-        }
-      }
-
       .empty {
         background-color: black;
         color: white;
@@ -243,7 +191,7 @@
     .swipe-buttons {
       width: 100%;
       position: absolute;
-      bottom: 0;
+      bottom: 2%;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
@@ -259,6 +207,57 @@
         color: white;
         border: 0px;
         box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+      }
+    }
+    .info-panel {
+      //height: 100%;
+      width: 320px;
+      background-color: #272727;
+      color: white;
+
+      @media screen and (max-width: 555px) {
+        width: 100vw;
+      }
+
+      .info-content {
+        background-color: #272727;
+        color: white;
+        width: 320px;
+        height: 100%;
+
+        @media screen and (max-width: 555px) {
+          width: 100vw;
+        }
+
+
+        .card-info-content {
+          background-color: rgba(0, 0, 0, 0.0);
+          display: flex;
+          justify-content: center;
+
+          .info-button-close {
+            background-color: rgba(0, 0, 0, 0.0);
+            color: white;
+            border-width: 0px;
+            margin: 10px;
+          }
+        }
+
+        .info-title {
+          font-size: 28px;
+          margin: 8px;
+        }
+
+        .info-intro {
+          font-size: 13px;
+          margin: 8px;
+        }
+
+        .info-address,
+        .info-reviews {
+          font-size: 11px;
+          margin: 22px;
+        }
       }
     }
   }
