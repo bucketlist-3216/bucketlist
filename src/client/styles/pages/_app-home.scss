@@ -1,59 +1,96 @@
 .app-home {
-    width: 100vw;
-    height: 100vh;
-    background-color: #272727;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(39,39,39,1);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .title {
+    white-space: nowrap;
     text-align: center;
+    font-family: "CeraPro-Bold";
+    font-style: normal;
+    font-size: 50px;
+    color: rgba(255,255,255,1);
+    font-size: 6vh;
+    display: inline-block;
+  }
+
+  hr {
+    color: gray;
+  }
+
+  p {
+    color: gray;
+  }
+
+  .row {
+    display: inline-block;
+    margin-top: 2vh;
+  }
+
+  .half-row {
+    border: 1px solid red;
+    width: 40%;
+  }
+
+  .social-logins {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-
-    .title {
-        color: #FFFFFF;
-        font-size: 6vh;
-        display: inline-block;
-    }
-
-    hr {
-        color: gray;
-    }
-
-    p {
-        color: gray;
-    }
+    text-align: center;
 
     .row {
-        display: inline-block;
-        margin-top: 2vh;
+      display: inline-block;
+      margin-top: 2vh;
     }
 
-    .half-row {
-        border: 1px solid red;
-        width: 40%;
+    .input-login {
+      text-align: center;
+      border: none;
+      border-radius: 10px;
+      width: 30%;
     }
 
-    .social-logins {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-
-        .row {
-            display: inline-block;
-            margin-top: 2vh;
-        }
-
-        .input-login {
-            text-align: center;
-            border: none ;
-            border-radius: 10px;
-            width: 30%;
-        }
-
-        .login-button {
-            background: gray;
-        }
-
-        .signup {
-            margin-top: 2vh;
-        }
+    .login-button {
+      background: gray;
     }
+
+    .signup {
+      margin-top: 2vh;
+    }
+  }
+	.or {
+    display: inline-flex;
+    justify-content: center;
+    margin: 15px 0;
+
+  	.line {
+      margin-top: 10px;
+      background-color: rgba(255,255,255,1);
+  		width: 13.5vw;
+  		height: 1px;
+  	}
+
+  	span {
+      margin: 0 8.5px;
+  		width: 13px;
+  		white-space: nowrap;
+  		text-align: center;
+  		font-family: "CeraPro-Bold";
+  		font-style: normal;
+  		font-size: 12px;
+  		color: rgba(255,255,255,1);
+  	}
+	}
+  .guest {
+		opacity: 0.5;
+		white-space: nowrap;
+		text-align: center;
+		font-family: "CeraPro-Bold";
+		font-style: normal;
+		font-size: 10px;
+		color: rgba(213,213,213,1);
+  }
 }

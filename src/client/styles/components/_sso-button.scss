@@ -1,0 +1,26 @@
+.sso-button {
+  background-color: rgba(255,255,255,1);
+  border-radius: 18px;
+  width: 61.5vw;
+  height: 36px;
+  border: none;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  justify-content: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+
+  span {
+		white-space: nowrap;
+		text-align: center;
+		font-family: "CeraPro-Bold";
+		font-style: normal;
+		font-size: 12px;
+		color: rgba(0,0,0,1);
+  }
+}

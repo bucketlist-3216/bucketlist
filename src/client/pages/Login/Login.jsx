@@ -4,16 +4,21 @@ import autoBindMethods from 'class-autobind-decorator';
 
 import loginSecrets from '../../../../config/login_secrets.json';
 
+// Import constants
 import PROVIDERS from '../../constants/providers';
 import PATHS from '../../constants/paths';
+
+// Import api
+import UserAPI from '../../api/user';
 
 // Import components
 import SingleSignOnButton from '../../components/SingleSignOnButton';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import Preloader from '../../components/Preloader';
 
 @autoBindMethods
-class AppHome extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -35,7 +40,7 @@ class AppHome extends Component {
   handleResponse(platform) {
     let instance = this;
     return function (response) {
-      instance.props.setLoading(true);
+      instance.setLoading(true);
       let userData = {};
 
       if (platform === 'google') {
@@ -58,19 +63,7 @@ class AppHome extends Component {
       localStorage.setItem('token', userData.token);
       localStorage.setItem('platform', userData.platform);
 
-      axios
-        .post(APIS.login, { userData })
-        .then(function (response) {
-          instance.setState({ userId: response.data.insertedId[0] });
-          instance.routeChange(PATHS.trips(instance.state.userId));
-        })
-        .catch(function (error) {
-          if (error.response && error.response.status === 401) {
-            instance.routeChange(PATHS.landingPage);
-            return;
-          }
-          alert(error.message);
-        });
+      UserAPI.login(instance, userData);
       //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
     }
   }
@@ -88,12 +81,13 @@ class AppHome extends Component {
         {/* <div className="login-inputs">
 
         </div> */}
-        <div className="social-logins">
+        {// TODO: implement normal login
+        /*<div className="social-logins">
           <div className="row"><input type="text" className="input-login" placeholder="email"></input></div>
           <div className="row"><input type="password" className="input-login" placeholder="password"></input></div>
           <div className="row"><button className="login-button input-login">Login</button></div>
           <p className="signup">Don't have an account? Sign up <a href="">here</a></p>
-        </div>
+        </div>*/}
         <div className="row">
           <GoogleLogin
             className="half-row"
@@ -111,7 +105,8 @@ class AppHome extends Component {
             onFailure={error => console.log(error)}
             cookiePolicy={'single_host_origin'}
           />
-          <FacebookLogin
+          {// TODO: implement FacebookLogin
+          /*<FacebookLogin
             className="half-row"
             appId={loginSecrets.facebook}
             fields="name,email"
@@ -125,12 +120,17 @@ class AppHome extends Component {
               />
             )}
             responseType="token"
-          />
-          </div>
-        <p onClick={() => this.routeChange(PATHS.createTrip)}>continue as guest</p>
+          />*/}
+        </div>
+      	<div className="or">
+      		<div className="line"></div>
+      		<span>or</span>
+        	<div className="line"></div>
+      	</div>
+        <span className="guest" onClick={() => this.routeChange(PATHS.createTrip)}>continue as guest</span>
       </div>
     );
   }
 }
 
-export default AppHome;
+export default Login;

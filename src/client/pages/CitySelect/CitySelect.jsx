@@ -9,17 +9,21 @@ import PATHS from '../../constants/paths';
 import CityCard from '../../components/CityCard';
 import Image from 'react-bootstrap/Image';
 
+// Import images
+import SingaporeImage from '../../../../assets/city/singapore.png';
+import NewYorkCityImage from '../../../../assets/city/new-york-city.png';
+
 const CITIES = {
-    "cities": [
-        {
-            "city": "Singapore",
-            "imageUrl": "https://i.ibb.co/ZYzjJ9B/sg-resize.jpg"
-        },
-        {
-            "city": "New York",
-            "imageUrl": "https://i.ibb.co/LCJQkKL/ny-resize.jpg"
-        }
-    ]
+  "cities": [
+    {
+      "name": "Singapore",
+      "imageUrl": SingaporeImage
+    },
+    {
+      "name": "New York City",
+      "imageUrl": NewYorkCityImage
+    }
+  ]
 }
 
 @autoBindMethods
@@ -51,18 +55,17 @@ class CitySelect extends Component {
 
     return (
       <div className="city-select">
+      	<div className="close">
+      		<span></span>
+      	</div>
         {/* <h2>Select city</h2> */}
         <div className="city-list">
         {
-            // Create city cards here from data
-            CITIES.cities.map(((city, key) => (
-                <div className="city-card" key={key}>
-                    <Image className="city-image" src={city.imageUrl} roundedCircle></Image>
-                    <br/>
-                    <p className="city-name">{city.city}</p>
-                </div>
-                )
-            ))
+          // Create city cards here from data
+          CITIES.cities.map(((city, key) => (
+            <CityCard city={city} key={key} />
+            )
+          ))
         }
         </div>
       </div>

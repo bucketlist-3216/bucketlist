@@ -1,16 +1,21 @@
 // Font Imports
 
 @font-face {
-  font-family: 'GlossAndBloom';
-  src: url('/assets/fonts/Gloss_And_Bloom.ttf') format('truetype');
+  font-family: 'CeraPro-Bold';
+  src: url('/assets/fonts/CeraPro-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'CeraPro-Regular';
+  src: url('/assets/fonts/CeraPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'IkonoMiniL-5';
+  src: url('/assets/fonts/IkonoMiniL-5.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'JosefinSans-Regular';
   src: url('/assets/fonts/JosefinSans-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'JosefinSans-SemiBold';
-  src: url('/assets/fonts/JosefinSans-SemiBold.ttf') format('truetype');
 }
