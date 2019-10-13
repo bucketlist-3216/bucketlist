@@ -1,0 +1,15 @@
+.place-img-container{
+    display: block;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+.place-img-container>img {
+   max-height: 100%;
+   max-width: 100%;
+}

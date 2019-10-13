@@ -13,6 +13,7 @@ import PATHS from './constants/paths';
 // Import views for router
 import Login from './pages/Login';
 import CreateTrip from './pages/CreateTrip';
+import PlaceList from './pages/PlaceList';
 import CitySelect from './pages/CitySelect';
 import SwipeView from './pages/SwipeView';
 
@@ -32,7 +33,7 @@ ReactDOM.render(
       {/* <Route path={PATHS.createTrip()} component={CreateView} />
       <Route path={PATHS.swipe()} component={SwipeView} />
       <Route path={PATHS.trips()} component={TripsPage} />
-      <Route path={PATHS.list()} component={ListPage} /> */}
+      <Route path={PATHS.list()} component={PlaceList} /> */}
     </Switch>
   </BrowserRouter>,
   document.querySelector('#root')
