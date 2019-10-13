@@ -1,10 +1,4 @@
 import React from 'react';
-import axios from 'axios';
-import { Modal } from 'react-bootstrap';
-
-import APIS from '../../../constants/apis';
-import InfoIcon from '../../../../../assets/common/icon-info.svg';
-import SwipeButton from '../SwipeButton';
 
 const SwipeCard = props => {
   const { zIndex, place, setPlaceData, setIsOpen } = props;

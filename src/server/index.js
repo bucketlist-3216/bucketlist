@@ -99,7 +99,7 @@ app.get('*', function(req, res) {
 
 /************************** Start the server **************************/
 
-port = process.env.PORT || 5000;
+port = process.env.PORT || 3001;
 
 app.listen(port, () => {
     console.log('Listening on port ', port);
