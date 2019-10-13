@@ -3,27 +3,28 @@ import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
 import PATHS from '../../constants/paths';
+import Header from "../../components/Header";
+import BackButton from "../../components/BackButton";
 import Title from "../../components/Title";
 import Create from "../../components/Create";
 import Preloader from '../../components/Preloader';
 
-
 @autoBindMethods
 class CreateView extends Component {
   constructor(props) {
-    super (props);
-    
+    super(props);
+
     this.state = {
       isLoading: false
     };
   }
-  
+
   routeChange(pathname) {
     this.props.history.push({
       pathname
     });
   }
-  
+
   setLoading(isLoading) {
     this.setState({ isLoading });
   }
@@ -48,5 +49,6 @@ class CreateView extends Component {
       </div>
     );
   }
-  
 }
+
+export default CreateView;

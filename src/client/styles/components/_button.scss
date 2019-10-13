@@ -1,0 +1,104 @@
+// //Button
+// .btn {
+//   display: block;
+//   color: $red;
+//   border-color: transparent;
+
+//   &:disabled,
+//   &.disabled {
+//     pointer-events: none;
+//   }
+// }
+
+// //Alternate Button
+// .btn.alt {
+//   color: $blue;
+// }
+.sso-button {
+  // if screen width > 555px, apply this
+  @media screen and (min-width: 555px) {
+    margin-right: 20px;
+    width: 120px;
+  }
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  vertical-align: middle;
+  // width: 120px;
+  width: 100%;
+
+  &:last-child {
+    margin-top: 10px;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    margin: 5px 10px 5px 5px;
+  }
+
+  span {
+    font-family: 'JosefinSans-Regular';
+    margin: 8px 0px 2px 5px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    // svg,
+    // span {
+    //   opacity: 0.5;
+    // }
+    // -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    // filter: grayscale(100%);
+  }
+}
+
+.submit-button {
+  float: right;
+  width: 144px;
+  height: 38px;
+  margin-top: 10px;
+  border-radius: 0;
+  border: 0;
+  background-color: rgba(241, 138, 124, 0.62);
+  color: #353839;
+  font-family: 'JosefinSans-Regular';
+
+  &:hover {
+    background-color: #f18a7c;
+    opacity: 1;
+    color: #353839;
+  }
+
+  // no fucking clue why this doesn't work. will come back to it
+  &:active {
+    color: #f18a7c;
+  }
+  // if screen width < 555px, apply this
+  @media screen and (max-width: 555px) {
+    float: none;
+    width: 100%;
+  }
+}
+
+.trip-button {
+  background: rgba(54, 54, 54, 0.78);
+  border: none;
+  justify-content: center;
+  width: 100%;
+  border-radius: 5px;
+
+  span {
+    font-family: 'JosefinSans-Regular';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 15px;
+    display: block;
+    align-items: baseline;
+    text-align: center;
+
+    color: #ffffff;
+  }
+}

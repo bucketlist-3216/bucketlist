@@ -1,3 +1,4 @@
+// const root = 'http://localhost:3001/api/v1'
 const root = 'https://bucketlist-pwa.herokuapp.com/api/v1'
 
 const APIS = {

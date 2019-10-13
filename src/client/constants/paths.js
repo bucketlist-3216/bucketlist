@@ -1,5 +1,5 @@
 const PATHS = {
-  appHome: '/',
+  landingPage: '/',
   createTrip: (userId = ':userId') => `/user/${userId}/create-trip`,
   swipe: (userId = ':userId', tripId = ':tripId') => `/user/${userId}/trip/${tripId}/swipe`,
   trips: (userId = ':userId') => `/user/${userId}/trips`,
