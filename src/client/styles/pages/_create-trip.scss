@@ -1,0 +1,13 @@
+.create-trip {
+  height: 100vh;
+  width: 100vw;
+  background-color: #272727;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+
+    h2 {
+      color: white;
+    }
+}
