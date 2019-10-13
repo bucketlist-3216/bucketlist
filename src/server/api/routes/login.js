@@ -4,12 +4,16 @@ const settings = require('../../config/settings.js');
 const { UserQueryModel } = require('../query-models');
 const userQueryModel = new UserQueryModel();
 const verify = require('../auth/verify');
+const jwt = require('jsonwebtoken');
+const loginSecrets = require('../../../../config/login_secrets.json');
 
 // Login API router
 const router = express.Router();
 if (settings.validate) {
     router.use(validateRequest);
 }
+
+let guestCount = 0;
 
 /**************** Login end points ****************/
 
@@ -62,5 +66,41 @@ router.post('/', function (req, res) {
             console.log(err);
         });
 });
+
+// When the user clicks sign in as guest
+router.post('/guest', function (req, res) {
+    // Add a user to table with temporary as true
+    let toAdd = {
+        "username": "_GUEST_USER",
+        "email": "_GUEST_USER@bucketlist.com",
+        "temporary": true
+    };
+
+    toAdd['email'] = toAdd['email'] + guestCount;
+    guestCount += 1;
+
+    userQueryModel
+        .addUser(toAdd, true)
+        .then(userId => {
+            userId = userId[0]
+
+            // Get JWT token
+            return jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '24h' });
+        })
+        .then(token => {
+            // Send JWT token back to the user
+            res.json({ "success": true, "message": "Signed in as guest", "token": token});
+        })
+        .catch(err => {
+            console.log('Error caught: ', err);
+        });
+});
+
+// When the user signs in after doing some stuff as a guest
+router.put('/guest', function (req, res) {
+    // insert new login details into the table 
+
+    // change temporary to false
+})
 
 module.exports = router;

@@ -5,7 +5,7 @@ const { UserQueryModel } = require('../query-models');
 const userQueryModel = new UserQueryModel();
 
 module.exports = (req, res, next) => {
-  if (req.path === '/login') {
+  if (req.path === '/login' || req.path === '/login/guest') {
     next();
   } else {
     const { token, platform } = req.headers;
