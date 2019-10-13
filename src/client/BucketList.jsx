@@ -22,7 +22,7 @@ ReactGA.pageview(window.location.pathname + window.location.search)
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route exact path={PATHS.appHome} component={AppHome} />
+      <Route exact path={PATHS.appHome} component={SwipeView} />
       <Route exact path={PATHS.createTrip} component={CreateTrip} />
       <Route exact path={PATHS.citySelect} component={CitySelect} />
       <Route exact path={PATHS.swipe} component={SwipeView} />
