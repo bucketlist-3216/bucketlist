@@ -4,16 +4,21 @@ import autoBindMethods from 'class-autobind-decorator';
 
 import loginSecrets from '../../../../config/login_secrets.json';
 
+// Import constants
 import PROVIDERS from '../../constants/providers';
 import PATHS from '../../constants/paths';
+
+// Import api
+import UserAPI from '../../api/user';
 
 // Import components
 import SingleSignOnButton from '../../components/SingleSignOnButton';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import Preloader from '../../components/Preloader';
 
 @autoBindMethods
-class Home extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -35,7 +40,7 @@ class Home extends Component {
   handleResponse(platform) {
     let instance = this;
     return function (response) {
-      instance.props.setLoading(true);
+      instance.setLoading(true);
       let userData = {};
 
       if (platform === 'google') {
@@ -58,19 +63,7 @@ class Home extends Component {
       localStorage.setItem('token', userData.token);
       localStorage.setItem('platform', userData.platform);
 
-      axios
-        .post(APIS.login, { userData })
-        .then(function (response) {
-          instance.setState({ userId: response.data.insertedId[0] });
-          instance.routeChange(PATHS.trips(instance.state.userId));
-        })
-        .catch(function (error) {
-          if (error.response && error.response.status === 401) {
-            instance.routeChange(PATHS.landingPage);
-            return;
-          }
-          alert(error.message);
-        });
+      UserAPI.login(instance, userData);
       //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
     }
   }
@@ -140,4 +133,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Login;

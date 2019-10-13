@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PATHS from './constants/paths';
 
 // Import views for router
-import Home from './pages/Home';
+import Login from './pages/Login';
 import CreateTrip from './pages/CreateTrip';
 import CitySelect from './pages/CitySelect';
 import SwipeView from './pages/SwipeView';
@@ -22,7 +22,8 @@ ReactGA.pageview(window.location.pathname + window.location.search)
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route exact path={PATHS.home} component={Home} />
+      <Route exact path={PATHS.home} component={Login} />
+      <Route exact path={PATHS.login} component={Login} />
       <Route exact path={PATHS.createTrip} component={CreateTrip} />
       <Route exact path={PATHS.citySelect} component={CitySelect} />
       <Route exact path={PATHS.swipe} component={SwipeView} />
