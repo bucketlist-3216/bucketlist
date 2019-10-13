@@ -13,7 +13,7 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 @autoBindMethods
-class AppHome extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -133,4 +133,4 @@ class AppHome extends Component {
   }
 }
 
-export default AppHome;
+export default Home;
