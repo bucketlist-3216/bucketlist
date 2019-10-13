@@ -1,0 +1,36 @@
+.city-select {
+    background: #272727;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+
+    h2 {
+        color: white;
+        display: inline-block;
+    }
+
+    .city-list {
+        max-height: 100vh;
+        max-width: 100vw;
+        overflow: hidden;
+        // background-color: red;
+
+        .city-card {
+            height: 40vh;
+            width: 100vw;
+            color: white;
+            border: none;
+            margin-top: 6vh;
+        }
+    
+        .city-image {
+            height: 80%;
+            border: 1px solid #707070;
+        }
+    
+        .city-name {
+            font-size: 3vh;
+        }
+
+    }
+}
