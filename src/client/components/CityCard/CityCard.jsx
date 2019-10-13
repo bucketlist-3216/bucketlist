@@ -1,25 +1,17 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import Image from 'react-bootstrap';
 
 import PATHS from '../../constants/paths';
 
 const CityCard = props => {
   const { city } = props;
-  let { city, imageUrl } = city;
-
-  function routeChange(pathname) {
-    props.history.push({
-      pathname
-    });
-  }
+  let { name, imageUrl } = city;
 
   return (
     <div className="city-card">
-        <h3>{city}</h3>
+        <img className="city-image" src={imageUrl}/>
         <br/>
-        <Image src={imageUrl}/>
+        <span className="city-name">{name}</span>
     </div>
   );
 };

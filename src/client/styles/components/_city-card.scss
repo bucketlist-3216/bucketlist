@@ -1,11 +1,18 @@
 .city-card {
-    background-color: transparent;
-    border-bottom: 1px solid gray;
-    display: inline-block;
-    text-align: center;
+    width: 100vw;
+    margin: 3.29vh 0;
 
-    h3 {
-        display: inline;
-        color: white;
+    .city-image {
+    		width: 29.56vh;
+    		height: 29.56vh;
+        margin-bottom: 3.2vh;
+    }
+
+    .city-name {
+    		text-align: center;
+    		font-family: "CeraPro-Bold";
+    		font-style: normal;
+    		font-size: 3.69vh;
+    		color: rgba(255,255,255,1);
     }
 }
