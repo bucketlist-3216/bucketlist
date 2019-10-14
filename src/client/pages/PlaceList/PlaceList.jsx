@@ -78,7 +78,7 @@ class PlaceList extends React.Component {
     if (this.state.places.length === 0) {
       return (
         <div className="list-page">
-          <PlaceListTopBar destination="Singapore"></PlaceListTopBar>
+          <PlaceListTopBar destination="Singapore" onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
           <div className="place-container-empty">
             <span>
               No places shortlisted yet! <br/>
@@ -94,7 +94,7 @@ class PlaceList extends React.Component {
 
     return (
       <div className="list-page">
-        <PlaceListTopBar destination="Singapore"></PlaceListTopBar>
+        <PlaceListTopBar destination="Singapore" onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
         {
           this.state.places.map((place, key) => (
             <PlaceCard

@@ -6,9 +6,10 @@ class PlaceListTopBar extends React.Component {
   }
 
   render() {
+    const { onClick } = this.props;
     return (
       <div className="top-bar">
-        <div className="home-button">
+        <div className="home-button" onClick={onClick}>
           <span></span>
         </div>
         <div className = "title">
