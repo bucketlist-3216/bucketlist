@@ -76,7 +76,7 @@ class Swipe extends Component {
       })
       .catch(function (error) {
         if (error.response && error.response.status === 401) {
-          instance.routeChange(PATHS.landingPage);
+          instance.routeChange(PATHS.login);
           return;
         }
         alert(error.message);
@@ -103,12 +103,12 @@ class Swipe extends Component {
           data: {
             vote: vote[swipeDirection],
             trip_id: tripId,
-            place_id: place.place_id 
+            place_id: place.place_id
           }
         })
         .catch(function (error) {
           if (error.response.status == 401) {
-            instance.routeChange(PATHS.landingPage);
+            instance.routeChange(PATHS.login);
             return;
           }
           alert(error.message);
@@ -150,7 +150,7 @@ class Swipe extends Component {
   renderSwiping() {
     const { places } = this.state;
     const currentPlace = places[0];
-    
+
     return (
       <div className="swipe-container">
         <Swipeable

@@ -72,7 +72,7 @@ class CitySelect extends Component {
     })
     .catch(function(error) {
       if (error.response && error.response.status === 401) {
-        instance.routeChange(PATHS.landingPage);
+        instance.routeChange(PATHS.login);
         return;
       }
       alert(error.message);
