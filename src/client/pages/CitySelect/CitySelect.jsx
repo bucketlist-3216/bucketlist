@@ -19,7 +19,7 @@ import NewYorkCityImage from '../../../../assets/city/new-york-city.png';
 const CITIES = {
   "cities": [
     {
-      "name": "singapore",
+      "name": "Singapore",
       "imageUrl": SingaporeImage,
       "disabled": false
     },
@@ -52,6 +52,7 @@ class CitySelect extends Component {
   }
 
   handleAddTrip (trip) {
+    trip['destination'] = trip['destination'].toLowerCase();
     console.log('Here')
     let instance = this;
     return axios
@@ -67,8 +68,8 @@ class CitySelect extends Component {
     .then(function(response) {
       let tripId = response.data.insertedId;
       // TODO: put in props for redirect
-      // instance.routeChange(PATHS.swipe(tripId));
-      instance.routeChange(PATHS.trips());
+      instance.routeChange(PATHS.swipe(tripId));
+      //instance.routeChange(PATHS.trips());
       instance.setState({ isLoading: false});
     })
     .catch(function(error) {
@@ -90,7 +91,7 @@ class CitySelect extends Component {
 
     return (
       <div className="city-select">
-      	<div className="close" onClick={() => this.routeChange(PATHS.createTrip())}>
+      	<div className="close" onClick={() => this.routeChange(PATHS.trips())}>
       		<span></span>
       	</div>
         {/* <h2>Select city</h2> */}
