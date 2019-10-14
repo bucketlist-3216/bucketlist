@@ -58,7 +58,7 @@ class CitySelect extends Component {
 
     return (
       <div className="city-select">
-      	<div className="close">
+      	<div className="close" onClick={() => this.routeChange(PATHS.createTrip())}>
       		<span></span>
       	</div>
         {/* <h2>Select city</h2> */}
@@ -67,7 +67,7 @@ class CitySelect extends Component {
           // Create city cards here from data
           CITIES.cities.map(((city, key) => (
               // TODO: Should pass city name also here
-              <div onClick={() => { if (!city.disabled) this.routeChange(PATHS.swipe)}}>
+              <div onClick={() => { if (!city.disabled) this.routeChange(PATHS.swipe())}}>
                 <CityCard city={city} key={key}/>
               </div>
             )

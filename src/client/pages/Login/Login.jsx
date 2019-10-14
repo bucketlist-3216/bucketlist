@@ -127,7 +127,7 @@ class Login extends Component {
       		<span>or</span>
         	<div className="line"></div>
       	</div>
-        <span className="guest" onClick={() => this.routeChange(PATHS.createTrip)}>continue as guest</span>
+        <span className="guest" onClick={() => this.routeChange(PATHS.createTrip())}>continue as guest</span>
       </div>
     );
   }
