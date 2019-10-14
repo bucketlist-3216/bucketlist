@@ -4,6 +4,8 @@ import PlaceCard from '../../components/PlaceCard/PlaceCard'
 import DummyPlaces from '../../components/PlaceCard/DummyData'
 import PlaceListTopBar from '../../components/AppBarTop/PlaceListTopBar';
 
+import APIS from '../../constants/apis';
+
 const DummyPlace = {
   place_id: 1,
   name: "Ya Kun Kaya Toast",
@@ -36,10 +38,11 @@ class PlaceList extends React.Component {
     });
   }
 
-  /*
+  
   componentDidMount() {
     let instance = this;
     const tripId = this.props.match.params.tripId;
+    console.log('Trip id is ', this.props);
     axios
       .request({
         url: APIS.voteResults(tripId),
@@ -62,7 +65,7 @@ class PlaceList extends React.Component {
         alert(error.message);
       });
   }
-  */
+  
 
   /* render() {
     if (this.state.isDoneFetching) {
@@ -115,15 +118,18 @@ class PlaceList extends React.Component {
     return (
       <div className="list-page">
         <PlaceListTopBar destination="Singapore"></PlaceListTopBar>
-        <PlaceCard place={DummyPlaces[0]} onClick={this.foo}></PlaceCard>
-        <PlaceCard place={DummyPlaces[1]} onClick={this.foo}></PlaceCard>
-        <PlaceCard place={DummyPlaces[2]} onClick={this.foo}></PlaceCard>
-        <PlaceCard place={DummyPlaces[3]} onClick={this.foo}></PlaceCard>
-        <PlaceCard place={DummyPlaces[4]} onClick={this.foo}></PlaceCard>
+          {
+            this.state.places.map((place, key) => (
+              <PlaceCard
+                key={key}
+                place={place}
+              />
+            ))
+          }
+        <div className="swipe-button">Let's go</div>
       </div>
     )
   }
-
   foo() {
     return null;
   }
