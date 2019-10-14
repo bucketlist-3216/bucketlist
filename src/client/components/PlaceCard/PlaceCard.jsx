@@ -21,11 +21,13 @@ class PlaceCard extends React.Component {
           <div className="place-name">
             {name}
           </div>
-          <div className="place-address">
-            {address}
-          </div>
-          <div className="place-votes">
-            Votes: {voteCount.LIKE}/{voteCount.LIKE + voteCount.DISLIKE}
+          <div className="place-others">
+            <div className="place-address">
+              {address}
+            </div>
+            <div className="place-votes">
+              Votes: {voteCount.LIKE}/{voteCount.LIKE + voteCount.DISLIKE}
+            </div>
           </div>
         </div>
       </div>
