@@ -1,7 +1,6 @@
 const PATHS = {
   home: '/',
   login: '/login',
-  createTrip: () => '/create-trip',
   citySelect: () => '/create-trip/city-select',
   trips: () => '/trips',
   createTripOld: (userId = ':userId') => `/user/${userId}/create-trip`,

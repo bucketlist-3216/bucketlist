@@ -1,13 +1,16 @@
 .trips-page {
-  display: flex;
-  flex-direction: column;
+  position: fixed;
   background: rgba(39,39,39,1);
   height: 100vh;
   width: 100vw;
 
   .top-bar {
+      position: absolute;
+      top: 0;
       text-align: center;
       height: 15.09vh;
+      width: 100%;
+      background: rgba(39,39,39,1);
       border-bottom-width: 0.0862vh;
       border-bottom-color: #4E4E4E;
       border-bottom-style: solid;
@@ -26,17 +29,13 @@
       }
   }
 
-  .shadow {
-      -webkit-box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
-      -moz-box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
-      box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
-  }
-
   .trips-container {
-      height: 80vh;
-      overflow: scroll;
-      border-bottom: 2px groove gray;
-      border-radius: 5px
+    display: flex;
+    flex-direction: column;
+    margin-top: 15.09vh;
+    height: 64.37vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   .add-icon-container {
