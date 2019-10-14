@@ -168,13 +168,15 @@ class Swipe extends Component {
         </div>
         <div className="swipe-header-secondary">
           <BackButton
-            onClick={() => this.routeChange(PATHS.trips(userId))}
+            onClick={() => this.routeChange(PATHS.trips)}
+            // onClick={() => this.routeChange(PATHS.trips(userId))}
           />
           {this.renderList(this.state.swipeList)}
           <img
             className="icon-list"
             src="/assets/common/icon-list.png"
-            onClick={() => this.routeChange(PATHS.list(userId, tripId))}
+            onClick={() => this.routeChange(PATHS.list)}
+            // onClick={() => this.routeChange(PATHS.list(userId, tripId))}
           />
         </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}

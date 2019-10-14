@@ -6,6 +6,7 @@ const PATHS = {
   trips: '/trips',
   createTripOld: (userId = ':userId') => `/user/${userId}/create-trip`,
   swipe: '/swipe',
+  list: '/list',
   swipeOld: (userId = ':userId', tripId = ':tripId') => `/user/${userId}/trip/${tripId}/swipe`,
   tripsOld: (userId = ':userId') => `/user/${userId}/trips`,
   listOld: (userId = ':userId', tripId = ':tripId') => `/user/${userId}/trip/${tripId}/list`
