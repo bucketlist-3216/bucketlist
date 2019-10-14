@@ -19,7 +19,7 @@ import NewYorkCityImage from '../../../../assets/city/new-york-city.png';
 const CITIES = {
   "cities": [
     {
-      "name": "singapore",
+      "name": "Singapore",
       "imageUrl": SingaporeImage,
       "disabled": false
     },
@@ -52,6 +52,7 @@ class CitySelect extends Component {
   }
 
   handleAddTrip (trip) {
+    trip['destination'] = trip['destination'].toLowerCase();
     console.log('Here')
     let instance = this;
     return axios
