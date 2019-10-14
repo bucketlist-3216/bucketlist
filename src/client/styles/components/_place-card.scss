@@ -1,0 +1,136 @@
+.place-card {
+    display: flex;
+    background-color: rgba(39,39,39,1);
+    height: 125px;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+}
+
+.place-img-container {
+    display: block;
+    left: 5%;
+    width: 125px;
+    height: 125px;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    float: left;
+}
+.place-img-container>img {
+    max-height: 80%;
+    max-width: 80%;
+    border-radius: 50%;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+}
+
+.place-details {
+    float: right;
+    display:flex;
+    flex-direction: column;
+    position: absolute;
+    left: 150px;
+    height: 100px;
+    width: calc(100% - 175px);
+    text-align: left;
+    align-content: left;
+    align-items: left;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+}
+
+.place-name {
+    overflow: visible;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Cera Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: rgba(255,255,255,1);
+}
+
+.place-others {
+    height: 60px;
+}
+
+.place-address {
+    text-align: left;
+    font-family: Cera Pro;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    color: rgba(255,255,255,1);
+}
+
+.place-votes {
+    text-align: left;
+    font-family: Cera Pro;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    color: rgba(255,255,255,1);
+}
+
+.place-list-top-bar {
+    display: flex;
+    height: 50px;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    background-color: rgba(39,39,39,1);
+    vertical-align: bottom;
+    justify-content: space-between;
+}
+
+.place-list-top-bar-back-button {
+    float:left;
+    width: 48px;
+    height: 32px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline:none;
+    align-content: center;
+    align-items: center;
+}
+.place-list-top-bar-back-button>img {
+    border-radius: 50%;
+    max-height: 32px;
+    max-width: 32px;
+}
+
+.place-list-top-bar-title {
+    float: left;
+    text-align: center;
+    font-family: Cera Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    color: rgba(255,255,255,1);
+}
+
+.place-list-top-bar-export-btn {
+    float: right;
+    width: 48px;
+    height: 32px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.place-list-top-bar-export-btn>img {
+    border-radius: 50%;
+    max-height: 32px;
+    max-width: 36px;
+}
