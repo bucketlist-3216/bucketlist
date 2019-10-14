@@ -33,25 +33,12 @@ class TripFriendQueryModel extends EntityQueryModel {
     }
 
     // Add a member to this trip by their email
-    addTripFriend ({user_id, email, trip_id}) {
-        // Get the user's ID
-        let tableName = this.tableName;
-        if (user_id) {
-          return knex(tableName)
-              .insert({
-                  user_id,
-                  trip_id
-              });
-        } else {
-          return this.userQueryModel.getUserId({ email })
-              .then(function (results) {
-                  return knex(tableName)
-                      .insert({
-                          user_id: results[0].user_id,
-                          trip_id
-                      });
-              });
-        }
+    addTripFriend ({ user_id, trip_id }) {
+        return knex(this.tableName)
+            .insert({
+                user_id,
+                trip_id
+            });
     }
 
     deleteTripFriend (filter) {

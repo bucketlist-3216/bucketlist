@@ -6,9 +6,9 @@ class UserQueryModel extends EntityQueryModel {
 
     constructor(dbClient) {
         super(dbClient);
-        this.validFilters = ['user_id', 'email', 'google_id', 'facebook_id'];
+        this.validFilters = ['user_id', 'email', 'google_id', 'facebook_id', 'temporary'];
         this.nonInsertableProps = ['user_id', 'create_time'];
-        this.selectableProps = ['user_id', 'username', 'email', 'google_id', 'facebook_id'];
+        this.selectableProps = ['user_id', 'username', 'email', 'google_id', 'facebook_id', 'temporary'];
         this.userMutable = true;
         this.tableName = 'User';
     }

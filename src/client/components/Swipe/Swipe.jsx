@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+import SlidingPanel from 'react-sliding-panel';
 import Swipeable from 'react-swipy';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
+import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
-import PlaceInfo from './PlaceInfo/';
+import PlaceInfo from '../PlaceInfo/';
 import BackButton from '../BackButton';
-import Preloader from '../Preloader';
+
+
+import { SAMPLE_PLACES } from './sample_data';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -18,18 +22,22 @@ class Swipe extends Component {
     super(props);
 
     this.state = {
-      places: [],
+      city: 'Singapore',
+      places: SAMPLE_PLACES.attraction,
+      placeData: {},
+      swipeList: 1,
       hasNext: true,
-      isLoading: true,
       isModalShown: false
     };
   }
 
   componentDidMount() {
-    const placeId = this.props.location.state
-      ? this.props.location.state.placeId
-      : null;
-    this.getPlacesToSwipe(placeId);
+    console.log("Swipe Component Mounted");
+  }
+
+  // Helper function for changing swipe list
+  listChange(value) {
+    this.setState({ swipeList: value });
   }
 
   // Helper function for redirecting
@@ -40,37 +48,14 @@ class Swipe extends Component {
   }
 
   // Helper functions to communicate with backend
+  getCity(tripId) {
+    const instance = this;
+  }
 
   getPlacesToSwipe(placeId) {
-    this.setState({ isLoading: true });
 
     const { tripId, userId } = this.props.match.params;
     const instance = this;
-
-    axios
-      .request({
-        url: APIS.placesToVote(tripId, userId),
-        method: 'get',
-        headers: {
-          token: localStorage.getItem('token'),
-          platform: localStorage.getItem('platform')
-        },
-        params: { placeId }
-      })
-      .then(function(response) {
-        if (response.data.length == 0) {
-          instance.setState({ hasNext: false });
-        }
-        instance.setState({ places: response.data });
-        instance.setState({ isLoading: false });
-      })
-      .catch(function (error) {
-        if (error.response && error.response.status == 401) {
-          instance.routeChange(PATHS.landingPage);
-          return;
-        }
-        alert(error.message);
-      });
   }
 
   castVote(place) {
@@ -81,40 +66,25 @@ class Swipe extends Component {
         left: 'DISLIKE',
         right: 'LIKE'
       };
-
-      axios
-        .request({
-          url: APIS.vote,
-          method: 'post',
-          headers: {
-            token: localStorage.getItem('token'),
-            platform: localStorage.getItem('platform')
-          },
-          data: {
-            vote: vote[swipeDirection],
-            user_id: userId,
-            trip_id: tripId,
-            place_id: place.place_id
-          }
-        })
-        .catch(function (error) {
-          if (error.esponse.status == 401) {
-            instance.routeChange(PATHS.landingPage);
-            return;
-          }
-          alert(error.message);
-        });
     };
   }
 
-  // Helper function for modal
+  // Helper function to set state
 
-  showModal(event) {
+  showModal(placeId) {
     this.setState({ isModalShown: true });
   }
 
   closeModal(event) {
     this.setState({ isModalShown: false });
+  }
+
+  setIsOpen(showInfo) {
+    this.setState({ isModalShown: showInfo });
+  }
+
+  setPlaceData(placeData) {
+    this.setState({ placeData });
   }
 
   // Helper functions for swiping
@@ -124,6 +94,7 @@ class Swipe extends Component {
     if (places.length > 0) {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
+      this.setState({ placeData: {} });
     } else {
       this.getPlacesToSwipe();
     }
@@ -132,6 +103,7 @@ class Swipe extends Component {
   renderSwiping() {
     const { places } = this.state;
     const currentPlace = places[0];
+
     return (
       <div className="swipe-container">
         <Swipeable
@@ -139,7 +111,8 @@ class Swipe extends Component {
           onSwipe={this.castVote(currentPlace)}
           onAfterSwipe={this.nextCard}
         >
-          <SwipeCard place={currentPlace} showModal={this.showModal} />
+          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setIsOpen={this.setIsOpen} />
+          {this.renderModal()}
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -163,53 +136,95 @@ class Swipe extends Component {
     );
   }
 
-  render() {
-    const { places, isLoading } = this.state;
-    const { userId, tripId } = this.props.match.params;
+  renderList(swipeList) {
+    if (swipeList === 1) {
+      if (this.state.places[0].category === 'Attraction') {
+        SAMPLE_PLACES.attraction = this.state.places;
+        this.setState({ places : SAMPLE_PLACES.food });
+      }
+      return (
+        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
+          <ToggleButton className="list-button-selected" name="food" value={1}>food</ToggleButton>
+          <ToggleButton className="list-button-unselected" name="places" value={2}>places</ToggleButton>
+        </ToggleButtonGroup>
+      );
+    }
+    else {
+      if (this.state.places[0].category === 'Food') {
+        SAMPLE_PLACES.food = this.state.places;
+        this.setState({ places : SAMPLE_PLACES.attraction });
+      }
+      return (
+        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
+          <ToggleButton className="list-button-unselected" name="food" value={1}>food</ToggleButton>
+          <ToggleButton className="list-button-selected" name="places" value={2}>places</ToggleButton>
+        </ToggleButtonGroup>
+      );
+    };
+  }
 
-    if (isLoading) return null;
+  render() {
+    const { places, isLoading, city, swipeList } = this.state;
+    const { userId, tripId } = this.props.match.params;
 
     return (
       <div className="swipe">
-        {places.length > 0 && (
-          <div>
-            {/* <PlaceInfo place={places[0]} state={this.state} closeModal={this.closeModal}/> */}
-            {this.renderModal(places[0].place_id)}
-            <div className="swipe-header">
-              <BackButton
-                onClick={() => {
-                  this.routeChange(PATHS.trips(userId));
-                }}
-              />
-              <div className="city">{places[0].city || ''}</div>
-              <img
-                className="icon-list"
-                src="/assets/common/icon-list.png"
-                onClick={() => {
-                  this.routeChange(PATHS.list(userId, tripId));
-                }}
-              />
-            </div>
-            <div className="place-name">
-              <span>{places[0].name || ''}</span>
-            </div>
+        <div className="swipe-header-primary">
+          <div className="city">
+            {city}
           </div>
-        )}
+        </div>
+        <div className="swipe-header-secondary">
+          <BackButton
+            onClick={() => this.routeChange(PATHS.trips())}
+            // onClick={() => this.routeChange(PATHS.trips(userId))}
+          />
+          {this.renderList(this.state.swipeList)}
+          <img
+            className="icon-list"
+            src="/assets/common/icon-list.png"
+            onClick={() => this.routeChange(PATHS.list())}
+            // onClick={() => this.routeChange(PATHS.list(userId, tripId))}
+          />
+        </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }
 
-  renderModal(placeId) {
-    const { isModalShown } = this.state;
+  renderModal() {
+    const { isModalShown, places } = this.state;
     const isMobile = window.innerWidth < 555;
+    const place = places[0];
+
     return (
-      <PlaceInfo
-        isModalShown={isModalShown}
-        closeModal={this.closeModal}
-        isMobile={isMobile}
-        placeId={placeId}
-      />
+      <div className="info-panel">
+        <SlidingPanel
+          type={"bottom"}
+          isOpen={isModalShown}
+          closeFunc={() => this.setIsOpen(false)}
+        >
+          <div className="info-content">
+            <div className="card-info-content">
+              <button className="info-button-close" onClick={() => this.setIsOpen(false)}>tap here to close</button>
+            </div>
+            <div  className="info-title">
+              { place.name + ", " + place.price }
+            </div>
+            <div  className="info-intro">
+              { place.desc }
+            </div>
+            <div className="info-address">
+              <div>{ "Location: " + place.location }</div>
+              <div>{ "Opening Hours: " + place.hours }</div>
+              <div>{ "Phone: " + place.number }</div>
+            </div>
+            <div  className="info-reviews">
+              {"Reviews:"}
+            </div>
+          </div>
+        </SlidingPanel>
+      </div>
     );
   }
 }

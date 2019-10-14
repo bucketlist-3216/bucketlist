@@ -1,2 +1,2 @@
 import TripsPage from './TripsPage';
-export default TripsPage
+export default TripsPage;

@@ -1,62 +1,50 @@
 .trip {
-  display: flex;
-  width: 300px;
-  height: 200px;
-  border: 2px solid #000000;
-  box-sizing: border-box;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-  border-radius: 49px;
-  margin: auto;
-  margin-bottom: 40px;
-  padding: 20px;
+    display: flex;
+    flex-direction: row;
+    background-color: #272727;
+    // border-bottom: 1px solid gray;
+    height: 23vh;
+    padding: auto auto auto auto;
 
-  .trip-img-container {
-    .trip-img {
-      height: -webkit-fill-available;
-    }
-  }
+    .row {
+        // width: 100vw;
+        height: 25vw;
+        display: inline-block;
+        max-height: 22vh;
+        // border: 2px solid green;
+        margin: auto auto auto auto;
 
-  .trip-details {
-    margin-left: 10px;
-    position: relative;
+        .trip-element {
+            display: inline-block;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+    
+        .trip-img {
+            width: 22vw;
+            height: 22vw;
+            margin-left: 0vw;
+            margin-right: 5vw;
+            max-width: 18vh;
+            max-height: 18vh;
+            margin-left: 0 !important;
+            border-radius: 10vw;
+        }
+    
+        .trip-dest {
+            font-family: "CeraPro-Bold";
+            margin-left: 5vw;
+            margin-right: 5vw;
+            color: white;
+            font-size: 22px;
+        }
+    
+        .right-icon {
+            color: white;
+            margin-left: 5vw;
+            margin-right: 5vw;
+            margin-right: 0;
+        }
+    }
 
-    .trip-destination {
-      font-family: 'JosefinSans-Regular';
-      font-style: normal;
-      font-weight: bold;
-      font-size: 15px;
-      line-height: 20px;
-      color: #000000;
-    }
-    .trip-dates {
-      font-family: 'JosefinSans-Regular';
-      font-style: italic;
-      font-weight: normal;
-      font-size: 10px;
-      line-height: 12px;
-      color: #000000;
-    }
-    .trip-members {
-      margin-top: 10px;
-      .trip-member {
-        font-family: 'JosefinSans-Regular';
-        font-style: normal;
-        font-weight: normal;
-        font-size: 10px;
-        line-height: 15px;
-        color: #000000;
-      }
-    }
-    .trip-button-containers {
-      position: absolute;
-      bottom: 0;
-      height: auto;
-      width: 80px;
-
-      button {
-        height: 28px;
-        margin-top: 5px;
-      }
-    }
-  }
 }

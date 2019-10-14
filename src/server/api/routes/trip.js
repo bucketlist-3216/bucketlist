@@ -27,11 +27,31 @@ const userQueryModel = new UserQueryModel();
 
 /**************** Trip APIs  ****************/
 
-// These are the trips
+// Get trip details
+router.get('/:tripId', function (req, res) {
+    return tripQueryModel.getTrip(req.params.tripId)
+        .then(function(queryResponse) {
+            res.json(queryResponse[0]);
+        })
+        .catch(function(err) {
+            res.status(500).end('Unable to get trip details');
+            console.log(err);
+        });
+});
 
-// TODO: Do we really need this?
-router.get('/:id', function (req, res) {
-    res.end('Get all trips');
+// Get user trips
+router.get('/', function (req, res) {
+  const userId = req.headers.verifiedUserId;
+  const trips = tripFriendQueryModel.getUserTrips(userId);
+
+  trips
+      .then(function(queryResponse) {
+          res.json(queryResponse);
+      })
+      .catch(function(err) {
+          res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
+          console.log(err);
+      });
 });
 
 // Create a trip
@@ -146,15 +166,30 @@ router.get('/:tripId/members', function (req, res) {
 
 // Add a member to a trip (adding a member-trip association)
 router.post('/:tripId/members/', function (req, res) {
-    const addTripFriend = tripFriendQueryModel.addTripFriend(req.params.email, req.body.trip.email);
+    const { tripId } = req.params;
+    const { email } = req.body;
+    const userNotFoundMessage = `Could not find user with email '${email}'`;
 
-    addTripFriend
+    userQueryModel.getUserId({ email })
+        .then(function (results) {
+            if (results.length === 0) {
+              throw new Error(userNotFoundMessage);
+            } else {
+              const { user_id } = results[0];
+              return addTripFriend({ user_id, trip_id: tripId });
+            }
+        })
         .then(function (insertionResponse) {
-            res.json({"inserted": insertionResponse});
+            res.json({"insertedId": insertionResponse});
         })
         .catch(function (err) {
-            res.status(500).end('Could not add user to trip');
-            console.log (JSON.stringify(err));
+            if (err.message === userNotFoundMessage) {
+                res.status(404).end(userNotFoundMessage);
+                console.log(err);
+            } else {
+                res.status(500).end('Could not add user to trip');
+                console.log(err);
+            }
         });
 });
 
