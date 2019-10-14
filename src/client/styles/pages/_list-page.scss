@@ -92,9 +92,28 @@
     display: flex;
     flex-direction: column;
     margin-top: 15.09vh;
-    height: 64.37vh;
+    height: 74.27vh;
     overflow-x: hidden;
     overflow-y: scroll;
+  }
+
+  .swipe-button-bottom {
+    position: absolute;
+    bottom: 0;
+    height: 10.64vh;
+    width: 100vw;
+    max-width: 400px;
+
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+
+    font-family: "CeraPro-Bold";
+    font-size: 30px;
+    line-height: 38px;
+    color: rgba(255, 255, 255, 1);
+    text-transform: uppercase;
+    text-align: center;
+    justify-content: center;
   }
 
   .place-container-empty {

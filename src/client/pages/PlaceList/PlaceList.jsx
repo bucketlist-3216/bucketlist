@@ -103,7 +103,9 @@ class PlaceList extends React.Component {
             />
           ))
         }</div>
-        <div className="swipe-button">Let's go</div>
+        <Button className="swipe-button-bottom" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+          Let's Explore
+        </Button>
       </div>
     )
   }
