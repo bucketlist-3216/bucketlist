@@ -5,6 +5,8 @@
   width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .top-bar {
     position: absolute;
@@ -36,9 +38,9 @@
 
     .home-button {
       float: left;
-      margin-left: 13px;
-      width: 32px;
-      height: 32px;
+      margin-left: 3.47vw;
+      width: 3.94vh;
+      height: 3.94vh;
       border-radius: 50%;
       -moz-border-radius: 50%;
       -webkit-border-radius: 50%;
@@ -57,7 +59,7 @@
         font-family: "IkonoMiniL-5";
         font-style: normal;
         font-weight: normal;
-        font-size: 12.5px;
+        font-size: 1.54vh;
         color: rgba(255,255,255,1);
         position: absolute;
         top: 50%;
@@ -89,12 +91,15 @@
   }
 
   .place-container {
+    position: absolute;
+    top: 15.09vh;
     display: flex;
     flex-direction: column;
-    margin-top: 15.09vh;
     height: 74.27vh;
     overflow-x: hidden;
     overflow-y: scroll;
+    width: 100vw;
+    max-width: 400px;
   }
 
   .swipe-button-bottom {
@@ -108,8 +113,8 @@
     border: none;
 
     font-family: "CeraPro-Bold";
-    font-size: 30px;
-    line-height: 38px;
+    font-size: 3.69vh;
+    line-height: 4.68vh;
     color: rgba(255, 255, 255, 1);
     text-transform: uppercase;
     text-align: center;
