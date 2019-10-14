@@ -122,11 +122,12 @@
   }
 
   .place-container-empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     span {
-      position: absolute;
-      left: 67px;
-      top: 330px;
-      overflow: visible;
       width: 243px;
       white-space: nowrap;
       text-align: center;
@@ -135,6 +136,8 @@
       font-size: 20px;
       line-height: 25px;
       color: rgba(255,255,255,1);
+
+      margin-bottom: 44.6px;
     }
 
     .swipe-button {
@@ -144,12 +147,9 @@
       border-style: solid;
       border-radius: 27px;
 
-      position: absolute;
-      overflow: visible;
       width: 258px;
       height: 54px;
-      left: 59px;
-      top: 425px;
+
       white-space: nowrap;
       text-align: center;
       font-family: "CeraPro-Bold";
