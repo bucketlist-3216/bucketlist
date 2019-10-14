@@ -17,6 +17,7 @@ import PlaceList from './pages/PlaceList';
 import CitySelect from './pages/CitySelect';
 import SwipeView from './pages/SwipeView';
 import TripsPage from './pages/TripsPage';
+import ListPage from './pages/PlaceList';
 
 ReactGA.initialize('UA-148749594-1');
 ReactGA.pageview(window.location.pathname + window.location.search)
@@ -34,7 +35,7 @@ ReactDOM.render(
       {/* <Route exact path={PATHS.landingPage} component={AppHome} /> */}
       {/* <Route path={PATHS.createTrip()} component={CreateView} />
       <Route path={PATHS.swipe()} component={SwipeView} /> */}
-      {/* <Route path={PATHS.list()} component={ListPage} /> */}
+      <Route path={PATHS.list()} component={ListPage} />
     </Switch>
   </BrowserRouter>,
   document.querySelector('#root')
