@@ -68,8 +68,8 @@ class CitySelect extends Component {
     .then(function(response) {
       let tripId = response.data.insertedId;
       // TODO: put in props for redirect
-      // instance.routeChange(PATHS.swipe(tripId));
-      instance.routeChange(PATHS.trips());
+      instance.routeChange(PATHS.swipe(tripId));
+      //instance.routeChange(PATHS.trips());
       instance.setState({ isLoading: false});
     })
     .catch(function(error) {

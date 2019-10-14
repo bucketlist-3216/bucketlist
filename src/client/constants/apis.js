@@ -8,7 +8,7 @@ const APIS = {
   trip: (tripId = '') => `${root}/trip/${tripId}`,
   vote: `${root}/trip/vote`,
   voteResults: (tripId) => `${root}/trip/${tripId}/vote/results/`,
-  placesToVote: (tripId, userId) => `${root}/trip/${tripId}/vote/user/${userId}`,
+  placesToVote: (tripId) => `${root}/trip/${tripId}/vote`,
   place: (placeId) => `${root}/place/${placeId}`,
   tripFriend: (tripId) => `${root}/trip/${tripId}/members`
 };
