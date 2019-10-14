@@ -1,0 +1,50 @@
+.trip {
+    display: flex;
+    flex-direction: row;
+    background-color: #272727;
+    // border-bottom: 1px solid gray;
+    height: 23vh;
+    padding: auto auto auto auto;
+
+    .row {
+        // width: 100vw;
+        height: 25vw;
+        display: inline-block;
+        max-height: 22vh;
+        // border: 2px solid green;
+        margin: auto auto auto auto;
+
+        .trip-element {
+            display: inline-block;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+    
+        .trip-img {
+            width: 22vw;
+            height: 22vw;
+            margin-left: 0vw;
+            margin-right: 5vw;
+            max-width: 18vh;
+            max-height: 18vh;
+            margin-left: 0 !important;
+            border-radius: 10vw;
+        }
+    
+        .trip-dest {
+            font-family: "CeraPro-Bold";
+            margin-left: 5vw;
+            margin-right: 5vw;
+            color: white;
+            font-size: 22px;
+        }
+    
+        .right-icon {
+            color: white;
+            margin-left: 5vw;
+            margin-right: 5vw;
+            margin-right: 0;
+        }
+    }
+
+}

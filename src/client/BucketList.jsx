@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import CreateTrip from './pages/CreateTrip';
 import CitySelect from './pages/CitySelect';
 import SwipeView from './pages/SwipeView';
+import TripsPage from './pages/TripsPage';
 
 ReactGA.initialize('UA-148749594-1');
 ReactGA.pageview(window.location.pathname + window.location.search)
@@ -22,6 +23,7 @@ ReactGA.pageview(window.location.pathname + window.location.search)
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
+      <Route exact path={PATHS.test} component={TripsPage} /> 
       <Route exact path={PATHS.home} component={Login} />
       <Route exact path={PATHS.login} component={Login} />
       <Route exact path={PATHS.appHome} component={SwipeView} />
@@ -30,9 +32,8 @@ ReactDOM.render(
       <Route exact path={PATHS.swipe} component={SwipeView} />
       {/* <Route exact path={PATHS.landingPage} component={AppHome} /> */}
       {/* <Route path={PATHS.createTrip()} component={CreateView} />
-      <Route path={PATHS.swipe()} component={SwipeView} />
-      <Route path={PATHS.trips()} component={TripsPage} />
-      <Route path={PATHS.list()} component={ListPage} /> */}
+      <Route path={PATHS.swipe()} component={SwipeView} /> */}
+      {/* <Route path={PATHS.list()} component={ListPage} /> */}
     </Switch>
   </BrowserRouter>,
   document.querySelector('#root')

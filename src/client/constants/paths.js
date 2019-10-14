@@ -1,5 +1,6 @@
 const PATHS = {
   home: '/',
+  test: '/test',
   login: '/login',
   createTrip: '/create-trip',
   citySelect: '/create-trip/city-select',
