@@ -65,27 +65,36 @@
         transform: translate(-50%, -50%);
       }
     }
+    //
+    // .place-list-top-bar-back-button > img {
+    //   border-radius: 50%;
+    //   max-height: 32px;
+    //   max-width: 32px;
+    // }
+    //
+    // .place-list-top-bar-export-btn {
+    //   float: right;
+    //   width: 48px;
+    //   height: 32px;
+    //   border-radius: 50%;
+    //   -moz-border-radius: 50%;
+    //   -webkit-border-radius: 50%;
+    // }
+    //
+    // .place-list-top-bar-export-btn > img {
+    //   border-radius: 50%;
+    //   max-height: 32px;
+    //   max-width: 36px;
+    // }
+  }
 
-    .place-list-top-bar-back-button > img {
-      border-radius: 50%;
-      max-height: 32px;
-      max-width: 32px;
-    }
-
-    .place-list-top-bar-export-btn {
-      float: right;
-      width: 48px;
-      height: 32px;
-      border-radius: 50%;
-      -moz-border-radius: 50%;
-      -webkit-border-radius: 50%;
-    }
-
-    .place-list-top-bar-export-btn > img {
-      border-radius: 50%;
-      max-height: 32px;
-      max-width: 36px;
-    }
+  .place-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15.09vh;
+    height: 64.37vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   .place-container-empty {

@@ -95,14 +95,14 @@ class PlaceList extends React.Component {
     return (
       <div className="list-page">
         <PlaceListTopBar destination="Singapore" onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
-        {
+        <div className="place-container">{
           this.state.places.map((place, key) => (
             <PlaceCard
               key={key}
               place={place}
             />
           ))
-        }
+        }</div>
         <div className="swipe-button">Let's go</div>
       </div>
     )

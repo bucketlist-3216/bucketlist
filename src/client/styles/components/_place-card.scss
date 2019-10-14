@@ -1,78 +1,55 @@
 .place-card {
-    display: flex;
-    background-color: rgba(39,39,39,1);
-    height: 125px;
-    width: 100%;
-    align-content: center;
-    align-items: center;
-}
+  display: flex;
+  background-color: rgba(39,39,39,1);
+  height: 16.38vh;
+  min-height: 16.38vh;
+  max-height: 16.38vh;
+  width: 100%;
+  position: relative;
 
-.place-img-container {
+  .place-img-container {
+    img {
+      position: absolute;
+      top: 26.5px;
+  		left: 27px;
+  		width: 100px;
+  		height: 100px;
+      border-radius: 50px;
+      object-fit: cover;
+    }
+  }
+
+  .place-details {
     display: block;
-    left: 5%;
-    width: 125px;
-    height: 125px;
-    text-align: center;
-    align-content: center;
-    align-items: center;
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    float: left;
-}
-.place-img-container>img {
-    max-height: 80%;
-    max-width: 80%;
-    border-radius: 50%;
-    text-align: center;
-    align-content: center;
-    align-items: center;
-}
+    position: relative;
+    width: 186px;
+    height: 100%;
 
-.place-details {
-    float: right;
-    display:flex;
-    flex-direction: column;
-    position: absolute;
-    left: 150px;
-    height: 100px;
-    width: calc(100% - 175px);
+    margin-left: 160px;
+    padding-top: 45px;
     text-align: left;
-    align-content: left;
-    align-items: left;
-    justify-content: space-between;
-    border-bottom: 1px solid grey;
-}
 
-.place-name {
-    overflow: visible;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Cera Pro;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 15px;
-    color: rgba(255,255,255,1);
-}
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(112,112,112,1);
+    border-bottom-style: solid;
 
-.place-others {
-    height: 60px;
-}
-
-.place-address {
-    text-align: left;
-    font-family: Cera Pro;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 11px;
-    color: rgba(255,255,255,1);
-}
-
-.place-votes {
-    text-align: left;
-    font-family: Cera Pro;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 11px;
-    color: rgba(255,255,255,1);
+    .place-name {
+      width: 145px;
+  		white-space: nowrap;
+  		font-family: "CeraPro-Bold";
+  		font-style: normal;
+  		font-weight: bold;
+  		font-size: 15px;
+  		color: rgba(255,255,255,1);
+      margin-bottom: 10px;
+    }
+    .place-others {
+  		text-align: left;
+  		font-family: "CeraPro-Regular";
+  		font-style: normal;
+  		font-weight: normal;
+  		font-size: 11px;
+  		color: rgba(255,255,255,1);
+    }
+  }
 }
