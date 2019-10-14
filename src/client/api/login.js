@@ -4,19 +4,15 @@ import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
 
 function login (instance, userData) {
-  localStorage.setItem('token', userData.token);
-  localStorage.setItem('platform', userData.platform);
-
   return axios
     .post(APIS.login, { userData })
     .then(function (response) {
-      instance.routeChange(PATHS.trips);
+      localStorage.setItem('token', userData.token);
+      localStorage.setItem('platform', userData.platform);
+
+      instance.routeChange(PATHS.trips());
     })
     .catch(function (error) {
-      if (error.response && error.response.status === 401) {
-        instance.routeChange(PATHS.landingPage);
-        return;
-      }
       alert(error.message);
     });
 }
@@ -31,10 +27,6 @@ function loginGuest (instance) {
       instance.routeChange(PATHS.createTrip);
     })
     .catch(function (error) {
-      if (error.response && error.response.status === 401) {
-        instance.routeChange(PATHS.login);
-        return;
-      }
       alert(error.message);
     });
 }

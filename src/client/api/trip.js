@@ -16,6 +16,7 @@ function getTrips (instance) {
     .then(function (response) {
       console.log(response.data);
       const { trips } = response.data;
+      
       instance.setState({ trips });
       instance.setState({ isDoneFetching: true });
       instance.setState({ isLoading: false });
