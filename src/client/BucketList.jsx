@@ -32,6 +32,7 @@ ReactDOM.render(
       <Route exact path={PATHS.createTrip()} component={CreateTrip} />
       <Route exact path={PATHS.citySelect()} component={CitySelect} />
       <Route exact path={PATHS.swipe()} component={SwipeView} />
+      <Route exact path={PATHS.list()} component={ListPage} />
       {/* <Route exact path={PATHS.landingPage} component={AppHome} /> */}
       {/* <Route path={PATHS.createTrip()} component={CreateView} />
       <Route path={PATHS.swipe()} component={SwipeView} /> */}
