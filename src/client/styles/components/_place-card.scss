@@ -1,3 +1,7 @@
+.place-card-container {
+    overflow: auto;
+}
+
 .place-card {
     display: flex;
     background-color: rgba(39,39,39,1);
@@ -30,17 +34,13 @@
 }
 
 .place-details {
-    float: right;
-    display:flex;
-    flex-direction: column;
-    position: absolute;
-    left: 150px;
-    height: 100px;
+    float: left;
+    position: relative;
+    left: 25px;
     width: calc(100% - 175px);
     text-align: left;
     align-content: left;
     align-items: left;
-    justify-content: space-between;
     border-bottom: 1px solid grey;
 }
 
