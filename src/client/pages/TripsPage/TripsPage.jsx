@@ -50,9 +50,31 @@ class TripsPage extends Component {
         <div className="trips-page">
           <div className="top-bar">
             <h1 className="title">Trips</h1>
-            {/* <h2 className="title">Trips</h2> */}
-            {/* <FontAwesomeIcon className="pinned-right" icon={ faChevronCircleRight }></FontAwesomeIcon> */}
           </div>
+          {this.renderTrips()}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  renderTrips() {
+    const { trips } = this.state;
+    if (trips.length === 0) {
+      return (
+        <div className="trips-container-empty">
+          <div className="no-trips-text">
+            <span>No trips yet, create one now!</span>
+          </div>
+          <div className="icon">
+            <span className="add">+</span>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
           <div className="trips-container shadow">
             {this.state.trips.map((trip, key) => (
               <Trip
@@ -65,15 +87,13 @@ class TripsPage extends Component {
             ))}
           </div>
           <div className="add" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
-              <div className="new-trip">
-                <FontAwesomeIcon icon={faPlus} size="2x"/>
-                <br/>
-              </div>
+            <div className="new-trip">
+              <FontAwesomeIcon icon={faPlus} size="2x"/>
+              <br/>
             </div>
+          </div>
         </div>
       );
-    } else {
-      return null;
     }
   }
 

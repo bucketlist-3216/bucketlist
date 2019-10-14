@@ -1,61 +1,100 @@
 .trips-page {
+  display: flex;
+  flex-direction: column;
+  background-color: #272727;
+  height: 100vh;
+  width: 100vw;
+
+  .top-bar {
+      text-align: center;
+
+      .center-title {
+          display: inline-block;
+      }
+
+      .title {
+      		text-align: center;
+          font-family: "CeraPro-Bold";
+      		font-style: normal;
+      		font-weight: bold;
+      		font-size: 30px;
+      		color: rgba(255,255,255,1);
+          margin-top: 75px;
+          display: inline-block;
+          justify-content: center;
+      }
+
+      .pinned-right {
+          float: right;
+          margin-right: 5vw;
+          font-size: 20px;
+      }
+  }
+
+  .shadow {
+      -webkit-box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
+      -moz-box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
+      box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
+  }
+
+  .trips-container {
+      height: 80vh;
+      overflow: scroll;
+      border-bottom: 2px groove gray;
+      border-radius: 5px
+  }
+
+  .add {
+      display: inline-block;
+      width: 100vw;
+      height: 10vh;
+      text-align: center;
+
+      .new-trip {
+          margin: auto auto auto auto;
+          color: white;
+          margin: 2vh;
+          font-size: 22px;
+      }
+  }
+
+  .trips-container-empty {
     display: flex;
     flex-direction: column;
-    background-color: #272727;
-    height: 100vh;
-    width: 100vw;
+    align-items: center;
 
-    .top-bar {
-        color: white;
-        width: 100vw;
-        height: 10vh;
-        text-align: center;
-        
-        .center-title {
-            display: inline-block;
-        }
-
-        .title {	
-            display: inline-block;	
-            justify-content: center;	
-            padding: 3%;	
-            font-family: "CeraPro-Bold";	
-            text-align: center;	
-            color: white;
-            font-size: 32px;	
-        }
-
-        .pinned-right {
-            float: right;
-            margin-right: 5vw;
-            font-size: 20px;
-        }
+    .no-trips-text {
+      margin-top: 18.9vh;
+      text-align: center;
+      font-family: "CeraPro-Bold";
+      font-style: normal;
+      font-size: 2.463vh;
+      color: rgba(255,255,255,1);
     }
 
-    .shadow {
-        -webkit-box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
-        -moz-box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
-        box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
-    }
+    .icon {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 4.286vh;
+      width: 20.2vh;
+      height: 20.2vh;
+      overflow: visible;
+      border-radius: 50%;
+      border: solid 0.86vh rgba(255,255,255,1);
+      text-align: center;
+      position: relative;
 
-    .trips-container {
-        height: 80vh;
-        overflow: scroll;
-        border-bottom: 2px groove gray;
-        border-radius: 5px
+      .add {
+        font-family: "CeraPro-Regular";
+        font-size: 9.85vh;
+        line-height: 9.85vh;
+        color: rgba(255,255,255,1);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
-
-    .add {
-        display: inline-block;
-        width: 100vw;
-        height: 10vh;
-        text-align: center;
-
-        .new-trip {
-            margin: auto auto auto auto;
-            color: white;
-            margin: 2vh;
-            font-size: 22px;
-        }
-    }
+  }
 }
