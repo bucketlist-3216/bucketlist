@@ -6,9 +6,9 @@ import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleRight, faPlus } from '@fortawesome/free-solid-svg-icons'
 
-import axios from 'axios'
+// Import api
+import TripAPI from '../../api/trip';
 
-import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
@@ -35,35 +35,8 @@ class TripsPage extends Component {
   }
 
   componentDidMount() {
-    let instance = this;
-    const userId = this.props.match.params.userId;
-    axios
-      .request({
-        url: APIS.userTrips(userId),
-        method: 'get',
-        headers: {
-          token: localStorage.getItem('token'),
-          platform: localStorage.getItem('platform')
-        }
-      })
-      .then(function (response) {
-        instance.setState({ trips: [
-          {
-            "destination": "singapore",
-            "tripId": 1
-          }
-        ] });
-        instance.setState({ isDoneFetching: true });
-        instance.setState({ isLoading: false });
-      })
-      .catch(function (error) {
-        if (error.response && error.response.status === 401) {
-          instance.routeChange(PATHS.landingPage);
-          return;
-        }
-        alert(error.message);
-      });
     this.setState({ isLoading: true });
+    TripAPI.getTrips(this);
   }
 
   render() {
