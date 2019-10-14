@@ -5,6 +5,7 @@ import DummyPlaces from '../../components/PlaceCard/DummyData'
 import PlaceListTopBar from '../../components/AppBarTop/PlaceListTopBar';
 
 import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 
 const DummyPlace = {
   place_id: 1,
@@ -113,6 +114,8 @@ class PlaceList extends React.Component {
   } */
 
   render() {
+    let { tripId } = this.props.match.params;
+
     return (
       <div className="list-page">
         <PlaceListTopBar destination="Singapore"></PlaceListTopBar>
@@ -124,7 +127,9 @@ class PlaceList extends React.Component {
             />
           ))
         }
-        <div className="swipe-button">Let's go</div>
+        <div className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+          Let's go
+        </div>
       </div>
     )
   }
