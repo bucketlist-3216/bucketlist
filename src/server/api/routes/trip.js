@@ -39,9 +39,7 @@ router.get('/:tripId', function (req, res) {
         });
 });
 
-
-/**************** User trips end points ****************/
-
+// Get user trips
 router.get('/', function (req, res) {
   const userId = req.headers.verifiedUserId;
   const trips = tripFriendQueryModel.getUserTrips(userId);

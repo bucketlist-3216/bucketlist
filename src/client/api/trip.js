@@ -6,7 +6,7 @@ import PATHS from '../constants/paths';
 function getTrips (instance) {
   return axios
     .request({
-      url: APIS.trips,
+      url: APIS.trip(),
       method: 'get',
       headers: {
         token: localStorage.getItem('token'),
@@ -14,10 +14,7 @@ function getTrips (instance) {
       }
     })
     .then(function (response) {
-      console.log(response.data);
-      const { trips } = response.data;
-      
-      instance.setState({ trips });
+      instance.setState({ trips : response.data });
       instance.setState({ isDoneFetching: true });
       instance.setState({ isLoading: false });
     })
