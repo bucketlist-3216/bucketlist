@@ -91,7 +91,7 @@ class Swipe extends Component {
         left: 'DISLIKE',
         right: 'LIKE'
       };
-      
+
       axios
         .request({
           url: APIS.vote,
@@ -103,7 +103,7 @@ class Swipe extends Component {
           data: {
             vote: vote[swipeDirection],
             trip_id: tripId,
-            place_id: 206 //HARDCODED FOR NOW
+            place_id: place.place_id 
           }
         })
         .catch(function (error) {
@@ -150,7 +150,7 @@ class Swipe extends Component {
   renderSwiping() {
     const { places } = this.state;
     const currentPlace = places[0];
-
+    
     return (
       <div className="swipe-container">
         <Swipeable
