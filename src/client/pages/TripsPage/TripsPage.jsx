@@ -75,7 +75,7 @@ class TripsPage extends Component {
     } else {
       return (
         <div>
-          <div className="trips-container shadow">
+          {/*<div className="trips-container shadow">
             {this.state.trips.map((trip, key) => (
               <Trip
                 key={key}
@@ -85,11 +85,10 @@ class TripsPage extends Component {
                 showModal={this.showModal}
               />
             ))}
-          </div>
-          <div className="add" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
-            <div className="new-trip">
-              <FontAwesomeIcon icon={faPlus} size="2x"/>
-              <br/>
+          </div>*/}
+          <div className="add-icon-container">
+            <div className="icon" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
+              <span className="add">+</span>
             </div>
           </div>
         </div>

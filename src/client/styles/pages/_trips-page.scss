@@ -1,33 +1,28 @@
 .trips-page {
   display: flex;
   flex-direction: column;
-  background-color: #272727;
+  background: rgba(39,39,39,1);
   height: 100vh;
   width: 100vw;
 
   .top-bar {
       text-align: center;
-
-      .center-title {
-          display: inline-block;
-      }
+      height: 15.09vh;
+      border-bottom-width: 0.0862vh;
+      border-bottom-color: #4E4E4E;
+      border-bottom-style: solid;
 
       .title {
       		text-align: center;
           font-family: "CeraPro-Bold";
       		font-style: normal;
       		font-weight: bold;
-      		font-size: 30px;
+      		font-size: 3.695vh;
       		color: rgba(255,255,255,1);
-          margin-top: 75px;
+          margin-top: 8.25vh;
           display: inline-block;
           justify-content: center;
-      }
-
-      .pinned-right {
-          float: right;
-          margin-right: 5vw;
-          font-size: 20px;
+          padding: 0;
       }
   }
 
@@ -44,18 +39,39 @@
       border-radius: 5px
   }
 
-  .add {
-      display: inline-block;
-      width: 100vw;
-      height: 10vh;
-      text-align: center;
+  .add-icon-container {
+    position: absolute;
+    bottom: 0;
+    height: 20.54vh;
+    width: 100%;
+    border-top-width: 0.0862vh;
+    border-top-color: #4E4E4E;
+    border-top-style: solid;
 
-      .new-trip {
-          margin: auto auto auto auto;
-          color: white;
-          margin: 2vh;
-          font-size: 22px;
+    .icon {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 4.286vh;
+      width: 9.11vh;
+      height: 9.11vh;
+      overflow: visible;
+      border-radius: 50%;
+      border: solid 0.493vh rgba(255,255,255,1);
+      text-align: center;
+      position: relative;
+
+      .add {
+        font-family: "CeraPro-Regular";
+        font-size: 4.43vh;
+        line-height: 5.54vh;
+        color: rgba(255,255,255,1);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
+    }
   }
 
   .trips-container-empty {
