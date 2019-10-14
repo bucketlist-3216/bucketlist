@@ -5,7 +5,7 @@ const PATHS = {
   citySelect: () => '/create-trip/city-select',
   trips: () => '/trips',
   createTripOld: (userId = ':userId') => `/user/${userId}/create-trip`,
-  swipe: (tripId) => `/swipe/${tripId}`,
+  swipe: (tripId = `:tripId`) => `/swipe/${tripId}`,
   list: () => '/list',
   swipeOld: (userId = ':userId', tripId = ':tripId') => `/user/${userId}/trip/${tripId}/swipe`,
   tripsOld: (userId = ':userId') => `/user/${userId}/trips`,
