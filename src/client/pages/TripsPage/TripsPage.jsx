@@ -67,7 +67,7 @@ class TripsPage extends Component {
           <div className="no-trips-text">
             <span>No trips yet, create one now!</span>
           </div>
-          <div className="icon">
+          <div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
             <span className="add">+</span>
           </div>
         </div>
