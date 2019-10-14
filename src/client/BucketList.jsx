@@ -25,7 +25,7 @@ ReactDOM.render(
     <Switch>
       <Route exact path={PATHS.home} component={Login} />
       <Route exact path={PATHS.login} component={Login} />
-      <Route exact path={PATHS.appHome} component={SwipeView} />
+      {/*<Route exact path={PATHS.appHome} component={SwipeView} />*/}
       <Route exact path={PATHS.createTrip} component={CreateTrip} />
       <Route exact path={PATHS.citySelect} component={CitySelect} />
       <Route exact path={PATHS.swipe} component={SwipeView} />
