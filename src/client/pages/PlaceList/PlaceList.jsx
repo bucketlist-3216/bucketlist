@@ -8,6 +8,7 @@ import PlaceListTopBar from '../../components/AppBarTop/PlaceListTopBar';
 import Preloader from '../../components/Preloader'
 
 import APIS from '../../constants/apis';
+import PATHS from '../../constants/paths';
 
 const DummyPlace = {
   place_id: 1,
@@ -44,7 +45,6 @@ class PlaceList extends React.Component {
   componentDidMount() {
     let instance = this;
     const tripId = this.props.match.params.tripId;
-    console.log('Trip id is ', this.props);
     axios
       .request({
         url: APIS.voteResults(tripId),
@@ -73,6 +73,8 @@ class PlaceList extends React.Component {
       return <Preloader/>;
     }
 
+    const { tripId } = this.props.match.params;
+
     if (this.state.places.length === 0) {
       return (
         <div className="list-page">
@@ -82,7 +84,9 @@ class PlaceList extends React.Component {
               No places shortlisted yet! <br/>
               Start exploring now.
             </span>
-            <Button className="swipe-button">Let's Go!</Button>
+            <Button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+              Let's Go!
+            </Button>
           </div>
         </div>
       );
