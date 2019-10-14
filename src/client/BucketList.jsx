@@ -13,6 +13,7 @@ import PATHS from './constants/paths';
 // Import views for router
 import Login from './pages/Login';
 import CreateTrip from './pages/CreateTrip';
+import PlaceList from './pages/PlaceList';
 import CitySelect from './pages/CitySelect';
 import SwipeView from './pages/SwipeView';
 import TripsPage from './pages/TripsPage';
