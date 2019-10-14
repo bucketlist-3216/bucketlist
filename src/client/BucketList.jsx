@@ -24,15 +24,9 @@ ReactDOM.render(
     <Switch>
       <Route exact path={PATHS.home} component={Login} />
       <Route exact path={PATHS.login} component={Login} />
-      <Route exact path={PATHS.appHome} component={SwipeView} />
       <Route exact path={PATHS.createTrip} component={CreateTrip} />
       <Route exact path={PATHS.citySelect} component={CitySelect} />
       <Route exact path={PATHS.swipe} component={SwipeView} />
-      {/* <Route exact path={PATHS.landingPage} component={AppHome} /> */}
-      {/* <Route path={PATHS.createTrip()} component={CreateView} />
-      <Route path={PATHS.swipe()} component={SwipeView} />
-      <Route path={PATHS.trips()} component={TripsPage} />
-      <Route path={PATHS.list()} component={ListPage} /> */}
     </Switch>
   </BrowserRouter>,
   document.querySelector('#root')
