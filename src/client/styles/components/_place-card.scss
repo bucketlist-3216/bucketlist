@@ -2,6 +2,7 @@
     display: flex;
     background-color: rgba(39,39,39,1);
     height: 125px;
+    width: 100%;
     align-content: center;
     align-items: center;
 }
@@ -9,8 +10,8 @@
 .place-img-container {
     display: block;
     left: 5%;
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
     text-align: center;
     align-content: center;
     align-items: center;
@@ -20,15 +21,27 @@
     float: left;
 }
 .place-img-container>img {
-   max-height: 100%;
-   max-width: 100%;
-   border-radius: 50%;
+    max-height: 80%;
+    max-width: 80%;
+    border-radius: 50%;
+    text-align: center;
+    align-content: center;
+    align-items: center;
 }
 
 .place-details {
-    float: left;
-    position: relative;
-    left: 5px;
+    float: right;
+    display:flex;
+    flex-direction: column;
+    position: absolute;
+    left: 150px;
+    height: 100px;
+    width: calc(100% - 175px);
+    text-align: left;
+    align-content: left;
+    align-items: left;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
 }
 
 .place-name {
@@ -40,7 +53,10 @@
     font-weight: bold;
     font-size: 15px;
     color: rgba(255,255,255,1);
+}
 
+.place-others {
+    height: 60px;
 }
 
 .place-address {
