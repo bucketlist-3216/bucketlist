@@ -1,5 +1,14 @@
-.place-img-container{
+.place-card {
+    display: flex;
+    background-color: rgba(39,39,39,1);
+    height: 125px;
+    align-content: center;
+    align-items: center;
+}
+
+.place-img-container {
     display: block;
+    left: 5%;
     width: 100px;
     height: 100px;
     text-align: center;
@@ -8,8 +17,46 @@
     border-radius: 50%;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
+    float: left;
 }
 .place-img-container>img {
    max-height: 100%;
    max-width: 100%;
+   border-radius: 50%;
+}
+
+.place-details {
+    float: left;
+    position: relative;
+    left: 5px;
+}
+
+.place-name {
+    overflow: visible;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Cera Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: rgba(255,255,255,1);
+
+}
+
+.place-address {
+    text-align: left;
+    font-family: Cera Pro;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    color: rgba(255,255,255,1);
+}
+
+.place-votes {
+    text-align: left;
+    font-family: Cera Pro;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    color: rgba(255,255,255,1);
 }
