@@ -28,7 +28,7 @@ function loginGuest (instance) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('platform', "jwt");
 
-      instance.routeChange(PATHS.trips);
+      instance.routeChange(PATHS.createTrip);
     })
     .catch(function (error) {
       if (error.response && error.response.status === 401) {
