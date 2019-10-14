@@ -37,58 +37,39 @@ class TripsPage extends Component {
   componentDidMount() {
     let instance = this;
     const userId = this.props.match.params.userId;
-    instance.setState({ trips: [
-            {
-              "destination": "Singapore",
-              "tripId": 1
-            },
-            {
-              "destination": "Singapore",
-              "tripId": 1
-            },
-            {
-              "destination": "Singapore",
-              "tripId": 1
-            },
-            {
-              "destination": "Singapore",
-              "tripId": 1
-            }
-          ] });
-    instance.state.isDoneFetching = true;
-    // axios
-    //   .request({
-    //     url: APIS.userTrips(userId),
-    //     method: 'get',
-    //     headers: {
-    //       token: localStorage.getItem('token'),
-    //       platform: localStorage.getItem('platform')
-    //     }
-    //   })
-    //   .then(function (response) {
-    //     instance.setState({ trips: [
-    //       {
-    //         "destination": "singapore",
-    //         "tripId": 1
-    //       }
-    //     ] });
-    //     instance.setState({ isDoneFetching: true });
-    //     instance.setState({ isLoading: false });
-    //   })
-    //   .catch(function (error) {
-    //     if (error.response && error.response.status === 401) {
-    //       instance.routeChange(PATHS.landingPage);
-    //       return;
-    //     }
-    //     alert(error.message);
-    //   });
-    // this.setState({ isLoading: true });
+    axios
+      .request({
+        url: APIS.userTrips(userId),
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
+      .then(function (response) {
+        instance.setState({ trips: [
+          {
+            "destination": "singapore",
+            "tripId": 1
+          }
+        ] });
+        instance.setState({ isDoneFetching: true });
+        instance.setState({ isLoading: false });
+      })
+      .catch(function (error) {
+        if (error.response && error.response.status === 401) {
+          instance.routeChange(PATHS.landingPage);
+          return;
+        }
+        alert(error.message);
+      });
+    this.setState({ isLoading: true });
   }
 
   render() {
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
-    if (false) {
+    if (this.state.isLoading) {
       return (<Preloader />);
     } else if (this.state.isDoneFetching) {
 

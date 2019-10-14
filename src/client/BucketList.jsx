@@ -23,7 +23,6 @@ ReactGA.pageview(window.location.pathname + window.location.search)
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route exact path={PATHS.test} component={TripsPage} /> 
       <Route exact path={PATHS.home} component={Login} />
       <Route exact path={PATHS.login} component={Login} />
       <Route exact path={PATHS.appHome} component={SwipeView} />
@@ -33,6 +32,7 @@ ReactDOM.render(
       {/* <Route exact path={PATHS.landingPage} component={AppHome} /> */}
       {/* <Route path={PATHS.createTrip()} component={CreateView} />
       <Route path={PATHS.swipe()} component={SwipeView} /> */}
+      <Route path={PATHS.trips} component={TripsPage} /> 
       {/* <Route path={PATHS.list()} component={ListPage} /> */}
     </Switch>
   </BrowserRouter>,
