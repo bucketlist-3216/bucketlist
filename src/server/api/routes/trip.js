@@ -214,13 +214,11 @@ router.delete('/members/:tripFriend', function (req, res) {
 router.post('/vote', function (req, res) {
     let { vote, user_id, trip_id, place_id } = req.body;
     user_id = req.headers.verifiedUserId;
-    console.log(user_id);
 
     const queryingTripFriendId = tripFriendQueryModel.getTripFriendId(trip_id, user_id);
     queryingTripFriendId
         .then(function (response) {
             const { trip_friend_id } = Object.assign({}, response[0]);
-            // console.log(response);
             return voteQueryModel.castVote({ trip_friend_id, place_id, vote });
         })
         .then(function (voteId) {
@@ -261,7 +259,7 @@ router.get('/vote/location/:locationId', function (req, res) {
 });
 
 // Get locations to vote for the trip
-router.get('/:tripId/vote/user/:userId', function (req, res) {
+router.get('/:tripId/vote', function (req, res) {
     const params = Object.assign({}, req.params, req.query);
     params.userId = req.headers.verifiedUserId;
     console.log(params.userId);

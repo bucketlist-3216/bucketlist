@@ -76,7 +76,7 @@ class TripsPage extends Component {
                   userId={this.props.match.params.userId}
                   history={this.props.history}
                   showModal={this.showModal}
-                  onClick={() => this.routeChange(PATHS.list(trip.trip_id))}
+                  onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
                 />
               ))}
             </div>
