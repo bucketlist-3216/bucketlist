@@ -192,7 +192,7 @@
     .swipe-buttons {
       width: 100%;
       position: absolute;
-      bottom: 2%;
+      bottom: 6%;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
@@ -202,6 +202,7 @@
         border-radius: 50%;
         border-width: 3px;
         margin: 21px;
+        margin-bottom: 0px;
         height: 80px;
         width: 80px;
         background-color: rgba(255, 255, 255, 0.3);
