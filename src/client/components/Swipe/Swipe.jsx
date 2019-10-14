@@ -91,7 +91,7 @@ class Swipe extends Component {
         left: 'DISLIKE',
         right: 'LIKE'
       };
-
+      
       axios
         .request({
           url: APIS.vote,
@@ -103,11 +103,11 @@ class Swipe extends Component {
           data: {
             vote: vote[swipeDirection],
             trip_id: tripId,
-            place_id: place.place_id
+            place_id: 206 //HARDCODED FOR NOW
           }
         })
         .catch(function (error) {
-          if (error.esponse.status === 401) {
+          if (error.response.status == 401) {
             instance.routeChange(PATHS.landingPage);
             return;
           }
@@ -212,7 +212,7 @@ class Swipe extends Component {
 
   render() {
     const { places, isLoading, city, swipeList } = this.state;
-    const { userId, tripId } = this.props.match.params;
+    const { tripId } = this.props.match.params;
 
     return (
       <div className="swipe">
@@ -226,7 +226,11 @@ class Swipe extends Component {
             onClick={() => this.routeChange(PATHS.trips())}
             // onClick={() => this.routeChange(PATHS.trips(userId))}
           />
-          {this.renderList(this.state.swipeList)}
+          {places.length > 0 && (
+            <div>
+              {this.renderList(this.state.swipeList)}
+            </div>
+          )}
           <img
             className="icon-list"
             src="/assets/common/icon-list.png"
