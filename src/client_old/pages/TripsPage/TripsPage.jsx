@@ -86,7 +86,7 @@ class TripsPage extends Component {
                 showModal={this.showModal}
               />
             ))}
-            <div className="trip" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
+            <div className="trip" onClick={() => this.routeChange(PATHS.trips(this.props.match.params.userId))}>
               <div className="trip-new">
                 <FontAwesomeIcon icon={faPlus} size="2x"/>
                 <br/>

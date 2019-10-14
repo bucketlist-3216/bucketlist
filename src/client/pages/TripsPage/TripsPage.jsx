@@ -44,37 +44,50 @@ class TripsPage extends Component {
     ReactGA.pageview(window.location.pathname + window.location.search);
     if (this.state.isLoading) {
       return (<Preloader />);
-    } else if (this.state.isDoneFetching) {
-
-      return (
-        <div className="trips-page">
-          <div className="top-bar">
-            <h1 className="title">Trips</h1>
-            {/* <h2 className="title">Trips</h2> */}
-            {/* <FontAwesomeIcon className="pinned-right" icon={ faChevronCircleRight }></FontAwesomeIcon> */}
-          </div>
-          <div className="trips-container shadow">
-            {this.state.trips.map((trip, key) => (
-              <Trip
-                key={key}
-                trip={trip}
-                userId={this.props.match.params.userId}
-                history={this.props.history}
-                showModal={this.showModal}
-                onClick={() => this.routeChange(PATHS.list())}
-              />
-            ))}
-          </div>
-          <div className="add" onClick={() => this.routeChange(PATHS.createTrip(this.props.match.params.userId))}>
-              <div className="new-trip">
-                <FontAwesomeIcon icon={faPlus} size="2x"/>
-                <br/>
+    } else {
+      const { trips } = this.state;
+      if (trips.length === 0) {
+        return (
+          <div className="trips-page">
+            <div className="top-bar">
+              <h1 className="title">Trips</h1>
+            </div>
+            <div className="trips-container-empty">
+              <div className="no-trips-text">
+                <span>No trips yet, create one now!</span>
+              </div>
+              <div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
+                <span className="add">+</span>
               </div>
             </div>
-        </div>
-      );
-    } else {
-      return null;
+          </div>
+        );
+      } else {
+        return (
+          <div className="trips-page">
+            <div className="top-bar">
+              <h1 className="title">Trips</h1>
+            </div>
+            <div className="trips-container">
+              {this.state.trips.map((trip, key) => (
+                <Trip
+                  key={key}
+                  trip={trip}
+                  userId={this.props.match.params.userId}
+                  history={this.props.history}
+                  showModal={this.showModal}
+                  onClick={() => this.routeChange(PATHS.list())}
+                />
+              ))}
+            </div>
+            <div className="add-icon-container">
+              <div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
+                <span className="add">+</span>
+              </div>
+            </div>
+          </div>
+        );
+      }
     }
   }
 
