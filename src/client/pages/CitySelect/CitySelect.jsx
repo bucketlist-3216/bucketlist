@@ -90,7 +90,7 @@ class CitySelect extends Component {
 
     return (
       <div className="city-select">
-      	<div className="close" onClick={() => this.routeChange(PATHS.trips())}>
+      	<div className="close" onClick={() => this.routeChange(PATHS.createTrip())}>
       		<span></span>
       	</div>
         {/* <h2>Select city</h2> */}

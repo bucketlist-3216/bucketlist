@@ -12,14 +12,14 @@
         display: inline-block;
         max-height: 22vh;
         // border: 2px solid green;
-        margin: 2vh auto;
+        margin: auto auto auto auto;
 
         .trip-element {
             display: inline-block;
             margin-top: auto;
             margin-bottom: auto;
         }
-
+    
         .trip-img {
             width: 22vw;
             height: 22vw;
@@ -30,7 +30,7 @@
             margin-left: 0 !important;
             border-radius: 10vw;
         }
-
+    
         .trip-dest {
             font-family: "CeraPro-Bold";
             margin-left: 5vw;
@@ -38,7 +38,7 @@
             color: white;
             font-size: 22px;
         }
-
+    
         .right-icon {
             color: white;
             margin-left: 5vw;
