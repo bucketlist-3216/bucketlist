@@ -8,6 +8,12 @@ let jwt = require('jsonwebtoken');
 const request = require('request-promise');
 
 module.exports = ({ token, platform }) => {
+    if (!token) {
+        return new Promise((resolve, reject) => {
+            throw new Error("No auth token provided");
+        });
+    }
+
     if (platform === 'google') {
         const ticket = client.verifyIdToken({
             idToken: token,
@@ -33,7 +39,7 @@ module.exports = ({ token, platform }) => {
             .then(response => {
                 response = JSON.parse(response);
                 if (response.data.app_id !== loginSecrets.facebook) {
-                    throw new Error("Unauthorized");// res.status(401).end('Unauthorized');
+                    throw new Error("Unauthorized");
                 }
                 return response.data.user_id;
             })
@@ -43,18 +49,16 @@ module.exports = ({ token, platform }) => {
     } else if (platform === 'jwt') {
         if (token.startsWith('Bearer ')) {
             token = token.slice(7, token.length);
-        } else if (!token) 
-            res.status(403).json({ "success": failed, message: "No auth token provided"});
-        else {
+        }
+        return new Promise((resolve, reject) => {
             jwt.verify(token, loginSecrets.jwtSecret, (err, payload) => {
                 if (err) {
-                    throw err;
+                    reject(err);
                 } else {
                     console.log('Decoded to ', JSON.stringify(payload));
-                    return payload.userID;
+                    resolve(payload.userId);
                 }
-            })
-        }
+            });
+        });
     }
-    // TODO: get user email from token
 };
