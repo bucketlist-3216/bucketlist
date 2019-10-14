@@ -13,15 +13,18 @@ import Image from 'react-bootstrap/Image';
 import SingaporeImage from '../../../../assets/city/singapore.png';
 import NewYorkCityImage from '../../../../assets/city/new-york-city.png';
 
+
 const CITIES = {
   "cities": [
     {
       "name": "Singapore",
-      "imageUrl": SingaporeImage
+      "imageUrl": SingaporeImage,
+      "disabled": false
     },
     {
       "name": "New York City",
-      "imageUrl": NewYorkCityImage
+      "imageUrl": NewYorkCityImage,
+      "disabled": true
     }
   ]
 }
@@ -63,7 +66,10 @@ class CitySelect extends Component {
         {
           // Create city cards here from data
           CITIES.cities.map(((city, key) => (
-            <CityCard city={city} key={key} />
+              // TODO: Should pass city name also here
+              <div onClick={() => { if (!city.disabled) this.routeChange(PATHS.swipe)}}>
+                <CityCard city={city} key={key}/>
+              </div>
             )
           ))
         }
