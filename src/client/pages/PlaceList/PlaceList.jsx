@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import PlaceCard from '../../components/PlaceCard/PlaceCard'
-//import DummyPlace from '../../components/PlaceCard/DummyData'
+import DummyPlaces from '../../components/PlaceCard/DummyData'
 
 const DummyPlace = {
   place_id: 1,
@@ -113,7 +113,11 @@ class PlaceList extends React.Component {
   render() {
     return (
       <div className="list-page">
-        <PlaceCard place={DummyPlace} onClick={this.foo}></PlaceCard>
+        <PlaceCard place={DummyPlaces[0]} onClick={this.foo}></PlaceCard>
+        <PlaceCard place={DummyPlaces[1]} onClick={this.foo}></PlaceCard>
+        <PlaceCard place={DummyPlaces[2]} onClick={this.foo}></PlaceCard>
+        <PlaceCard place={DummyPlaces[3]} onClick={this.foo}></PlaceCard>
+        <PlaceCard place={DummyPlaces[4]} onClick={this.foo}></PlaceCard>
       </div>
     )
   }

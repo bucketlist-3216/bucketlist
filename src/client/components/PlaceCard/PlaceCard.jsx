@@ -13,7 +13,7 @@ class PlaceCard extends React.Component {
     }
 
     return (
-      <div className="place-card" /*onClick={this.props.onClick.bind()}*/ style="display:flex">
+      <div className="place-card" /*onClick={this.props.onClick.bind()}*/>
         <div className="place-img-container">
           <img src={image_link} className="place-img"/>
         </div>
