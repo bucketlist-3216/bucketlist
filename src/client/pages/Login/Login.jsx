@@ -60,15 +60,17 @@ class Login extends Component {
         };
         instance.setState({ token: response.accessToken });
       }
-      localStorage.setItem('token', userData.token);
-      localStorage.setItem('platform', userData.platform);
 
       UserAPI.login(instance, userData);
-      //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
     }
   }
 
   render() {
+    if (localStorage.getItem('token')) {
+      this.routeChange(PATHS.trips);
+      return;
+    }
+
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
     if (this.state.isLoading) {
@@ -127,7 +129,7 @@ class Login extends Component {
       		<span>or</span>
         	<div className="line"></div>
       	</div>
-        <span className="guest" onClick={() => this.routeChange(PATHS.createTrip)}>continue as guest</span>
+        <span className="guest" onClick={() => UserAPI.loginGuest(this)}>continue as guest</span>
       </div>
     );
   }
