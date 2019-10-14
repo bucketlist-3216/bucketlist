@@ -52,8 +52,6 @@ class CitySelect extends Component {
   }
 
   handleAddTrip (trip) {
-    trip['destination'] = trip['destination'].toLowerCase();
-    console.log('Here')
     let instance = this;
     return axios
     .request({
