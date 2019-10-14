@@ -23,7 +23,7 @@ class Swipe extends Component {
 
     this.state = {
       city: 'Singapore',
-      places: SAMPLE_PLACES,
+      places: SAMPLE_PLACES.attraction,
       placeData: {},
       swipeList: 1,
       hasNext: true,
@@ -138,6 +138,10 @@ class Swipe extends Component {
 
   renderList(swipeList) {
     if (swipeList === 1) {
+      if (this.state.places[0].category === 'Attraction') {
+        SAMPLE_PLACES.attraction = this.state.places;
+        this.setState({ places : SAMPLE_PLACES.food });
+      }
       return (
         <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
           <ToggleButton className="list-button-selected" name="food" value={1}>food</ToggleButton>
@@ -146,6 +150,10 @@ class Swipe extends Component {
       );
     }
     else {
+      if (this.state.places[0].category === 'Food') {
+        SAMPLE_PLACES.food = this.state.places;
+        this.setState({ places : SAMPLE_PLACES.attraction });
+      }
       return (
         <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
           <ToggleButton className="list-button-unselected" name="food" value={1}>food</ToggleButton>
