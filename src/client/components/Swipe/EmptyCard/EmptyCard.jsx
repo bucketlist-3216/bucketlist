@@ -4,7 +4,7 @@ const EmptyCard = props => {
   const { zIndex } = props;
   return (
     <div className="swipe-card" style={{ zIndex }}>
-      <div className="empty">No More Card</div>
+      <div className="empty">No More Cards</div>
     </div>
   );
 };
