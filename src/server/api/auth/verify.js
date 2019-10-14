@@ -55,7 +55,6 @@ module.exports = ({ token, platform }) => {
                 if (err) {
                     reject(err);
                 } else {
-                    console.log('Decoded to ', JSON.stringify(payload));
                     resolve(payload.userId);
                 }
             });

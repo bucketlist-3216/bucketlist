@@ -30,7 +30,6 @@ module.exports = (req, res, next) => {
 
     gettingVerifiedUserId
         .then(function (userId) {
-            console.log('verifiedUserId: ' + userId);
             req.headers.verifiedUserId = userId;
             next();
         })
