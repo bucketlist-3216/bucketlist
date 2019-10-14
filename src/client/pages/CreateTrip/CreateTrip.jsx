@@ -36,7 +36,7 @@ class CreateTrip extends Component {
     return (
       <div className="create-trip" >
       	<span className="title">Create a Trip</span>
-      	<div className="icon" onClick={() => this.routeChange(PATHS.citySelect)}>
+      	<div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
     			<span className="add">+</span>
       	</div>
       </div>

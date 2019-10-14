@@ -39,6 +39,23 @@ router.get('/:tripId', function (req, res) {
         });
 });
 
+
+/**************** User trips end points ****************/
+
+router.get('/', function (req, res) {
+  const userId = req.headers.verifiedUserId;
+  const trips = tripFriendQueryModel.getUserTrips(userId);
+
+  trips
+      .then(function(queryResponse) {
+          res.json(queryResponse);
+      })
+      .catch(function(err) {
+          res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
+          console.log(err);
+      });
+});
+
 // Create a trip
 router.post('/', function (req, res) {
     const sampleTrip = {

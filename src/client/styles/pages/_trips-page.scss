@@ -1,0 +1,61 @@
+.trips-page {
+    display: flex;
+    flex-direction: column;
+    background-color: #272727;
+    height: 100vh;
+    width: 100vw;
+
+    .top-bar {
+        color: white;
+        width: 100vw;
+        height: 10vh;
+        text-align: center;
+        
+        .center-title {
+            display: inline-block;
+        }
+
+        .title {	
+            display: inline-block;	
+            justify-content: center;	
+            padding: 3%;	
+            font-family: "CeraPro-Bold";	
+            text-align: center;	
+            color: white;
+            font-size: 32px;	
+        }
+
+        .pinned-right {
+            float: right;
+            margin-right: 5vw;
+            font-size: 20px;
+        }
+    }
+
+    .shadow {
+        -webkit-box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
+        -moz-box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
+        box-shadow: 1px 10px 7px 8px rgba(219,219,219,1);
+    }
+
+    .trips-container {
+        height: 80vh;
+        overflow: scroll;
+        border-bottom: 2px groove gray;
+        border-radius: 5px
+    }
+
+    .add {
+        display: inline-block;
+        width: 100vw;
+        height: 10vh;
+        text-align: center;
+
+        .new-trip {
+            margin: auto auto auto auto;
+            color: white;
+            margin: 2vh;
+            font-size: 22px;
+        }
+    }
+}

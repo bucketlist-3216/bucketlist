@@ -9,7 +9,7 @@ import PROVIDERS from '../../constants/providers';
 import PATHS from '../../constants/paths';
 
 // Import api
-import UserAPI from '../../api/user';
+import LoginAPI from '../../api/login';
 
 // Import components
 import SingleSignOnButton from '../../components/SingleSignOnButton';
@@ -61,14 +61,14 @@ class Login extends Component {
         instance.setState({ token: response.accessToken });
       }
 
-      UserAPI.login(instance, userData);
+      LoginAPI.login(instance, userData);
     }
   }
 
   render() {
     if (localStorage.getItem('token')) {
-      this.routeChange(PATHS.trips);
-      return;
+      this.routeChange(PATHS.trips());
+      return null;
     }
 
     ReactGA.initialize('UA-148749594-1');
@@ -129,7 +129,7 @@ class Login extends Component {
       		<span>or</span>
         	<div className="line"></div>
       	</div>
-        <span className="guest" onClick={() => UserAPI.loginGuest(this)}>continue as guest</span>
+        <span className="guest" onClick={() => LoginAPI.loginGuest(this)}>continue as guest</span>
       </div>
     );
   }

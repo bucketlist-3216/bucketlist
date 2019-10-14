@@ -63,25 +63,4 @@ router.delete('/', function(req, res) {
     res.end();
 });
 
-/**************** User trips end points ****************/
-
-/***
- * Get user's trips
- */
-router.get('/:userId/trips', function (req, res) {
-  const userId = req.headers.verifiedUserId;
-  console.log(userId);
-  const trips = tripFriendQueryModel.getUserTrips(userId);
-
-  trips
-      .then(function(queryResponse) {
-          res.json(queryResponse);
-      })
-      .catch(function(err) {
-          res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
-          console.log(err);
-      });
-});
-
-
 module.exports = router;
