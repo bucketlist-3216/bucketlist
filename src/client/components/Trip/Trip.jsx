@@ -21,7 +21,7 @@ const Trip = props => {
     <div className="trip" onClick={onClick}>
       <div className="row">
         <div className="trip-element">
-          <img src={`../../../../assets/trips/${destination}.png`} alt={destination} className="trip-img"/>
+          <img src={`../../../../assets/trips/${destination.toLowerCase()}.png`} alt={destination} className="trip-img"/>
         </div>
         <div className="trip-element trip-dest">
             {destination}
