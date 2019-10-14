@@ -7,16 +7,16 @@ class PlaceListTopBar extends React.Component {
 
   render() {
     return (
-      <div className="place-list-top-bar">
-        <div className="place-list-top-bar-back-button">
-          <img src="../../../../assets/common/icon-backarrow.png"></img>
+      <div className="top-bar">
+        <div className="home-button">
+          <span></span>
         </div>
-        <div className = "place-list-top-bar-title">
+        <div className = "title">
           {this.props.destination}
         </div>
-        <div className="place-list-top-bar-export-btn">
+        {/*<div className="place-list-top-bar-export-btn">
           <img src="../../../../assets/common/icon-export.png"></img>
-        </div>
+        </div>*/}
       </div>
     );
   }
