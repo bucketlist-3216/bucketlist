@@ -54,18 +54,39 @@ class Swipe extends Component {
 
   getPlacesToSwipe(placeId) {
 
-    const { tripId, userId } = this.props.match.params;
+    const { tripId } = this.props.match.params;
     const instance = this;
   }
 
   castVote(place) {
     return swipeDirection => {
-      const { tripId, userId } = this.props.match.params;
+      const { tripId } = this.props.match.params;
       const instance = this;
       const vote = {
         left: 'DISLIKE',
         right: 'LIKE'
       };
+      axios
+        .request({
+          url: APIS.vote,
+          method: 'post',
+          headers: {
+            token: localStorage.getItem('token'),
+            platform: localStorage.getItem('platform')
+          },
+          data: {
+            vote: vote[swipeDirection],
+            trip_id: tripId,
+            place_id: 206 //HARDCODED FOR NOW
+          }
+        })
+        .catch(function (error) {
+          if (error.response.status == 401) {
+            instance.routeChange(PATHS.landingPage);
+            return;
+          }
+          alert(error.message);
+        });
     };
   }
 
@@ -165,7 +186,7 @@ class Swipe extends Component {
 
   render() {
     const { places, isLoading, city, swipeList } = this.state;
-    const { userId, tripId } = this.props.match.params;
+    const { tripId } = this.props.match.params;
 
     return (
       <div className="swipe">
@@ -179,11 +200,15 @@ class Swipe extends Component {
             onClick={() => this.routeChange(PATHS.trips())}
             // onClick={() => this.routeChange(PATHS.trips(userId))}
           />
-          {this.renderList(this.state.swipeList)}
+          {places.length > 0 && (
+            <div>
+              {this.renderList(this.state.swipeList)}
+            </div>
+          )}
           <img
             className="icon-list"
             src="/assets/common/icon-list.png"
-            onClick={() => this.routeChange(PATHS.list())}
+            onClick={() => this.routeChange(PATHS.list(tripId))}
             // onClick={() => this.routeChange(PATHS.list(userId, tripId))}
           />
         </div>
