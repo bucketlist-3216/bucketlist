@@ -4,11 +4,13 @@ import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
 
 function login (instance, userData) {
+  localStorage.setItem('token', userData.token);
+  localStorage.setItem('platform', userData.platform);
+
   return axios
     .post(APIS.login, { userData })
     .then(function (response) {
-      instance.setState({ userId: response.data.insertedId[0] });
-      instance.routeChange(PATHS.trips(instance.state.userId));
+      instance.routeChange(PATHS.trips);
     })
     .catch(function (error) {
       if (error.response && error.response.status === 401) {
@@ -19,11 +21,13 @@ function login (instance, userData) {
     });
 }
 
-function createGuestUser (instance) {
+function loginGuest (instance) {
   return axios
-    .post(APIS.createGuestUser)
+    .post(APIS.loginGuest)
     .then(function (response) {
-      instance.setState({ userId: response.data.insertedId[0] });
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('platform', "jwt");
+
       instance.routeChange(PATHS.trips);
     })
     .catch(function (error) {
@@ -37,5 +41,5 @@ function createGuestUser (instance) {
 
 export default {
   login,
-  createGuestUser
+  loginGuest
 };
