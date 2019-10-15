@@ -34,7 +34,7 @@ ReactDOM.render(
       {/* <Route exact path={PATHS.landingPage} component={AppHome} /> */}
       {/* <Route path={PATHS.createTrip()} component={CreateView} />
       <Route path={PATHS.swipe()} component={SwipeView} /> */}
-      {/* <Route path={PATHS.list()} component={ListPage} /> */}
+      {<Route path={PATHS.list()} component={PlaceList} />}
     </Switch>
   </BrowserRouter>,
   document.querySelector('#root')
