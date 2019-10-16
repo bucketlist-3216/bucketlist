@@ -1,4 +1,4 @@
-# BucketList Developer Site
+# BucketList
 
 Bucketlist is a Progressive Web Application that helps your discover attractions and plan your travel. This submission serves as a minimum viable product for the Final Project, where we will develop this application to its full potential.
 
