@@ -76,6 +76,7 @@
     "react-bootstrap-navbar": "^1.1.0",
     "react-datepicker": "^2.9.6",
     "react-drag-drawer": "^3.3.1",
+    "react-epic-spinners": "^0.4.1",
     "react-facebook-login": "^4.1.1",
     "react-ga": "^2.6.0",
     "react-google-login": "^5.0.5",
