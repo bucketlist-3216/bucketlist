@@ -1,11 +1,11 @@
 import React from 'react';
-import HeaderButton from '../HeaderButton';
+import IconButton from '../IconButton';
 
 const ListButton = (props) => {
   const { onClick } = props;
 
   return (
-    <HeaderButton
+    <IconButton
       icon=""
       className="list-button"
       onClick={onClick}

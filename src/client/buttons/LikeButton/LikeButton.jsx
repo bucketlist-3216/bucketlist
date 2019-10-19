@@ -1,15 +1,16 @@
 import React from 'react';
 import IconButton from '../IconButton';
 
-const HomeButton = (props) => {
+const LikeButton = (props) => {
   const { className, onClick } = props;
+
   return (
     <IconButton
-      icon=""
-      className="home-button"
+      icon=""
+      className={`like-button ${className}`}
       onClick={onClick}
     />
   );
 };
 
-export default HomeButton;
+export default LikeButton;

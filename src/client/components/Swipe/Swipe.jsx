@@ -190,9 +190,9 @@ class Swipe extends Component {
         this.setState({ places : SAMPLE_PLACES.food });
       }
       return (
-        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
-          <ToggleButton className="list-button-selected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="list-button-unselected" name="places" value={2}>places</ToggleButton>
+        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.listChange}>
+          <ToggleButton className="toggle-button-selected" name="food" value={1}>food</ToggleButton>
+          <ToggleButton className="toggle-button-unselected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
       );
     }
@@ -202,9 +202,9 @@ class Swipe extends Component {
         this.setState({ places : SAMPLE_PLACES.attraction });
       }
       return (
-        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
-          <ToggleButton className="list-button-unselected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="list-button-selected" name="places" value={2}>places</ToggleButton>
+        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.listChange}>
+          <ToggleButton className="toggle-button-unselected" name="food" value={1}>food</ToggleButton>
+          <ToggleButton className="toggle-button-selected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
       );
     };
