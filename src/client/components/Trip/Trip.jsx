@@ -18,17 +18,15 @@ const Trip = props => {
   }
 
   return (
-    <div className="trip" onClick={onClick}>
-      <div className="row">
-        <div className="trip-element">
-          <img src={`../../../../assets/trips/${destination.toLowerCase()}.png`} alt={destination} className="trip-img"/>
-        </div>
-        <div className="trip-element trip-dest">
-            {destination}
-        </div>
-        <div className="trip-element right-icon">
-          <FontAwesomeIcon icon={ faChevronRight }></FontAwesomeIcon>
-        </div>
+    <div className="trip row" onClick={onClick}>
+      <div className="trip-element trip-img">
+        <img src={`../../../../assets/trips/${destination.toLowerCase()}.png`} alt={destination}/>
+      </div>
+      <div className="trip-element trip-dest">
+        <span>{destination}</span>
+      </div>
+      <div className="trip-element right-icon">
+        <FontAwesomeIcon icon={ faChevronRight }></FontAwesomeIcon>
       </div>
     </div>
   );
