@@ -209,6 +209,19 @@
           margin: 22px;
         }
       }
+
+      // To override react-sliding-panel css
+      .cloud-sliding-panel-container {
+        width: 100%;
+
+        .panel-glass {
+          width: 100%;
+        }
+
+        .panel-bottom {
+          width: 100%;
+        }
+      }
     }
   }
 }
