@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SlidingPanel from 'react-sliding-panel';
 import Swipeable from 'react-swipy';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
@@ -10,7 +9,7 @@ import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
-import PlaceInfo from '../PlaceInfo/';
+import InfoPanel from './InfoPanel';
 import HomeButton from '../../buttons/HomeButton';
 import ListButton from '../../buttons/ListButton';
 
@@ -148,7 +147,7 @@ class Swipe extends Component {
   };
 
   renderSwiping() {
-    const { places } = this.state;
+    const { places, isModalShown } = this.state;
     const currentPlace = places[0];
 
     return (
@@ -159,7 +158,7 @@ class Swipe extends Component {
           onAfterSwipe={this.nextCard}
         >
           <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setIsOpen={this.setIsOpen} />
-          {this.renderModal()}
+          <InfoPanel place={currentPlace} isModalShown={isModalShown} setIsOpen={this.setIsOpen}/>
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -237,42 +236,6 @@ class Swipe extends Component {
           </div>
         </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
-      </div>
-    );
-  }
-
-  renderModal() {
-    const { isModalShown, places } = this.state;
-    const isMobile = window.innerWidth < 555;
-    const place = places[0];
-
-    return (
-      <div className="info-panel">
-        <SlidingPanel
-          type={"bottom"}
-          isOpen={isModalShown}
-          closeFunc={() => this.setIsOpen(false)}
-        >
-          <div className="info-content">
-            <div className="card-info-content">
-              <button className="info-button-close" onClick={() => this.setIsOpen(false)}>tap here to close</button>
-            </div>
-            <div  className="info-title">
-              { place.name + ", " + place.price }
-            </div>
-            <div  className="info-intro">
-              { place.desc }
-            </div>
-            <div className="info-address">
-              <div>{ "Location: " + place.location }</div>
-              <div>{ "Opening Hours: " + place.hours }</div>
-              <div>{ "Phone: " + place.number }</div>
-            </div>
-            <div  className="info-reviews">
-              {"Reviews:"}
-            </div>
-          </div>
-        </SlidingPanel>
       </div>
     );
   }
