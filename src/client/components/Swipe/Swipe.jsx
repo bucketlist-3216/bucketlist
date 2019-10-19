@@ -11,8 +11,8 @@ import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
 import PlaceInfo from '../PlaceInfo/';
-import BackButton from '../BackButton';
-
+import HomeButton from '../../buttons/HomeButton';
+import ListButton from '../../buttons/ListButton';
 
 import { SAMPLE_PLACES } from './sample_data';
 
@@ -216,27 +216,25 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        <div className="swipe-header-primary">
-          <div className="city">
-            {city}
-          </div>
-        </div>
-        <div className="swipe-header-secondary">
-          <BackButton
-            onClick={() => this.routeChange(PATHS.trips())}
-            // onClick={() => this.routeChange(PATHS.trips(userId))}
-          />
-          {places.length > 0 && (
-            <div>
-              {this.renderList(this.state.swipeList)}
+        <div className="swipe-header">
+          <div className="swipe-header-primary">
+            <div className="city">
+              {city}
             </div>
-          )}
-          <img
-            className="icon-list"
-            src="/assets/common/icon-list.png"
-            onClick={() => this.routeChange(PATHS.list(tripId))}
-            // onClick={() => this.routeChange(PATHS.list(userId, tripId))}
-          />
+          </div>
+          <div className="swipe-header-secondary">
+            <HomeButton
+              onClick={() => this.routeChange(PATHS.trips())}
+            />
+            {places.length > 0 && (
+              <div>
+                {this.renderList(this.state.swipeList)}
+              </div>
+            )}
+            <ListButton
+              onClick={() => this.routeChange(PATHS.list(tripId))}
+            />
+          </div>
         </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>

@@ -1,0 +1,29 @@
+.header-button {
+  width: 3.94vh;
+  height: 3.94vh;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  background-color: rgba(255,255,255,0.3);
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  align-content: center;
+  align-items: center;
+  position: relative;
+
+  span {
+    text-align: center;
+    font-family: "IkonoMiniL-5";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.54vh;
+    color: rgba(255,255,255,1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
