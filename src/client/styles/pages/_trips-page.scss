@@ -15,7 +15,11 @@ html, body {
       top: 0;
       height: 9%;
       width: 100%;
+      padding: 0 3.47vw;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+
       background: rgba(39,39,39,1);
       border-bottom-width: 0.0862vh;
       border-bottom-color: #4E4E4E;
@@ -29,7 +33,9 @@ html, body {
       		font-size: 3.695vh;
       		color: rgba(255,255,255,1);
           padding: 0;
-          margin: auto;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, 0);
       }
   }
 
@@ -79,8 +85,10 @@ html, body {
   }
 
   .trips-container-empty {
+    height: 91%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
     .no-trips-text {
