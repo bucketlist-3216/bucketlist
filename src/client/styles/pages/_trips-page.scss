@@ -13,22 +13,15 @@ html, body {
   .top-bar {
       position: absolute;
       top: 0;
-      height: 15.09%;
+      height: 9%;
       width: 100%;
-      padding-top: 8.25%;
-
       display: flex;
-      justify-content: center;
-
       background: rgba(39,39,39,1);
       border-bottom-width: 0.0862vh;
       border-bottom-color: #4E4E4E;
       border-bottom-style: solid;
 
       .title {
-          position: absolute;
-          top: 54.67%;
-
       		text-align: center;
           font-family: "CeraPro-Bold";
       		font-style: normal;
@@ -36,13 +29,14 @@ html, body {
       		font-size: 3.695vh;
       		color: rgba(255,255,255,1);
           padding: 0;
+          margin: auto;
       }
   }
 
   .trips-container {
     position: absolute;
-    top: 15.09%;
-    height: 64.37%;
+    top: 9.1%;
+    height: 70.46%;
     width: 100%;
     display: block;
     overflow-x: hidden;
