@@ -70,6 +70,22 @@
     justify-content: center;
   }
 
+  .swipe-button-bottom:active {
+    background-color: #272727 !important;
+    border-color: #272727 !important;
+    color: #FFFFFF !important;
+  }
+
+  .swipe-button-bottom:hover {
+    background-color: rgba(255,255,255,1) !important;
+    border-color: rgba(255,255,255,1) !important;
+    color: #272727 !important;
+  }
+
+  .swipe-button-bottom:focus {
+    box-shadow: none !important;
+  }
+
   .place-container-empty {
     display: flex;
     flex-direction: column;
