@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const SwipeCard = props => {
   const { zIndex, place, imageIndex, setPlaceData, setShowInfo, 
@@ -22,10 +24,16 @@ const SwipeCard = props => {
       
 
       <div onMouseDown={event => handleImageClickStart(event)}>
-      <div className="previous-image" onClick={event => handleImageClickEnd(event, "previous")}>
-      </div>
-      <div className="next-image" onClick={event => handleImageClickEnd(event, "next")}>
-      </div>
+        <div className="previous-image" onClick={event => handleImageClickEnd(event, "previous")}>
+          <div className="previous-image-button">
+            <FontAwesomeIcon icon={ faChevronLeft } size="3x"></FontAwesomeIcon>
+          </div>
+        </div>
+        <div className="next-image" onClick={event => handleImageClickEnd(event, "next")}>
+          <div className="next-image-button">
+            <FontAwesomeIcon icon={ faChevronRight } size="3x"></FontAwesomeIcon>
+          </div>
+        </div>
       </div>
 
       <img className="card-image" src={ images[imageIndex] } />

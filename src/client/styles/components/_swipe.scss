@@ -165,6 +165,13 @@
         top: 0;
         left: 0;
         border: 0px;
+
+        .previous-image-button {
+          color: #272727;
+          margin-top: 22vh;
+          left: 10px;
+          position: absolute;
+        }
       }
 
       .next-image {
@@ -174,6 +181,13 @@
         top: 0;
         right: 0;
         border: 0px;
+
+        .next-image-button {
+          color: #272727;
+          margin-top: 22vh;
+          right: 10px;
+          position: absolute;
+        }
       }
 
       .card-info {
