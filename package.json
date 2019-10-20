@@ -69,7 +69,6 @@
     "lodash": "^4.17.15",
     "mysql": "^2.17.1",
     "nodemon": "^1.19.2",
-    "nuka-carousel": "^4.5.12",
     "prop-types": "^15.7.2",
     "react-animated-css": "^1.2.1",
     "react-bootstrap": "^1.0.0-beta.12",
