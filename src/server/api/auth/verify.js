@@ -3,7 +3,6 @@ const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const loginSecrets = require('../../../../config/login_secrets.json');
 const {OAuth2Client} = require('google-auth-library');
-// const client = new OAuth2Client(loginSecrets.google);
 let jwt = require('jsonwebtoken');
 
 // For Facebook Login authentication
