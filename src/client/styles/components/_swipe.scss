@@ -12,7 +12,7 @@
 
   .swipe-header-primary {
     width: 320px;
-    font-family: 'JosefinSans-Regular';
+    font-family: 'CeraPro-Bold';
     margin: auto;
     margin-top: 20px;
 
@@ -31,7 +31,7 @@
 
   .swipe-header-secondary {
     width: 320px;
-    font-family: 'JosefinSans-Regular';
+    font-family: 'CeraPro-Bold';
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -81,7 +81,7 @@
     position: relative;
 
     span {
-      font-family: 'JosefinSans-Regular';
+      font-family: 'CeraPro-Bold';
       font-size: 35px;
       line-height: 40px;
       text-align: center;
@@ -184,7 +184,7 @@
         justify-content: center;
 
         .description {
-          font-family: 'JosefinSans-Regular';
+          font-family: 'CeraPro-Regular';
           float: left;
           font-size: 25px;
           color: white;
@@ -202,7 +202,7 @@
       .empty {
         background-color: black;
         color: white;
-        font-family: "CeraPro-Bold";
+        font-family: "CeraPro-Regular";
         font-style: normal;
         font-size: 2.463vh;
         height: 100%;
