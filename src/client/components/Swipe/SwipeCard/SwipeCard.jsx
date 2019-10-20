@@ -21,7 +21,6 @@ const SwipeCard = props => {
 
   return (
     <div className="swipe-card" style={{ zIndex }} >
-      
 
       <div onMouseDown={event => handleImageClickStart(event)}>
         <div className="previous-image" onClick={event => handleImageClickEnd(event, "previous")}>
@@ -49,6 +48,7 @@ const SwipeCard = props => {
       <div className="card-info">
         <button className="info-button-open" onClick={() => handleInfoClick(true)}>tap here for more info</button>
       </div>
+      
     </div>
   );
 };

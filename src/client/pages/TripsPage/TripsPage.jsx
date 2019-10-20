@@ -50,7 +50,7 @@ class TripsPage extends Component {
         return (
           <div className="trips-page">
             <div className="top-bar">
-              <h1 className="title">Trips</h1>
+              <h1 className="title" onClick={() => this.routeChange(PATHS.tutorial)} >Trips</h1>
             </div>
             <div className="trips-container-empty">
               <div className="no-trips-text">
@@ -66,7 +66,7 @@ class TripsPage extends Component {
         return (
           <div className="trips-page">
             <div className="top-bar">
-              <h1 className="title">Trips</h1>
+              <h1 className="title" onClick={() => this.routeChange(PATHS.tutorial)} >Trips</h1>
             </div>
             <div className="trips-container">
               {this.state.trips.map((trip, key) => (

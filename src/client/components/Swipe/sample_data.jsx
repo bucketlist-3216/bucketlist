@@ -25,10 +25,10 @@ export const SAMPLE_PLACES = {
 			"price": "$$",
 			"category": "Food",
 			"images": [
-			  __dirname + "../../../../assets/place_assets/1.jpg",
-			  __dirname + "../../../../assets/place_assets/2.jpg",
-			  __dirname + "../../../../assets/place_assets/3.jpg",
-			  __dirname + "../../../../assets/place_assets/4.jpg",
+			  __dirname + "../../../../assets/place_assets/5.jpg",
+			  __dirname + "../../../../assets/place_assets/6.jpg",
+			  __dirname + "../../../../assets/place_assets/7.jpg",
+			  __dirname + "../../../../assets/place_assets/8.jpg",
 			]
 		},
 		{
@@ -57,10 +57,10 @@ export const SAMPLE_PLACES = {
 			"price": "$$",
 			"category": "Food",
 			"images": [
-			  __dirname + "../../../../assets/place_assets/1.jpg",
-			  __dirname + "../../../../assets/place_assets/2.jpg",
-			  __dirname + "../../../../assets/place_assets/3.jpg",
-			  __dirname + "../../../../assets/place_assets/4.jpg",
+			  __dirname + "../../../../assets/place_assets/5.jpg",
+			  __dirname + "../../../../assets/place_assets/6.jpg",
+			  __dirname + "../../../../assets/place_assets/7.jpg",
+			  __dirname + "../../../../assets/place_assets/8.jpg",
 			]
 		},
 		{
@@ -89,10 +89,10 @@ export const SAMPLE_PLACES = {
 			"price": "$",
 			"category": "Attraction",
 			"images": [
-			  __dirname + "../../../../assets/place_assets/1.jpg",
-			  __dirname + "../../../../assets/place_assets/2.jpg",
-			  __dirname + "../../../../assets/place_assets/3.jpg",
-			  __dirname + "../../../../assets/place_assets/4.jpg",
+			  __dirname + "../../../../assets/place_assets/5.jpg",
+			  __dirname + "../../../../assets/place_assets/6.jpg",
+			  __dirname + "../../../../assets/place_assets/7.jpg",
+			  __dirname + "../../../../assets/place_assets/8.jpg",
 			]
 		},
 		{
@@ -121,10 +121,10 @@ export const SAMPLE_PLACES = {
 			"price": "$",
 			"category": "Attraction",
 			"images": [
-			  __dirname + "../../../../assets/place_assets/1.jpg",
-			  __dirname + "../../../../assets/place_assets/2.jpg",
-			  __dirname + "../../../../assets/place_assets/3.jpg",
-			  __dirname + "../../../../assets/place_assets/4.jpg",
+			  __dirname + "../../../../assets/place_assets/5.jpg",
+			  __dirname + "../../../../assets/place_assets/6.jpg",
+			  __dirname + "../../../../assets/place_assets/7.jpg",
+			  __dirname + "../../../../assets/place_assets/8.jpg",
 			]
 		}
 	]
