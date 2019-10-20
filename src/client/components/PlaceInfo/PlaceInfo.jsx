@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
-import Preloader from '../Preloader';
 
 const SAMPLE_PLACE = {
   place_id: 203,
@@ -68,7 +67,7 @@ class PlaceInfo extends Component {
           <Modal.Title className="info-title">{place.city}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { _.isEmpty(place) ? <Preloader /> :
+          { _.isEmpty(place) ? {EMPTY} :
             <div className="info-body">
               <div className="image-row">
                 {/* {_.map(place.images, (image, key) => {

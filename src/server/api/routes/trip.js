@@ -39,6 +39,21 @@ router.get('/:tripId', function (req, res) {
         });
 });
 
+// Get user trips
+router.get('/', function (req, res) {
+  const userId = req.headers.verifiedUserId;
+  const trips = tripFriendQueryModel.getUserTrips(userId);
+
+  trips
+      .then(function(queryResponse) {
+          res.json(queryResponse);
+      })
+      .catch(function(err) {
+          res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
+          console.log(err);
+      });
+});
+
 // Create a trip
 router.post('/', function (req, res) {
     const sampleTrip = {
@@ -203,7 +218,6 @@ router.post('/vote', function (req, res) {
     queryingTripFriendId
         .then(function (response) {
             const { trip_friend_id } = Object.assign({}, response[0]);
-            // console.log(response);
             return voteQueryModel.castVote({ trip_friend_id, place_id, vote });
         })
         .then(function (voteId) {
@@ -243,7 +257,7 @@ router.get('/vote/location/:locationId', function (req, res) {
 });
 
 // Get locations to vote for the trip
-router.get('/:tripId/vote/user/:userId', function (req, res) {
+router.get('/:tripId/vote', function (req, res) {
     const params = Object.assign({}, req.params, req.query);
     params.userId = req.headers.verifiedUserId;
     const places = voteQueryModel.getPlacesToVote(params);

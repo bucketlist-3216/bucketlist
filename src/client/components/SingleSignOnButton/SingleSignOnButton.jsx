@@ -20,7 +20,7 @@ const SingleSignOnButton = props => {
         onClick={renderProps.onClick}
         disabled={props.disabled}
       >
-        {logo}
+        <div className="logo">{logo}</div>
         <span>{providerName}</span>
       </button>
     </div>

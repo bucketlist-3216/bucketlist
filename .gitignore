@@ -2,3 +2,5 @@
 /build
 /src/server/build
 /.env
+.DS_Store
+src/.DS_Store
