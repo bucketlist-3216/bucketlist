@@ -1,7 +1,6 @@
 // For Google Login authentication
-const loginSecrets = require('../../../../config/login_secrets.json');
 const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client(loginSecrets.google);
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 let jwt = require('jsonwebtoken');
 
 // For Facebook Login authentication
@@ -17,7 +16,7 @@ module.exports = ({ token, platform }) => {
     if (platform === 'google') {
         const ticket = client.verifyIdToken({
             idToken: token,
-            audience: loginSecrets.google
+            audience: process.env.GOOGLE_CLIENT_ID
         });
         return ticket
             .then((response) => response.getPayload())
@@ -32,13 +31,13 @@ module.exports = ({ token, platform }) => {
             method: 'GET',
             uri: `https\://graph.facebook.com/debug_token?\
                 input_token=${token}\
-                &access_token=${loginSecrets.facebook}|${loginSecrets.facebook_app_secret}`
+                &access_token=${process.env.FACEBOOK_APP_ID}|${process.env.FACEBOOK_APP_SECRET}`
         };
 
         return request(options)
             .then(response => {
                 response = JSON.parse(response);
-                if (response.data.app_id !== loginSecrets.facebook) {
+                if (response.data.app_id !== process.env.FACEBOOK_APP_ID) {
                     throw new Error("Unauthorized");
                 }
                 return response.data.user_id;

@@ -5,7 +5,6 @@ const { UserQueryModel } = require('../query-models');
 const userQueryModel = new UserQueryModel();
 const verify = require('../auth/verify');
 const jwt = require('jsonwebtoken');
-const loginSecrets = require('../../../../config/login_secrets.json');
 
 // Login API router
 const router = express.Router();

@@ -4,3 +4,4 @@
 /src/server/build
 .DS_Store
 src/.DS_Store
+.env
