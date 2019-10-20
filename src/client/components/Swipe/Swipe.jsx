@@ -27,7 +27,9 @@ class Swipe extends Component {
       placeData: {},
       swipeList: 1,
       hasNext: true,
-      isModalShown: false
+      showInfo: false,
+      imageIndex: 0,
+      initialScreenX: 0,
     };
   }
 
@@ -35,11 +37,25 @@ class Swipe extends Component {
     console.log("Swipe Component Mounted");
   }
 
-  // Helper function for changing swipe list
-  listChange(value) {
+  /* These are helper functions for setting states. */
+  setShowInfo(showInfo) {
+    this.setState({ showInfo: showInfo });
+  }
+
+  setPlaceData(placeData) {
+    this.setState({ placeData });
+  }
+
+  setInitialScreenX(value) {
+    this.setState({ initialScreenX: value });
+  }
+
+  setSwipeList(value) {
+    this.setState({ imageIndex: 0 });
     this.setState({ swipeList: value });
   }
 
+  // TODO: Cleanup
   // Helper function for redirecting
   routeChange(pathname) {
     this.props.history.push({
@@ -116,28 +132,26 @@ class Swipe extends Component {
     };
   }
 
-  // Helper function to set state
+  imageChange(screenX, value) {
+    const delta = Math.abs(screenX - this.state.initialScreenX);
 
-  showModal(placeId) {
-    this.setState({ isModalShown: true });
+    if (delta < 10) {
+      var imgIdx = this.state.imageIndex;
+      if (value === "previous") {
+        imgIdx = Math.max(0, imgIdx - 1);
+      } else {
+        imgIdx = Math.min(this.state.places[0].images.length - 1, imgIdx + 1);
+      }
+      this.setState({ imageIndex: imgIdx });
+    }
   }
+  // TODO: Cleanup
 
-  closeModal(event) {
-    this.setState({ isModalShown: false });
-  }
-
-  setIsOpen(showInfo) {
-    this.setState({ isModalShown: showInfo });
-  }
-
-  setPlaceData(placeData) {
-    this.setState({ placeData });
-  }
 
   // Helper functions for swiping
-
   nextCard = () => {
     const { places } = this.state;
+    this.setState({ imageIndex: 0 });
     if (places.length > 0) {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
@@ -147,34 +161,8 @@ class Swipe extends Component {
     }
   };
 
-  renderSwiping() {
-    const { places } = this.state;
-    const currentPlace = places[0];
-
-    return (
-      <div className="swipe-container">
-        <Swipeable
-          buttons={this.renderButtons}
-          onSwipe={this.castVote(currentPlace)}
-          onAfterSwipe={this.nextCard}
-        >
-          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setIsOpen={this.setIsOpen} />
-          {this.renderModal()}
-        </Swipeable>
-        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
-      </div>
-    );
-  }
-
-  renderSwipeComplete() {
-    return (
-      <div className="swipe-container">
-        <EmptyCard zIndex={-2}>No more cards</EmptyCard>
-      </div>
-    );
-  }
-
-  renderButtons({ left, right }) {
+  /* Render swipe buttons. */
+  renderSwipeButtons({ left, right }) {
     return (
       <div className="swipe-buttons">
         <SwipeButton onClick={left} type="reject" />
@@ -183,14 +171,45 @@ class Swipe extends Component {
     );
   }
 
-  renderList(swipeList) {
+  /* Render swipe cards. */
+  renderSwiping() {
+    const { places, imageIndex } = this.state;
+    const currentPlace = places[0];
+
+    return (
+      <div className="swipe-container">
+        <Swipeable
+          buttons={this.renderSwipeButtons}
+          onSwipe={this.castVote(currentPlace)}
+          onAfterSwipe={this.nextCard}
+        >
+          <SwipeCard place={currentPlace} imageIndex={imageIndex} setPlaceData={this.setPlaceData} 
+            setShowInfo={this.setShowInfo} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} />
+          {this.renderInfoModal()}
+        </Swipeable>
+        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
+      </div>
+    );
+  }
+
+  /* Render this when there are no more swipe cards. */
+  renderSwipeComplete() {
+    return (
+      <div className="swipe-container">
+        <EmptyCard zIndex={-2}>No more cards</EmptyCard>
+      </div>
+    );
+  }
+
+  /* Renders the chosen list of cards between food places and attraction places. */
+  renderSwipeList(swipeList) {
     if (swipeList === 1) {
       if (this.state.places[0].category === 'Attraction') {
         SAMPLE_PLACES.attraction = this.state.places;
         this.setState({ places : SAMPLE_PLACES.food });
       }
       return (
-        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
+        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.setSwipeList}>
           <ToggleButton className="list-button-selected" name="food" value={1}>food</ToggleButton>
           <ToggleButton className="list-button-unselected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
@@ -202,7 +221,7 @@ class Swipe extends Component {
         this.setState({ places : SAMPLE_PLACES.attraction });
       }
       return (
-        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
+        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.setSwipeList}>
           <ToggleButton className="list-button-unselected" name="food" value={1}>food</ToggleButton>
           <ToggleButton className="list-button-selected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
@@ -210,6 +229,44 @@ class Swipe extends Component {
     };
   }
 
+  /* Renders modal to display more information about the swipe card location. */
+  renderInfoModal() {
+    const { showInfo, places } = this.state;
+    const isMobile = window.innerWidth < 555;
+    const place = places[0];
+
+    return (
+      <div className="info-panel">
+        <SlidingPanel
+          type={"bottom"}
+          isOpen={showInfo}
+          closeFunc={() => this.setShowInfo(false)}
+        >
+          <div className="info-content">
+            <div className="card-info-content">
+              <button className="info-button-close" onClick={() => this.setShowInfo(false)}>tap here to close</button>
+            </div>
+            <div  className="info-title">
+              { place.name + ", " + place.price }
+            </div>
+            <div  className="info-intro">
+              { place.desc }
+            </div>
+            <div className="info-address">
+              <div>{ "Location: " + place.location }</div>
+              <div>{ "Opening Hours: " + place.hours }</div>
+              <div>{ "Phone: " + place.number }</div>
+            </div>
+            <div  className="info-reviews">
+              {"Reviews:"}
+            </div>
+          </div>
+        </SlidingPanel>
+      </div>
+    );
+  }
+
+  /* This is the main render function. */
   render() {
     const { places, isLoading, city, swipeList } = this.state;
     const { tripId } = this.props.match.params;
@@ -228,7 +285,7 @@ class Swipe extends Component {
           />
           {places.length > 0 && (
             <div>
-              {this.renderList(this.state.swipeList)}
+              {this.renderSwipeList(this.state.swipeList)}
             </div>
           )}
           <img
@@ -239,42 +296,6 @@ class Swipe extends Component {
           />
         </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
-      </div>
-    );
-  }
-
-  renderModal() {
-    const { isModalShown, places } = this.state;
-    const isMobile = window.innerWidth < 555;
-    const place = places[0];
-
-    return (
-      <div className="info-panel">
-        <SlidingPanel
-          type={"bottom"}
-          isOpen={isModalShown}
-          closeFunc={() => this.setIsOpen(false)}
-        >
-          <div className="info-content">
-            <div className="card-info-content">
-              <button className="info-button-close" onClick={() => this.setIsOpen(false)}>tap here to close</button>
-            </div>
-            <div  className="info-title">
-              { place.name + ", " + place.price }
-            </div>
-            <div  className="info-intro">
-              { place.desc }
-            </div>
-            <div className="info-address">
-              <div>{ "Location: " + place.location }</div>
-              <div>{ "Opening Hours: " + place.hours }</div>
-              <div>{ "Phone: " + place.number }</div>
-            </div>
-            <div  className="info-reviews">
-              {"Reviews:"}
-            </div>
-          </div>
-        </SlidingPanel>
       </div>
     );
   }
