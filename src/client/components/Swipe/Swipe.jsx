@@ -12,6 +12,9 @@ import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
 import PlaceInfo from '../PlaceInfo/';
 import BackButton from '../BackButton';
+import MenuButton from '../MenuButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faList } from '@fortawesome/free-solid-svg-icons';
 
 
 import { SAMPLE_PLACES } from './sample_data';
@@ -288,11 +291,9 @@ class Swipe extends Component {
               {this.renderSwipeList(this.state.swipeList)}
             </div>
           )}
-          <img
-            className="icon-list"
-            src="/assets/common/icon-list.png"
+          <MenuButton
             onClick={() => this.routeChange(PATHS.list(tripId))}
-            // onClick={() => this.routeChange(PATHS.list(userId, tripId))}
+            // onClick={() => this.routeChange(PATHS.trips(userId))}
           />
         </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
