@@ -145,7 +145,7 @@ class Swipe extends Component {
       this.setState({ imageIndex: imgIdx });
     }
   }
-  // TODO: Cleanup
+  // TODO: Cleanup until here
 
 
   // Helper functions for swiping
@@ -187,7 +187,7 @@ class Swipe extends Component {
             setShowInfo={this.setShowInfo} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} />
           {this.renderInfoModal()}
         </Swipeable>
-        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
+        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
       </div>
     );
   }
