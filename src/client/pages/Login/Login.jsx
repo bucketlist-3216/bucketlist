@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
-import loginSecrets from '../../../../config/login_secrets.json';
+// import loginSecrets from '../../../../config/login_secrets.json';
 
 // Import constants
 import PROVIDERS from '../../constants/providers';
@@ -93,7 +93,7 @@ class Login extends Component {
         <div className="row">
           <GoogleLogin
             className="half-row"
-            clientId={loginSecrets.google}
+            clientId={process.env.GOOGLE_CLIENT_ID}
             render={renderProps => (
               <SingleSignOnButton
                 providerName={PROVIDERS['google'].providerName}
