@@ -21,7 +21,7 @@ class Swipe extends Component {
     this.state = {
       city: 'Singapore',
       listBuffer: {
-        attraction: [],
+        attractions: [],
         food: []
       },
       places: [],
@@ -30,7 +30,8 @@ class Swipe extends Component {
       hasNext: true,
       showInfo: false,
       imageIndex: 0,
-      initialScreenX: 0
+      initialScreenX: 0,
+      previousType: 1,
     };
   }
 
@@ -40,11 +41,6 @@ class Swipe extends Component {
       : null;
     this.getPlacesToSwipe(placeId);
     this.getCity(this.props.match.params.tripId);
-  }
-
-  // Helper function for changing swipe list
-  setSwipeList(value) {
-    this.setState({ swipeList: value });
   }
 
   // Helper function for redirecting
@@ -99,7 +95,6 @@ class Swipe extends Component {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
-        console.log(response.data)
         instance.setState({ listBuffer: response.data });
         if (instance.swipeList === 1) {
           instance.setState({ places: response.data['attractions']});
@@ -234,9 +229,10 @@ class Swipe extends Component {
 
   renderList(swipeList) {
     if (swipeList === 1) {
-      if (this.state.places[0].category === 'Attraction') {
-        this.state.listBuffer.attraction = this.state.places;
+      if (swipeList !== this.state.previousType) {
+        this.state.listBuffer.attractions = this.state.places;
         this.setState({ places : this.state.listBuffer.food });
+        this.setState({ previousType : swipeList });
       }
       return (
         <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
@@ -246,9 +242,10 @@ class Swipe extends Component {
       );
     }
     else {
-      if (this.state.places[0].category === 'Food') {
+      if (swipeList !== this.state.previousType) {
         this.state.listBuffer.food = this.state.places;
-        this.setState({ places : this.state.listBuffer.attraction });
+        this.setState({ places : this.state.listBuffer.attractions });
+        this.setState({ previousType : swipeList });
       }
       return (
         <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
@@ -275,7 +272,7 @@ class Swipe extends Component {
             <HomeButton
               onClick={() => this.routeChange(PATHS.trips())}
             />
-            {places.length > 0 && (
+            {places.length > -1 && (
               <div>
                 {this.renderList(this.state.swipeList)}
               </div>
