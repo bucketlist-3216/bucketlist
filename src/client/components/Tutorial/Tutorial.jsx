@@ -42,8 +42,9 @@ class Tutorial extends Component {
     const { tutorialList, tutorialIndex } = this.state;
     if (tutorialIndex < this.state.tutorialList.length - 1) {
       return (
-        <div className="tutorial-image">
-          <img src={ tutorialList[tutorialIndex] } 
+        <div>
+          <img className="tutorial-image"
+            src={ tutorialList[tutorialIndex] } 
             onClick={ event => this.nextTutorial(event) }
           />
         </div>
@@ -51,7 +52,8 @@ class Tutorial extends Component {
     } else {
       return (
         <div>
-          <img src={ tutorialList[tutorialIndex] } 
+          <img className="tutorial-image"
+            src={ tutorialList[tutorialIndex] } 
             onClick={ event => this.routeChange(PATHS.citySelect()) }
           />
         </div>

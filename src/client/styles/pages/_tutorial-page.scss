@@ -1,15 +1,12 @@
 .tutorial-page {
-  position: fixed;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
   background-color: #272727;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 
-  .hello {
-    max-height: 100%;
-    width: auto;
+  .tutorial-image {
+    height: 100vh;
   }
 }
