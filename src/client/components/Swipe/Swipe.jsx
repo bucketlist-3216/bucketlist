@@ -216,8 +216,8 @@ class Swipe extends Component {
 
   renderList(swipeList) {
     if (swipeList === 1) {
-      if (this.state.places[0].category === 'Attraction') {
-        this.state.listBuffer.attraction = this.state.places;
+      if (this.state.places[0].type === 'Attraction') {
+        this.state.listBuffer.attractions = this.state.places;
         this.setState({ places : this.state.listBuffer.food });
       }
       return (
@@ -228,9 +228,9 @@ class Swipe extends Component {
       );
     }
     else {
-      if (this.state.places[0].category === 'Food') {
+      if (this.state.places[0].type === 'Food') {
         this.state.listBuffer.food = this.state.places;
-        this.setState({ places : this.state.listBuffer.attraction });
+        this.setState({ places : this.state.listBuffer.attractions });
       }
       return (
         <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.listChange}>
