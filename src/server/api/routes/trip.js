@@ -264,26 +264,9 @@ router.get('/vote/location/:locationId', function (req, res) {
 router.get('/:tripId/vote', function (req, res) {
     const params = Object.assign({}, req.params, req.query);
     params.userId = req.headers.verifiedUserId;
-    console.log(params.userId);
     let places = voteQueryModel.getPlacesToVote(params);
 
     places
-        .then(function(placesToVote) {
-            // Get the images for these places
-            let place_ids = _.map(placesToVote, p => p.place_id);
-            let promises = _.map(place_ids, p => placeImageQueryModel.getPlaceImage(p));
-
-            return new Promise(function(resolve, reject) {
-                Promise.all(promises)
-                    .then(function(images) {
-                        images = _.map(images, img => img.map(i => placeImageQueryModel.augmentUrlWithBucket(i.image_link)));
-                        _.each(images, (element, idx, list) => {
-                            placesToVote[idx].images = element;
-                        })
-                        resolve(placesToVote);
-                    })
-            })
-        })
         .then(function(queryResponse) {
             res.json(queryResponse);
         })

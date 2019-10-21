@@ -136,6 +136,9 @@
             color: white;
             font-family: 'CeraPro-Medium';
             font-size: 1.6vh;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }

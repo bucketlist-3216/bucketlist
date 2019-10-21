@@ -8,7 +8,6 @@ const SwipeCard = props => {
       setIsOpen(showInfo);
   };
 
-  console.log('Displaying image from: ', images[0]);
   return (
     <div className="swipe-card" style={{ zIndex }}>
       <img className="card-image" src={ images[0] } />
