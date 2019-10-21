@@ -22,7 +22,7 @@ class Swipe extends Component {
 
     this.state = {
       city: 'Singapore',
-      places: SAMPLE_PLACES.attraction,
+      places: [],
       placeData: {},
       swipeList: 1,
       hasNext: true,
@@ -33,7 +33,11 @@ class Swipe extends Component {
   }
 
   componentDidMount() {
-    console.log("Swipe Component Mounted");
+    const placeId = this.props.location.state
+      ? this.props.location.state.placeId
+      : null;
+    this.getPlacesToSwipe(placeId);
+    this.getCity(this.props.match.params.tripId);
   }
 
   // Helper function for changing swipe list
@@ -51,9 +55,30 @@ class Swipe extends Component {
   // Helper functions to communicate with backend
   getCity(tripId) {
     const instance = this;
+
+    axios
+    .request({
+      url: APIS.trip(tripId),
+      method: 'get',
+      headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      }
+    })
+    .then(function(response) {
+      instance.setState({ city: response.data.destination });
+    })
+    .catch(function (error) {
+      if (error.response.status === 401) {
+        instance.routeChange(PATHS.landingPage);
+        return;
+      }
+      alert(error.message);
+    });
   }
 
   getPlacesToSwipe(placeId) {
+    this.setState({ isLoading: true });
 
     const { tripId } = this.props.match.params;
     const instance = this;
@@ -72,6 +97,7 @@ class Swipe extends Component {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
+        console.log(response.data[0])
         instance.setState({ places: response.data });
         instance.setState({ isLoading: false });
       })
@@ -166,7 +192,6 @@ class Swipe extends Component {
   renderSwiping() {
     const { places, imageIndex, showInfo } = this.state;
     const currentPlace = places[0];
-
     return (
       <div className="swipe-container">
         <Swipeable

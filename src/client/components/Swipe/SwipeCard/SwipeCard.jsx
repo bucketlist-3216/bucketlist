@@ -18,6 +18,7 @@ const SwipeCard = props => {
       setShowInfo(showInfo);
   };
 
+  console.log('Displaying image from: ', images[0]);
   return (
     <div className="swipe-card" style={{ zIndex }}>
       <div onMouseDown={event => handleImageClickStart(event)}>

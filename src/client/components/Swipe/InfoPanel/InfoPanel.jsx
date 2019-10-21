@@ -25,12 +25,12 @@ const SwipeCard = props => {
             { place.name + ", " + place.price }
           </div>
           <div  className="info-intro">
-            { place.desc }
+            { place.description }
           </div>
           <div className="info-address">
-            <div>{ "Location: " + place.location }</div>
-            <div>{ "Opening Hours: " + place.hours }</div>
-            <div>{ "Phone: " + place.number }</div>
+            <div>{ "Location: " + place.address }</div>
+            <div>{ "Opening Hours: " + place.opening_hours }</div>
+            <div>{ "Phone: " + place.ph_number }</div>
           </div>
           {/*<div  className="info-reviews">
             {"Reviews:"}

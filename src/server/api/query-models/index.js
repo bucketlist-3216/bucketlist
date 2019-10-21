@@ -4,6 +4,7 @@ const TripQueryModel = require('./trip-query-model');
 const TripFriendQueryModel = require('./trip-friend-query-model');
 const UserQueryModel = require('./user-query-model');
 const PlaceQueryModel = require('./place-query-model');
+const PlaceImageQueryModel = require('./place-image-query-model');
 
 module.exports = {
     VoteQueryModel,
@@ -11,5 +12,6 @@ module.exports = {
     TripPlaceQueryModel,
     TripQueryModel,
     UserQueryModel,
-    PlaceQueryModel
+    PlaceQueryModel,
+    PlaceImageQueryModel
 };
