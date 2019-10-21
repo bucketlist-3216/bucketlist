@@ -13,8 +13,6 @@ import InfoPanel from './InfoPanel';
 import HomeButton from '../../buttons/HomeButton';
 import ListButton from '../../buttons/ListButton';
 
-import { SAMPLE_PLACES } from './sample_data';
-
 @autoBindMethods
 class Swipe extends Component {
   constructor(props) {
@@ -22,6 +20,10 @@ class Swipe extends Component {
 
     this.state = {
       city: 'Singapore',
+      listBuffer: {
+        attraction: [],
+        food: []
+      },
       places: [],
       placeData: {},
       swipeList: 1,
@@ -97,8 +99,13 @@ class Swipe extends Component {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
-        console.log(response.data[0])
-        instance.setState({ places: response.data });
+        console.log(response.data)
+        instance.setState({ listBuffer: response.data });
+        if (instance.swipeList === 1) {
+          instance.setState({ places: response.data['attractions']});
+        } else {
+          instance.setState({ places: response.data['food']});
+        }
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
@@ -228,8 +235,8 @@ class Swipe extends Component {
   renderList(swipeList) {
     if (swipeList === 1) {
       if (this.state.places[0].category === 'Attraction') {
-        SAMPLE_PLACES.attraction = this.state.places;
-        this.setState({ places : SAMPLE_PLACES.food });
+        this.state.listBuffer.attraction = this.state.places;
+        this.setState({ places : this.state.listBuffer.food });
       }
       return (
         <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
@@ -240,8 +247,8 @@ class Swipe extends Component {
     }
     else {
       if (this.state.places[0].category === 'Food') {
-        SAMPLE_PLACES.food = this.state.places;
-        this.setState({ places : SAMPLE_PLACES.attraction });
+        this.state.listBuffer.food = this.state.places;
+        this.setState({ places : this.state.listBuffer.attraction });
       }
       return (
         <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>

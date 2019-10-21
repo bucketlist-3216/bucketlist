@@ -31,7 +31,7 @@ class VoteQueryModel extends EntityQueryModel {
 
     getPlacesToVote({tripId, userId, placeId, limit = 100}) {
         let query = knex
-            .select(['place_id', 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number'])
+            .select(['place_id', 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number', 'type'])
             .from(this.placeQueryModel.tableName)
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
             .where({trip_id: tripId})
@@ -45,7 +45,38 @@ class VoteQueryModel extends EntityQueryModel {
         if (placeId || placeId == 0) {
           query = query.orWhere({place_id: placeId, trip_id: tripId}).orderByRaw(`(place_id = ${placeId}) DESC`);
         }
-        return query;
+
+        let that = this;
+        return query
+            .then(function(placesToVote) {
+                // Get the images for these places
+                let place_ids = _.map(placesToVote, p => p.place_id);
+                let promises = _.map(place_ids, p => that.placeImageQueryModel.getPlaceImage(p));
+
+                return new Promise(function(resolve, reject) {
+                    Promise.all(promises)
+                        .then(function(images) {
+                            images = _.map(images, img => img.map(i => that.placeImageQueryModel.augmentUrlWithBucket(i.image_link)));
+                            _.each(images, (element, idx, list) => {
+                                placesToVote[idx].images = element;
+                            })
+                            resolve(placesToVote);
+                        })
+                })
+            })
+            .then(function(unsortedPlacesToVote) {
+                console.log('Unsorted places are: ', unsortedPlacesToVote);
+                let food = []
+                let attractions = []
+
+                food = _.filter(unsortedPlacesToVote, e => e.type === 'Food')
+                attractions = _.filter(unsortedPlacesToVote, e => e.type === 'Attraction')
+
+                return {
+                    food: food,
+                    attractions: attractions
+                }
+            });
     }
 
     // Cast a vote for a location
