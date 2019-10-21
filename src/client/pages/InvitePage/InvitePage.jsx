@@ -3,6 +3,8 @@ import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
 import PATHS from '../../constants/paths';
+import APIS from '../../constants/apis';
+import axios from "axios";
 
 
 @autoBindMethods
@@ -11,9 +13,9 @@ class InvitePage extends Component {
     super (props);
   }
 
-  routeChange(pathname) {
+  routeChange(pathname, state) {
     this.props.history.push({
-      pathname
+      pathname, state
     });
   }
 
@@ -21,16 +23,21 @@ class InvitePage extends Component {
     ReactGA.initialize('UA-148749594-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
 
-    
-
-    return (
-      <div className="create-trip" >
-      	<span className="title">Create a Trip</span>
-      	<div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
-    			<span className="add">+</span>
-      	</div>
-      </div>
-    );
+    if (!localStorage.getItem('token')) {
+      this.routeChange(PATHS.login, {"returnPrevious": true});
+    } else {
+      const { inviteLink } = this.props.match.params
+      console.log("inviteLink: ", inviteLink);
+      axios.request({
+        url: APIS.trip(inviteLink),
+        method: 'GET',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      }).then((tripIdJson) => this.routeChange(PATHS.list(tripIdJson.tripId)));
+    }
+    return null;
   }
 }
 

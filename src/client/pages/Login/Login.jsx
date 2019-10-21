@@ -67,7 +67,8 @@ class Login extends Component {
 
   render() {
     if (localStorage.getItem('token')) {
-      this.routeChange(PATHS.trips());
+      if ("returnPrevious" in this.props) this.props.history.goBack();
+      else this.routeChange(PATHS.trips());
       return null;
     }
 
