@@ -13,6 +13,7 @@ import PATHS from '../../constants/paths';
 import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
+import LogoutButton from "../../buttons/LogoutButton";
 
 @autoBindMethods
 class TripsPage extends Component {
@@ -50,6 +51,7 @@ class TripsPage extends Component {
         return (
           <div className="trips-page">
             <div className="top-bar">
+              {localStorage.getItem('platform') !== 'jwt' && <LogoutButton routeChange={this.routeChange}/>}
               <h1 className="title">Trips</h1>
             </div>
             <div className="trips-container-empty">
@@ -66,6 +68,7 @@ class TripsPage extends Component {
         return (
           <div className="trips-page">
             <div className="top-bar">
+              {localStorage.getItem('platform') !== 'jwt' && <LogoutButton routeChange={this.routeChange}/>}
               <h1 className="title">Trips</h1>
             </div>
             <div className="trips-container">

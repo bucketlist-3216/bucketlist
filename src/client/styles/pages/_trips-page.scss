@@ -1,15 +1,25 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 .trips-page {
   position: fixed;
   background: rgba(39,39,39,1);
   height: 100%;
   width: 100%;
+  display: block;
 
   .top-bar {
       position: absolute;
       top: 0;
-      text-align: center;
-      height: 15.09vh;
+      height: 9%;
       width: 100%;
+      padding: 0 3.47vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
       background: rgba(39,39,39,1);
       border-bottom-width: 0.0862vh;
       border-bottom-color: #4E4E4E;
@@ -22,18 +32,19 @@
       		font-weight: bold;
       		font-size: 3.695vh;
       		color: rgba(255,255,255,1);
-          margin-top: 8.25vh;
-          display: inline-block;
-          justify-content: center;
           padding: 0;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, 0);
       }
   }
 
   .trips-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 15.09vh;
-    height: 64.37vh;
+    position: absolute;
+    top: 9.1%;
+    height: 70.46%;
+    width: 100%;
+    display: block;
     overflow-x: hidden;
     overflow-y: scroll;
   }
@@ -42,23 +53,22 @@
     position: absolute;
     background-color: rgba(39,39,39,1);
     bottom: 0;
-    height: 20.54vh;
+    height: 20.54%;
     width: 100%;
     border-top-width: 0.0862vh;
     border-top-color: #4E4E4E;
     border-top-style: solid;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     .icon {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 4.286vh;
       width: 9.11vh;
       height: 9.11vh;
-      overflow: visible;
       border-radius: 50%;
       border: solid 0.493vh rgba(255,255,255,1);
-      text-align: center;
+      margin: auto;
       position: relative;
 
       .add {
@@ -75,12 +85,14 @@
   }
 
   .trips-container-empty {
+    height: 91%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
     .no-trips-text {
-      margin-top: 18.9vh;
+      margin-top: 22.26%;
       text-align: center;
       font-family: "CeraPro-Bold";
       font-style: normal;
