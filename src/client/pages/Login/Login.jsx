@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
-import loginSecrets from '../../../../config/login_secrets.json';
-
 // Import constants
 import PROVIDERS from '../../constants/providers';
 import PATHS from '../../constants/paths';
@@ -93,7 +91,7 @@ class Login extends Component {
         <div className="row">
           <GoogleLogin
             className="half-row"
-            clientId={loginSecrets.google}
+            clientId={process.env.GOOGLE_CLIENT_ID}
             render={renderProps => (
               <SingleSignOnButton
                 providerName={PROVIDERS['google'].providerName}
@@ -110,7 +108,7 @@ class Login extends Component {
           {// TODO: implement FacebookLogin
           /*<FacebookLogin
             className="half-row"
-            appId={loginSecrets.facebook}
+            appId={process.env.FACEBOOK_APP_ID}
             fields="name,email"
             callback={this.handleResponse('facebook')}
             render={renderProps => (

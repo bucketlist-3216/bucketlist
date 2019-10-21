@@ -5,7 +5,7 @@ import autoBindMethods from 'class-autobind-decorator';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
-import loginSecrets from '../../../../config/login_secrets.json';
+// import loginSecrets from '../../../../config/login_secrets.json';
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import PROVIDERS from '../../constants/providers';
@@ -76,7 +76,7 @@ class Login extends Component {
       <div className="login">
         <div className="sso-container">
           <GoogleLogin
-            clientId={loginSecrets.google}
+            clientId={process.env.GOOGLE_CLIENT_ID}
             render={renderProps => (
               <SingleSignOnButton
                 providerName={PROVIDERS['google'].providerName}
@@ -91,7 +91,7 @@ class Login extends Component {
             cookiePolicy={'single_host_origin'}
           />
           <FacebookLogin
-            appId={loginSecrets.facebook}
+            appId={process.env.FACEBOOK_APP_ID}
             fields="name,email"
             callback={this.handleResponse('facebook')}
             render={renderProps => (
