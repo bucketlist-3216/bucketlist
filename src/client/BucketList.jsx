@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
+import { Workbox } from "workbox-window";
 
 // Style imports
 import './styles/styles.scss';
@@ -18,6 +19,8 @@ import CitySelect from './pages/CitySelect';
 import SwipeView from './pages/SwipeView';
 import TripsPage from './pages/TripsPage';
 import ListPage from './pages/PlaceList';
+//import TutorialView from './pages/TutorialView';
+//<Route exact path={PATHS.tutorial} component={TutorialView} />
 
 ReactGA.initialize('UA-148749594-1');
 ReactGA.pageview(window.location.pathname + window.location.search)

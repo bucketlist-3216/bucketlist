@@ -8,7 +8,12 @@ export const SAMPLE_PLACES = {
 			"hours": "10am-10pm every day",
 			"price": "$",
 			"category": "Food",
-			"image": __dirname + "../../../../assets/place_assets/1.jpg"
+			"images": [
+			  __dirname + "../../../../assets/place_assets/1.jpg",
+			  __dirname + "../../../../assets/place_assets/2.jpg",
+			  __dirname + "../../../../assets/place_assets/3.jpg",
+			  __dirname + "../../../../assets/place_assets/4.jpg",
+			]
 		},
 		{
 			"place_id": "303",
@@ -19,7 +24,12 @@ export const SAMPLE_PLACES = {
 			"hours": "1.30pm-8.30pm every day",
 			"price": "$$",
 			"category": "Food",
-			"image": __dirname + "../../../../assets/place_assets/2.jpg"
+			"images": [
+			  __dirname + "../../../../assets/place_assets/5.jpg",
+			  __dirname + "../../../../assets/place_assets/6.jpg",
+			  __dirname + "../../../../assets/place_assets/7.jpg",
+			  __dirname + "../../../../assets/place_assets/8.jpg",
+			]
 		},
 		{
 			"place_id": "310",
@@ -30,7 +40,12 @@ export const SAMPLE_PLACES = {
 			"hours": "10am-1am Mondays to Thursdays; 12pm-2pm on Fridays and Saturdays; Closed on Sundays",
 			"price": "$$$",
 			"category": "Food",
-			"image": __dirname + "../../../../assets/place_assets/4.jpg"
+			"images": [
+			  __dirname + "../../../../assets/place_assets/1.jpg",
+			  __dirname + "../../../../assets/place_assets/2.jpg",
+			  __dirname + "../../../../assets/place_assets/3.jpg",
+			  __dirname + "../../../../assets/place_assets/4.jpg",
+			]
 		},
 		{
 			"place_id": "304",
@@ -41,7 +56,12 @@ export const SAMPLE_PLACES = {
 			"hours": "8am-7pm every day; Closed on Mondays",
 			"price": "$$",
 			"category": "Food",
-			"image": __dirname + "../../../../assets/place_assets/5.jpg"
+			"images": [
+			  __dirname + "../../../../assets/place_assets/5.jpg",
+			  __dirname + "../../../../assets/place_assets/6.jpg",
+			  __dirname + "../../../../assets/place_assets/7.jpg",
+			  __dirname + "../../../../assets/place_assets/8.jpg",
+			]
 		},
 		{
 			"place_id": "305",
@@ -52,7 +72,12 @@ export const SAMPLE_PLACES = {
 			"hours": "11.30am-11.45pm Monday to Thursday; 11.30am-1.45am Friday; 5pm-1.45am Saturday; Closed on Sundays",
 			"price": "$$$",
 			"category": "Food",
-			"image": __dirname + "../../../../assets/place_assets/8.jpg"
+			"images": [
+			  __dirname + "../../../../assets/place_assets/1.jpg",
+			  __dirname + "../../../../assets/place_assets/2.jpg",
+			  __dirname + "../../../../assets/place_assets/3.jpg",
+			  __dirname + "../../../../assets/place_assets/4.jpg",
+			]
 		}],
 	attraction: [{
 			"place_id": "307",
@@ -63,7 +88,12 @@ export const SAMPLE_PLACES = {
 			"hours": "10am-7pm every day",
 			"price": "$",
 			"category": "Attraction",
-			"image": __dirname + "../../../../assets/place_assets/3.jpg"
+			"images": [
+			  __dirname + "../../../../assets/place_assets/5.jpg",
+			  __dirname + "../../../../assets/place_assets/6.jpg",
+			  __dirname + "../../../../assets/place_assets/7.jpg",
+			  __dirname + "../../../../assets/place_assets/8.jpg",
+			]
 		},
 		{
 			"place_id": "308",
@@ -74,7 +104,12 @@ export const SAMPLE_PLACES = {
 			"hours": "5am-12mn every day",
 			"price": "$",
 			"category": "Attraction",
-			"image": __dirname + "../../../../assets/place_assets/6.jpg"
+			"images": [
+			  __dirname + "../../../../assets/place_assets/1.jpg",
+			  __dirname + "../../../../assets/place_assets/2.jpg",
+			  __dirname + "../../../../assets/place_assets/3.jpg",
+			  __dirname + "../../../../assets/place_assets/4.jpg",
+			]
 		},
 		{
 			"place_id": "309",
@@ -85,7 +120,12 @@ export const SAMPLE_PLACES = {
 			"hours": "7am-7pm every day",
 			"price": "$",
 			"category": "Attraction",
-			"image": __dirname + "../../../../assets/place_assets/7.jpg"
+			"images": [
+			  __dirname + "../../../../assets/place_assets/5.jpg",
+			  __dirname + "../../../../assets/place_assets/6.jpg",
+			  __dirname + "../../../../assets/place_assets/7.jpg",
+			  __dirname + "../../../../assets/place_assets/8.jpg",
+			]
 		}
 	]
 }

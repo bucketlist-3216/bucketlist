@@ -2,18 +2,18 @@ import React from 'react';
 import SlidingPanel from 'react-sliding-panel';
 
 const SwipeCard = props => {
-  const { place, isModalShown, setIsOpen } = props;
+  const { place, showInfo, setShowInfo } = props;
   const { image } = place;
 
   const handleClick = (showInfo) => {
-      setIsOpen(showInfo);
+      setShowInfo(showInfo);
   };
 
   return (
     <div className="info-panel">
       <SlidingPanel
         type={"bottom"}
-        isOpen={isModalShown}
+        isOpen={showInfo}
         closeFunc={() => handleClick(false)}
       >
         <div className="info-content">
