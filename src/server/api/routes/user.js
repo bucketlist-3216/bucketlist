@@ -8,6 +8,7 @@ const {
 } = require('../query-models')
 
 const userQueryModel = new UserQueryModel();
+const tripFriendQueryModel = new TripFriendQueryModel();
 
 // User API router
 const router = express.Router();
@@ -45,9 +46,24 @@ function getUserHandler(req, res) {
         });
 }
 
-// TODO: Implement this operation
+// Replaces the given user ID with the user ID in the token
+// The give ID should be the guest ID, while the token ID should be the logged in ID
 function updateUserHandler(req, res) {
-    res.end();
+    const guestId = req.params.userId;
+    const newId = req.headers.verifiedUserId;
+    tripFriendQueryModel.changeTripFriendUserId(guestId, newId)
+        .then(() => {
+            userQueryModel.deleteUser(guestId)
+                .return(res.end())
+                .catch((err) => {
+                    res.status(500).end("Could not delete guest ID: ", guestId);
+                    console.log(err);
+                });
+        })
+        .catch(function (err) {
+            res.status(500).end("Could not update user ID ", guestId);
+            console.log(err);
+        });
 }
 
 // TODO: Implement this operation
