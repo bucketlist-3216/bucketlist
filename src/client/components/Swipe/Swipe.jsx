@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SlidingPanel from 'react-sliding-panel';
 import Swipeable from 'react-swipy';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
@@ -10,8 +9,11 @@ import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
-import PlaceInfo from '../PlaceInfo/';
-import BackButton from '../BackButton';
+import InfoPanel from './InfoPanel';
+import HomeButton from '../../buttons/HomeButton';
+import ListButton from '../../buttons/ListButton';
+
+import { SAMPLE_PLACES } from './sample_data';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -171,7 +173,7 @@ class Swipe extends Component {
   };
 
   renderSwiping() {
-    const { places } = this.state;
+    const { places, isModalShown } = this.state;
     const currentPlace = places[0];
     return (
       <div className="swipe-container">
@@ -181,7 +183,7 @@ class Swipe extends Component {
           onAfterSwipe={this.nextCard}
         >
           <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setIsOpen={this.setIsOpen} />
-          {this.renderModal()}
+          <InfoPanel place={currentPlace} isModalShown={isModalShown} setIsOpen={this.setIsOpen}/>
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
       </div>
@@ -212,9 +214,9 @@ class Swipe extends Component {
         this.setState({ places : SAMPLE_PLACES.food });
       }
       return (
-        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
-          <ToggleButton className="list-button-selected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="list-button-unselected" name="places" value={2}>places</ToggleButton>
+        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.listChange}>
+          <ToggleButton className="toggle-button-selected" name="food" value={1}>food</ToggleButton>
+          <ToggleButton className="toggle-button-unselected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
       );
     }
@@ -224,9 +226,9 @@ class Swipe extends Component {
         this.setState({ places : SAMPLE_PLACES.attraction });
       }
       return (
-        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
-          <ToggleButton className="list-button-unselected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="list-button-selected" name="places" value={2}>places</ToggleButton>
+        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.listChange}>
+          <ToggleButton className="toggle-button-unselected" name="food" value={1}>food</ToggleButton>
+          <ToggleButton className="toggle-button-selected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
       );
     };
@@ -238,65 +240,27 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        <div className="swipe-header-primary">
-          <div className="city">
-            {city}
-          </div>
-        </div>
-        <div className="swipe-header-secondary">
-          <BackButton
-            onClick={() => this.routeChange(PATHS.trips())}
-            // onClick={() => this.routeChange(PATHS.trips(userId))}
-          />
-          {places.length > 0 && (
-            <div>
-              {this.renderList(this.state.swipeList)}
+        <div className="swipe-header">
+          <div className="swipe-header-primary">
+            <div className="city">
+              {city}
             </div>
-          )}
-          <img
-            className="icon-list"
-            src="/assets/common/icon-list.png"
-            onClick={() => this.routeChange(PATHS.list(tripId))}
-            // onClick={() => this.routeChange(PATHS.list(userId, tripId))}
-          />
+          </div>
+          <div className="swipe-header-secondary">
+            <HomeButton
+              onClick={() => this.routeChange(PATHS.trips())}
+            />
+            {places.length > 0 && (
+              <div>
+                {this.renderList(this.state.swipeList)}
+              </div>
+            )}
+            <ListButton
+              onClick={() => this.routeChange(PATHS.list(tripId))}
+            />
+          </div>
         </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
-      </div>
-    );
-  }
-
-  renderModal() {
-    const { isModalShown, places } = this.state;
-    const isMobile = window.innerWidth < 555;
-    const place = places[0];
-
-    return (
-      <div className="info-panel">
-        <SlidingPanel
-          type={"bottom"}
-          isOpen={isModalShown}
-          closeFunc={() => this.setIsOpen(false)}
-        >
-          <div className="info-content">
-            <div className="card-info-content">
-              <button className="info-button-close" onClick={() => this.setIsOpen(false)}>tap here to close</button>
-            </div>
-            <div  className="info-title">
-              { place.name + ", " + place.price }
-            </div>
-            <div  className="info-intro">
-              { place.description }
-            </div>
-            <div className="info-address">
-              <div>{ "Location: " + place.address }</div>
-              <div>{ "Opening Hours: " + place.opening_hours }</div>
-              <div>{ "Phone: " + place.ph_number }</div>
-            </div>
-            <div  className="info-reviews">
-              {"Reviews:"}
-            </div>
-          </div>
-        </SlidingPanel>
       </div>
     );
   }
