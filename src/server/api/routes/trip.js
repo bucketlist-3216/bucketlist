@@ -39,14 +39,26 @@ router.delete('/members/:tripFriend', deleteTripMemberHandler);
 
 // Get trip details
 function getTripDetailsHandler(req, res) {
-    return tripQueryModel.getTrip(req.params.tripId)
-        .then(function(queryResponse) {
-            res.json(queryResponse[0]);
-        })
-        .catch(function(err) {
-            res.status(500).end('Unable to get trip details');
-            console.log(err);
-        });
+    if (isNaN(req.params.tripId)) {
+        //try to handle as invite
+        return tripQueryModel.getTripInvite(req.params.tripId)
+            .then(function(queryResponse) {
+              res.json(queryResponse[0]);
+          })
+          .catch(function(err) {
+              res.status(500).end('Unable to get trip details');
+              console.log(err);
+          });
+    } else {
+        return tripQueryModel.getTrip(req.params.tripId)
+            .then(function(queryResponse) {
+                res.json(queryResponse[0]);
+            })
+            .catch(function(err) {
+                res.status(500).end('Unable to get trip details');
+                console.log(err);
+            });
+    }
 }
 
 // Get user trips
@@ -66,7 +78,7 @@ function getUserTripsHandler(req, res) {
 
 // Create a trip
 function addTripHandler(req, res) {
-    const toInsert = req.body.trip;
+    let toInsert = req.body.trip;
     toInsert.authorId = req.headers.verifiedUserId;
     console.log(toInsert.authorId );
 
@@ -76,6 +88,8 @@ function addTripHandler(req, res) {
     return tripInsertion
         .then(function (returnedObject) {
             // console.log('Trip insertion complete: ', returnedObject);
+
+            insertTripLink(returnedObject[0]);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId({ email: emailId });
@@ -142,6 +156,23 @@ function updateTripHandler(req, res) {
             res.status(500).end(`Unable to update trip due to ${err.message}`);
             console.log(err);
         });
+}
+
+// Generate and inserts a unique 16-character random link for trip
+async function insertTripLink(trip_id) {
+  //console.log("Inserting link for trip ID: ", trip_id)
+  let result = '';
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  do {
+    for (let i = 0; i < 16; i++) {
+      result += characters.charAt(Math.floor(Math.random() * 52));
+    }
+    let linkAlreadyExists = await tripQueryModel.getTripInvite(result).select("trip_id").then((rows)=>_.size(rows));
+    //console.log(linkAlreadyExists);
+    if (linkAlreadyExists)
+      result = '';
+  } while (!result);
+  tripQueryModel.updateTrip(trip_id, {invite_extension: result}).then((rows)=>console.log(rows));
 }
 
 /**************** Trip Member APIs  ****************/
