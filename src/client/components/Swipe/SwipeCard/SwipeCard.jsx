@@ -43,7 +43,7 @@ const SwipeCard = props => {
             { place.name + ", " + place.price }
           </div>
           <div className="info-desc">
-            { place.desc }
+            { place.description }
           </div>
         </div>
       </div>
