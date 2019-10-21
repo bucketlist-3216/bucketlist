@@ -13,7 +13,7 @@ class TutorialPage extends Component {
 
   render() {
     return (
-      <div className="swipe-view">
+      <div className="tutorial-page">
         <Tutorial history={this.props.history} />
       </div>
     );
