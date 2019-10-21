@@ -2,6 +2,7 @@ const EntityQueryModel = require('./entity');
 const TripQueryModel = require('./trip-query-model');
 const TripFriendQueryModel = require('./trip-friend-query-model');
 const PlaceQueryModel = require('./place-query-model');
+const PlaceImageQueryModel = require('./place-image-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 
@@ -18,6 +19,7 @@ class VoteQueryModel extends EntityQueryModel {
         this.tripQueryModel = new TripQueryModel();
         this.tripFriendQueryModel = new TripFriendQueryModel();
         this.placeQueryModel = new PlaceQueryModel();
+        this.placeImageQueryModel = new PlaceImageQueryModel();
     }
 
     // Get the votes for the matching location entry
@@ -29,12 +31,10 @@ class VoteQueryModel extends EntityQueryModel {
 
     getPlacesToVote({tripId, userId, placeId, limit = 100}) {
         let query = knex
-            .select(['place_id', 'name', 'city', 'image_link'])
+            .select(['place_id', 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number'])
             .from(this.placeQueryModel.tableName)
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
-            .where('place_id', '>', '301')
             .where({trip_id: tripId})
-            .whereNot({image_link: ''})
             .whereNotExists(knex
                 .from(this.tableName)
                 .innerJoin(this.tripFriendQueryModel.tableName, `${this.tripFriendQueryModel.tableName}.trip_friend_id`, '=', `${this.tableName}.trip_friend_id`)
@@ -89,7 +89,7 @@ class VoteQueryModel extends EntityQueryModel {
     }
 
     getVotingResults(tripId) {
-        let selectedColumns = [`${this.tableName}.place_id`, 'name', 'address', 'image_link', 'vote'];
+        let selectedColumns = [`${this.tableName}.place_id`, 'name', 'address', 'vote'];
 
         let queryingVotes = knex
             .select(knex.raw(`${selectedColumns.join()}, count(*) as count`))
