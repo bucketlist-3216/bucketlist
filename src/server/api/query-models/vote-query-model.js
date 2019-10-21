@@ -98,9 +98,26 @@ class VoteQueryModel extends EntityQueryModel {
             .innerJoin(this.placeQueryModel.tableName, `${this.placeQueryModel.tableName}.place_id`, '=', `${this.tableName}.place_id`)
             .where({trip_id: tripId})
             .groupBy(...selectedColumns);
-
+        
+        let that = this;
         return queryingVotes
+            .then(function(results) {
+                let place_ids = _.map(results, r => r.place_id);
+                let promises = _.map(place_ids, p => that.placeImageQueryModel.getPlaceImage(p));
+
+                return new Promise(function(resolve, reject) {
+                    Promise.all(promises)
+                        .then(function(images) {
+                            images = _.map(images, img => img.map(i => that.placeImageQueryModel.augmentUrlWithBucket(i.image_link)));
+                            _.each(images, (element, idx, list) => {
+                                results[idx].image = element[0];
+                            })
+                            resolve(results);
+                        })
+                })
+            })
             .then(function (results) {
+                console.log('The results we see are: ', results);
                 let votingResults = {};
 
                 results.forEach(function (row) {
