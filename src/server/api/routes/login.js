@@ -81,7 +81,7 @@ router.post('/guest', function (req, res) {
             userId = userId[0]
 
             // Get JWT token
-            let token =  jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '24h' });
+            let token =  jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '7d' });
 
             return {
                 token: token,
