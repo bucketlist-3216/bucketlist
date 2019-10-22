@@ -7,7 +7,6 @@ const {
     TripFriendQueryModel
 } = require('../query-models')
 
-const computeResource = new Compute();
 const userQueryModel = new UserQueryModel();
 const tripFriendQueryModel = new TripFriendQueryModel();
 
@@ -19,24 +18,22 @@ if (settings.validate) {
 
 /**************** User end points ****************/
 
-// Dont know what end points we need here. Leaving blank for now.
+router.post('/', addUserHandler);
+router.get('/:userId', getUserHandler);
+router.put('/:userId', updateUserHandler);
+router.delete('/:userId', deleteUserHandler);
 
-/***
- * Post user profile
- */
-router.post('/', function(req, res) {
+/*********** Implement Request Handlers **********/
+
+function addUserHandler(req, res) {
     const insertion = userQueryModel.addUser(req.body.user);
 
     insertion.then(function (insertionResponse) {
         res.end(JSON.stringify({"insertedId": insertionResponse}));
     });
-});
+}
 
-
-/***
- * Get user profile
- */
-router.get('/:userId', function(req, res) {
+function getUserHandler(req, res) {
     const userProfile = userQueryModel.getUser({user_id: req.params.userId});
 
     userProfile
@@ -47,20 +44,16 @@ router.get('/:userId', function(req, res) {
             res.status(500).end(`Could not get user because of the following error: ${err.message}`);
             console.log(err);
         });
-});
+}
 
-/***
- * Edit user profile
- */
-router.put('/profile', function(req, res) {
+// TODO: Implement this operation
+function updateUserHandler(req, res) {
     res.end();
-});
+}
 
-/***
- * Remove user
- */
-router.delete('/', function(req, res) {
+// TODO: Implement this operation
+function deleteUserHandler(req, res) {
     res.end();
-});
+}
 
 module.exports = router;

@@ -3,6 +3,8 @@ const validateRequest = require('../validate');
 const settings = require('../../config/settings.js');
 const { UserQueryModel } = require('../query-models');
 const userQueryModel = new UserQueryModel();
+const { TripFriendQueryModel } = require('../query-models');
+const tripFriendQueryModel = new TripFriendQueryModel();
 const verify = require('../auth/verify');
 const jwt = require('jsonwebtoken');
 const loginSecrets = require('../../../../config/login_secrets.json');
@@ -25,6 +27,8 @@ router.post('/', function (req, res) {
     const { email, username, token, platform } = userData;
     const gettingUser = userQueryModel.getUser({ email });
     const gettingPlatformId = verify({ token, platform });
+    const oldUserPlatform = req.headers.platform;
+    console.log("Old user Platform: ", oldUserPlatform);
 
     Promise.all([gettingUser, gettingPlatformId])
         .then(function (result) {
@@ -58,6 +62,23 @@ router.post('/', function (req, res) {
             return [userId];
         })
         .then(function (userId) {
+            if (oldUserPlatform==='jwt') {
+                let gettingVerifiedUserId = verify(req.headers);
+                gettingVerifiedUserId.then(function (oldUserId) {
+                    console.log("Updating user ID ", oldUserId, " to ", userId[0]);
+                    tripFriendQueryModel.changeTripFriendUserId(oldUserId, userId[0]).then(() =>
+                        userQueryModel.deleteUser(oldUserId).return().catch(
+                            (err) => {
+                                console.log("Unable to delete old user ID " + oldUserId);
+                                console.log(err);
+                        })
+                    );
+                })
+                .catch(function (err) {
+                    res.status(401).end(`Unable to authenticate old user token due to ${err.message}`);
+                    console.log(err);
+                });
+            }
             res.json({"insertedId": userId});
         })
         .catch(function (err) {

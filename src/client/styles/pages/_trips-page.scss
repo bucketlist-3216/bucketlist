@@ -37,6 +37,10 @@ html, body {
           left: 50%;
           transform: translate(-50%, 0);
       }
+
+      .sso-button {
+          width: fit-content;
+      }
   }
 
   .trips-container {
