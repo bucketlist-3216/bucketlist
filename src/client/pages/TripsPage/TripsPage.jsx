@@ -79,7 +79,15 @@ class TripsPage extends Component {
         return (
           <div className="trips-page">
             <div className="top-bar">
-              {localStorage.getItem('platform') !== 'jwt' && <LogoutButton routeChange={this.routeChange}/>}
+              {localStorage.getItem('platform') === 'jwt' ?
+                <SingleSignOnButton
+                  providerName={PROVIDERS['google'].providerName}
+                  logo={PROVIDERS['google'].logo}
+                  setLoading={(isLoading) => this.setState({ isLoading })}
+                  onLoginSuccess={() => TripAPI.getTrips(this)}
+                /> :
+                <LogoutButton routeChange={this.routeChange}/>
+              }
               <h1 className="title">Trips</h1>
             </div>
             <div className="trips-container">
