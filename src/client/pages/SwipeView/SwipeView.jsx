@@ -11,6 +11,16 @@ class SwipeView extends Component {
   }
 
   render() {
+    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
+    var ga_info = "SwipePage" + "_" + user_id + "_" + new Date().toLocaleString();
+
+    ReactGA.initialize('UA-148749594-1');
+    ReactGA.event({
+      category: 'User',
+      action: 'Viewed Swipe Page',
+      label: ga_info,
+    });
+
     return (
       <div className="swipe-view">
         <Swipe {...this.props}/>

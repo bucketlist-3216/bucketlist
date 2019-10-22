@@ -17,6 +17,8 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import Preloader from '../../components/Preloader';
 
+ReactGA.initialize('UA-148749594-1');
+
 @autoBindMethods
 class Login extends Component {
   constructor(props) {
@@ -66,13 +68,21 @@ class Login extends Component {
   }
 
   render() {
+    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
+    var ga_info = "LoginPage" + "_" + user_id + "_" + new Date().toLocaleString();
+
+    ReactGA.initialize('UA-148749594-1');
+    ReactGA.event({
+      category: 'User',
+      action: 'Viewed Login Page',
+      label: ga_info,
+    });
+
     if (localStorage.getItem('token')) {
       this.routeChange(PATHS.trips());
       return null;
     }
 
-    ReactGA.initialize('UA-148749594-1');
-    ReactGA.pageview(window.location.pathname + window.location.search);
     if (this.state.isLoading) {
         return (<Preloader />);
     }

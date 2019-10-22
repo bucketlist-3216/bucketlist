@@ -15,7 +15,6 @@ import Image from 'react-bootstrap/Image';
 import SingaporeImage from '../../../../assets/city/singapore.png';
 import NewYorkCityImage from '../../../../assets/city/new-york-city.png';
 
-
 const CITIES = {
   "cities": [
     {
@@ -81,11 +80,15 @@ class CitySelect extends Component {
   }
 
   render() {
+    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
+    var ga_info = "CitySelectPage" + "_" + user_id + "_" + new Date().toLocaleString();
+
     ReactGA.initialize('UA-148749594-1');
-    ReactGA.pageview(window.location.pathname + window.location.search);
-    // if (this.state.isLoading) {
-    //     return (<Preloader />);
-    // }
+    ReactGA.event({
+      category: 'User',
+      action: 'Viewed City Select Page',
+      label: ga_info,
+    });
 
     return (
       <div className="city-select">

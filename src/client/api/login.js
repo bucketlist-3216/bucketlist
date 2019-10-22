@@ -9,7 +9,7 @@ function login (instance, userData) {
     .then(function (response) {
       localStorage.setItem('token', userData.token);
       localStorage.setItem('platform', userData.platform);
-      localStorage.setItem('userId', response.data.userId)
+      localStorage.setItem('userId', response.data.userId);
 
       instance.routeChange(PATHS.trips());
     })

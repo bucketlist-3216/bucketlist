@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
 
 import axios from 'axios';
@@ -69,6 +70,16 @@ class PlaceList extends React.Component {
   }
 
   render() {
+    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
+    var ga_info = "PlaceListPage" + "_" + user_id + "_" + new Date().toLocaleString();
+
+    ReactGA.initialize('UA-148749594-1');
+    ReactGA.event({
+      category: 'User',
+      action: 'Viewed Place List Page',
+      label: ga_info,
+    });
+
     if (!this.state.isDoneFetching) {
       return <Preloader/>;
     }

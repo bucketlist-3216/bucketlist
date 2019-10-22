@@ -41,8 +41,16 @@ class TripsPage extends Component {
   }
 
   render() {
+    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
+    var ga_info = "TripsPage" + "_" + user_id + "_" + new Date().toLocaleString();
+
     ReactGA.initialize('UA-148749594-1');
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    ReactGA.event({
+      category: 'User',
+      action: 'Viewed Trips Page',
+      label: ga_info,
+    });
+
     if (this.state.isLoading) {
       return (<Preloader />);
     } else {

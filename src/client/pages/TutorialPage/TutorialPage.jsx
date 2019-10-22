@@ -4,7 +4,6 @@ import autoBindMethods from 'class-autobind-decorator'
 
 import Tutorial from "../../components/Tutorial";
 
-
 @autoBindMethods
 class TutorialPage extends Component {
   constructor(props) {
@@ -12,6 +11,16 @@ class TutorialPage extends Component {
   }
 
   render() {
+    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
+    var ga_info = "TutorialPage" + "_" + user_id + "_" + new Date().toLocaleString();
+
+    ReactGA.initialize('UA-148749594-1');
+    ReactGA.event({
+      category: 'User',
+      action: 'Viewed Tutorial Page',
+      label: ga_info,
+    });
+
     return (
       <div className="tutorial-page">
         <Tutorial history={this.props.history} />
