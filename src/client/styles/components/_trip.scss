@@ -1,50 +1,55 @@
-.trip {
+.trip.row {
     display: flex;
     flex-direction: row;
     background-color: #272727;
-    // border-bottom: 1px solid gray;
-    height: 23vh;
-    padding: auto auto auto auto;
+    width: 100%;
+    height: 33.4%;
+    margin: 0;
+    padding: 0 9%;
 
-    .row {
-        // width: 100vw;
-        height: 25vw;
+    .trip-element {
         display: inline-block;
-        max-height: 22vh;
-        // border: 2px solid green;
-        margin: 2vh auto;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
 
-        .trip-element {
-            display: inline-block;
-            margin-top: auto;
-            margin-bottom: auto;
-        }
+    .trip-img {
+        width: 22%;
+        margin-right: 5%;
 
-        .trip-img {
+        img {
             width: 22vw;
             height: 22vw;
-            margin-left: 0vw;
-            margin-right: 5vw;
+            margin-left: 0 !important;
             max-width: 18vh;
             max-height: 18vh;
-            margin-left: 0 !important;
-            border-radius: 10vw;
-        }
-
-        .trip-dest {
-            font-family: "CeraPro-Bold";
-            margin-left: 5vw;
-            margin-right: 5vw;
-            color: white;
-            font-size: 22px;
-        }
-
-        .right-icon {
-            color: white;
-            margin-left: 5vw;
-            margin-right: 5vw;
-            margin-right: 0;
+            border-radius: 50%;
         }
     }
 
+    .trip-dest {
+        padding-left: 5%;
+        width: 58.95%;
+        height: 100%;
+        border-bottom-width: 0.0862vh;
+        border-bottom-color: #4E4E4E;
+        border-bottom-style: solid;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+            font-family: "CeraPro-Bold";
+            color: white;
+            font-size: 2.71vh;
+        }
+    }
+
+    .right-icon {
+        color: white;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-right: 0;
+    }
 }
