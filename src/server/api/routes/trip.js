@@ -8,7 +8,8 @@ const {
     TripPlaceQueryModel,
     TripQueryModel,
     TripFriendQueryModel,
-    UserQueryModel
+    UserQueryModel,
+    PlaceImageQueryModel
 } = require('../query-models');
 
 // Trip API router
@@ -24,6 +25,7 @@ const tripFriendQueryModel = new TripFriendQueryModel();
 const voteQueryModel = new VoteQueryModel();
 const tripPlaceQueryModel = new TripPlaceQueryModel();
 const userQueryModel = new UserQueryModel();
+const placeImageQueryModel = new PlaceImageQueryModel();
 
 /**************** Trip APIs  ****************/
 router.get('/', getUserTripsHandler); // TODO: Move this to /user/trips
@@ -254,8 +256,7 @@ router.get('/vote/location/:locationId', function (req, res) {
 router.get('/:tripId/vote', function (req, res) {
     const params = Object.assign({}, req.params, req.query);
     params.userId = req.headers.verifiedUserId;
-    console.log(params.userId);
-    const places = voteQueryModel.getPlacesToVote(params);
+    let places = voteQueryModel.getPlacesToVote(params);
 
     places
         .then(function(queryResponse) {

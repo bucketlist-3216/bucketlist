@@ -62,24 +62,8 @@ router.post('/', function (req, res) {
             return [userId];
         })
         .then(function (userId) {
-            if (oldUserPlatform==='jwt') {
-                let gettingVerifiedUserId = verify(req.headers);
-                gettingVerifiedUserId.then(function (oldUserId) {
-                    console.log("Updating user ID ", oldUserId, " to ", userId[0]);
-                    tripFriendQueryModel.changeTripFriendUserId(oldUserId, userId[0]).then(() =>
-                        userQueryModel.deleteUser(oldUserId).return().catch(
-                            (err) => {
-                                console.log("Unable to delete old user ID " + oldUserId);
-                                console.log(err);
-                        })
-                    );
-                })
-                .catch(function (err) {
-                    res.status(401).end(`Unable to authenticate old user token due to ${err.message}`);
-                    console.log(err);
-                });
-            }
-            res.json({"insertedId": userId});
+            // res.setHeader('userId', userId);
+            res.json({"insertedId": userId, userId: userId});
         })
         .catch(function (err) {
             res.status(500).end('Unable to login due to', err);
@@ -101,11 +85,17 @@ router.post('/guest', function (req, res) {
             userId = userId[0]
 
             // Get JWT token
-            return jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '24h' });
+            let token =  jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '7d' });
+
+            return {
+                token: token,
+                userId: userId
+            };
         })
         .then(token => {
             // Send JWT token back to the user
-            res.json({ "success": true, "message": "Signed in as guest", "token": token});
+            // res.setHeader('userId', token.userId)
+            res.json({ "success": true, "message": "Signed in as guest", "token": token.token, userId: token.userId});
         })
         .catch(err => {
             console.log('Error caught: ', err);

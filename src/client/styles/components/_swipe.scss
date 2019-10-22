@@ -82,6 +82,38 @@
       justify-content: center;
       top: 0;
 
+      .previous-image {
+        width: 50%;
+        height: 66.34%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 0px;
+
+        .previous-image-button {
+          color: #272727;
+          margin-top: 33.66vh;
+          left: 10px;
+          position: absolute;
+        }
+      }
+
+      .next-image {
+        width: 50%;
+        height: 66.34%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: 0px;
+
+        .next-image-button {
+          color: #272727;
+          margin-top: 33.66vh;
+          right: 10px;
+          position: absolute;
+        }
+      }
+
       .info-container {
         position: absolute;
         bottom: 0;
@@ -136,6 +168,9 @@
             color: white;
             font-family: 'CeraPro-Medium';
             font-size: 1.6vh;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }

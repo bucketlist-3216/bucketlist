@@ -1,0 +1,12 @@
+.tutorial-page {
+  height: 100vh;
+  background-color: #272727;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  .tutorial-image {
+    height: 100vh;
+  }
+}

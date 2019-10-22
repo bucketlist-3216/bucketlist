@@ -13,8 +13,6 @@ import InfoPanel from './InfoPanel';
 import HomeButton from '../../buttons/HomeButton';
 import ListButton from '../../buttons/ListButton';
 
-import { SAMPLE_PLACES } from './sample_data';
-
 @autoBindMethods
 class Swipe extends Component {
   constructor(props) {
@@ -22,21 +20,27 @@ class Swipe extends Component {
 
     this.state = {
       city: 'Singapore',
-      places: SAMPLE_PLACES.attraction,
+      listBuffer: {
+        attractions: [],
+        food: []
+      },
+      places: [],
       placeData: {},
       swipeList: 1,
       hasNext: true,
-      isModalShown: false
+      showInfo: false,
+      imageIndex: 0,
+      initialScreenX: 0,
+      previousType: 1,
     };
   }
 
   componentDidMount() {
-    console.log("Swipe Component Mounted");
-  }
-
-  // Helper function for changing swipe list
-  listChange(value) {
-    this.setState({ swipeList: value });
+    const placeId = this.props.location.state
+      ? this.props.location.state.placeId
+      : null;
+    this.getPlacesToSwipe(placeId);
+    this.getCity(this.props.match.params.tripId);
   }
 
   // Helper function for redirecting
@@ -49,9 +53,30 @@ class Swipe extends Component {
   // Helper functions to communicate with backend
   getCity(tripId) {
     const instance = this;
+
+    axios
+    .request({
+      url: APIS.trip(tripId),
+      method: 'get',
+      headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      }
+    })
+    .then(function(response) {
+      instance.setState({ city: response.data.destination });
+    })
+    .catch(function (error) {
+      if (error.response.status === 401) {
+        instance.routeChange(PATHS.landingPage);
+        return;
+      }
+      alert(error.message);
+    });
   }
 
   getPlacesToSwipe(placeId) {
+    this.setState({ isLoading: true });
 
     const { tripId } = this.props.match.params;
     const instance = this;
@@ -70,7 +95,12 @@ class Swipe extends Component {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
-        instance.setState({ places: response.data });
+        instance.setState({ listBuffer: response.data });
+        if (instance.swipeList === 1) {
+          instance.setState({ places: response.data['attractions']});
+        } else {
+          instance.setState({ places: response.data['food']});
+        }
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
@@ -117,26 +147,41 @@ class Swipe extends Component {
 
   // Helper function to set state
 
-  showModal(placeId) {
-    this.setState({ isModalShown: true });
-  }
-
-  closeModal(event) {
-    this.setState({ isModalShown: false });
-  }
-
-  setIsOpen(showInfo) {
-    this.setState({ isModalShown: showInfo });
+  setShowInfo(showInfo) {
+    this.setState({ showInfo: showInfo });
   }
 
   setPlaceData(placeData) {
     this.setState({ placeData });
   }
 
+  setInitialScreenX(value) {
+    this.setState({ initialScreenX: value });
+  }
+
+  setSwipeList(value) {
+    this.setState({ imageIndex: 0 });
+    this.setState({ swipeList: value });
+  }
+
+  imageChange(screenX, value) {
+    const delta = Math.abs(screenX - this.state.initialScreenX);
+    if (delta < 10) {
+      var imgIdx = this.state.imageIndex;
+      if (value === "previous") {
+        imgIdx = Math.max(0, imgIdx - 1);
+      } else {
+        imgIdx = Math.min(this.state.places[0].images.length - 1, imgIdx + 1);
+      }
+      this.setState({ imageIndex: imgIdx });
+    }
+  }
+
   // Helper functions for swiping
 
   nextCard = () => {
     const { places } = this.state;
+    this.setState({ imageIndex: 0 });
     if (places.length > 0) {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
@@ -147,9 +192,8 @@ class Swipe extends Component {
   };
 
   renderSwiping() {
-    const { places, isModalShown } = this.state;
+    const { places, imageIndex, showInfo } = this.state;
     const currentPlace = places[0];
-
     return (
       <div className="swipe-container">
         <Swipeable
@@ -157,10 +201,11 @@ class Swipe extends Component {
           onSwipe={this.castVote(currentPlace)}
           onAfterSwipe={this.nextCard}
         >
-          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setIsOpen={this.setIsOpen} />
-          <InfoPanel place={currentPlace} isModalShown={isModalShown} setIsOpen={this.setIsOpen}/>
+          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo}
+            imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} />
+          <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
         </Swipeable>
-        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
+        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
       </div>
     );
   }
@@ -184,24 +229,26 @@ class Swipe extends Component {
 
   renderList(swipeList) {
     if (swipeList === 1) {
-      if (this.state.places[0].category === 'Attraction') {
-        SAMPLE_PLACES.attraction = this.state.places;
-        this.setState({ places : SAMPLE_PLACES.food });
+      if (swipeList !== this.state.previousType) {
+        this.state.listBuffer.attractions = this.state.places;
+        this.setState({ places : this.state.listBuffer.food });
+        this.setState({ previousType : swipeList });
       }
       return (
-        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.listChange}>
+        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
           <ToggleButton className="toggle-button-selected" name="food" value={1}>food</ToggleButton>
           <ToggleButton className="toggle-button-unselected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
       );
     }
     else {
-      if (this.state.places[0].category === 'Food') {
-        SAMPLE_PLACES.food = this.state.places;
-        this.setState({ places : SAMPLE_PLACES.attraction });
+      if (swipeList !== this.state.previousType) {
+        this.state.listBuffer.food = this.state.places;
+        this.setState({ places : this.state.listBuffer.attractions });
+        this.setState({ previousType : swipeList });
       }
       return (
-        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.listChange}>
+        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
           <ToggleButton className="toggle-button-unselected" name="food" value={1}>food</ToggleButton>
           <ToggleButton className="toggle-button-selected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
@@ -225,7 +272,7 @@ class Swipe extends Component {
             <HomeButton
               onClick={() => this.routeChange(PATHS.trips())}
             />
-            {places.length > 0 && (
+            {places.length > -1 && (
               <div>
                 {this.renderList(this.state.swipeList)}
               </div>

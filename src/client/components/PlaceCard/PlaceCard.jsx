@@ -6,16 +6,16 @@ class PlaceCard extends React.Component {
   }
 
   render() {
-    let { place_id, name, address, image_link, voteCount } = this.props.place;
+    let { place_id, name, address, image, voteCount } = this.props.place;
 
-    if (!image_link || image_link === '<Null>') {
-        image_link = '../../../../assets/places/default.jpg'
+    if (!image || image === '<Null>') {
+        image = '../../../../assets/places/default.jpg'
     }
 
     return (
       <div className="place-card" /*onClick={this.props.onClick.bind()}*/>
         <div className="place-img-container">
-          <img src={image_link} className="place-img"/>
+          <img src={image} className="place-img"/>
         </div>
         <div className="place-details">
           <div className="place-name">
