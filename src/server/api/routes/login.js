@@ -62,8 +62,24 @@ router.post('/', function (req, res) {
             return [userId];
         })
         .then(function (userId) {
-            // res.setHeader('userId', userId);
-            res.json({"insertedId": userId, userId: userId});
+            if (oldUserPlatform==='jwt') {
+                let gettingVerifiedUserId = verify(req.headers);
+                gettingVerifiedUserId.then(function (oldUserId) {
+                    console.log("Updating user ID ", oldUserId, " to ", userId[0]);
+                    tripFriendQueryModel.changeTripFriendUserId(oldUserId, userId[0]).then(() =>
+                        userQueryModel.deleteUser(oldUserId).return().catch(
+                            (err) => {
+                                console.log("Unable to delete old user ID " + oldUserId);
+                                console.log(err);
+                        })
+                    );
+                })
+                .catch(function (err) {
+                    res.status(401).end(`Unable to authenticate old user token due to ${err.message}`);
+                    console.log(err);
+                });
+            }
+            res.json({"insertedId": userId, "userId": userId});
         })
         .catch(function (err) {
             res.status(500).end('Unable to login due to', err);
