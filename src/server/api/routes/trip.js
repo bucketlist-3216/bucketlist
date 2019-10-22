@@ -28,9 +28,19 @@ const userQueryModel = new UserQueryModel();
 const placeImageQueryModel = new PlaceImageQueryModel();
 
 /**************** Trip APIs  ****************/
+router.get('/', getUserTripsHandler); // TODO: Move this to /user/trips
+
+router.get('/:tripId', getTripDetailsHandler);
+router.post('/', addTripHandler); 
+router.put('/:toUpdate', updateTripHandler);
+router.delete('/:toDelete', deleteTripHandler);
+
+router.get('/:tripId/members', getTripMembersHandler);
+router.post('/:tripId/members/', addTripMembersHandler);
+router.delete('/members/:tripFriend', deleteTripMemberHandler);
 
 // Get trip details
-router.get('/:tripId', function (req, res) {
+function getTripDetailsHandler(req, res) {
     return tripQueryModel.getTrip(req.params.tripId)
         .then(function(queryResponse) {
             res.json(queryResponse[0]);
@@ -39,10 +49,10 @@ router.get('/:tripId', function (req, res) {
             res.status(500).end('Unable to get trip details');
             console.log(err);
         });
-});
+}
 
 // Get user trips
-router.get('/', function (req, res) {
+function getUserTripsHandler(req, res) {
   const userId = req.headers.verifiedUserId;
   const trips = tripFriendQueryModel.getUserTrips(userId);
 
@@ -54,20 +64,10 @@ router.get('/', function (req, res) {
           res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
           console.log(err);
       });
-});
+}
 
 // Create a trip
-router.post('/', function (req, res) {
-    const sampleTrip = {
-        "destination": "Singapore",
-        "start_date": "2019-01-01",
-        "end_date": "2019-01-02",
-        "authorId": "",
-        "members": [
-            "email1@email.com",
-            "email2@email.com"
-        ]
-    };
+function addTripHandler(req, res) {
     const toInsert = req.body.trip;
     toInsert.authorId = req.headers.verifiedUserId;
     console.log(toInsert.authorId );
@@ -106,10 +106,10 @@ router.post('/', function (req, res) {
             res.status(500).end(`Could not create a trip due to ${err})`);
             console.log(err);
         });
-});
+}
 
 // Delete a trip
-router.delete('/:toDelete', function (req, res) {
+function deleteTripHandler(req, res) {
     // Generate mySQL query to delete entry
     const deletion = tripQueryModel.deleteTrip(req.params.trips);
 
@@ -125,16 +125,11 @@ router.delete('/:toDelete', function (req, res) {
             res.status(500).end(`Unable to delete trip because of the following error: ${err.message}`);
             console.log(err);
         });
-});
+}
 
 // Replace an existing entry
-router.put('/:toUpdate', function (req, res) {
+function updateTripHandler(req, res) {
     // Update on mySQL using knex
-    // sample object
-    const newTripObject = {
-        "field": "newValue"
-    };
-
     const updating = tripQueryModel.updateTrip(req.params.toUpdate, req.body.trip);
 
     // Construct response after updating
@@ -149,25 +144,22 @@ router.put('/:toUpdate', function (req, res) {
             res.status(500).end(`Unable to update trip due to ${err.message}`);
             console.log(err);
         });
-});
+}
 
 /**************** Trip Member APIs  ****************/
 
-// These are the people who are a part of this trip
-
-
 // Get the members of a given trip.
-router.get('/:tripId/members', function (req, res) {
+function getTripMembersHandler(req, res) {
     let getTripFriends = tripFriendQueryModel.getTripFriends(req.params.tripId);
 
     getTripFriends
         .then(function (queryResponse) {
             res.json({"tripFriends": queryResponse});
         })
-});
+}
 
 // Add a member to a trip (adding a member-trip association)
-router.post('/:tripId/members/', function (req, res) {
+function addTripMembersHandler(req, res) {
     const { tripId } = req.params;
     const { email } = req.body;
     const userNotFoundMessage = `Could not find user with email '${email}'`;
@@ -193,10 +185,10 @@ router.post('/:tripId/members/', function (req, res) {
                 console.log(err);
             }
         });
-});
+}
 
 // Remove a member from a trip
-router.delete('/members/:tripFriend', function (req, res) {
+function deleteTripMemberHandler(req, res) {
     const deleteMember = tripFriendQueryModel.deleteTripFriend(req.params.tripFriend);
 
     deleteMember
@@ -207,7 +199,7 @@ router.delete('/members/:tripFriend', function (req, res) {
             res.status(500).end('Could not delete user from trip');
             console.log (JSON.stringify(err));
         });
-});
+}
 
 /**************** Trip Voting APIs  ****************/
 

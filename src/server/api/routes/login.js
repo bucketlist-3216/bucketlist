@@ -3,6 +3,8 @@ const validateRequest = require('../validate');
 const settings = require('../../config/settings.js');
 const { UserQueryModel } = require('../query-models');
 const userQueryModel = new UserQueryModel();
+const { TripFriendQueryModel } = require('../query-models');
+const tripFriendQueryModel = new TripFriendQueryModel();
 const verify = require('../auth/verify');
 const jwt = require('jsonwebtoken');
 const loginSecrets = require('../../../../config/login_secrets.json');
@@ -25,6 +27,8 @@ router.post('/', function (req, res) {
     const { email, username, token, platform } = userData;
     const gettingUser = userQueryModel.getUser({ email });
     const gettingPlatformId = verify({ token, platform });
+    const oldUserPlatform = req.headers.platform;
+    console.log("Old user Platform: ", oldUserPlatform);
 
     Promise.all([gettingUser, gettingPlatformId])
         .then(function (result) {
