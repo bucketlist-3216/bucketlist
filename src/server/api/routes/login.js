@@ -58,8 +58,8 @@ router.post('/', function (req, res) {
             return [userId];
         })
         .then(function (userId) {
-            res.setHeader('userId', userId);
-            res.json({"insertedId": userId});
+            // res.setHeader('userId', userId);
+            res.json({"insertedId": userId, userId: userId});
         })
         .catch(function (err) {
             res.status(500).end('Unable to login due to', err);
@@ -90,8 +90,8 @@ router.post('/guest', function (req, res) {
         })
         .then(token => {
             // Send JWT token back to the user
-            res.setHeader('userId', token.userId)
-            res.json({ "success": true, "message": "Signed in as guest", "token": token.token});
+            // res.setHeader('userId', token.userId)
+            res.json({ "success": true, "message": "Signed in as guest", "token": token.token, userId: token.userId});
         })
         .catch(err => {
             console.log('Error caught: ', err);

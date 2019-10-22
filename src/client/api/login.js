@@ -9,6 +9,7 @@ function login (instance, userData) {
     .then(function (response) {
       localStorage.setItem('token', userData.token);
       localStorage.setItem('platform', userData.platform);
+      localStorage.setItem('userId', response.data.userId)
 
       instance.routeChange(PATHS.trips());
     })
@@ -23,6 +24,7 @@ function loginGuest (instance) {
     .then(function (response) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('platform', "jwt");
+      localStorage.setItem('userId', response.data.userId)
 
       instance.routeChange(PATHS.trips());
     })
