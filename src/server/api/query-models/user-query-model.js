@@ -45,6 +45,12 @@ class UserQueryModel extends EntityQueryModel {
             .where(filters)
             .update(data);
     }
+
+    deleteUser (userId) {
+        return knex(this.tableName)
+            .where({user_id: userId})
+            .del();
+    }
 }
 
 module.exports = UserQueryModel;
