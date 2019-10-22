@@ -58,6 +58,7 @@ router.post('/', function (req, res) {
             return [userId];
         })
         .then(function (userId) {
+            res.setHeader('userId', userId);
             res.json({"insertedId": userId});
         })
         .catch(function (err) {
@@ -80,11 +81,17 @@ router.post('/guest', function (req, res) {
             userId = userId[0]
 
             // Get JWT token
-            return jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '24h' });
+            let token =  jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '24h' });
+
+            return {
+                token: token,
+                userId: userId
+            };
         })
         .then(token => {
             // Send JWT token back to the user
-            res.json({ "success": true, "message": "Signed in as guest", "token": token});
+            res.setHeader('userId', token.userId)
+            res.json({ "success": true, "message": "Signed in as guest", "token": token.token});
         })
         .catch(err => {
             console.log('Error caught: ', err);
