@@ -2,6 +2,7 @@ const EntityQueryModel = require('./entity');
 const TripQueryModel = require('./trip-query-model');
 const TripFriendQueryModel = require('./trip-friend-query-model');
 const PlaceQueryModel = require('./place-query-model');
+const PlaceImageQueryModel = require('./place-image-query-model');
 const { knex } = require('../../database');
 const _ = require('underscore');
 
@@ -18,6 +19,7 @@ class VoteQueryModel extends EntityQueryModel {
         this.tripQueryModel = new TripQueryModel();
         this.tripFriendQueryModel = new TripFriendQueryModel();
         this.placeQueryModel = new PlaceQueryModel();
+        this.placeImageQueryModel = new PlaceImageQueryModel();
     }
 
     // Get the votes for the matching location entry
@@ -29,12 +31,10 @@ class VoteQueryModel extends EntityQueryModel {
 
     getPlacesToVote({tripId, userId, placeId, limit = 100}) {
         let query = knex
-            .select(['place_id', 'name', 'city', 'image_link'])
+            .select(['place_id', 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number', 'type'])
             .from(this.placeQueryModel.tableName)
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
-            .where('place_id', '>', '301')
             .where({trip_id: tripId})
-            .whereNot({image_link: ''})
             .whereNotExists(knex
                 .from(this.tableName)
                 .innerJoin(this.tripFriendQueryModel.tableName, `${this.tripFriendQueryModel.tableName}.trip_friend_id`, '=', `${this.tableName}.trip_friend_id`)
@@ -45,7 +45,38 @@ class VoteQueryModel extends EntityQueryModel {
         if (placeId || placeId == 0) {
           query = query.orWhere({place_id: placeId, trip_id: tripId}).orderByRaw(`(place_id = ${placeId}) DESC`);
         }
-        return query;
+
+        let that = this;
+        return query
+            .then(function(placesToVote) {
+                // Get the images for these places
+                let place_ids = _.map(placesToVote, p => p.place_id);
+                let promises = _.map(place_ids, p => that.placeImageQueryModel.getPlaceImage(p));
+
+                return new Promise(function(resolve, reject) {
+                    Promise.all(promises)
+                        .then(function(images) {
+                            images = _.map(images, img => img.map(i => that.placeImageQueryModel.augmentUrlWithBucket(i.image_link)));
+                            _.each(images, (element, idx, list) => {
+                                placesToVote[idx].images = element;
+                            })
+                            resolve(placesToVote);
+                        })
+                })
+            })
+            .then(function(unsortedPlacesToVote) {
+                console.log('Unsorted places are: ', unsortedPlacesToVote);
+                let food = []
+                let attractions = []
+
+                food = _.filter(unsortedPlacesToVote, e => e.type === 'Food')
+                attractions = _.filter(unsortedPlacesToVote, e => e.type === 'Attraction')
+
+                return {
+                    food: food,
+                    attractions: attractions
+                }
+            });
     }
 
     // Cast a vote for a location
@@ -89,7 +120,7 @@ class VoteQueryModel extends EntityQueryModel {
     }
 
     getVotingResults(tripId) {
-        let selectedColumns = [`${this.tableName}.place_id`, 'name', 'address', 'image_link', 'vote'];
+        let selectedColumns = [`${this.tableName}.place_id`, 'name', 'address', 'vote'];
 
         let queryingVotes = knex
             .select(knex.raw(`${selectedColumns.join()}, count(*) as count`))
@@ -98,9 +129,26 @@ class VoteQueryModel extends EntityQueryModel {
             .innerJoin(this.placeQueryModel.tableName, `${this.placeQueryModel.tableName}.place_id`, '=', `${this.tableName}.place_id`)
             .where({trip_id: tripId})
             .groupBy(...selectedColumns);
-
+        
+        let that = this;
         return queryingVotes
+            .then(function(results) {
+                let place_ids = _.map(results, r => r.place_id);
+                let promises = _.map(place_ids, p => that.placeImageQueryModel.getPlaceImage(p));
+
+                return new Promise(function(resolve, reject) {
+                    Promise.all(promises)
+                        .then(function(images) {
+                            images = _.map(images, img => img.map(i => that.placeImageQueryModel.augmentUrlWithBucket(i.image_link)));
+                            _.each(images, (element, idx, list) => {
+                                results[idx].image = element[0];
+                            })
+                            resolve(results);
+                        })
+                })
+            })
             .then(function (results) {
+                console.log('The results we see are: ', results);
                 let votingResults = {};
 
                 results.forEach(function (row) {

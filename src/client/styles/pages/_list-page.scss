@@ -11,14 +11,16 @@
   .top-bar {
     position: absolute;
     top: 0;
-    height: 15.09vh;
+    height: 9%;
     width: 100%;
     background: rgba(39,39,39,1);
     border-bottom-width: 0.0862vh;
     border-bottom-color: #4E4E4E;
     border-bottom-style: solid;
-    align-items: normal;
-    padding-top: 8.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 3.47vw;
 
     .title {
       text-align: center;
@@ -35,79 +37,26 @@
       left: 50%;
       transform: translate(-50%, 0);
     }
-
-    .home-button {
-      float: left;
-      margin-left: 3.47vw;
-      width: 3.94vh;
-      height: 3.94vh;
-      border-radius: 50%;
-      -moz-border-radius: 50%;
-      -webkit-border-radius: 50%;
-      background-color: rgba(255,255,255,0.3);
-      background-repeat: no-repeat;
-      border: none;
-      cursor: pointer;
-      overflow: hidden;
-      outline: none;
-      align-content: center;
-      align-items: center;
-      position: relative;
-
-      span {
-        text-align: center;
-        font-family: "IkonoMiniL-5";
-        font-style: normal;
-        font-weight: normal;
-        font-size: 1.54vh;
-        color: rgba(255,255,255,1);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-    }
-    //
-    // .place-list-top-bar-back-button > img {
-    //   border-radius: 50%;
-    //   max-height: 32px;
-    //   max-width: 32px;
-    // }
-    //
-    // .place-list-top-bar-export-btn {
-    //   float: right;
-    //   width: 48px;
-    //   height: 32px;
-    //   border-radius: 50%;
-    //   -moz-border-radius: 50%;
-    //   -webkit-border-radius: 50%;
-    // }
-    //
-    // .place-list-top-bar-export-btn > img {
-    //   border-radius: 50%;
-    //   max-height: 32px;
-    //   max-width: 36px;
-    // }
   }
 
   .place-container {
     position: absolute;
-    top: 15.09vh;
+    top: 9.1%;
     display: flex;
     flex-direction: column;
-    height: 74.27vh;
+    height: 80.36%;
     overflow-x: hidden;
     overflow-y: scroll;
-    width: 100vw;
-    max-width: 400px;
+    width: 100%;
+    max-width: 70vh;
   }
 
   .swipe-button-bottom {
     position: absolute;
     bottom: 0;
-    height: 10.64vh;
-    width: 100vw;
-    max-width: 400px;
+    height: 10.64%;
+    width: 100%;
+    max-width: 70vh;
 
     background-color: #686868;
     border: none;
@@ -121,6 +70,22 @@
     justify-content: center;
   }
 
+  .swipe-button-bottom:active {
+    background-color: #272727 !important;
+    border-color: #272727 !important;
+    color: #FFFFFF !important;
+  }
+
+  .swipe-button-bottom:hover {
+    background-color: rgba(255,255,255,1) !important;
+    border-color: rgba(255,255,255,1) !important;
+    color: #272727 !important;
+  }
+
+  .swipe-button-bottom:focus {
+    box-shadow: none !important;
+  }
+
   .place-container-empty {
     display: flex;
     flex-direction: column;
@@ -128,16 +93,15 @@
     align-items: center;
 
     span {
-      width: 243px;
-      white-space: nowrap;
+      white-space: pre-wrap;
       text-align: center;
       font-family: "CeraPro-Bold";
       font-style: normal;
-      font-size: 20px;
-      line-height: 25px;
+      font-size: 2.46vh;
+      line-height: 3.08vh;
       color: rgba(255,255,255,1);
 
-      margin-bottom: 44.6px;
+      margin-bottom: 5.49vh;
     }
 
     .swipe-button {
@@ -145,17 +109,17 @@
       border-color: rgba(112,112,112,1);
       border-width: 1px;
       border-style: solid;
-      border-radius: 27px;
+      border-radius: 3.325vh;
 
-      width: 258px;
-      height: 54px;
+      width: 31.77vh;
+      height: 6.65vh;
 
       white-space: nowrap;
       text-align: center;
       font-family: "CeraPro-Bold";
       font-style: normal;
       font-weight: normal;
-      font-size: 16px;
+      font-size: 1.97vh;
       color: rgba(39,39,39,1);
     }
 

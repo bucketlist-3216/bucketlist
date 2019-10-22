@@ -17,11 +17,7 @@ if (settings.validate) {
 router.get('/:placeId', function (req, res) {
     const queryingPlace = placeQueryModel.getPlaceData(req.params.placeId);
     queryingPlace
-        .then(function (results) {
-            const placeData = Object.assign({}, results[0]);
-            placeData.images = [placeData.image_link];
-            res.json(placeData);
-        })
+        .then(results => res.json(results))
         .catch(function (err) {
             res.status(500).end(`Unable to get place data`);
             console.log(err);

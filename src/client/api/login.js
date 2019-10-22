@@ -3,12 +3,18 @@ import axios from 'axios';
 import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
 
-function login (instance, userData) {
+function login (userData) {
   return axios
-    .post(APIS.login, { userData })
+    .post(APIS.login, { userData }, 
+      {headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      }
+    })
     .then(function (response) {
       localStorage.setItem('token', userData.token);
       localStorage.setItem('platform', userData.platform);
+      localStorage.setItem('userId', response.data.userId);
 
       instance.routeChange(PATHS.trips());
     })
@@ -23,6 +29,7 @@ function loginGuest (instance) {
     .then(function (response) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('platform', "jwt");
+      localStorage.setItem('userId', response.data.userId)
 
       instance.routeChange(PATHS.trips());
     })

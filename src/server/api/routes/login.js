@@ -3,6 +3,8 @@ const validateRequest = require('../validate');
 const settings = require('../../config/settings.js');
 const { UserQueryModel } = require('../query-models');
 const userQueryModel = new UserQueryModel();
+const { TripFriendQueryModel } = require('../query-models');
+const tripFriendQueryModel = new TripFriendQueryModel();
 const verify = require('../auth/verify');
 const jwt = require('jsonwebtoken');
 const loginSecrets = require('../../../../config/login_secrets.json');
@@ -25,6 +27,8 @@ router.post('/', function (req, res) {
     const { email, username, token, platform } = userData;
     const gettingUser = userQueryModel.getUser({ email });
     const gettingPlatformId = verify({ token, platform });
+    const oldUserPlatform = req.headers.platform;
+    console.log("Old user Platform: ", oldUserPlatform);
 
     Promise.all([gettingUser, gettingPlatformId])
         .then(function (result) {
@@ -58,7 +62,8 @@ router.post('/', function (req, res) {
             return [userId];
         })
         .then(function (userId) {
-            res.json({"insertedId": userId});
+            // res.setHeader('userId', userId);
+            res.json({"insertedId": userId, userId: userId});
         })
         .catch(function (err) {
             res.status(500).end('Unable to login due to', err);
@@ -80,11 +85,17 @@ router.post('/guest', function (req, res) {
             userId = userId[0]
 
             // Get JWT token
-            return jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '24h' });
+            let token =  jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '7d' });
+
+            return {
+                token: token,
+                userId: userId
+            };
         })
         .then(token => {
             // Send JWT token back to the user
-            res.json({ "success": true, "message": "Signed in as guest", "token": token});
+            // res.setHeader('userId', token.userId)
+            res.json({ "success": true, "message": "Signed in as guest", "token": token.token, userId: token.userId});
         })
         .catch(err => {
             console.log('Error caught: ', err);

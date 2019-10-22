@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SlidingPanel from 'react-sliding-panel';
 import Swipeable from 'react-swipy';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
@@ -10,11 +9,9 @@ import PATHS from '../../constants/paths';
 import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
-import PlaceInfo from '../PlaceInfo/';
-import BackButton from '../BackButton';
-
-
-import { SAMPLE_PLACES } from './sample_data';
+import InfoPanel from './InfoPanel';
+import HomeButton from '../../buttons/HomeButton';
+import ListButton from '../../buttons/ListButton';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -23,21 +20,27 @@ class Swipe extends Component {
 
     this.state = {
       city: 'Singapore',
-      places: SAMPLE_PLACES.attraction,
+      listBuffer: {
+        attractions: [],
+        food: []
+      },
+      places: [],
       placeData: {},
       swipeList: 1,
       hasNext: true,
-      isModalShown: false
+      showInfo: false,
+      imageIndex: 0,
+      initialScreenX: 0,
+      previousType: 1,
     };
   }
 
   componentDidMount() {
-    console.log("Swipe Component Mounted");
-  }
-
-  // Helper function for changing swipe list
-  listChange(value) {
-    this.setState({ swipeList: value });
+    const placeId = this.props.location.state
+      ? this.props.location.state.placeId
+      : null;
+    this.getPlacesToSwipe(placeId);
+    this.getCity(this.props.match.params.tripId);
   }
 
   // Helper function for redirecting
@@ -50,9 +53,30 @@ class Swipe extends Component {
   // Helper functions to communicate with backend
   getCity(tripId) {
     const instance = this;
+
+    axios
+    .request({
+      url: APIS.trip(tripId),
+      method: 'get',
+      headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      }
+    })
+    .then(function(response) {
+      instance.setState({ city: response.data.destination });
+    })
+    .catch(function (error) {
+      if (error.response.status === 401) {
+        instance.routeChange(PATHS.landingPage);
+        return;
+      }
+      alert(error.message);
+    });
   }
 
   getPlacesToSwipe(placeId) {
+    this.setState({ isLoading: true });
 
     const { tripId } = this.props.match.params;
     const instance = this;
@@ -71,7 +95,12 @@ class Swipe extends Component {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
-        instance.setState({ places: response.data });
+        instance.setState({ listBuffer: response.data });
+        if (instance.swipeList === 1) {
+          instance.setState({ places: response.data['attractions']});
+        } else {
+          instance.setState({ places: response.data['food']});
+        }
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
@@ -118,26 +147,41 @@ class Swipe extends Component {
 
   // Helper function to set state
 
-  showModal(placeId) {
-    this.setState({ isModalShown: true });
-  }
-
-  closeModal(event) {
-    this.setState({ isModalShown: false });
-  }
-
-  setIsOpen(showInfo) {
-    this.setState({ isModalShown: showInfo });
+  setShowInfo(showInfo) {
+    this.setState({ showInfo: showInfo });
   }
 
   setPlaceData(placeData) {
     this.setState({ placeData });
   }
 
+  setInitialScreenX(value) {
+    this.setState({ initialScreenX: value });
+  }
+
+  setSwipeList(value) {
+    this.setState({ imageIndex: 0 });
+    this.setState({ swipeList: value });
+  }
+
+  imageChange(screenX, value) {
+    const delta = Math.abs(screenX - this.state.initialScreenX);
+    if (delta < 10) {
+      var imgIdx = this.state.imageIndex;
+      if (value === "previous") {
+        imgIdx = Math.max(0, imgIdx - 1);
+      } else {
+        imgIdx = Math.min(this.state.places[0].images.length - 1, imgIdx + 1);
+      }
+      this.setState({ imageIndex: imgIdx });
+    }
+  }
+
   // Helper functions for swiping
 
   nextCard = () => {
     const { places } = this.state;
+    this.setState({ imageIndex: 0 });
     if (places.length > 0) {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
@@ -148,9 +192,8 @@ class Swipe extends Component {
   };
 
   renderSwiping() {
-    const { places } = this.state;
+    const { places, imageIndex, showInfo } = this.state;
     const currentPlace = places[0];
-
     return (
       <div className="swipe-container">
         <Swipeable
@@ -158,10 +201,11 @@ class Swipe extends Component {
           onSwipe={this.castVote(currentPlace)}
           onAfterSwipe={this.nextCard}
         >
-          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setIsOpen={this.setIsOpen} />
-          {this.renderModal()}
+          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo}
+            imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} />
+          <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
         </Swipeable>
-        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} />}
+        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
       </div>
     );
   }
@@ -185,26 +229,28 @@ class Swipe extends Component {
 
   renderList(swipeList) {
     if (swipeList === 1) {
-      if (this.state.places[0].category === 'Attraction') {
-        SAMPLE_PLACES.attraction = this.state.places;
-        this.setState({ places : SAMPLE_PLACES.food });
+      if (swipeList !== this.state.previousType) {
+        this.state.listBuffer.attractions = this.state.places;
+        this.setState({ places : this.state.listBuffer.food });
+        this.setState({ previousType : swipeList });
       }
       return (
-        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
-          <ToggleButton className="list-button-selected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="list-button-unselected" name="places" value={2}>places</ToggleButton>
+        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
+          <ToggleButton className="toggle-button-selected" name="food" value={1}>food</ToggleButton>
+          <ToggleButton className="toggle-button-unselected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
       );
     }
     else {
-      if (this.state.places[0].category === 'Food') {
-        SAMPLE_PLACES.food = this.state.places;
-        this.setState({ places : SAMPLE_PLACES.attraction });
+      if (swipeList !== this.state.previousType) {
+        this.state.listBuffer.food = this.state.places;
+        this.setState({ places : this.state.listBuffer.attractions });
+        this.setState({ previousType : swipeList });
       }
       return (
-        <ToggleButtonGroup className="list-buttons" name="list-button" value={swipeList} onChange={this.listChange}>
-          <ToggleButton className="list-button-unselected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="list-button-selected" name="places" value={2}>places</ToggleButton>
+        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
+          <ToggleButton className="toggle-button-unselected" name="food" value={1}>food</ToggleButton>
+          <ToggleButton className="toggle-button-selected" name="places" value={2}>places</ToggleButton>
         </ToggleButtonGroup>
       );
     };
@@ -216,65 +262,27 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        <div className="swipe-header-primary">
-          <div className="city">
-            {city}
-          </div>
-        </div>
-        <div className="swipe-header-secondary">
-          <BackButton
-            onClick={() => this.routeChange(PATHS.trips())}
-            // onClick={() => this.routeChange(PATHS.trips(userId))}
-          />
-          {places.length > 0 && (
-            <div>
-              {this.renderList(this.state.swipeList)}
+        <div className="swipe-header">
+          <div className="swipe-header-primary">
+            <div className="city">
+              {city}
             </div>
-          )}
-          <img
-            className="icon-list"
-            src="/assets/common/icon-list.png"
-            onClick={() => this.routeChange(PATHS.list(tripId))}
-            // onClick={() => this.routeChange(PATHS.list(userId, tripId))}
-          />
+          </div>
+          <div className="swipe-header-secondary">
+            <HomeButton
+              onClick={() => this.routeChange(PATHS.trips())}
+            />
+            {places.length > -1 && (
+              <div>
+                {this.renderList(this.state.swipeList)}
+              </div>
+            )}
+            <ListButton
+              onClick={() => this.routeChange(PATHS.list(tripId))}
+            />
+          </div>
         </div>
         {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
-      </div>
-    );
-  }
-
-  renderModal() {
-    const { isModalShown, places } = this.state;
-    const isMobile = window.innerWidth < 555;
-    const place = places[0];
-
-    return (
-      <div className="info-panel">
-        <SlidingPanel
-          type={"bottom"}
-          isOpen={isModalShown}
-          closeFunc={() => this.setIsOpen(false)}
-        >
-          <div className="info-content">
-            <div className="card-info-content">
-              <button className="info-button-close" onClick={() => this.setIsOpen(false)}>tap here to close</button>
-            </div>
-            <div  className="info-title">
-              { place.name + ", " + place.price }
-            </div>
-            <div  className="info-intro">
-              { place.desc }
-            </div>
-            <div className="info-address">
-              <div>{ "Location: " + place.location }</div>
-              <div>{ "Opening Hours: " + place.hours }</div>
-              <div>{ "Phone: " + place.number }</div>
-            </div>
-            <div  className="info-reviews">
-              {"Reviews:"}
-            </div>
-          </div>
-        </SlidingPanel>
       </div>
     );
   }
