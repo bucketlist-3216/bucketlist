@@ -4,35 +4,46 @@
 
     .city-image {
         position: relative;
+        max-width: 100vw;
+        max-height: 100vw;
         width: 29.56vh;
         height: 29.56vh;
         margin: 0 auto 3.2vh auto;
 
-        img {
-    		    width: 29.56vh;
-    		    height: 29.56vh;
-            margin-bottom: 3.2vh;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
         span {
-    		    width: 29.56vh;
-    		    height: 29.56vh;
-            border-radius: 50%;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
 
-            background-color: rgba(0, 0, 0, 0.5);
             color: #FFFFFF;
             font-family: 'CeraPro-Bold';
             font-size: 3vh;
-            line-height: 29.56vh;
             text-align: center;
+            z-index: 2;
+        }
+
+        .glass {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+    		    width: 100%;
+    		    height: 100%;
+            border-radius: 50%;
+
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        img {
+    		    width: 100%;
+    		    height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
 

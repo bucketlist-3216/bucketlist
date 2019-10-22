@@ -10,8 +10,9 @@ const CityCard = props => {
   return (
     <div className="city-card">
         <div className="city-image">
+          {disabled && <span>coming soon</span>}
+          {disabled && <div className="glass"></div>}
           <img src={imageUrl}/>
-          {disabled && <span>Coming Soon</span>}
         </div>
         <br/>
         <span className="city-name">{name}</span>
