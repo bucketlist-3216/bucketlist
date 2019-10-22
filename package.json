@@ -65,7 +65,7 @@
     "helmet": "^3.21.1",
     "heroku-ssl-redirect": "0.0.4",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.19.4",
+    "knex": "^0.19.5",
     "lodash": "^4.17.15",
     "mysql": "^2.17.1",
     "nodemon": "^1.19.2",
