@@ -27,8 +27,8 @@ router.post('/', function (req, res) {
     const { email, username, token, platform } = userData;
     const gettingUser = userQueryModel.getUser({ email });
     const gettingPlatformId = verify({ token, platform });
-    const oldUserToken = req.headers.token;
-    console.log("Old user Token: ", oldUserToken);
+    const oldUserPlatform = req.headers.platform;
+    console.log("Old user Platform: ", oldUserPlatform);
 
     Promise.all([gettingUser, gettingPlatformId])
         .then(function (result) {
@@ -62,7 +62,7 @@ router.post('/', function (req, res) {
             return [userId];
         })
         .then(function (userId) {
-            if (oldUserToken) {
+            if (oldUserPlatform==='jwt') {
                 let gettingVerifiedUserId = verify(req.headers);
                 gettingVerifiedUserId.then(function (oldUserId) {
                     console.log("Updating user ID ", oldUserId, " to ", userId[0]);
