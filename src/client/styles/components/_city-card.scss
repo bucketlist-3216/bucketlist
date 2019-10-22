@@ -3,9 +3,37 @@
     margin: 3.29vh 0;
 
     .city-image {
-    		width: 29.56vh;
-    		height: 29.56vh;
-        margin-bottom: 3.2vh;
+        position: relative;
+        width: 29.56vh;
+        height: 29.56vh;
+        margin: 0 auto 3.2vh auto;
+
+        img {
+    		    width: 29.56vh;
+    		    height: 29.56vh;
+            margin-bottom: 3.2vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        span {
+    		    width: 29.56vh;
+    		    height: 29.56vh;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #FFFFFF;
+            font-family: 'CeraPro-Regular';
+            font-size: 3vh;
+            line-height: 29.56vh;
+            text-align: center;
+        }
     }
 
     .city-name {

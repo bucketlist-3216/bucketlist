@@ -5,11 +5,14 @@ import PATHS from '../../constants/paths';
 
 const CityCard = props => {
   const { city } = props;
-  let { name, imageUrl } = city;
+  let { name, imageUrl, disabled } = city;
 
   return (
     <div className="city-card">
-        <img className="city-image" src={imageUrl}/>
+        <div className="city-image">
+          <img src={imageUrl}/>
+          {disabled && <span>Coming Soon</span>}
+        </div>
         <br/>
         <span className="city-name">{name}</span>
     </div>
