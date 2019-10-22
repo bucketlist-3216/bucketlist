@@ -46,24 +46,9 @@ function getUserHandler(req, res) {
         });
 }
 
-// Replaces the given user ID with the user ID in the token
-// The give ID should be the guest ID, while the token ID should be the logged in ID
+// TODO: Implement this operation
 function updateUserHandler(req, res) {
-    const guestId = req.params.userId;
-    const newId = req.headers.verifiedUserId;
-    tripFriendQueryModel.changeTripFriendUserId(guestId, newId)
-        .then(() => {
-            userQueryModel.deleteUser(guestId)
-                .return(res.end())
-                .catch((err) => {
-                    res.status(500).end("Could not delete guest ID: ", guestId);
-                    console.log(err);
-                });
-        })
-        .catch(function (err) {
-            res.status(500).end("Could not update user ID ", guestId);
-            console.log(err);
-        });
+    res.end();
 }
 
 // TODO: Implement this operation
