@@ -63,7 +63,7 @@ class Login extends Component {
             providerName={PROVIDERS['google'].providerName}
             logo={PROVIDERS['google'].logo}
             setLoading={this.setLoading}
-            onLoginSuccess={() => routeChange(PATHS.trips())}
+            onLoginSuccess={() => this.routeChange(PATHS.trips())}
           />
         </div>
       	<div className="or">
