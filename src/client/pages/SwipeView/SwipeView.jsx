@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator'
+import PATHS from '../../constants/paths';
 
 import Swipe from "../../components/Swipe";
 
@@ -10,7 +11,18 @@ class SwipeView extends Component {
     super(props);
   }
 
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname
+    });
+  }
+
   render() {
+    if (localStorage.getItem('tutorial')) {
+      localStorage.removeItem('tutorial');
+      this.routeChange(PATHS.tutorial);
+    }
+
     var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
     var ga_info = "SwipePage" + "_" + user_id + "_" + new Date().toLocaleString();
 
