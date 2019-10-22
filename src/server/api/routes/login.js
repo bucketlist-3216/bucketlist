@@ -80,7 +80,7 @@ router.post('/guest', function (req, res) {
             userId = userId[0]
 
             // Get JWT token
-            return jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '24h' });
+            return jwt.sign({ "userId": userId }, loginSecrets.jwtSecret, { expiresIn: '7d' });
         })
         .then(token => {
             // Send JWT token back to the user
