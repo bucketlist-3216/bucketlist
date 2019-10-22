@@ -46,18 +46,6 @@ class Login extends Component {
       label: ga_info,
     });
 
-<<<<<<< HEAD
-  render() {
-    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
-    var ga_info = "LoginPage" + "_" + user_id + "_" + new Date().toLocaleString();
-
-    ReactGA.initialize('UA-148749594-1');
-    ReactGA.event({
-      category: 'User',
-      action: 'Viewed Login Page',
-      label: ga_info,
-    });
-
     if (localStorage.getItem('token')) {
       this.routeChange(PATHS.trips());
       return null;
