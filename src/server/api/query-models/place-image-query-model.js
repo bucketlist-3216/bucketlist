@@ -12,7 +12,7 @@ class PlaceImageQueryModel extends EntityQueryModel {
         this.nonInsertableProps = ['place_image_id'];
         this.tableName = 'Place_Image';
         this.bucketUrl = 'https://storage.googleapis.com/place-image-bucket/';
-        this.s3Url = 'https://place-image.s3-ap-southeast-1.amazonaws.com/';
+        this.s3Url = 'https://place-image.s3-ap-southeast-1.amazonaws.com/progressive/';
 
         this.userMutable = false;
     }
