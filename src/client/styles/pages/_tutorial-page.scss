@@ -1,13 +1,28 @@
 .tutorial-page {
-  height: 85vh;
-  height: calc(var(--vh, 1vh) * 100);
+  position: fixed;
+  height: 100%;
+  width: 100%;
   background-color: #272727;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 
+  //height: 85vh;
+  //height: calc(var(--vh, 1vh) * 100);
+  //background-color: #272727;
+  //display: flex;
+  //justify-content: center;
+  //flex-direction: column;
+  //align-items: center;
+
   .tutorial-image {
-    height: 85vh;
+    height: 100%;
+  	width: 320px;
+
+  	// if screen width < 555px, apply this
+  	@media screen and (max-width: 555px) {
+    	width: 100%;
+  	}
   }
 }
