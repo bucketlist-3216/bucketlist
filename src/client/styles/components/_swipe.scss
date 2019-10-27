@@ -9,15 +9,24 @@
 
   .swipe-header {
     width: 100%;
-    height: 10%;
+    height: 10vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-bottom: 10px;
+    flex-direction: row;
+    justify-content: space-between;
 
-    .swipe-header-primary {
-      width: 100%;
+    .swipe-header-sides {
+      height: 10vh;
+      width: 10vh;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swipe-header-middle {
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       margin-bottom: 2.4%;
 
@@ -28,14 +37,8 @@
         line-height: 3.08vh;
         text-align: center;
         color: #FFFFFF;
+        padding-bottom: 5px;
       }
-    }
-
-    .swipe-header-secondary {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 3.47%;
 
       .swipe-header-toggle {
 
@@ -212,16 +215,6 @@
         height: 100%;
         width: 100%;
       }
-    }
-
-    .swipe-buttons {
-      width: 100%;
-      position: absolute;
-      bottom: 2.83%;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 5.6%;
     }
   }
 }

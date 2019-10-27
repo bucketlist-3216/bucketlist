@@ -272,20 +272,24 @@ class Swipe extends Component {
     return (
       <div className="swipe">
         <div className="swipe-header">
-          <div className="swipe-header-primary">
-            <div className="city">
-              {city}
-            </div>
-          </div>
-          <div className="swipe-header-secondary">
+          <div className="swipe-header-sides">
             <HomeButton
               onClick={() => this.routeChange(PATHS.trips())}
             />
-            {places.length > -1 && (
-              <div className="swipe-header-toggle">
-                {this.renderList(this.state.swipeList)}
+          </div>
+          <div>
+            <div className="swipe-header-middle">
+              <div className="city">
+                {city}
               </div>
-            )}
+              {places.length > -1 && (
+                <div className="swipe-header-toggle">
+                  {this.renderList(this.state.swipeList)}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="swipe-header-sides">
             <ListButton
               onClick={() => this.routeChange(PATHS.list(tripId))}
             />
