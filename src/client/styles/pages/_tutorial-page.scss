@@ -1,7 +1,7 @@
 .tutorial-page {
   position: fixed;
   height: 100%;
-  width: 100%;
+  width: auto;
   background-color: #272727;
   display: flex;
   justify-content: center;
@@ -19,10 +19,5 @@
   .tutorial-image {
     height: 100%;
   	width: 320px;
-
-  	// if screen width < 555px, apply this
-  	@media screen and (max-width: 555px) {
-    	width: 100%;
-  	}
   }
 }
