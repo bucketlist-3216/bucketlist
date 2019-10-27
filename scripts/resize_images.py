@@ -2,7 +2,7 @@ import os
 import subprocess
 from shutil import copyfile
 
-# Ensure that jpegoptim command line utility is installed on your device
+# Ensure that jpegoptim and optipng command line utilities are installed on your device.
 
 source = os.path.join('/Users/cksash/Downloads/data', 'monday_photos')
 dest = os.path.join('/Users/cksash/Downloads/data', 'output')
