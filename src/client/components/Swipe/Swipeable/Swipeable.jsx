@@ -19,8 +19,8 @@ const SWIPE_CONFIG = {
 };
 
 const DEFAULT_PROPS = {
-  limit: 60,
-  min: 1000,
+  limit: 80,
+  min: 70,
 };
 
 const INITIAL_STATE = {
@@ -112,6 +112,7 @@ export default class Swipeable extends PureComponent {
       moving: false,
       offsetX: getLimitOffset(limit, direction),
     });
+
   };
 
   onAfterSwipe = () => {
@@ -139,11 +140,11 @@ export default class Swipeable extends PureComponent {
     const {offsetX, offsetY, swiped, pristine, forced} = this.state;
     const {children, limit, buttons, min, renderResult, setRenderResult} = this.props;
 
-    if (offsetX >= 60 && renderResult !== 'like') {
+    if (offsetX >= limit && renderResult !== 'like') {
       setRenderResult('like');
-    } else if (offsetX <= -60 && renderResult !== 'dislike') {
+    } else if (offsetX <= -limit && renderResult !== 'dislike') {
       setRenderResult('dislike');
-    } else if (offsetX < 60 && offsetX > -60 && renderResult !== '') {
+    } else if (offsetX < limit && offsetX > -limit && renderResult !== '') {
       setRenderResult('');
     }
 
@@ -153,7 +154,7 @@ export default class Swipeable extends PureComponent {
           from={{offsetX: 0, offsetY: 0, opacity: 1}}
           to={{
             offsetX, offsetY,
-            opacity: getOpacity(offsetX, limit, min),
+            opacity: !forced ? 1 : getOpacity(offsetX, limit, min),
           }}
           onRest={() => swiped && this.onAfterSwipe()}
           immediate={pristine || (!forced && Math.abs(offsetX) >= limit)}

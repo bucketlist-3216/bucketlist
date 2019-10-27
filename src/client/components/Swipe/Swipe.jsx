@@ -206,7 +206,7 @@ class Swipe extends Component {
       <div className="swipe-container">
         <Swipeable
           buttons={this.renderButtons}
-          onSwipeLeft={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
+          onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
           renderResult={renderResult} setRenderResult={this.setRenderResult}
         >
           <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo} 
