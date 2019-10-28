@@ -48,7 +48,8 @@ class TripFriendQueryModel extends EntityQueryModel {
         return knex(this.tableName)
             .insert({
                 user_id,
-                trip_id
+                trip_id,
+                is_admin: 0
             });
     }
 
