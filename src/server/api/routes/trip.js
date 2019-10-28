@@ -69,22 +69,23 @@ function getUserTripsHandler(req, res) {
 // Create a trip
 function addTripHandler(req, res) {
     const toInsert = req.body.trip;
-    toInsert.authorId = req.headers.verifiedUserId;
-    console.log(toInsert.authorId );
+    toInsert.created_by = req.headers.verifiedUserId;
+    // console.log(toInsert.created_by);
 
     // Insert trip into mySQL using knex
     const tripInsertion = tripQueryModel.addTrip(toInsert);
 
     return tripInsertion
-        .then(function (returnedObject) {
-            // console.log('Trip insertion complete: ', returnedObject);
+        .then(function (insertedTrips) {
+            // console.log('Trip insertion complete: ', insertedTrips);
+            // console.log(toInsert.members);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId({ email: emailId });
 
                 return getUserId.then(function (userId) {
                     return tripFriendQueryModel.addTripFriend({
-                        "trip_id": returnedObject[0],
+                        "trip_id": insertedTrips[0],
                         "user_id": userId[0]['user_id']
                     });
                 });
@@ -92,11 +93,11 @@ function addTripHandler(req, res) {
             });
 
             tripMembershipUpdates.push(tripFriendQueryModel.addTripFriend({
-                "trip_id": returnedObject[0],
-                "user_id": toInsert.authorId
+                "trip_id": insertedTrips[0],
+                "user_id": toInsert.created_by
             }));
 
-            return Promise.all([returnedObject].concat(tripMembershipUpdates));
+            return Promise.all([insertedTrips].concat(tripMembershipUpdates));
         })
         .then(function (result) {
             // console.log('promise.all is complete with result: ', result);
@@ -111,11 +112,14 @@ function addTripHandler(req, res) {
 // Delete a trip
 function deleteTripHandler(req, res) {
     // Generate mySQL query to delete entry
-    const deletion = tripQueryModel.deleteTrip(req.params.trips);
+    const userID = req.verifiedUserId;
+    const deletion = tripQueryModel.deleteTrip(userId, req.params.trip);
 
     // Construct response after deletion
     deletion
         .then(function (returnObject) {
+            console.log(returnObject);
+
             res.json({
                 "deletedId": req.params.toDelete,
                 "response": returnObject
