@@ -47,8 +47,7 @@ class Login extends Component {
     });
 
     if (localStorage.getItem('token')) {
-      if ("returnPrevious" in this.props) this.props.history.goBack();
-      else this.routeChange(PATHS.trips());
+      this.routeChange(PATHS.trips());
       return null;
     }
 
