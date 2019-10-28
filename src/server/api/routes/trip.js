@@ -90,25 +90,26 @@ function getUserTripsHandler(req, res) {
 
 // Create a trip
 function addTripHandler(req, res) {
-    let toInsert = req.body.trip;
-    toInsert.authorId = req.headers.verifiedUserId;
-    console.log(toInsert.authorId);
+    const toInsert = req.body.trip;
+    toInsert.created_by = req.headers.verifiedUserId;
+    // console.log(toInsert.created_by);
 
     // Insert trip into mySQL using knex
     const tripInsertion = tripQueryModel.addTrip(toInsert);
 
     return tripInsertion
-        .then(function (returnedObject) {
-            // console.log('Trip insertion complete: ', returnedObject);
+        .then(function (insertedTrips) {
+            // console.log('Trip insertion complete: ', insertedTrips);
+            // console.log(toInsert.members);
 
-            insertTripLink(returnedObject[0]);
+            insertTripLink(insertedTrips[0]);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId({ email: emailId });
 
                 return getUserId.then(function (userId) {
                     return tripFriendQueryModel.addTripFriend({
-                        "trip_id": returnedObject[0],
+                        "trip_id": insertedTrips[0],
                         "user_id": userId[0]['user_id']
                     });
                 });
@@ -116,11 +117,11 @@ function addTripHandler(req, res) {
             });
 
             tripMembershipUpdates.push(tripFriendQueryModel.addTripFriend({
-                "trip_id": returnedObject[0],
-                "user_id": toInsert.authorId
+                "trip_id": insertedTrips[0],
+                "user_id": toInsert.created_by
             }));
 
-            return Promise.all([returnedObject].concat(tripMembershipUpdates));
+            return Promise.all([insertedTrips].concat(tripMembershipUpdates));
         })
         .then(function (result) {
             // console.log('promise.all is complete with result: ', result);
@@ -135,15 +136,24 @@ function addTripHandler(req, res) {
 // Delete a trip
 function deleteTripHandler(req, res) {
     // Generate mySQL query to delete entry
-    const deletion = tripQueryModel.deleteTrip(req.params.trips);
+    const userId = req.headers.verifiedUserId;
+    const deletion = tripQueryModel.deleteTrip(userId, req.params.toDelete);
 
+    console.log('Prameters to delete: ', userId, req.params.toDelete);
     // Construct response after deletion
     deletion
         .then(function (returnObject) {
-            res.json({
-                "deletedId": req.params.toDelete,
-                "response": returnObject
-            });
+            console.log(returnObject);
+
+            if (returnObject === 0) {
+                res.status(500).end('Not authorized to delete this trip');
+                return;
+            } else {
+                res.json({
+                    "tripToDelete": req.params.toDelete,
+                    "tripsDeleted": returnObject
+                });
+            }
         })
         .catch(function (err) {
             res.status(500).end(`Unable to delete trip because of the following error: ${err.message}`);

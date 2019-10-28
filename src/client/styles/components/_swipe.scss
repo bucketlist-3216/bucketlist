@@ -9,14 +9,24 @@
 
   .swipe-header {
     width: 100%;
-    height: 10%;
+    height: 10vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
 
-    .swipe-header-primary {
-      width: 100%;
+    .swipe-header-sides {
+      height: 10vh;
+      width: 10vh;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swipe-header-middle {
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       margin-bottom: 2.4%;
 
@@ -27,36 +37,33 @@
         line-height: 3.08vh;
         text-align: center;
         color: #FFFFFF;
+        padding-bottom: 5px;
       }
-    }
 
-    .swipe-header-secondary {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 3.47%;
+      .swipe-header-toggle {
 
-      .toggle-buttons {
-        background-color: #3B3B3B;
-        border-radius: 3.08vh;
-        font-family: 'CeraPro-Bold';
-
-        .toggle-button-unselected {
-          width: 70px;
-          background-color:#3B3B3B;
-          font-size: 1.85vh;
+        .toggle-buttons {
+          background-color: #3B3B3B;
           border-radius: 3.08vh;
-          border: none;
-          opacity: 0.5;
-        }
+          font-family: 'CeraPro-Bold';
 
-        .toggle-button-selected {
-          width: 80px;
-          background-color: #4D4D4D;
-          color: #FFFFFF;
-          font-size: 1.85vh;
-          border-radius: 3.08vh;
-          border: none;
+          .toggle-button-unselected {
+            width: 70px;
+            background-color:#3B3B3B;
+            font-size: 1.85vh;
+            border-radius: 3.08vh;
+            border: none;
+            opacity: 0.5;
+          }
+
+          .toggle-button-selected {
+            width: 80px;
+            background-color: #4D4D4D;
+            color: #FFFFFF;
+            font-size: 1.85vh;
+            border-radius: 3.08vh;
+            border: none;
+          }
         }
       }
     }
@@ -67,8 +74,35 @@
     position: relative;
     width: 100%;
     height: 90%;
+    z-index: 1;
 
     .wrapper{}
+
+    .center-align {
+      text-align: center;
+      width: 100%;
+      height: 100%;
+
+      .no-card-msg {
+        margin-top: 10%;
+        margin-bottom: 10%;
+        width: 100%;
+        font-family: 'CeraPro-Medium';
+        color: white;
+        text-align: center;
+        font-size: 3.45vh;
+      }
+  
+      .finding-cards-graphic {
+        max-width: 80%;
+        max-height: 60%;
+        margin-bottom: 10%;
+      }
+  
+      .finding-cards-spinner {
+        display: inline-block;
+      }
+    }
 
     .swipe-card {
       width: 100%;
@@ -96,6 +130,14 @@
           left: 10px;
           position: absolute;
         }
+
+        .like-label {
+          background-color: #008000;
+          background-color: rgba(0, 255, 0, 0.4);
+          margin-top: 10vh;
+          left: 20px;
+          position: absolute;
+        }
       }
 
       .next-image {
@@ -112,6 +154,13 @@
           right: 10px;
           position: absolute;
         }
+
+        .dislike-label {
+          background-color: rgba(255, 0, 0, 0.4);
+          margin-top: 10vh;
+          right: 20px;
+          position: absolute;
+        }
       }
 
       .info-container {
@@ -125,7 +174,8 @@
 
         .info-button-open {
           width: 100%;
-          height: 19.1%;
+          height: 20.1%;
+          //height: 4.49vh;
           margin-top: -2%;
 
           display: flex;
@@ -138,15 +188,15 @@
 
           .icon {
             font-family: 'IkonoMiniL-3';
-            font-size: 3.69vh;
+            font-size: 2.69vh;
             margin: auto;
           }
 
           .text {
             font-family: 'CeraPro-Medium';
-            font-size: 1.23vh;
+            font-size: 1.4vh;
             margin: auto;
-            margin-top: -12%;
+            margin-top: -6%;
           }
         }
         .info-text {
@@ -167,7 +217,7 @@
             width: 100%;
             color: white;
             font-family: 'CeraPro-Medium';
-            font-size: 1.6vh;
+            font-size: 1.8vh;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -191,16 +241,6 @@
         height: 100%;
         width: 100%;
       }
-    }
-
-    .swipe-buttons {
-      width: 100%;
-      position: absolute;
-      bottom: 2.83%;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 5.6%;
     }
   }
 }
