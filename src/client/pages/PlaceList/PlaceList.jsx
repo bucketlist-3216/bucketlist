@@ -37,7 +37,7 @@ class PlaceList extends React.Component {
         tripFriends: [],
         isDoneFetching: false,
         isLoading: true,
-        isManagingGroup: true
+        isManagingGroup: false
     };
   }
 

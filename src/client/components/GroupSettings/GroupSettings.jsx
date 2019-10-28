@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import autoBindMethods from 'class-autobind-decorator';
 
 import TripFriend from '../../components/TripFriend';
+import AddFriendModal from '../../components/AddFriendModal';
 
 @autoBindMethods
 class GroupSettings extends Component {
@@ -9,12 +10,16 @@ class GroupSettings extends Component {
     super(props);
 
     this.state = {
-      isEditing: false
+      isEditing: false,
+      isModalShown: false
     };
   }
 
   render() {
     const { parent } = this.props;
+    const { tripId } = parent.props.match.params;
+    const { isModalShown } = this.state;
+
     return (
       <div className="group-settings">
         <div className="top-bar">
@@ -32,8 +37,8 @@ class GroupSettings extends Component {
           </span>
         </div>
         <div className="friends-container">
-          <div className="add-friend">
-            <div className="add-button" onClick={() => this.routeChange(PATHS.citySelect())}>
+          <div className="add-friend" onClick={() => this.setState({ isModalShown: true })}>
+            <div className="add-button">
               <span>+</span>
             </div>
             <div className="add-text">
@@ -55,8 +60,18 @@ class GroupSettings extends Component {
             </span>
           </button>
         </div>
+        <AddFriendModal
+          isModalShown={isModalShown}
+          closeModal={this.closeModal}
+          tripId={tripId}
+        />
       </div>
     );
+  }
+
+  // Helper function
+  closeModal() {
+    this.setState({ isModalShown: false });
   }
 }
 

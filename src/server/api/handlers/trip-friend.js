@@ -36,6 +36,7 @@ function addTripFriendHandler(req, res) {
     const { tripId } = req.params;
     const { email } = req.body;
     const userNotFoundMessage = `Could not find user with email '${email}'`;
+    const duplicateMessage = `User is already in this trip`;
 
     userQueryModel.getUserId({ email })
         .then(function (results) {
@@ -43,7 +44,7 @@ function addTripFriendHandler(req, res) {
               throw new Error(userNotFoundMessage);
             } else {
               const { user_id } = results[0];
-              return addTripFriend({ user_id, trip_id: tripId });
+              return tripFriendQueryModel.addTripFriend({ user_id, trip_id: tripId });
             }
         })
         .then(function (insertionResponse) {
@@ -53,9 +54,11 @@ function addTripFriendHandler(req, res) {
             if (err.message === userNotFoundMessage) {
                 res.status(404).end(userNotFoundMessage);
                 console.log(err);
+            } else if (err.errno === 1062) {
+                res.status(409).end(duplicateMessage);
             } else {
                 res.status(500).end('Could not add user to trip');
-                console.log(err);
+                console.log(JSON.stringify(err));
             }
         });
 }

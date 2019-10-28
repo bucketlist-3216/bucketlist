@@ -41,6 +41,7 @@
       }
 
       .edit {
+        visibility: hidden;
         font-family: "CeraPro-Medium";
         font-style: normal;
         font-weight: bold;
@@ -136,6 +137,7 @@
       }
 
       .admin {
+        visibility: hidden;
         height: 100%;
         margin-left: 16px;
 
