@@ -47,8 +47,6 @@ class TripsPage extends Component {
   }
 
   deleteTrip(trip) {
-    console.log('Trip to delete is ', trip);
-
     return axios
       .request({
         url: APIS.trip(trip.trip_id),
