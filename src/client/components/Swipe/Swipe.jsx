@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Swipeable from 'react-swipy';
+import Swipeable from './Swipeable/Swipeable';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
@@ -12,6 +12,8 @@ import EmptyCard from './EmptyCard';
 import InfoPanel from './InfoPanel';
 import HomeButton from '../../buttons/HomeButton';
 import ListButton from '../../buttons/ListButton';
+import Img from 'react-image';
+import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -32,6 +34,7 @@ class Swipe extends Component {
       imageIndex: 0,
       initialScreenX: 0,
       previousType: 1,
+      renderResult: '',
     };
   }
 
@@ -159,6 +162,12 @@ class Swipe extends Component {
     this.setState({ initialScreenX: value });
   }
 
+  setRenderResult(value) {
+    if (this.state.renderResult !== value) {
+      this.setState({ renderResult: value });
+    }
+  }
+
   setSwipeList(value) {
     this.setState({ imageIndex: 0 });
     this.setState({ swipeList: value });
@@ -182,6 +191,7 @@ class Swipe extends Component {
   nextCard = () => {
     const { places } = this.state;
     this.setState({ imageIndex: 0 });
+    this.setState({ renderResult: '' });
     if (places.length > 0) {
       const newPlaces = places.slice(1, places.length);
       this.setState({ places: newPlaces });
@@ -192,17 +202,18 @@ class Swipe extends Component {
   };
 
   renderSwiping() {
-    const { places, imageIndex, showInfo } = this.state;
+    const { places, imageIndex, showInfo, renderResult } = this.state;
     const currentPlace = places[0];
     return (
       <div className="swipe-container">
         <Swipeable
           buttons={this.renderButtons}
-          onSwipe={this.castVote(currentPlace)}
-          onAfterSwipe={this.nextCard}
+          onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
+          renderResult={renderResult} setRenderResult={this.setRenderResult}
         >
-          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo}
-            imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} />
+          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo} 
+            imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} 
+            renderResult={renderResult} />
           <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
@@ -213,7 +224,12 @@ class Swipe extends Component {
   renderSwipeComplete() {
     return (
       <div className="swipe-container">
-        <EmptyCard zIndex={-2}>No more cards</EmptyCard>
+        <div className="center-align">
+          <div className="no-card-msg">We're looking for more places</div>
+          <Img className="finding-cards-graphic" src={ 'https://place-image.s3-ap-southeast-1.amazonaws.com/progressive/preloader-globe.svg' } />
+          <br/>
+          <LoopingRhombusesSpinner className="finding-cards-spinner" />
+        </div>
       </div>
     );
   }
@@ -263,20 +279,24 @@ class Swipe extends Component {
     return (
       <div className="swipe">
         <div className="swipe-header">
-          <div className="swipe-header-primary">
-            <div className="city">
-              {city}
-            </div>
-          </div>
-          <div className="swipe-header-secondary">
+          <div className="swipe-header-sides">
             <HomeButton
               onClick={() => this.routeChange(PATHS.trips())}
             />
-            {places.length > -1 && (
-              <div>
-                {this.renderList(this.state.swipeList)}
+          </div>
+          <div>
+            <div className="swipe-header-middle">
+              <div className="city">
+                {city}
               </div>
-            )}
+              {places.length > -1 && (
+                <div className="swipe-header-toggle">
+                  {this.renderList(this.state.swipeList)}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="swipe-header-sides">
             <ListButton
               onClick={() => this.routeChange(PATHS.list(tripId))}
             />

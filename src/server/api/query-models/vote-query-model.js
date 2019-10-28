@@ -35,9 +35,6 @@ class VoteQueryModel extends EntityQueryModel {
         let query = knex
             .select([`${this.placeQueryModel.tableName}.place_id`, 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number', 'type', knex.raw(`GROUP_CONCAT(image_link) as images`)])
             .from(this.placeQueryModel.tableName)
-            .limit(limit)
-            .innerJoin(this.placeImageQueryModel.tableName, `${this.placeImageQueryModel.tableName}.place_id`, '=', `${this.placeQueryModel.tableName}.place_id`)
-            .groupBy(['place_id', 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number', 'type'].map(e => `${this.placeQueryModel.tableName}.${e}`))
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
             .where({trip_id: tripId})
             .whereNotExists(knex
@@ -45,7 +42,11 @@ class VoteQueryModel extends EntityQueryModel {
                 .innerJoin(this.tripFriendQueryModel.tableName, `${this.tripFriendQueryModel.tableName}.trip_friend_id`, '=', `${this.tableName}.trip_friend_id`)
                 .where({user_id: userId, trip_id: tripId})
                 .whereRaw(`${this.tableName}.place_id = ${this.placeQueryModel.tableName}.place_id`)
-            );
+            )
+            .limit(limit)
+            .innerJoin(this.placeImageQueryModel.tableName, `${this.placeImageQueryModel.tableName}.place_id`, '=', `${this.placeQueryModel.tableName}.place_id`)
+            .groupBy(['place_id', 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number', 'type'].map(e => `${this.placeQueryModel.tableName}.${e}`))
+            .orderBy('place_id', 'asc');
 
         // console.log(query.toQuery());
         if (placeId || placeId == 0) {
