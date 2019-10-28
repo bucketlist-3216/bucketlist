@@ -30,11 +30,27 @@ class VoteQueryModel extends EntityQueryModel {
     }
 
     getPlacesToVote({tripId, userId, placeId, limit = 20}) {
+        const types = ['Food', 'Attraction'];
+        const promises = _.map(types, t => this._getPlacesToVote(tripId, userId, placeId, limit/types.length, t));
+
+        return Promise.all(promises)
+            .then(function(results) {
+                let response = {};
+                
+                response['food'] = results[0];
+                response['attractions'] = results[1];
+
+                return response;
+            });
+    }
+
+    _getPlacesToVote(tripId, userId, placeId, limit = 20, type) {
         let start = new Date();
         console.log ('Invoking SQL Interface at ', new Date());
         let query = knex
             .select([`${this.placeQueryModel.tableName}.place_id`, 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number', 'type', knex.raw(`GROUP_CONCAT(image_link) as images`)])
             .from(this.placeQueryModel.tableName)
+            .where({type: type})
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
             .where({trip_id: tripId})
             .whereNotExists(knex
@@ -63,18 +79,16 @@ class VoteQueryModel extends EntityQueryModel {
                 // console.log('Received result: ', unsortedPlacesToVote)
                 console.log ('Organizing place details at ', new Date());
                 
-                let food = []
-                let attractions = []
+                // let food = []
+                // let attractions = []
 
-                food = _.filter(unsortedPlacesToVote, e => e.type === 'Food')
-                attractions = _.filter(unsortedPlacesToVote, e => e.type === 'Attraction')
+                // food = _.filter(unsortedPlacesToVote, e => e.type === 'Food')
+                // attractions = _.filter(unsortedPlacesToVote, e => e.type === 'Attraction')
                 
                 console.log ('Returning place details at ', new Date());
                 console.log('Took totally ', new Date() - start);
-                return {
-                    food: food,
-                    attractions: attractions
-                }
+                
+                return unsortedPlacesToVote;
             });
     }
 
