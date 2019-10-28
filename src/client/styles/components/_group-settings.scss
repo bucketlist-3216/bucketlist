@@ -15,7 +15,7 @@
       align-items: center;
 
       background: rgba(39,39,39,1);
-      border-bottom-width: 0.0862vh;
+      border-bottom-width: 0.7px;
       border-bottom-color: #4E4E4E;
       border-bottom-style: solid;
 
@@ -50,49 +50,6 @@
       }
   }
 
-  .add-friend {
-    height: 85px;
-    width: 100%;
-    margin-top: 15px;
-
-    display: flex;
-    align-items: center;
-
-    .add-button {
-      height: 49px;
-      width: 49px;
-      border-width: 1px;
-
-      margin-left: 32px;
-      margin-right: 25px;
-
-      span {
-        font-size: 33px;
-        font-family: "CeraPro-Light";
-        color: #FFFFFF;
-      }
-    }
-
-    .add-text {
-      width: 186px;
-      height: 100%;
-
-      border-bottom-width: 0.5px;
-      border-bottom-color: #707070;
-      border-bottom-style: solid;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      span {
-        font-size: 20px;
-        font-family: "CeraPro-Medium";
-        color: #FFFFFF;
-      }
-    }
-  }
-
   .friends-container {
     height: 70.46%;
     width: 100%;
@@ -100,25 +57,31 @@
     overflow-x: hidden;
     overflow-y: scroll;
 
-    .trip-friend {
-      height: 85px;
+    .add-friend {
+      height: 14.86%;
+      width: 100%;
+      margin-top: 2.6vh;
 
-      .prof-pic {
-        height: 49px;
-        width: 49px;
+      display: flex;
+      align-items: center;
 
-        margin-left: 32px;
-        margin-right: 25px;
-      }
+      .add-button {
+        height: 6vh;
+        width: 6vh;
+        border-width: 0.1vh;
 
-      .prof-pic-default {
+        margin-left: 8.53%;
+        margin-right: 6.67%;
+
         span {
-          font-size: 2.8vh;
+          font-size: 4vh;
+          font-family: "CeraPro-Light";
+          color: #FFFFFF;
         }
       }
 
-      .name {
-        width: 186px;
+      .add-text {
+        width: 49.6%;
         height: 100%;
 
         border-bottom-width: 0.5px;
@@ -130,7 +93,44 @@
         justify-content: center;
 
         span {
-          font-size: 15px;
+          font-size: 2.46vh;
+          font-family: "CeraPro-Medium";
+          color: #FFFFFF;
+        }
+      }
+    }
+
+    .trip-friend {
+      height: 14.86%;
+
+      .prof-pic {
+        height: 6vh;
+        width: 6vh;
+
+        margin-left: 8.53%;
+        margin-right: 6.67%;
+      }
+
+      .prof-pic-default {
+        span {
+          font-size: 2.8vh;
+        }
+      }
+
+      .name {
+        width: 49.6%;
+        height: 100%;
+
+        border-bottom-width: 0.5px;
+        border-bottom-color: #707070;
+        border-bottom-style: solid;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          font-size: 1.85vh;
           font-family: "CeraPro-Medium";
           color: #FFFFFF;
         }
@@ -139,14 +139,14 @@
       .admin {
         visibility: hidden;
         height: 100%;
-        margin-left: 16px;
+        margin-left: 4.27%;
 
         display: flex;
         flex-direction: column;
         justify-content: center;
 
         span {
-          font-size: 12px;
+          font-size: 1.48vh;
           font-family: "CeraPro-Medium";
           color: #FFFFFF;
         }
@@ -161,7 +161,7 @@
     width: 100%;
 
     background-color: rgba(39,39,39,1);
-    border-top-width: 0.0862vh;
+    border-top-width: 0.7px;
     border-top-color: #4E4E4E;
     border-top-style: solid;
 
@@ -170,11 +170,11 @@
     justify-content: center;
 
     .link-button {
-      width: 258px;
-      height: 54px; // 3.5vh;
+      width: 68.8%;
+      height: 6.65vh;
       margin: auto;
       background-color: #FFFFFF;
-      border-radius: 27px; // 1.75vh;
+      border-radius: 3.323vh;
       border: none;
       display: flex;
 
@@ -182,7 +182,7 @@
         margin: auto;
         color: #272727;
         font-family: "CeraPro-Bold";
-        font-size: 16px; // 1.3vh;
+        font-size: 2vh;
       }
     }
   }

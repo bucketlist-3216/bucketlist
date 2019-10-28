@@ -14,7 +14,7 @@
       height: 100%;
 
       border: none;
-      border-radius: 73px 73px 0 0;
+      border-radius: 9vh 9vh 0 0;
       background-color: rgba(100,100,100,0.95);
 
       .modal-header {
@@ -23,8 +23,8 @@
 
         .close {
           position: absolute;
-          top: 40px;
-          left: 40px;
+          top: 5.2%;
+          left: 10.7%;
           float: left;
           width: 3.94vh;
           height: 3.94vh;
@@ -66,14 +66,14 @@
 
           .icon {
             font-family: "IkonoMiniL-5";
-            font-size: 40px;
+            font-size: 4.93vh;
             color: #FFFFFF;
             margin-bottom: 3vh;
           }
 
           .text {
             font-family: "CeraPro-Bold";
-            font-size: 30px;
+            font-size: 3.69vh;
             color: #FFFFFF;
           }
         }
@@ -108,7 +108,7 @@
 
               text-align: center;
               font-family: "CeraPro-Bold";
-              font-size: 12px;
+              font-size: 1.5vh;
               color: #272727;
             }
           }
@@ -116,7 +116,7 @@
           .submit-button {
             width: 82%;
             height: 4.4vh;
-            margin-top: 32px;
+            margin-top: 3.94vh;
 
             border-radius: 2.2vh;
             border: none;
@@ -125,7 +125,7 @@
 
             text-align: center;
             font-family: "CeraPro-Bold";
-            font-size: 12px;
+            font-size: 1.5vh;
             color: #FFFFFF;
           }
         }
