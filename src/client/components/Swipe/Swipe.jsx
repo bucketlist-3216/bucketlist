@@ -37,6 +37,7 @@ class Swipe extends Component {
       initialScreenX: 0,
       previousType: 1,
       renderResult: '',
+      initialSetup: false,
       sideDrawerOpen: false,
     };
   }
@@ -215,8 +216,12 @@ class Swipe extends Component {
   };
 
   renderSwiping() {
-    const { places, imageIndex, showInfo, renderResult } = this.state;
+    const { places, imageIndex, showInfo, renderResult, initialSetup } = this.state;
     const currentPlace = places[0];
+    if (this.state.initialSetup === false) {
+      this.setState({ initialSetup: true });
+    }
+
     return (
       <div className="swipe-container">
         <Swipeable
@@ -257,31 +262,33 @@ class Swipe extends Component {
   }
 
   renderList(swipeList) {
-    if (swipeList === 1) {
-      if (swipeList !== this.state.previousType) {
-        this.state.listBuffer.attractions = this.state.places;
-        this.setState({ places : this.state.listBuffer.food });
-        this.setState({ previousType : swipeList });
+    if (this.state.initialSetup) {
+      if (swipeList === 1) {
+        if (swipeList !== this.state.previousType) {
+          this.state.listBuffer.attractions = this.state.places;
+          this.setState({ places : this.state.listBuffer.food });
+          this.setState({ previousType : swipeList });
+        }
+        return (
+          <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
+            <ToggleButton className="toggle-button-selected" name="food" value={1}>food</ToggleButton>
+            <ToggleButton className="toggle-button-unselected" name="places" value={2}>places</ToggleButton>
+          </ToggleButtonGroup>
+        );
       }
-      return (
-        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
-          <ToggleButton className="toggle-button-selected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="toggle-button-unselected" name="places" value={2}>places</ToggleButton>
-        </ToggleButtonGroup>
-      );
-    }
-    else {
-      if (swipeList !== this.state.previousType) {
-        this.state.listBuffer.food = this.state.places;
-        this.setState({ places : this.state.listBuffer.attractions });
-        this.setState({ previousType : swipeList });
-      }
-      return (
-        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
-          <ToggleButton className="toggle-button-unselected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="toggle-button-selected" name="places" value={2}>places</ToggleButton>
-        </ToggleButtonGroup>
-      );
+      else {
+        if (swipeList !== this.state.previousType) {
+          this.state.listBuffer.food = this.state.places;
+          this.setState({ places : this.state.listBuffer.attractions });
+          this.setState({ previousType : swipeList });
+        }
+        return (
+          <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
+            <ToggleButton className="toggle-button-unselected" name="food" value={1}>food</ToggleButton>
+            <ToggleButton className="toggle-button-selected" name="places" value={2}>places</ToggleButton>
+          </ToggleButtonGroup>
+        );
+      };
     };
   }
 

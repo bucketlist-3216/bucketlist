@@ -21,9 +21,6 @@ class TutorialPage extends Component {
       label: ga_info,
     });
 
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-
     return (
       <div className="tutorial-page">
         <Tutorial history={this.props.history} />
