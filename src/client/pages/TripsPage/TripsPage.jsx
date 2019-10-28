@@ -17,6 +17,9 @@ import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 import LogoutButton from "../../buttons/LogoutButton";
+import axios from 'axios';
+
+import APIS from '../../constants/apis';
 
 @autoBindMethods
 class TripsPage extends Component {
@@ -41,6 +44,36 @@ class TripsPage extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     TripAPI.getTrips(this);
+  }
+
+  deleteTrip(trip) {
+    console.log('Trip to delete is ', trip);
+
+    return axios
+      .request({
+        url: APIS.trip(trip.trip_id),
+        method: 'delete',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
+      .then(function (response) {
+        if (response.data.tripsDeleted === 1) {
+          location.reload();
+        } else {
+          alert('You are not authorized to delete this trip');
+        }
+      })
+      .catch(function (error) {
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('platform');
+          instance.routeChange(PATHS.login);
+          return;
+        }
+        alert(error.message);
+      });
   }
 
   render() {
@@ -107,6 +140,7 @@ class TripsPage extends Component {
                   history={this.props.history}
                   showModal={this.showModal}
                   onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
+                  onDelete={() => this.deleteTrip(trip)}
                 />
               ))}
             </div>

@@ -112,18 +112,24 @@ function addTripHandler(req, res) {
 // Delete a trip
 function deleteTripHandler(req, res) {
     // Generate mySQL query to delete entry
-    const userID = req.verifiedUserId;
-    const deletion = tripQueryModel.deleteTrip(userId, req.params.trip);
+    const userId = req.headers.verifiedUserId;
+    const deletion = tripQueryModel.deleteTrip(userId, req.params.toDelete);
 
+    console.log('Prameters to delete: ', userId, req.params.toDelete);
     // Construct response after deletion
     deletion
         .then(function (returnObject) {
             console.log(returnObject);
 
-            res.json({
-                "deletedId": req.params.toDelete,
-                "response": returnObject
-            });
+            if (returnObject === 0) {
+                res.status(500).end('Not authorized to delete this trip');
+                return;
+            } else {
+                res.json({
+                    "tripToDelete": req.params.toDelete,
+                    "tripsDeleted": returnObject
+                });
+            }
         })
         .catch(function (err) {
             res.status(500).end(`Unable to delete trip because of the following error: ${err.message}`);
