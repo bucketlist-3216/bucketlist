@@ -10,7 +10,7 @@ class TripQueryModel extends EntityQueryModel {
         this.validFilters = ['trip_id'];
         this.nonInsertableProps = ['trip_id'];
         this.tableName = 'Trip';
-        this.selectableProps = ['trip_id', 'destination', 'start_date', 'end_date'];
+        this.selectableProps = ['trip_id', 'destination', 'start_date', 'end_date', 'created_by', 'invite_extension'];
         this.userMutable = false;
     }
 
@@ -30,18 +30,26 @@ class TripQueryModel extends EntityQueryModel {
     }
 
     // Delete a trip entirely
-    deleteTrip (filter) {
+    deleteTrip (verifiedUserId, tripId) {
+        // Check whether this person created the trip
+
         return knex(this.tableName)
-            .where(filters)
+            .where({trip_id: tripId})
+            .where({created_by: verifiedUserId})
             .del();
     }
 
     updateTrip (id, newObject) {
-        newObject = _.omit(this.nonInsertableProps);
-
+        newObject = _.omit(newObject, this.nonInsertableProps);
         return knex(this.tableName)
             .where({'trip_id': id})
             .update(newObject);
+    }
+
+    // Get trip by invite link
+    getTripInvite (inviteLink) {
+        return knex(this.tableName)
+            .where({'invite_extension': inviteLink})
     }
 
 }

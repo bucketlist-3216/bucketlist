@@ -10,6 +10,8 @@ import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
 import InfoPanel from './InfoPanel';
+import SideDrawer from '../SideDrawer/';
+import Backdrop from '../Backdrop/';
 import HomeButton from '../../buttons/HomeButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
@@ -35,6 +37,8 @@ class Swipe extends Component {
       initialScreenX: 0,
       previousType: 1,
       renderResult: '',
+      initialSetup: false,
+      sideDrawerOpen: false,
     };
   }
 
@@ -150,6 +154,16 @@ class Swipe extends Component {
 
   // Helper function to set state
 
+  drawerToggleClickHandler = () => {
+    this.setState(prevState => {
+      return { sideDrawerOpen: !prevState.sideDrawerOpen }
+    });
+  }
+
+  backdropClickHandler = () => {
+    this.setState({ sideDrawerOpen: false });
+  }
+
   setShowInfo(showInfo) {
     this.setState({ showInfo: showInfo });
   }
@@ -202,8 +216,12 @@ class Swipe extends Component {
   };
 
   renderSwiping() {
-    const { places, imageIndex, showInfo, renderResult } = this.state;
+    const { places, imageIndex, showInfo, renderResult, initialSetup } = this.state;
     const currentPlace = places[0];
+    if (this.state.initialSetup === false) {
+      this.setState({ initialSetup: true });
+    }
+
     return (
       <div className="swipe-container">
         <Swipeable
@@ -226,7 +244,8 @@ class Swipe extends Component {
       <div className="swipe-container">
         <div className="center-align">
           <div className="no-card-msg">We're looking for more places</div>
-          <Img className="finding-cards-graphic" src={ 'https://place-image.s3-ap-southeast-1.amazonaws.com/progressive/preloader-globe.svg' } />
+          <Img className="finding-cards-graphic" src={ '__dirname + "../../../../assets/common/adventure.svg' } />
+
           <br/>
           <LoopingRhombusesSpinner className="finding-cards-spinner" />
         </div>
@@ -244,44 +263,54 @@ class Swipe extends Component {
   }
 
   renderList(swipeList) {
-    if (swipeList === 1) {
-      if (swipeList !== this.state.previousType) {
-        this.state.listBuffer.attractions = this.state.places;
-        this.setState({ places : this.state.listBuffer.food });
-        this.setState({ previousType : swipeList });
+    if (this.state.initialSetup) {
+      if (swipeList === 1) {
+        if (swipeList !== this.state.previousType) {
+          this.state.listBuffer.attractions = this.state.places;
+          this.setState({ places : this.state.listBuffer.food });
+          this.setState({ previousType : swipeList });
+        }
+        return (
+          <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
+            <ToggleButton className="toggle-button-selected" name="food" value={1}>food</ToggleButton>
+            <ToggleButton className="toggle-button-unselected" name="places" value={2}>places</ToggleButton>
+          </ToggleButtonGroup>
+        );
       }
-      return (
-        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
-          <ToggleButton className="toggle-button-selected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="toggle-button-unselected" name="places" value={2}>places</ToggleButton>
-        </ToggleButtonGroup>
-      );
-    }
-    else {
-      if (swipeList !== this.state.previousType) {
-        this.state.listBuffer.food = this.state.places;
-        this.setState({ places : this.state.listBuffer.attractions });
-        this.setState({ previousType : swipeList });
-      }
-      return (
-        <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
-          <ToggleButton className="toggle-button-unselected" name="food" value={1}>food</ToggleButton>
-          <ToggleButton className="toggle-button-selected" name="places" value={2}>places</ToggleButton>
-        </ToggleButtonGroup>
-      );
+      else {
+        if (swipeList !== this.state.previousType) {
+          this.state.listBuffer.food = this.state.places;
+          this.setState({ places : this.state.listBuffer.attractions });
+          this.setState({ previousType : swipeList });
+        }
+        return (
+          <ToggleButtonGroup className="toggle-buttons" name="toggle-button" value={swipeList} onChange={this.setSwipeList}>
+            <ToggleButton className="toggle-button-unselected" name="food" value={1}>food</ToggleButton>
+            <ToggleButton className="toggle-button-selected" name="places" value={2}>places</ToggleButton>
+          </ToggleButtonGroup>
+        );
+      };
     };
   }
 
   render() {
-    const { places, isLoading, city, swipeList } = this.state;
+    const { places, isLoading, city, swipeList, sideDrawerOpen } = this.state;
     const { tripId } = this.props.match.params;
 
     return (
       <div className="swipe">
+        {sideDrawerOpen && 
+          <Backdrop backdropClickHandler={this.backdropClickHandler} /> 
+        }
+        <SideDrawer 
+          sideDrawerOpen={sideDrawerOpen} 
+          drawerToggleClickHandler={this.drawerToggleClickHandler}
+          routeChange={this.routeChange}
+        />
         <div className="swipe-header">
           <div className="swipe-header-sides">
             <HomeButton
-              onClick={() => this.routeChange(PATHS.trips())}
+              onClick={() => this.drawerToggleClickHandler()}
             />
           </div>
           <div>

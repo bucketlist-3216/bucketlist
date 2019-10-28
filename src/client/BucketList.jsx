@@ -19,6 +19,7 @@ import CitySelect from './pages/CitySelect';
 import SwipeView from './pages/SwipeView';
 import TripsPage from './pages/TripsPage';
 import ListPage from './pages/PlaceList';
+import InvitePage from './pages/InvitePage';
 import TutorialPage from './pages/TutorialPage';
 
 ReactGA.initialize('UA-148749594-1');
@@ -34,6 +35,7 @@ ReactDOM.render(
       <Route exact path={PATHS.citySelect()} component={CitySelect} />
       <Route exact path={PATHS.swipe()} component={SwipeView} />
       <Route exact path={PATHS.list()} component={ListPage} />
+      <Route exact path={PATHS.invite()} component={InvitePage} />
       <Route exact path={PATHS.tutorial} component={TutorialPage} />
       {/* <Route exact path={PATHS.login} component={AppHome} /> */}
       {/* <Route path={PATHS.trips()} component={CreateView} />
