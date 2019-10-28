@@ -1,6 +1,7 @@
 const EntityQueryModel = require('./entity');
 const { knex } = require('../../database');
 const _ = require('underscore');
+const PlaceImageQueryModel = require('./place-image-query-model');
 
 class PlaceQueryModel extends EntityQueryModel {
 
@@ -10,16 +11,47 @@ class PlaceQueryModel extends EntityQueryModel {
         this.validFilters = ['name', 'type'];
         this.selectableProps = [];
         this.nonInsertableProps = ['place_id'];
-        this.tableName = 'Place';
+        this.tableName = 'Place_Curated';
 
-        this.userMutable = false;
+				this.userMutable = false;
+				
+				this.placeImageQueryModel = new PlaceImageQueryModel();
     }
 
     getPlaceData(placeId) {
-      return knex
-          .select(this.selectableProps)
-          .from(this.tableName)
-          .where({ place_id: placeId });
+			let that = this;
+			return this.placeImageQueryModel
+				.getPlaceImage(placeId)
+				.then(res => 
+					_.map(res, r => 
+						that.placeImageQueryModel.augmentUrlWithBucket(r.image_link)
+					)
+				)
+				.then(r => {
+					return new Promise((resolve, reject) => {
+						knex
+							.select(this.selectableProps)
+							.from(this.tableName)
+							.where({ place_id: placeId })
+							.then(res => res[0])
+							.then(res => {
+								res = {
+									images: r || [],
+									place_id: res.place_id,
+									name: res.name,
+									longitude: res.longitude || "",
+									latitude: res.latitude || "",
+									desc: res.description || "",
+									price: res.price || "",
+									category: res.type || "",
+									number: res.number || "",
+									location: res.address || ""
+								};
+								
+								resolve(res)
+							});
+					});
+				});
     }
 
     getMatchingPlaces(filters) {

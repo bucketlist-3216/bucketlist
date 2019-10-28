@@ -1,15 +1,13 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import LikeButton from '../../../buttons/LikeButton';
+import DislikeButton from '../../../buttons/DislikeButton';
 
 const SwipeButton = ({ type, onClick }) => {
-  const icon = (type === 'approve') ? faThumbsUp : faThumbsDown;
-  return (
-    <Button className="action-button" variant="outline-dark" onClick={onClick}>
-      <FontAwesomeIcon icon={icon} size="4x"/>
-    </Button>
-  );
+  if (type === 'approve') {
+    return <LikeButton className="swipe-button" onClick={onClick}/>;
+  } else {
+    return <DislikeButton className="swipe-button" onClick={onClick}/>;
+  }
 };
 
 export default SwipeButton;

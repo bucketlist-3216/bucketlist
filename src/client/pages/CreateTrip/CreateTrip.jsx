@@ -3,8 +3,6 @@ import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
 import PATHS from '../../constants/paths';
-// import Preloader from '../../components/Preloader';
-
 
 @autoBindMethods
 class CreateTrip extends Component {
@@ -27,11 +25,15 @@ class CreateTrip extends Component {
   }
 
   render() {
+    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
+    var ga_info = "CreateTripPage" + "_" + user_id + "_" + new Date().toLocaleString();
+
     ReactGA.initialize('UA-148749594-1');
-    ReactGA.pageview(window.location.pathname + window.location.search);
-    // if (this.state.isLoading) {
-    //     return (<Preloader/>);
-    // }
+    ReactGA.event({
+      category: 'User',
+      action: 'Viewed Create Trip Page',
+      label: ga_info,
+    });
 
     return (
       <div className="create-trip" >

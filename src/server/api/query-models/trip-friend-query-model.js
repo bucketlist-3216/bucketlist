@@ -49,6 +49,12 @@ class TripFriendQueryModel extends EntityQueryModel {
             .del();
     }
 
+    changeTripFriendUserId(oldId, newId) {
+        return knex(this.tableName)
+            .where({user_id: oldId})
+            .update({user_id: newId});
+    }
+
     // Get all the locations in this particular trip
     getUserTrips (userId) {
         let tripProperties = this.tripQueryModel.selectableProps.filter((element) => element !== 'trip_id');

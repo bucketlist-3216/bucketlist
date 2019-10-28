@@ -8,6 +8,7 @@ const {
 } = require('../query-models')
 
 const userQueryModel = new UserQueryModel();
+const tripFriendQueryModel = new TripFriendQueryModel();
 
 // User API router
 const router = express.Router();
