@@ -297,6 +297,7 @@ class Swipe extends Component {
         <SideDrawer 
           sideDrawerOpen={sideDrawerOpen} 
           drawerToggleClickHandler={this.drawerToggleClickHandler}
+          routeChange={this.routeChange}
         />
         <div className="swipe-header">
           <div className="swipe-header-sides">

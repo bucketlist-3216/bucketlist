@@ -28,11 +28,69 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
 
     .swipe-drawer-profile {
       height: 10vh;
       width: 10vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swipe-drawer-name {
+      height: 2.5vh;
+      width: 100%;
+      font-family: 'CeraPro-Medium';
+      color: white;
+      font-size: 2.5vh;
+      padding-left: 2vh;
+    }
+
+    .swipe-drawer-username {
+      height: 2.2vh;
+      width: 100%;
+      font-family: 'CeraPro-Medium';
+      color: white;
+      font-size: 2vh;
+      padding-left: 2vh;
+      padding-bottom: 10vh;
+    }
+
+    .swipe-drawer-tab-container {
+      height: 10vh;
+      width: 100%;
+      font-family: 'CeraPro-Medium';
+      color: white;
+      font-size: 2.5vh;
+      padding-left: 2vh;
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+
+      .swipe-drawer-tab {
+        padding-left: 2.5vh;
+      }
+    }
+
+    .swipe-drawer-tab-last {
+      height: 10vh;
+      width: 100%;
+      font-family: 'CeraPro-Medium';
+      color: white;
+      font-size: 2vh;
+      padding-left: 2vh;
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      margin-top: auto;
+
+      .swipe-drawer-tab {
+        padding-left: 2.5vh;
+      }
     }
 
   }
