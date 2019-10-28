@@ -1,0 +1,40 @@
+.trip-details {
+  display: flex;
+
+  .trip-friends {
+    width: 50%;
+    height: 100%;
+    border-right-width: 0.0862vh;
+    border-right-color: #4E4E4E;
+    border-right-style: solid;
+
+    .trip-friends-filled {
+    height: 100%;
+      margin: 0 13.83%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
+      span {
+        font-family: "CeraPro-Bold";
+        font-size: 1.48vh;
+        color: #FFFFFF;
+      }
+
+      .trip-friends-list {
+        display: block;
+        div {
+          font-family: "CeraPro-Bold";
+          font-size: 1.48vh;
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+
+  .trip-buttons {
+    width: 50%;
+    height: 100%;
+  }
+}

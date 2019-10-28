@@ -9,8 +9,6 @@
   align-items: center;
 
   .top-bar {
-    position: absolute;
-    top: 0;
     height: 9%;
     width: 100%;
     background: rgba(39,39,39,1);
@@ -39,12 +37,19 @@
     }
   }
 
+  .trip-details {
+    height: 16.75%;
+    width: 100%;
+    background: rgba(39,39,39,1);
+    border-bottom-width: 0.0862vh;
+    border-bottom-color: #4E4E4E;
+    border-bottom-style: solid;
+  }
+
   .place-container {
-    position: absolute;
-    top: 9.1%;
     display: flex;
     flex-direction: column;
-    height: 80.36%;
+    height: 63.61%;
     overflow-x: hidden;
     overflow-y: scroll;
     width: 100%;
