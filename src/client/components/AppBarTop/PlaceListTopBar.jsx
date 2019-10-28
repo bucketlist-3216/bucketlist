@@ -10,7 +10,9 @@ class PlaceListTopBar extends React.Component {
     const { onClick } = this.props;
     return (
       <div className="top-bar">
-        <HomeButton onClick={onClick}/>
+        <div className="top-bar-button">
+          <HomeButton onClick={onClick}/>
+        </div>
         <div className = "title">
           {this.props.destination}
         </div>

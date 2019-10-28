@@ -10,7 +10,7 @@ module.exports = {
         "sampleKey3"
     ],
     "validate": false,
-    "database": {
+    "database1": {
         "host": "35.186.146.32",
         "user": "bucketlist",
         "password": mysqlUser.password,
@@ -20,5 +20,11 @@ module.exports = {
           "cert": fs.readFileSync(`${configFolder}/ssl_cert/client-cert.pem`),
           "ca": fs.readFileSync(`${configFolder}/ssl_cert/server-ca.pem`)
         }
+    },
+    "database": {
+        "host": "bucketlist.c3xvacxs1afc.ap-southeast-1.rds.amazonaws.com",
+        "user": "bucketlist",
+        "password": mysqlUser.password,
+        "database": "bucketlist"
     }
 };

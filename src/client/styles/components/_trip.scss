@@ -13,6 +13,12 @@
         margin-bottom: auto;
     }
 
+    .delete-button {
+        color: white;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
     .trip-img {
         width: 22%;
         margin-right: 5%;
@@ -29,7 +35,7 @@
 
     .trip-dest {
         padding-left: 5%;
-        width: 58.95%;
+        width: 53.95%;
         height: 100%;
         border-bottom-width: 0.0862vh;
         border-bottom-color: #4E4E4E;
@@ -48,8 +54,8 @@
 
     .right-icon {
         color: white;
-        margin-left: 5%;
-        margin-right: 5%;
+        margin-left: 0;
+        margin-right: 0;
         margin-right: 0;
     }
 }
