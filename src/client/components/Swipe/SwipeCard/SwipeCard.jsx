@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import LikeButton from '../../../buttons/LikeButton';
 import DislikeButton from '../../../buttons/DislikeButton';
+
 //import Img from 'react-image';
 //import { PixelSpinner } from 'react-epic-spinners';
 //<Img className="card-image" src={images[imageIndex]} loader={ <PixelSpinner/> } />
@@ -39,7 +40,9 @@ const SwipeCard = props => {
           </div>
         </div>
       </div>
+
       <img className="card-image" src={images[imageIndex]} />
+
       <div className="info-container">
         <button className="info-button-open" onClick={() => handleInfoClick(true)}>
           <span className="icon"></span>

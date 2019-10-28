@@ -245,6 +245,7 @@ class Swipe extends Component {
         <div className="center-align">
           <div className="no-card-msg">We're looking for more places</div>
           <Img className="finding-cards-graphic" src={ '__dirname + "../../../../assets/common/adventure.svg' } />
+
           <br/>
           <LoopingRhombusesSpinner className="finding-cards-spinner" />
         </div>
