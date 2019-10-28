@@ -50,7 +50,7 @@ function getTripDetailsHandler(req, res) {
                     let tripId = trip_id_array[0];
                     console.log("TripId: ", tripId);
                     res.send({"tripId": tripId});
-                    return tripFriendQueryModel.addTripFriend(req.headers.verifiedUserId, tripId)
+                    return tripFriendQueryModel.addTripFriend({user_id: req.headers.verifiedUserId, trip_id: tripId})
                         .catch(function (err) {
                             res.status(500).end('Unable to add user to trip');
                             console.log(err);
