@@ -3,7 +3,8 @@ const config = require('../config/settings');
 
 const knex = require('knex')({
     client: 'mysql',
-    connection: config.database
+    connection: config.database,
+    pool: { min: 0, max: 10 }
 });
 
 module.exports = {
