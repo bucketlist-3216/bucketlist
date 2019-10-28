@@ -102,7 +102,7 @@ function addTripHandler(req, res) {
             // console.log('Trip insertion complete: ', insertedTrips);
             // console.log(toInsert.members);
 
-            insertTripLink(returnedObject[0]);
+            insertTripLink(insertedTrips[0]);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId({ email: emailId });

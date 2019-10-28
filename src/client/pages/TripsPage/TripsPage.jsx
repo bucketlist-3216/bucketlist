@@ -140,7 +140,7 @@ class TripsPage extends Component {
                   history={this.props.history}
                   showModal={this.showModal}
                   onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
-                  onDelete={() => this.deleteTrip(trip)}
+                  onDelete={() => {if (window.confirm('Are you sure you wish to delete this trip?')) this.deleteTrip(trip)}}
                 />
               ))}
             </div>
