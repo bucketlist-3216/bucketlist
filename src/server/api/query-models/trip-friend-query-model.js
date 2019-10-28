@@ -39,7 +39,7 @@ class TripFriendQueryModel extends EntityQueryModel {
     }
 
     // Add a member to this trip by their email
-    addTripFriend ({ user_id, trip_id }) {
+    addTripFriend ({user_id, trip_id}) {
         return knex(this.tableName)
             .insert({
                 user_id,

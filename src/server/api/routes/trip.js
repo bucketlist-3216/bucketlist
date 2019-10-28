@@ -51,36 +51,58 @@ router.delete('/:tripId/friends/:tripFriendId', deleteTripFriendHandler);
 
 // Get trip details
 function getTripDetailsHandler(req, res) {
-    return tripQueryModel.getTrip(req.params.tripId)
-        .then(function(queryResponse) {
-            res.json(queryResponse[0]);
-        })
-        .catch(function(err) {
-            res.status(500).end('Unable to get trip details');
-            console.log(err);
-        });
+    if (isNaN(req.params.tripId)) {
+        //try to handle as invite
+        return tripQueryModel.getTripInvite(req.params.tripId).pluck('trip_id')
+            .then((trip_id_array) => {
+                if (_.size(trip_id_array) == 0) res.status(404).end("Invite Link not found");
+                else {
+                    let tripId = trip_id_array[0];
+                    console.log("TripId: ", tripId);
+                    res.send({"tripId": tripId});
+                    return tripFriendQueryModel.addTripFriend({user_id: req.headers.verifiedUserId, trip_id: tripId})
+                        .catch(function (err) {
+                            res.status(500).end('Unable to add user to trip');
+                            console.log(err);
+                        });
+                }
+            })
+            .catch(function (err) {
+                res.status(500).end('Unable to get trip details');
+                console.log(err);
+            });
+    } else {
+        return tripQueryModel.getTrip(req.params.tripId)
+            .then(function (queryResponse) {
+                res.json(queryResponse[0]);
+            })
+            .catch(function (err) {
+                res.status(500).end('Unable to get trip details');
+                console.log(err);
+            });
+    }
 }
 
 // Get user trips
 function getUserTripsHandler(req, res) {
-  const userId = req.headers.verifiedUserId;
-  const trips = tripFriendQueryModel.getUserTrips(userId);
+    const userId = req.headers.verifiedUserId;
+    const trips = tripFriendQueryModel.getUserTrips(userId);
 
-  trips
-      .then(function(queryResponse) {
-          res.json(queryResponse);
-      })
-      .catch(function(err) {
-          res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
-          console.log(err);
-      });
+    trips
+        .then(function (queryResponse) {
+            res.json(queryResponse);
+        })
+        .catch(function (err) {
+            res.status(500).end(`Unable to get user's trips because of the following error: ${err.message}`);
+            console.log(err);
+        });
 }
 
 // Create a trip
 function addTripHandler(req, res) {
-    const toInsert = req.body.trip;
+    let toInsert = req.body.trip;
     toInsert.authorId = req.headers.verifiedUserId;
-    console.log(toInsert.authorId );
+    console.log(toInsert.authorId);
 
     // Insert trip into mySQL using knex
     const tripInsertion = tripQueryModel.addTrip(toInsert);
@@ -88,6 +110,8 @@ function addTripHandler(req, res) {
     return tripInsertion
         .then(function (returnedObject) {
             // console.log('Trip insertion complete: ', returnedObject);
+
+            insertTripLink(returnedObject[0]);
 
             let tripMembershipUpdates = _.map(toInsert.members, emailId => {
                 let getUserId = userQueryModel.getUserId({ email: emailId });
@@ -110,7 +134,7 @@ function addTripHandler(req, res) {
         })
         .then(function (result) {
             // console.log('promise.all is complete with result: ', result);
-            res.json({insertedId: result[0]});
+            res.json({ insertedId: result[0] });
         })
         .catch(function (err) {
             res.status(500).end(`Could not create a trip due to ${err})`);
@@ -156,6 +180,78 @@ function updateTripHandler(req, res) {
         });
 }
 
+// Generate and inserts a unique 16-character random link for trip
+async function insertTripLink(trip_id) {
+    //console.log("Inserting link for trip ID: ", trip_id)
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    do {
+        for (let i = 0; i < 16; i++) {
+            result += characters.charAt(Math.floor(Math.random() * 52));
+        }
+        let linkAlreadyExists = await tripQueryModel.getTripInvite(result).select("trip_id").then((rows) => _.size(rows));
+        //console.log(linkAlreadyExists);
+        if (linkAlreadyExists)
+            result = '';
+    } while (!result);
+    tripQueryModel.updateTrip(trip_id, { invite_extension: result }).then((rows) => console.log(rows));
+}
+
+/**************** Trip Member APIs  ****************/
+
+// Get the members of a given trip.
+function getTripMembersHandler(req, res) {
+    let getTripFriends = tripFriendQueryModel.getTripFriends(req.params.tripId);
+
+    getTripFriends
+        .then(function (queryResponse) {
+            res.json({ "tripFriends": queryResponse });
+        })
+}
+
+// Add a member to a trip (adding a member-trip association)
+function addTripMembersHandler(req, res) {
+    const { tripId } = req.params;
+    const { email } = req.body;
+    const userNotFoundMessage = `Could not find user with email '${email}'`;
+
+    userQueryModel.getUserId({ email })
+        .then(function (results) {
+            if (results.length === 0) {
+                throw new Error(userNotFoundMessage);
+            } else {
+                const { user_id } = results[0];
+                return addTripFriend({ user_id, trip_id: tripId });
+            }
+        })
+        .then(function (insertionResponse) {
+            res.json({ "insertedId": insertionResponse });
+        })
+        .catch(function (err) {
+            if (err.message === userNotFoundMessage) {
+                res.status(404).end(userNotFoundMessage);
+                console.log(err);
+            } else {
+                res.status(500).end('Could not add user to trip');
+                console.log(err);
+            }
+        });
+}
+
+// Remove a member from a trip
+function deleteTripMemberHandler(req, res) {
+    const deleteMember = tripFriendQueryModel.deleteTripFriend(req.params.tripFriend);
+
+    deleteMember
+        .then(function (deletionResponse) {
+            res.json({ "deletedId": deletionResponse });
+        })
+        .catch(function (err) {
+            res.status(500).end('Could not delete user from trip');
+            console.log(JSON.stringify(err));
+        });
+}
+
 /**************** Trip Voting APIs  ****************/
 
 // These are the votes that have been cast inside this trip
@@ -189,19 +285,19 @@ router.delete('/vote', function (req, res) {
     // Construct response after deletion
     deletion
         .then(function (returnObject) {
-            res.json({"deletedId": returnObject});
+            res.json({ "deletedId": returnObject });
         });
 });
 
 // Get the votes for the chosen location
 router.get('/vote/location/:locationId', function (req, res) {
-    const votes = voteQueryModel.getVotes({trip_place_id: req.params.locationId});
+    const votes = voteQueryModel.getVotes({ trip_place_id: req.params.locationId });
 
     votes
-        .then(function(queryResponse) {
+        .then(function (queryResponse) {
             res.json(queryResponse);
         })
-        .catch(function(err) {
+        .catch(function (err) {
             res.status(500).end('Unable to get votes for location');
             console.log(err);
         });
@@ -214,7 +310,7 @@ router.get('/:tripId/vote', function (req, res) {
     let places = voteQueryModel.getPlacesToVote(params);
 
     places
-        .then(function(queryResponse) {
+        .then(function (queryResponse) {
             res.json(queryResponse);
         })
         .catch(function (err) {
@@ -228,7 +324,7 @@ router.get('/:tripId/vote/results', function (req, res) {
     const votingResults = voteQueryModel.getVotingResults(req.params.tripId);
 
     votingResults
-        .then(function(queryResponse) {
+        .then(function (queryResponse) {
             res.json(queryResponse);
         })
         .catch(function (err) {
@@ -267,12 +363,12 @@ router.get('/locations', function (req, res) {
     const tripLocations = tripPlaceQueryModel.getLocationsInTrip(req.body.trip);
 
     tripLocations
-        .then(function(queryResponse) {
+        .then(function (queryResponse) {
             res.json({
                 "location_ids": _.map(queryResponse, pair => pair['place_id'])
             });
         })
-        .catch(function(err) {
+        .catch(function (err) {
             res.status(500).end('Unable to get trip locations');
             console.log(err);
         });
@@ -283,10 +379,10 @@ router.post('/locations', function (req, res) {
     const insert = tripPlaceQueryModel.addLocationToTrip(req.body.trip);
 
     insert
-        .then(function(insertionResponse) {
-            res.json({"inserted": insertionResponse});
+        .then(function (insertionResponse) {
+            res.json({ "inserted": insertionResponse });
         })
-        .catch(function(err) {
+        .catch(function (err) {
             console.log(JSON.stringify(err));
             res.status(500).end('Unable to insert trip locations');
         });
@@ -297,10 +393,10 @@ router.delete('/locations/:tripPlaceId', function (req, res) {
     const deleteLocation = tripPlaceQueryModel.deleteLocationFromTrip(req.params.tripPlaceId);
 
     deleteLocation
-        .then(function(deletionResponse) {
-            res.json({"deleted": deletionResponse});
+        .then(function (deletionResponse) {
+            res.json({ "deleted": deletionResponse });
         })
-        .catch(function(err) {
+        .catch(function (err) {
             console.log(JSON.stringify(err));
             res.status(500).end('Unable to delete trip location');
         });
@@ -313,7 +409,7 @@ router.get('/locations/top', function (req, res) {
     const getTopLocations = tripPlaceQueryModel.getTopLocationInTrip(req.body.trip);
 
     getTopLocations
-        .then(function(queryResponse) {
+        .then(function (queryResponse) {
             res.json(queryResponse);
         })
         .catch(function (err) {
