@@ -54,14 +54,39 @@
     width: 100%;
     margin-top: 15px;
 
+    display: flex;
+    align-items: center;
+
     .add-button {
       height: 49px;
       width: 49px;
       border-width: 1px;
 
+      margin-left: 32px;
+      margin-right: 25px;
+
       span {
         font-size: 33px;
         font-family: "CeraPro-Light";
+        color: #FFFFFF;
+      }
+    }
+
+    .add-text {
+      width: 186px;
+      height: 100%;
+
+      border-bottom-width: 0.5px;
+      border-bottom-color: #707070;
+      border-bottom-style: solid;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      span {
+        font-size: 20px;
+        font-family: "CeraPro-Medium";
         color: #FFFFFF;
       }
     }
@@ -74,9 +99,56 @@
     overflow-x: hidden;
     overflow-y: scroll;
 
-    .row {
+    .trip-friend {
       height: 85px;
-      
+
+      .prof-pic {
+        height: 49px;
+        width: 49px;
+
+        margin-left: 32px;
+        margin-right: 25px;
+      }
+
+      .prof-pic-default {
+        span {
+          font-size: 2.8vh;
+        }
+      }
+
+      .name {
+        width: 186px;
+        height: 100%;
+
+        border-bottom-width: 0.5px;
+        border-bottom-color: #707070;
+        border-bottom-style: solid;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          font-size: 15px;
+          font-family: "CeraPro-Medium";
+          color: #FFFFFF;
+        }
+      }
+
+      .admin {
+        height: 100%;
+        margin-left: 16px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          font-size: 12px;
+          font-family: "CeraPro-Medium";
+          color: #FFFFFF;
+        }
+      }
     }
   }
 

@@ -8,9 +8,13 @@ import DummyPlaces from '../../components/PlaceCard/DummyData'
 import PlaceListTopBar from '../../components/AppBarTop/PlaceListTopBar';
 import Preloader from '../../components/Preloader'
 import TripDetails from '../../components/TripDetails'
+import GroupSettings from '../../components/GroupSettings';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
+
+// Import api
+import TripFriendAPI from '../../api/trip-friend';
 
 const DummyPlace = {
   place_id: 1,
@@ -30,8 +34,10 @@ class PlaceList extends React.Component {
 
     this.state = {
         places: [],
+        tripFriends: [],
         isDoneFetching: false,
-        isLoading: true
+        isLoading: true,
+        isManagingGroup: true
     };
   }
 
@@ -68,6 +74,7 @@ class PlaceList extends React.Component {
         }
         alert(error.message);
       });
+    TripFriendAPI.getTripFriends(this, tripId);
   }
 
   render() {
@@ -85,12 +92,16 @@ class PlaceList extends React.Component {
       return <Preloader/>;
     }
 
+    if (this.state.isManagingGroup) {
+      return <GroupSettings parent={this} />;
+    }
+
     const { tripId } = this.props.match.params;
 
     return (
       <div className="list-page">
         <PlaceListTopBar destination="Singapore" onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
-        <TripDetails tripId={tripId} />
+        <TripDetails tripId={tripId} parent={this} />
         { this.state.places.length === 0
           ? (
             <div className="place-container-empty">

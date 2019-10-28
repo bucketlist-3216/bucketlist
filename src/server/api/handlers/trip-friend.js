@@ -25,6 +25,10 @@ function getTripFriendsHandler(req, res) {
         .then(function (queryResponse) {
             res.json(queryResponse);
         })
+        .catch(function (err) {
+            res.status(500).end('Could not get trip friends');
+            console.log(err);
+        })
 }
 
 // Add a member to a trip (adding a member-trip association)

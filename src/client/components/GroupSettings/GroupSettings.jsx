@@ -31,21 +31,21 @@ class GroupSettings extends Component {
           }
           </span>
         </div>
-        <div className="add-friend">
-          <div className="add-button" onClick={() => this.routeChange(PATHS.citySelect())}>
-            <span>+</span>
-          </div>
-          <span>Add Members</span>
-        </div>
         <div className="friends-container">
-          {parent.state.tripFriends.map((tripFriend, key) => (
-            <div className="row">
-              <TripFriend
-                tripFriend={tripFriend}
-                isAdminShown={true}
-                key={key}
-              />
+          <div className="add-friend">
+            <div className="add-button" onClick={() => this.routeChange(PATHS.citySelect())}>
+              <span>+</span>
             </div>
+            <div className="add-text">
+              <span>Add Friends</span>
+            </div>
+          </div>
+          {parent.state.tripFriends.map((tripFriend, key) => (
+            <TripFriend
+              tripFriend={tripFriend}
+              isAdminShown={true}
+              key={key}
+            />
           ))}
         </div>
         <div className="bottom-bar">
