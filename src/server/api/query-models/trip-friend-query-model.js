@@ -20,11 +20,17 @@ class TripFriendQueryModel extends EntityQueryModel {
     }
 
     // Get all the members in this particular trip
-    getTripFriends (trip_id) {
-        return knex(this.tableName)
-            .select(this.selectableProps)
-            .where({ trip_id });
+    getTripFriends (tripId, userId) {
+        const userProperties = this.userQueryModel.selectableProps.filter((element) => element !== 'user_id');
+        const selectedColumns = userProperties.concat([`${this.tableName}.trip_friend_id`]);
+        return knex
+            .select(selectedColumns)
+            .from(this.tableName)
+            .innerJoin(this.userQueryModel.tableName, `${this.userQueryModel.tableName}.user_id`, '=', `${this.tableName}.user_id`)
+            .where({ trip_id: tripId })
+            .whereNot({ [`${this.tableName}.user_id`]: userId });
     }
+
 
     getTripFriendId (trip_id, user_id) {
         return knex(this.tableName)
