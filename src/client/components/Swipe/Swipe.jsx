@@ -12,8 +12,6 @@ import EmptyCard from './EmptyCard';
 import InfoPanel from './InfoPanel';
 import HomeButton from '../../buttons/HomeButton';
 import ListButton from '../../buttons/ListButton';
-import Img from 'react-image';
-import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -224,12 +222,7 @@ class Swipe extends Component {
   renderSwipeComplete() {
     return (
       <div className="swipe-container">
-        <div className="center-align">
-          <div className="no-card-msg">We're looking for more places</div>
-          <Img className="finding-cards-graphic" src={ 'https://place-image.s3-ap-southeast-1.amazonaws.com/progressive/preloader-globe.svg' } />
-          <br/>
-          <LoopingRhombusesSpinner className="finding-cards-spinner" />
-        </div>
+        <EmptyCard zIndex={-2}>No more cards</EmptyCard>
       </div>
     );
   }
