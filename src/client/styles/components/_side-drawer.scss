@@ -1,55 +1,39 @@
-.trip.row {
-    display: flex;
-    flex-direction: row;
-    background-color: #272727;
+.side-drawer {
+  position: fixed;
+  height: 100%;
+  width: 70%;
+  top: 0;
+  left: 0;
+  background-color: #212529;
+  box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.side-drawer-open {
+  position: fixed;
+  height: 100%;
+  width: 70%;
+  top: 0;
+  left: 0;
+  background-color: #212529;
+  box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  transform: translateX(0);
+  transition: transform 0.3s ease-in;
+
+  .side-drawer-container {
+    height: 100%;
     width: 100%;
-    height: 33.4%;
-    margin: 0;
-    padding: 0 9%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-    .trip-element {
-        display: inline-block;
-        margin-top: auto;
-        margin-bottom: auto;
+    .swipe-drawer-profile {
+      height: 10vh;
+      width: 10vh;
     }
 
-    .trip-img {
-        width: 22%;
-        margin-right: 5%;
-
-        img {
-            width: 22vw;
-            height: 22vw;
-            margin-left: 0 !important;
-            max-width: 18vh;
-            max-height: 18vh;
-            border-radius: 50%;
-        }
-    }
-
-    .trip-dest {
-        padding-left: 5%;
-        width: 58.95%;
-        height: 100%;
-        border-bottom-width: 0.0862vh;
-        border-bottom-color: #4E4E4E;
-        border-bottom-style: solid;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        span {
-            font-family: "CeraPro-Bold";
-            color: white;
-            font-size: 2.71vh;
-        }
-    }
-
-    .right-icon {
-        color: white;
-        margin-left: 5%;
-        margin-right: 5%;
-        margin-right: 0;
-    }
+  }
 }

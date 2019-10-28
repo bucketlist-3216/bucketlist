@@ -10,6 +10,8 @@ import SwipeCard from './SwipeCard/';
 import SwipeButton from './SwipeButton';
 import EmptyCard from './EmptyCard';
 import InfoPanel from './InfoPanel';
+import SideDrawer from '../SideDrawer/';
+import Backdrop from '../Backdrop/';
 import HomeButton from '../../buttons/HomeButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
@@ -35,6 +37,7 @@ class Swipe extends Component {
       initialScreenX: 0,
       previousType: 1,
       renderResult: '',
+      sideDrawerOpen: false,
     };
   }
 
@@ -149,6 +152,16 @@ class Swipe extends Component {
   }
 
   // Helper function to set state
+
+  drawerToggleClickHandler = () => {
+    this.setState(prevState => {
+      return { sideDrawerOpen: !prevState.sideDrawerOpen }
+    });
+  }
+
+  backdropClickHandler = () => {
+    this.setState({ sideDrawerOpen: false });
+  }
 
   setShowInfo(showInfo) {
     this.setState({ showInfo: showInfo });
@@ -273,15 +286,22 @@ class Swipe extends Component {
   }
 
   render() {
-    const { places, isLoading, city, swipeList } = this.state;
+    const { places, isLoading, city, swipeList, sideDrawerOpen } = this.state;
     const { tripId } = this.props.match.params;
 
     return (
       <div className="swipe">
+        {sideDrawerOpen && 
+          <Backdrop backdropClickHandler={this.backdropClickHandler} /> 
+        }
+        <SideDrawer 
+          sideDrawerOpen={sideDrawerOpen} 
+          drawerToggleClickHandler={this.drawerToggleClickHandler}
+        />
         <div className="swipe-header">
           <div className="swipe-header-sides">
             <HomeButton
-              onClick={() => this.routeChange(PATHS.trips())}
+              onClick={() => this.drawerToggleClickHandler()}
             />
           </div>
           <div>
