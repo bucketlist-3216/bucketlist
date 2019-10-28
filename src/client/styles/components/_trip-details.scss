@@ -1,5 +1,6 @@
 .trip-details {
   display: flex;
+  overflow: hidden;
 
   .trip-friends {
     width: 50%;
@@ -7,34 +8,62 @@
     border-right-width: 0.0862vh;
     border-right-color: #4E4E4E;
     border-right-style: solid;
+  }
 
-    .trip-friends-filled {
-    height: 100%;
-      margin: 0 13.83%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
+  .trip-friends-filled {
+    padding: 0 6.93%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
 
-      span {
-        font-family: "CeraPro-Bold";
-        font-size: 1.48vh;
-        color: #FFFFFF;
-      }
+    .trip-friends-filled-text {
+      position: absolute;
+      top: 5.53%;
+      width: 72.27%;
+      text-align: center;
+      font-family: "CeraPro-Bold";
+      font-size: 1.48vh;
+      color: #FFFFFF;
+      margin-bottom: 1.23vh;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-      .trip-friends-list {
-        display: block;
-        div {
-          font-family: "CeraPro-Bold";
-          font-size: 1.48vh;
-          color: #FFFFFF;
-        }
-      }
+    .trip-friends-list {
+      position: absolute;
+      top: 24%;
+      width: 72.27%;
+      display: block;
+      height: 81%;
+      overflow-x: hidden;
+      overflow-y: scroll;
     }
   }
 
   .trip-buttons {
     width: 50%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .manage-group {
+      width: 16vh;
+      height: 3.5vh;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 1.75vh;
+      display: flex;
+
+      span {
+        margin: auto;
+        color: #FFFFFF;
+        font-family: "CeraPro-Medium";
+        font-size: 1.3vh;
+      }
+    }
   }
 }

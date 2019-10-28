@@ -1,2 +1,2 @@
-import TripDetails from './TripDetails';
-export default TripDetails
+import TripFriend from './TripFriend';
+export default TripFriend

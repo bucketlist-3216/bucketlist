@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import autoBindMethods from 'class-autobind-decorator';
 
+// Import components
+import TripFriend from '../../components/TripFriend';
 import Preloader from '../../components/Preloader';
 
 // Import api
@@ -31,27 +33,23 @@ class TripDetails extends Component {
 
     return (
       <div className="trip-details">
-        <div className="trip-friends">
-          { this.state.tripFriends.length === 0
-            ? (
-              <div className="trip-friends-empty">
-                <span>No friends on this trip yet!</span>
+        { this.state.tripFriends.length === 0
+          ? (
+            <div className="trip-friends trip-friends-empty">
+              <span className="trip-friends-empty-text">No friends on this trip yet!</span>
+            </div>
+          )
+          : (
+            <div className="trip-friends trip-friends-filled">
+              <span className="trip-friends-filled-text">Friends on this trip:</span>
+              <div className="trip-friends-list">
+                {this.state.tripFriends.map((tripFriend, key) =>
+                  <TripFriend tripFriend={tripFriend} key={key} />
+                )}
               </div>
-            )
-            : (
-              <div className="trip-friends-filled">
-                <span>Friends on this trip:</span>
-                <br />
-                <div className="trip-friends-list">
-                  {this.state.tripFriends.map((tripFriend, key) =>
-                    <div>{tripFriend.username}</div>
-                    //<TripFriend tripFriend={tripFriend} key={key} />
-                  )}
-                </div>
-              </div>
-            )
-          }
-        </div>
+            </div>
+          )
+        }
         <div className="trip-buttons">
           <div className="manage-group">
             <span>Manage Group</span>
