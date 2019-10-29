@@ -294,7 +294,7 @@ class Swipe extends Component {
   }
 
   render() {
-    const { places, isLoading, city, swipeList, sideDrawerOpen } = this.state;
+    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer } = this.state;
     const { tripId } = this.props.match.params;
 
     return (
@@ -331,7 +331,8 @@ class Swipe extends Component {
             />
           </div>
         </div>
-        {places.length > 0 ? this.renderSwiping() : this.renderSwipeComplete()}
+        { (places.length > 0 || listBuffer.attractions > 0 || listBuffer.food > 0) 
+          ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }

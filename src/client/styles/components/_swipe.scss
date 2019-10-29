@@ -242,5 +242,16 @@
         width: 100%;
       }
     }
+
+    .swipe-buttons {
+      width: 100%;
+      position: absolute;
+      bottom: 2.83%;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 5.6%;
+    }
+    
   }
 }
