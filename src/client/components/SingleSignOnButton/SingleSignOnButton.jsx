@@ -31,14 +31,14 @@ const SingleSignOnButton = props => {
       if (platform === 'google') {
         userData = {
           email: response.profileObj.email,
-          username: response.profileObj.name,
+          name: response.profileObj.name,
           token: response.Zi.id_token,
           platform
         };
       } else if (platform === 'facebook') {
         userData = {
           email: response.email,
-          username: response.name,
+          name: response.name,
           token: response.accessToken,
           platform
         };
