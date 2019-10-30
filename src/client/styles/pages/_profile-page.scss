@@ -3,6 +3,7 @@
   height: 100%;
   width: 100%;
   color: rgba(255,255,255,1);
+  font-family: "CeraPro";
 
   .header-space{
     height: 3vh;
@@ -49,18 +50,25 @@
     .detail-row {
       display: block;
       height: 54px;
+      width: 100%;
+      margin: auto;
+      padding: 25px 5vw;
 
       .detail-field {
         display: inline-block;
-        font-weight: bold;
+        font-family: "CeraPro-Bold";
         left: 5vw;
         vertical-align: middle;
+        font-size: 13px;
+        width: 33vw;
       }
 
       .detail-value {
         display: inline-block;
         left: 36vw;
         vertical-align: middle;
+        font-size: 11px;
+        width: 57vw;
       }
     }
   }

@@ -8,7 +8,11 @@ class ProfilePage extends React.Component {
       isDoneFetching: false,
       isLoading: true,
       coverPictureLink: '../../../../assets/demo/MarinaBaySands.jpg',
-      profilePictureLink: '../../../../assets/demo/YaKunKayaToast.jpg'
+      profilePictureLink: '../../../../assets/demo/YaKunKayaToast.jpg',
+      name: 'Kaya Toast',
+      username: 'kayaAndButter',
+      location: 'Singapore',
+      email: 'ilovekaya@toast.com'
     };
   }
 
