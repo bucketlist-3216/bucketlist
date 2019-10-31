@@ -14,7 +14,8 @@ class ProfilePage extends React.Component {
       name: 'Kaya Toast',
       username: 'kayaAndButter',
       location: 'Singapore',
-      email: 'ilovekaya@toast.com'
+      email: 'ilovekaya@toast.com',
+      changesMade: false
     };
   }
 
@@ -57,19 +58,27 @@ class ProfilePage extends React.Component {
       <div className="details-container">
         <div className="detail-row">
           <label className="detail-field">Name</label>
-          <label className="detail-value">{this.state.name}</label>
+          <input className="detail-value" type="text" value={this.state.name}
+            onChange={(event)=>this.setState({changesMade:true, name: event.target.value})}
+          />
         </div>
         <div className="detail-row">
           <label className="detail-field">Username</label>
-          <label className="detail-value">{this.state.username}</label>
+          <input className="detail-value" type="text" value={this.state.username}
+            onChange={(event)=>this.setState({changesMade:true, username: event.target.value})}
+          />
         </div>
         <div className="detail-row">
           <label className="detail-field">Location</label>
-          <label className="detail-value">{this.state.location}</label>
+          <input className="detail-value" type="text" value={this.state.location}
+            onChange={(event)=>this.setState({changesMade:true, location: event.target.value})}
+          />
         </div>
         <div className="detail-row">
           <label className="detail-field">Email</label>
-          <label className="detail-value">{this.state.email}</label>
+          <input className="detail-value" type="text" value={this.state.email}
+            onChange={(event)=>this.setState({changesMade:true, email: event.target.value})}
+          />
         </div>
       </div>
     </div>

@@ -67,10 +67,13 @@
 
       .detail-value {
         display: inline-block;
+        font-family: "CeraPro-Regular";
         left: 36vw;
         vertical-align: middle;
         font-size: 11px;
         width: 57vw;
+        background-color: #555555;
+        border: 1px white solid;
       }
     }
   }
