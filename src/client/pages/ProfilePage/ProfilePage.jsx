@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import getUserData from "../../api/user.js";
 import Preloader from "../../components/Preloader/index.js";
+import axios from "axios";
+import APIS from "../../constants/apis";
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -17,6 +19,13 @@ class ProfilePage extends React.Component {
       email: 'ilovekaya@toast.com',
       changesMade: false
     };
+    this.coverUploadRef = React.createRef();
+    this.profileUploadRef = React.createRef();
+    this.changeCoverPic = this.changeCoverPic.bind(this);
+    this.changeProfilePic = this.changeProfilePic.bind(this);
+    this.handleCoverPicChange = this.handleCoverPicChange.bind(this)
+    this.handleProfilePicChange = this.handleProfilePicChange.bind(this)
+    this.sendForm = this.sendForm.bind(this)
   }
 
   routeChange(pathname) {
@@ -33,13 +42,68 @@ class ProfilePage extends React.Component {
         name: name,
         username: username,
         location: location,
-        email: email
+        email: email,
+        profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+        coverPictureLink: cover_photo ? cover_photo : '../../../../assets/common/default-landscape.jpg',
+        nameChanged: false,
+        usernameChanged: false,
+        locationChanged: false,
+        emailChanged: false,
+        profilePhotoChanged: false,
+        coverPhotoChanged: false
       });
     });
   }
 
-  changePicture() {
+  changeCoverPic() {
+    this.coverUploadRef.current.click();
+  }
+  changeProfilePic(){
+    this.profileUploadRef.current.click();
+  }
 
+  handleCoverPicChange(event) {
+    this.setState({
+      coverPhotoChanged: true,
+      changesMade:true, 
+      coverPictureLink: URL.createObjectURL(event.target.files[0]),
+      coverPictureFile: event.target.files[0]
+    })
+  }
+  handleProfilePicChange(event) {
+    this.setState({
+      profilePhotoChanged: true,
+      changesMade:true, 
+      profilePictureLink: URL.createObjectURL(event.target.files[0]),
+      profilePictureFile: event.target.files[0]
+    })
+  }
+
+  sendForm() {
+    var formData = new FormData();
+    if (this.state.nameChanged) formData.set('name', this.state.name);
+    if (this.state.usernameChanged) formData.set('username', this.state.username);
+    if (this.state.locationChanged) formData.set('location', this.state.location);
+    if (this.state.emailChanged) formData.set('email', this.state.email);
+    if (this.state.profilePhotoChanged) formData.append('profilePhotoData', this.state.profilePictureFile);
+    if (this.state.coverPhotoChanged) formData.append('coverPhotoData', this.state.coverPictureFile);
+    axios.request({
+      url: APIS.user(localStorage.getItem('userId')),
+      method: 'put',
+      data: formData,
+      headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      }
+    }).catch(function (error) {
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('platform');
+        instance.routeChange(PATHS.login);
+        return;
+      }
+      alert(error.message);
+    });
   }
 
   render() {
@@ -49,35 +113,42 @@ class ProfilePage extends React.Component {
       <div className="header-space"></div>
       <div className="buttons-container">
         <label className="cancel-button" onClick={this.props.history.goBack}>Cancel</label>
-        <label className="save-button">Save</label>
+        {this.state.changesMade ? 
+        <label className="save-button" onClick={this.sendForm}>Save</label>
+        :
+        <label className="save-button-disabled">Save</label>}
       </div>
       <div className="pictures-container">
-        <img className="cover-picture" src={this.state.coverPictureLink} onClick={this.changeCoverPic}></img>
-        <img className="profile-picture" src={this.state.profilePictureLink} onclick={this.changeProfilePic}></img>
+        <img className="cover-picture" src={this.state.coverPictureLink} onClick={this.changeCoverPic}/>
+        <input type="file" id="cover-pic-file" style={{display: "none"}} 
+          ref={this.coverUploadRef} accept="image/*" onChange={this.handleCoverPicChange}/>
+        <img className="profile-picture" src={this.state.profilePictureLink} onClick={this.changeProfilePic}/>
+        <input type="file" id="profile-pic-file" style={{display: "none"}}
+          ref={this.profileUploadRef} accept="image/*" onChange={this.handleProfilePicChange}/>
       </div>
       <div className="details-container">
         <div className="detail-row">
           <label className="detail-field">Name</label>
           <input className="detail-value" type="text" value={this.state.name}
-            onChange={(event)=>this.setState({changesMade:true, name: event.target.value})}
+            onChange={(event)=>this.setState({nameChanged:true, changesMade:true, name: event.target.value})}
           />
         </div>
         <div className="detail-row">
           <label className="detail-field">Username</label>
           <input className="detail-value" type="text" value={this.state.username}
-            onChange={(event)=>this.setState({changesMade:true, username: event.target.value})}
+            onChange={(event)=>this.setState({usernameChanged:true, changesMade:true, username: event.target.value})}
           />
         </div>
         <div className="detail-row">
           <label className="detail-field">Location</label>
           <input className="detail-value" type="text" value={this.state.location}
-            onChange={(event)=>this.setState({changesMade:true, location: event.target.value})}
+            onChange={(event)=>this.setState({locationChanged:true, changesMade:true, location: event.target.value})}
           />
         </div>
         <div className="detail-row">
           <label className="detail-field">Email</label>
           <input className="detail-value" type="text" value={this.state.email}
-            onChange={(event)=>this.setState({changesMade:true, email: event.target.value})}
+            onChange={(event)=>this.setState({emailChanged:true, changesMade:true, email: event.target.value})}
           />
         </div>
       </div>

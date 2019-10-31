@@ -22,6 +22,11 @@
     .save-button {
       float: right;
     }
+    
+    .save-button-disabled {
+      float: right;
+      color: #555555;
+    }
   }
 
   .pictures-container {
