@@ -1,0 +1,78 @@
+.profile-banner {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100vw;
+  height: 28vh;
+  border-bottom: 0.7px #555555 solid;
+
+  .photos-container {
+    height: calc(14vh + 30px);
+
+    .cover-photo {
+      position: absolute;
+      height: 14vh;
+      width: 100vw;
+    }
+
+    .profile-and-button-container {
+      position: absolute;
+      height: 60px;
+      top: calc(14vh - 30px);
+
+      .profile-photo {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        position: relative;
+        left: 6vw;
+        border: 1px rgba(255,255,255,1);
+        background-color: #555555;
+        z-index: 1;
+        float:left;
+      }
+
+      .edit-button {
+        text-align: center;
+        vertical-align: middle;
+        width: 70px;
+        font-size: 8px;
+        font-family: 'CeraPro';
+        color: rgba(255,255,255,1);
+        border: 2px rgba(255,255,255,1) solid;
+        border-radius: 8px;
+        bottom: 0px;
+        position: absolute;
+        left: calc(95vw - 70px);
+      }
+    }
+  }
+  .details-container {
+    display: block;
+    color: rgba(255,255,255,1);
+    margin-left: 6vw;
+    font-style: "CeraPro-Regular";
+    
+
+    .name {
+      display: block;
+      font-style: "CeraPro-Bold";
+      font-size: 15px;
+      margin-bottom: 0px;
+    }
+    .username {
+      display: block;
+      font-size: 11px;
+    }
+    .location {
+      display: block;
+      color: #8D8D8D;
+      font-size: 10px;
+    }
+    .trip-count {
+      display: block;
+      color: #8D8D8D;
+      font-size: 10px;
+    }
+  }
+}
