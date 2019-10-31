@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import getUserData from "../../api/user.js";
+import Preloader from "../../components/Preloader/index.js";
 
 class ProfilePage extends React.Component {
-    constructor(props) {
+  constructor(props) {
     super(props);
 
     this.state = {
       isDoneFetching: false,
       isLoading: true,
-      coverPictureLink: '../../../../assets/demo/MarinaBaySands.jpg',
-      profilePictureLink: '../../../../assets/demo/YaKunKayaToast.jpg',
+      coverPictureLink: '../../../../assets/common/default-landscape.jpg',
+      profilePictureLink: '../../../../assets/common/user-icon.png',
       name: 'Kaya Toast',
       username: 'kayaAndButter',
       location: 'Singapore',
@@ -22,11 +24,25 @@ class ProfilePage extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.setState({ isLoading: true });
+    getUserData(this, localStorage.getItem("userId")).then(() => {
+      let {user_id, username, email, google_id, facebook_id, temporary, location, name, profile_photo, cover_photo} = this.state.userData[0];
+      this.setState({
+        name: name,
+        username: username,
+        location: location,
+        email: email
+      });
+    });
+  }
+
   changePicture() {
 
   }
 
   render() {
+    if (this.state.isLoading) return <Preloader/>;
     return (
     <div className="profile-page">
       <div className="header-space"></div>
