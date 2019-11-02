@@ -194,11 +194,12 @@ class Swipe extends Component {
   imageChange(screenX, value) {
     const delta = Math.abs(screenX - this.state.initialScreenX);
     if (delta < 10) {
+      var numOfImgs = this.state.places[0].images.length;
       var imgIdx = this.state.imageIndex;
       if (value === "previous") {
-        imgIdx = Math.max(0, imgIdx - 1);
+        imgIdx = ((((imgIdx - 1) % numOfImgs) + numOfImgs) % numOfImgs);
       } else {
-        imgIdx = Math.min(this.state.places[0].images.length - 1, imgIdx + 1);
+        imgIdx = (imgIdx + 1) % numOfImgs;
       }
       this.setState({ imageIndex: imgIdx });
     }
