@@ -57,6 +57,14 @@ class TripsPage extends Component {
 
     if (this.state.isLoading) {
       return (<Preloader />);
+    } else if (localStorage.getItem('platform') === 'jwt') {
+      const {trips} = this.state;
+      if (trips.length === 0) {
+        this.routeChange(PATHS.citySelect());
+      } else {
+        this.routeChange(PATHS.list(trips[0]['trip_id']));
+      }
+      return null;
     } else { //Logged in as proper user
       const { trips } = this.state;
       let tripsContainer = ""
