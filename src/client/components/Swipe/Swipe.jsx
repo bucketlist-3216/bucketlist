@@ -239,7 +239,12 @@ class Swipe extends Component {
     );
   }
 
-  renderSwipeComplete() {
+  renderSwipeComplete(listBuffer) {
+    if (this.state.initialSetup === false) {
+      if (listBuffer.attractions.length > 0 || listBuffer.food.length > 0) {
+        this.setState({ initialSetup: true });
+      }
+    }
     return (
       <div className="swipe-container">
         <div className="center-align">
@@ -331,8 +336,8 @@ class Swipe extends Component {
             />
           </div>
         </div>
-        { (places.length > 0 || listBuffer.attractions > 0 || listBuffer.food > 0) 
-          ? this.renderSwiping() : this.renderSwipeComplete()}
+        { (places.length > 0) 
+          ? this.renderSwiping() : this.renderSwipeComplete(listBuffer)}
       </div>
     );
   }
