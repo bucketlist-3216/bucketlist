@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 const Compute = require('../../compute');
 const validateRequest = require('../validate');
 const settings = require('../../config/settings.js');
@@ -20,7 +22,7 @@ if (settings.validate) {
 
 router.post('/', addUserHandler);
 router.get('/:userId', getUserHandler);
-router.put('/:userId', updateUserHandler);
+router.put('/:userId', upload.fields([{ name: 'cover-pic-file', maxCount: 1 }, { name: 'profile-pic-file', maxCount: 1 }]), updateUserHandler);
 router.delete('/:userId', deleteUserHandler);
 
 /*********** Implement Request Handlers **********/
@@ -48,6 +50,9 @@ function getUserHandler(req, res) {
 
 // TODO: Implement this operation
 function updateUserHandler(req, res) {
+    textFields = req.body;
+    fileFields = req.files;
+    console.log(fileFields);
     res.end();
 }
 

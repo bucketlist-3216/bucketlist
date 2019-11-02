@@ -85,8 +85,8 @@ class ProfilePage extends React.Component {
     if (this.state.usernameChanged) formData.set('username', this.state.username);
     if (this.state.locationChanged) formData.set('location', this.state.location);
     if (this.state.emailChanged) formData.set('email', this.state.email);
-    if (this.state.profilePhotoChanged) formData.append('profilePhotoData', this.state.profilePictureFile);
-    if (this.state.coverPhotoChanged) formData.append('coverPhotoData', this.state.coverPictureFile);
+    if (this.state.profilePhotoChanged) formData.append('profile-pic-file', this.state.profilePictureFile);
+    if (this.state.coverPhotoChanged) formData.append('cover-pic-file', this.state.coverPictureFile);
     axios.request({
       url: APIS.user(localStorage.getItem('userId')),
       method: 'put',
