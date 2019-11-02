@@ -39,6 +39,8 @@ class Swipe extends Component {
       renderResult: '',
       initialSetup: false,
       sideDrawerOpen: false,
+      numOfListRenders: 0,
+      emptyListTillRefresh: false,
     };
   }
 
@@ -103,7 +105,7 @@ class Swipe extends Component {
           instance.setState({ hasNext: false });
         }
         instance.setState({ listBuffer: response.data });
-        if (instance.swipeList === 1) {
+        if (instance.state.swipeList === 2) {
           instance.setState({ places: response.data['attractions']});
         } else {
           instance.setState({ places: response.data['food']});
@@ -117,6 +119,8 @@ class Swipe extends Component {
         }
         alert(error.message);
       });
+
+    this.setState({ numOfListRenders: this.state.numOfListRenders + 1})
   }
 
   castVote(place) {
@@ -298,9 +302,41 @@ class Swipe extends Component {
     };
   }
 
+  /* This method waits for 20 render times to register the last location card's voteCount() effect.
+     It then calls getPlacesToSwipe() and continuously render for 30 times to display an updated location list. */
+  bufferRender(places, emptyListTillRefresh, numOfListRenders) {
+    if (places.length < 1) {
+      if (!emptyListTillRefresh) {
+        if (numOfListRenders < 25) {
+          this.setState({ numOfListRenders: this.state.numOfListRenders + 1});
+          if (numOfListRenders > 20) {
+            this.getPlacesToSwipe();
+            this.setState({ emptyListTillRefresh: true});
+          }
+        }
+      } else {
+        if (numOfListRenders < 50) {
+          this.setState({ numOfListRenders: this.state.numOfListRenders + 1});
+        } 
+      }
+    }
+
+    if (places.length > 0 && numOfListRenders > 0) {
+      this.setState({ numOfListRenders : 0 });
+      this.setState({ emptyListTillRefresh: false});
+    }
+  }
+
   render() {
-    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer } = this.state;
+    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh } = this.state;
     const { tripId } = this.props.match.params;
+
+    this.bufferRender(places, emptyListTillRefresh, numOfListRenders);
+
+    if (places.length > 0 && numOfListRenders > 0) {
+      this.setState({ numOfListRenders : 0 });
+      this.setState({ emptyListTillRefresh: false});
+    }
 
     return (
       <div className="swipe">
