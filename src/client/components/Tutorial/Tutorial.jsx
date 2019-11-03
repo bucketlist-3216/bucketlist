@@ -35,15 +35,12 @@ class Tutorial extends Component {
   }
 
   previousTutorial(event) {
-    console.log('Previous tutorial from ', this.state.tutorialIndex)
     var tutIdx = this.state.tutorialIndex;
     tutIdx = Math.min(0, tutIdx - 1);
     this.setState({ tutorialIndex: tutIdx });
   }
 
   nextTutorial(event) {
-    console.log('Next tutorial from ', this.state.tutorialIndex)
-
     if (this.state.tutorialIndex == this.state.tutorialMsgs.length - 1) {
       this.routeChange(PATHS.citySelect());
     }
