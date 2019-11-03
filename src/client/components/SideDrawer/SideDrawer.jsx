@@ -3,53 +3,59 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faGlobeAmericas, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import PATHS from '../../constants/paths';
-import HomeButton from '../../buttons/HomeButton';
+import ProfileButton from '../../buttons/ProfileButton';
 
 const SideDrawer = props => {
   const { sideDrawerOpen, drawerToggleClickHandler, routeChange } = props;
   let sideDrawerClassName = sideDrawerOpen ? "side-drawer-open" : "side-drawer";
 
-  return (
-    <nav className={sideDrawerClassName}>
-      <div className="side-drawer-container">
-        <div className="swipe-drawer-profile">
-          <HomeButton
-            onClick={() => drawerToggleClickHandler()}
-          />
-        </div>
-        <div className="swipe-drawer-name">
-          {"Name"}
-        </div>
-        <div className="swipe-drawer-username">
-          {"@username"}
-        </div>
-        <div className="swipe-drawer-tab-container" onClick={() => alert('Coming soon!')}>
-          <div>
-            <FontAwesomeIcon icon={ faUser } size="lg"></FontAwesomeIcon>
+  const handleLogOut = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('platform');
+    routeChange(PATHS.home)
+  }
+
+  if (localStorage.getItem('platform') == 'google') {
+    return (
+      <nav className={sideDrawerClassName}>
+        <div className="side-drawer-container">
+          <div className="swipe-drawer-profile">
+            <ProfileButton
+              onClick={() => drawerToggleClickHandler()}
+            />
           </div>
-          <div className="swipe-drawer-tab">
-            {"Profile"}
+          <div className="swipe-drawer-name">
+            {"Name"}
           </div>
-        </div>
-        <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.trips())}>
-          <div>
-            <FontAwesomeIcon icon={ faGlobeAmericas } size="lg"></FontAwesomeIcon>
+          <div className="swipe-drawer-username">
+            {"@username"}
           </div>
-          <div className="swipe-drawer-tab">
-            {"Trips"}
+          <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.profile)}>
+            <div>
+              <FontAwesomeIcon icon={ faUser } size="lg"></FontAwesomeIcon>
+            </div>
+            <div className="swipe-drawer-tab">
+              {"Profile"}
+            </div>
           </div>
-        </div>
-        <div className="swipe-drawer-tab-container" onClick={() => alert('Coming soon!')}>
-          <div>
-            <FontAwesomeIcon icon={ faCog } size="lg"></FontAwesomeIcon>
+          <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.trips())}>
+            <div>
+              <FontAwesomeIcon icon={ faGlobeAmericas } size="lg"></FontAwesomeIcon>
+            </div>
+            <div className="swipe-drawer-tab">
+              {"Trips"}
+            </div>
           </div>
-          <div className="swipe-drawer-tab">
-            {"Settings"}
+          <div className="swipe-drawer-tab-container" onClick={() => alert('Coming soon!')}>
+            <div>
+              <FontAwesomeIcon icon={ faCog } size="lg"></FontAwesomeIcon>
+            </div>
+            <div className="swipe-drawer-tab">
+              {"Settings"}
+            </div>
           </div>
-        </div>
-        { 
-          localStorage.getItem('platform') == 'google' &&
-          <div className="swipe-drawer-tab-last" onClick={() => alert('Coming soon!')}>
+          <div className="swipe-drawer-tab-last" onClick={() => handleLogOut()}>
             <div>
               <FontAwesomeIcon icon={ faSignOutAlt } size="xs"></FontAwesomeIcon>
             </div>
@@ -57,10 +63,33 @@ const SideDrawer = props => {
               {"Log Out"}
             </div>
           </div>
-        }
-      </div>
-    </nav>
-  )
+        </div>
+      </nav>
+    )
+  } else {
+    return (
+      <nav className={sideDrawerClassName}>
+        <div className="side-drawer-container">
+          <div className="swipe-drawer-profile">
+            <ProfileButton
+              onClick={() => drawerToggleClickHandler()}
+            />
+          </div>
+          <div className="swipe-drawer-name">
+            {"Guest User"}
+          </div>
+          <div className="swipe-drawer-guest">
+            <div>
+              {"You are currently signed in as a guest."}
+            </div>
+            <div>
+              {"Create an account here to save your trip!"}
+            </div>
+          </div>
+        </div>
+      </nav>
+    )
+  }
 };
 
 export default SideDrawer;

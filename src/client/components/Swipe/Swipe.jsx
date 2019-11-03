@@ -12,7 +12,7 @@ import EmptyCard from './EmptyCard';
 import InfoPanel from './InfoPanel';
 import SideDrawer from '../SideDrawer/';
 import Backdrop from '../Backdrop/';
-import HomeButton from '../../buttons/HomeButton';
+import ProfileButton from '../../buttons/ProfileButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
 import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
@@ -39,6 +39,9 @@ class Swipe extends Component {
       renderResult: '',
       initialSetup: false,
       sideDrawerOpen: false,
+      numOfListRenders: 0,
+      emptyListTillRefresh: false,
+      lastVoted: '',
     };
   }
 
@@ -102,12 +105,27 @@ class Swipe extends Component {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
+
         instance.setState({ listBuffer: response.data });
-        if (instance.swipeList === 1) {
-          instance.setState({ places: response.data['attractions']});
+
+        if (instance.state.swipeList === 2) {
+          //console.log(response.data['attractions'][0])
+          //console.log(instance.state.lastVoted)
+          if (response.data['attractions'][0] == instance.state.lastVoted) {
+            instance.setState({ places: response.data['attractions'].slice(1, response.data['attractions'].length)});
+          } else {
+            instance.setState({ places: response.data['attractions']});
+          }
+          //instance.setState({ places: response.data['attractions']});
         } else {
-          instance.setState({ places: response.data['food']});
+          if (response.data['food'][0] == instance.state.lastVoted) {
+            instance.setState({ places: response.data['food'].slice(1, response.data['food'].length)});
+          } else {
+            instance.setState({ places: response.data['food']});
+          }
+          //instance.setState({ places: response.data['food']});
         }
+
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
@@ -117,6 +135,8 @@ class Swipe extends Component {
         }
         alert(error.message);
       });
+
+    this.setState({ numOfListRenders: this.state.numOfListRenders + 1})
   }
 
   castVote(place) {
@@ -149,6 +169,7 @@ class Swipe extends Component {
           }
           alert(error.message);
         });
+      this.setState({ lastVoted: place})
     };
   }
 
@@ -190,11 +211,12 @@ class Swipe extends Component {
   imageChange(screenX, value) {
     const delta = Math.abs(screenX - this.state.initialScreenX);
     if (delta < 10) {
+      var numOfImgs = this.state.places[0].images.length;
       var imgIdx = this.state.imageIndex;
       if (value === "previous") {
-        imgIdx = Math.max(0, imgIdx - 1);
+        imgIdx = ((((imgIdx - 1) % numOfImgs) + numOfImgs) % numOfImgs);
       } else {
-        imgIdx = Math.min(this.state.places[0].images.length - 1, imgIdx + 1);
+        imgIdx = (imgIdx + 1) % numOfImgs;
       }
       this.setState({ imageIndex: imgIdx });
     }
@@ -231,7 +253,7 @@ class Swipe extends Component {
         >
           <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo} 
             imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} 
-            renderResult={renderResult} />
+            renderResult={renderResult} imageIndex={imageIndex} numOfImgs={this.state.places[0].images.length} />
           <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
         </Swipeable>
         {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
@@ -239,7 +261,12 @@ class Swipe extends Component {
     );
   }
 
-  renderSwipeComplete() {
+  renderSwipeComplete(listBuffer) {
+    if (this.state.initialSetup === false) {
+      if (listBuffer.attractions.length > 0 || listBuffer.food.length > 0) {
+        this.setState({ initialSetup: true });
+      }
+    }
     return (
       <div className="swipe-container">
         <div className="center-align">
@@ -293,9 +320,41 @@ class Swipe extends Component {
     };
   }
 
+  /* This method waits for 20 render times to register the last location card's voteCount() effect.
+     It then calls getPlacesToSwipe() and continuously render for 30 times to display an updated location list. */
+  bufferRender(places, emptyListTillRefresh, numOfListRenders) {
+    if (places.length < 1) {
+      if (!emptyListTillRefresh) {
+        if (numOfListRenders < 25) {
+          this.setState({ numOfListRenders: this.state.numOfListRenders + 1});
+          if (numOfListRenders > 20) {
+            this.getPlacesToSwipe();
+            this.setState({ emptyListTillRefresh: true});
+          }
+        }
+      } else {
+        if (numOfListRenders < 50) {
+          this.setState({ numOfListRenders: this.state.numOfListRenders + 1});
+        } 
+      }
+    }
+
+    if (places.length > 0 && numOfListRenders > 0) {
+      this.setState({ numOfListRenders : 0 });
+      this.setState({ emptyListTillRefresh: false});
+    }
+  }
+
   render() {
-    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer } = this.state;
+    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh } = this.state;
     const { tripId } = this.props.match.params;
+
+    this.bufferRender(places, emptyListTillRefresh, numOfListRenders);
+
+    if (places.length > 0 && numOfListRenders > 0) {
+      this.setState({ numOfListRenders : 0 });
+      this.setState({ emptyListTillRefresh: false});
+    }
 
     return (
       <div className="swipe">
@@ -309,7 +368,7 @@ class Swipe extends Component {
         />
         <div className="swipe-header">
           <div className="swipe-header-sides">
-            <HomeButton
+            <ProfileButton
               onClick={() => this.drawerToggleClickHandler()}
             />
           </div>
@@ -331,8 +390,8 @@ class Swipe extends Component {
             />
           </div>
         </div>
-        { (places.length > 0 || listBuffer.attractions > 0 || listBuffer.food > 0) 
-          ? this.renderSwiping() : this.renderSwipeComplete()}
+        { (places.length > 0) 
+          ? this.renderSwiping() : this.renderSwipeComplete(listBuffer)}
       </div>
     );
   }
