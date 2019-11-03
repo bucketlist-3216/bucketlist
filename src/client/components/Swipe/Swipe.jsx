@@ -41,6 +41,7 @@ class Swipe extends Component {
       sideDrawerOpen: false,
       numOfListRenders: 0,
       emptyListTillRefresh: false,
+      lastVoted: '',
     };
   }
 
@@ -104,12 +105,27 @@ class Swipe extends Component {
         if (response.data.length == 0) {
           instance.setState({ hasNext: false });
         }
+
         instance.setState({ listBuffer: response.data });
+
         if (instance.state.swipeList === 2) {
-          instance.setState({ places: response.data['attractions']});
+          //console.log(response.data['attractions'][0])
+          //console.log(instance.state.lastVoted)
+          if (response.data['attractions'][0] == instance.state.lastVoted) {
+            instance.setState({ places: response.data['attractions'].slice(1, response.data['attractions'].length)});
+          } else {
+            instance.setState({ places: response.data['attractions']});
+          }
+          //instance.setState({ places: response.data['attractions']});
         } else {
-          instance.setState({ places: response.data['food']});
+          if (response.data['food'][0] == instance.state.lastVoted) {
+            instance.setState({ places: response.data['food'].slice(1, response.data['food'].length)});
+          } else {
+            instance.setState({ places: response.data['food']});
+          }
+          //instance.setState({ places: response.data['food']});
         }
+
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
@@ -153,6 +169,7 @@ class Swipe extends Component {
           }
           alert(error.message);
         });
+      this.setState({ lastVoted: place})
     };
   }
 
