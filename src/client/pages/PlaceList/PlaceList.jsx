@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
-
 import axios from 'axios';
+
 import PlaceCard from '../../components/PlaceCard/PlaceCard'
 import DummyPlaces from '../../components/PlaceCard/DummyData'
 import PlaceListTopBar from '../../components/AppBarTop/PlaceListTopBar';
 import Preloader from '../../components/Preloader'
+import TripDetails from '../../components/TripDetails'
+import GroupSettings from '../../components/GroupSettings';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
+
+// Import api
+import TripFriendAPI from '../../api/trip-friend';
 
 const DummyPlace = {
   place_id: 1,
@@ -29,8 +34,10 @@ class PlaceList extends React.Component {
 
     this.state = {
         places: [],
+        tripFriends: [],
         isDoneFetching: false,
-        isLoading: true
+        isLoading: true,
+        isManagingGroup: false
     };
   }
 
@@ -67,6 +74,7 @@ class PlaceList extends React.Component {
         }
         alert(error.message);
       });
+    TripFriendAPI.getTripFriends(this, tripId);
   }
 
   render() {
@@ -84,44 +92,48 @@ class PlaceList extends React.Component {
       return <Preloader/>;
     }
 
-    const { tripId } = this.props.match.params;
-
-    if (this.state.places.length === 0) {
-      return (
-        <div className="list-page">
-          <PlaceListTopBar destination="Singapore" onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
-          <div className="place-container-empty">
-            <span>
-              No places shortlisted yet! <br/>
-              Start exploring now.
-            </span>
-            <Button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
-              Let's Go!
-            </Button>
-          </div>
-        </div>
-      );
+    if (this.state.isManagingGroup) {
+      return <GroupSettings parent={this} />;
     }
+
+    const { tripId } = this.props.match.params;
 
     return (
       <div className="list-page">
         <PlaceListTopBar destination="Singapore" onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
-        <div className="place-container">{
-          this.state.places.map((place, key) => (
-            <PlaceCard
-              key={key}
-              place={place}
-            />
-          ))
-        }</div>
-        <Button className="swipe-button-bottom" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
-          Let's Explore
-        </Button>
+        <TripDetails tripId={tripId} parent={this} />
+        { this.state.places.length === 0
+          ? (
+            <div className="place-container-empty">
+              <span>
+                No places shortlisted yet! <br/>
+                Start exploring now.
+              </span>
+              <Button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+                Let's Go!
+              </Button>
+            </div>
+          )
+          : (
+            <div className="place-container">{
+              this.state.places.map((place, key) => (
+                <PlaceCard
+                  key={key}
+                  place={place}
+                />
+              ))
+            }</div>
+          )
+        }
+        { this.state.places.length > 0 &&
+          (
+            <Button className="swipe-button-bottom" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+              Let's Explore
+            </Button>
+          )
+        }
       </div>
-    )
-  }
-  foo() {
-    return null;
+    );
   }
 }
 

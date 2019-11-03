@@ -1,0 +1,135 @@
+.modal {
+  display: flex !important;
+  justify-content: center;
+  .add-friend-modal.modal-dialog.modal-xl {
+    position: absolute;
+    bottom: 0;
+
+    width: 100%;
+    height: 95%;
+    margin: 0;
+
+    .modal-content {
+      width: 100%;
+      height: 100%;
+
+      border: none;
+      border-radius: 9vh 9vh 0 0;
+      background-color: rgba(100,100,100,0.95);
+
+      .modal-header {
+        height: 28.5%;
+        border: none;
+
+        .close {
+          position: absolute;
+          top: 5.2%;
+          left: 10.7%;
+          float: left;
+          width: 3.94vh;
+          height: 3.94vh;
+          border-radius: 50%;
+          -moz-border-radius: 50%;
+          -webkit-border-radius: 50%;
+          background-color: rgba(255,255,255,0.3);
+          background-repeat: no-repeat;
+          border: none;
+          cursor: pointer;
+          overflow: hidden;
+          outline: none;
+          align-content: center;
+          align-items: center;
+          opacity: 1;
+
+          span {
+            color: #FFFFFF;
+            text-align: center;
+            font-family: "IkonoMiniL-5";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 3.7vh;
+            line-height: 3.7vh;
+            text-shadow: none;
+            position: absolute;
+            top: -11%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+
+        .modal-title {
+          position: relative;
+          padding-top: 6.5vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .icon {
+            font-family: "IkonoMiniL-5";
+            font-size: 4.93vh;
+            color: #FFFFFF;
+            margin-bottom: 3vh;
+          }
+
+          .text {
+            font-family: "CeraPro-Bold";
+            font-size: 3.69vh;
+            color: #FFFFFF;
+          }
+        }
+      }
+
+      .modal-body {
+        width: 100%;
+
+        form {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .form-group {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            ::placeholder {
+              color: #9A9A9A;
+            }
+
+            .email-field {
+              width: 82%;
+              height: 4.4vh;
+
+              border-radius: 2.2vh;
+              border: none;
+              box-shadow: none;
+
+              text-align: center;
+              font-family: "CeraPro-Bold";
+              font-size: 1.5vh;
+              color: #272727;
+            }
+          }
+
+          .submit-button {
+            width: 82%;
+            height: 4.4vh;
+            margin-top: 3.94vh;
+
+            border-radius: 2.2vh;
+            border: none;
+            box-shadow: none;
+            background-color: #C78C68;
+
+            text-align: center;
+            font-family: "CeraPro-Bold";
+            font-size: 1.5vh;
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
+  }
+}
