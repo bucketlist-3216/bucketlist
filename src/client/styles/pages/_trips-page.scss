@@ -67,7 +67,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
 
-    .icon {
+    .add-button {
       width: 9.11vh;
       height: 9.11vh;
       border-radius: 50%;
@@ -75,7 +75,7 @@ html, body {
       margin: auto;
       position: relative;
 
-      .add {
+      span {
         font-family: "CeraPro-Regular";
         font-size: 4.43vh;
         line-height: 5.54vh;
@@ -104,29 +104,11 @@ html, body {
       color: rgba(255,255,255,1);
     }
 
-    .icon {
+    .add-button {
       display: block;
       margin-left: auto;
       margin-right: auto;
       margin-top: 4.286vh;
-      width: 20.2vh;
-      height: 20.2vh;
-      overflow: visible;
-      border-radius: 50%;
-      border: solid 0.86vh rgba(255,255,255,1);
-      text-align: center;
-      position: relative;
-
-      .add {
-        font-family: "CeraPro-Regular";
-        font-size: 9.85vh;
-        line-height: 9.85vh;
-        color: rgba(255,255,255,1);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
     }
   }
 }

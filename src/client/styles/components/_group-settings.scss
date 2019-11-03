@@ -1,0 +1,189 @@
+.group-settings {
+  position: fixed;
+  background: rgba(39,39,39,1);
+  height: 100%;
+  width: 100%;
+  display: block;
+
+  .top-bar {
+      height: 9%;
+      width: 100%;
+      padding: 0 7.2%;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      background: rgba(39,39,39,1);
+      border-bottom-width: 0.7px;
+      border-bottom-color: #4E4E4E;
+      border-bottom-style: solid;
+
+      .close {
+        opacity: 1;
+        float: none;
+        width: 6%;
+
+        span {
+          font-size: 2.46vh;
+        }
+      }
+
+      .title {
+          width: 100%;
+      		text-align: center;
+          font-family: "CeraPro-Bold";
+      		font-style: normal;
+      		font-weight: bold;
+      		font-size: 3.695vh;
+          color: #FFFFFF;
+          padding: 0;
+      }
+
+      .edit {
+        visibility: hidden;
+        font-family: "CeraPro-Medium";
+        font-style: normal;
+        font-weight: bold;
+        font-size: 1.48vh;
+        color: #FFFFFF;
+      }
+  }
+
+  .friends-container {
+    height: 70.46%;
+    width: 100%;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .add-friend {
+      height: 14.86%;
+      width: 100%;
+      margin-top: 2.6vh;
+
+      display: flex;
+      align-items: center;
+
+      .add-button {
+        height: 6vh;
+        width: 6vh;
+        border-width: 0.1vh;
+
+        margin-left: 8.53%;
+        margin-right: 6.67%;
+
+        span {
+          font-size: 4vh;
+          font-family: "CeraPro-Light";
+          color: #FFFFFF;
+        }
+      }
+
+      .add-text {
+        width: 49.6%;
+        height: 100%;
+
+        border-bottom-width: 0.5px;
+        border-bottom-color: #707070;
+        border-bottom-style: solid;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          font-size: 2.46vh;
+          font-family: "CeraPro-Medium";
+          color: #FFFFFF;
+        }
+      }
+    }
+
+    .trip-friend {
+      height: 14.86%;
+
+      .prof-pic {
+        height: 6vh;
+        width: 6vh;
+
+        margin-left: 8.53%;
+        margin-right: 6.67%;
+      }
+
+      .prof-pic-default {
+        span {
+          font-size: 2.8vh;
+        }
+      }
+
+      .name {
+        width: 49.6%;
+        height: 100%;
+
+        border-bottom-width: 0.5px;
+        border-bottom-color: #707070;
+        border-bottom-style: solid;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          font-size: 1.85vh;
+          font-family: "CeraPro-Medium";
+          color: #FFFFFF;
+        }
+      }
+
+      .admin {
+        visibility: hidden;
+        height: 100%;
+        margin-left: 4.27%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          font-size: 1.48vh;
+          font-family: "CeraPro-Medium";
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+
+  .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    height: 20.54%;
+    width: 100%;
+
+    background-color: rgba(39,39,39,1);
+    border-top-width: 0.7px;
+    border-top-color: #4E4E4E;
+    border-top-style: solid;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .link-button {
+      width: 68.8%;
+      height: 6.65vh;
+      margin: auto;
+      background-color: #FFFFFF;
+      border-radius: 3.323vh;
+      border: none;
+      display: flex;
+
+      span {
+        margin: auto;
+        color: #272727;
+        font-family: "CeraPro-Bold";
+        font-size: 2vh;
+      }
+    }
+  }
+}
