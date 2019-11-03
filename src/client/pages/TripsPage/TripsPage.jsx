@@ -18,6 +18,9 @@ import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 import LogoutButton from "../../buttons/LogoutButton";
 import ProfileBanner from "../../components/Trip/ProfileBanner";
+import axios from 'axios';
+
+import APIS from '../../constants/apis';
 
 @autoBindMethods
 class TripsPage extends Component {
@@ -42,6 +45,34 @@ class TripsPage extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     TripAPI.getTrips(this);
+  }
+
+  deleteTrip(trip) {
+    return axios
+      .request({
+        url: APIS.trip(trip.trip_id),
+        method: 'delete',
+        headers: {
+          token: localStorage.getItem('token'),
+          platform: localStorage.getItem('platform')
+        }
+      })
+      .then(function (response) {
+        if (response.data.tripsDeleted === 1) {
+          location.reload();
+        } else {
+          alert('You are not authorized to delete this trip');
+        }
+      })
+      .catch(function (error) {
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('platform');
+          instance.routeChange(PATHS.login);
+          return;
+        }
+        alert(error.message);
+      });
   }
 
   render() {
@@ -73,15 +104,16 @@ class TripsPage extends Component {
         tripsContainer = (
           <div className="trips-container">
             {this.state.trips.map((trip, key) => (
-              <Trip
-                key={key}
-                trip={trip}
-                userId={this.props.match.params.userId}
-                history={this.props.history}
-                showModal={this.showModal}
-                onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
-              />
-            ))}
+                <Trip
+                  key={key}
+                  trip={trip}
+                  userId={this.props.match.params.userId}
+                  history={this.props.history}
+                  showModal={this.showModal}
+                  onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
+                  onDelete={() => {if (window.confirm('Are you sure you wish to delete this trip?')) this.deleteTrip(trip)}}
+                />
+              ))}
           </div>
         );
       } else {
@@ -89,9 +121,6 @@ class TripsPage extends Component {
           <div className="trips-container-empty">
             <div className="no-trips-text">
               <span>No trips yet, create one now!</span>
-            </div>
-            <div className="icon" onClick={() => this.routeChange(PATHS.tutorial)}>
-              <span className="add">+</span>
             </div>
           </div>
         )
