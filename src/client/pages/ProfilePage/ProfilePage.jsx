@@ -103,7 +103,7 @@ class ProfilePage extends React.Component {
         return;
       }
       alert(error.message);
-    });
+    }).then(() => this.props.history.goBack());
   }
 
   render() {
