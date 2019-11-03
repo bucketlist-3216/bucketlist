@@ -9,7 +9,7 @@ const APIS = {
   voteResults: (tripId) => `${root}/trip/${tripId}/vote/results/`,
   placesToVote: (tripId) => `${root}/trip/${tripId}/vote`,
   place: (placeId) => `${root}/place/${placeId}`,
-  tripFriend: (tripId) => `${root}/trip/${tripId}/members`,
+  tripFriend: (tripId, tripFriendId = '') => `${root}/trip/${tripId}/friends/${tripFriendId}`
   user: (user_id) => `${root}/user/${user_id}`
 };
 

@@ -1,0 +1,24 @@
+.trip-friend {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.86vh;
+
+  .prof-pic {
+    height: 3.45vh;
+    width: 3.45vh;
+    margin-right: 1.79vh;
+  }
+
+  .prof-pic-default {
+    span {
+      font-family: "IkonoMiniL-3";
+      font-size: 1.6vh;
+    }
+
+  }
+  .name {
+    font-family: "CeraPro-Medium";
+    font-size: 1.48vh;
+    color: #FFFFFF;
+  }
+}

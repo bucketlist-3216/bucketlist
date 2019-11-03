@@ -1,12 +1,153 @@
 .tutorial-page {
-  height: 100vh;
+  background: url('/../../../../assets/tutorial/2.jpg');
   background-color: #272727;
-  display: flex;
+  background-repeat: no-repeat;
   justify-content: center;
-  flex-direction: column;
   align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+
+  .tutorial-box {
+    position: absolute;
+    top: 20%;
+    background: #272727;
+    width: 90%;
+    height: 35%;
+    border-radius: 6.5vh;
+    
+
+    .tutorial-title {
+      // background: #272727;
+      // border: 2px solid red;
+      text-align: center;
+      color: white;
+      justify-content: center;
+      align-items: center;
+      vertical-align: center;
+
+      .middle-txt {
+        position: relative;
+        top: 25%;
+        width: 100%;
+        // border: 1px solid red;
+        font-size: 3vh;
+        font-weight: normal;
+        font-family: 'CeraPro-Bold';
+      }
+      
+      border-top-left-radius: 6.5vh;
+      border-top-right-radius: 6.5vh;
+      height: 25%;
+    }
+
+    .tutorial-msg {
+      background: #484848;
+      height:50%;
+      text-align: center;
+      justify-items: center;
+      vertical-align: middle;
+      color: white;
+      padding: 2%;
+
+      .msg {
+        position: relative;
+        top: 10%;
+
+        font-size: 2.1vh;
+        font-weight: lighter;
+        font-family: 'CeraPro-Regular';
+        text-align: center;
+      }
+
+      .skip-button {
+        background: #272727;
+        border-radius: 10px;
+        margin: 5%;
+        border: #272727;
+        font-size: 1.8vh;
+        font-weight: normal;
+        font-family: 'CeraPro-Regular';
+      }
+    }
+
+    .tutorial-buttons {
+      display: flex;
+      flex-direction: row;
+      height: 25%;
+
+      .tutorial-button-half-left {
+        .middle-txt {
+          position: relative;
+          top: 25%;
+          width: 100%;
+          // border: 1px solid red;
+          font-size: 3vh;
+          font-weight: normal;
+          font-family: 'CeraPro-Bold';
+        }
+
+        color: white;
+        width: 50%;
+        height: 100%;
+        // border: 2px solid red;
+        border-bottom-left-radius: 6.5vh;
+        font-size: 3vh;
+        font-weight: normal;
+        font-family: 'CeraPro-Bold';
+      }
+
+      .tutorial-button-half-right {
+
+        .middle-txt {
+          position: relative;
+          top: 25%;
+          width: 100%;
+          // border: 1px solid red;
+          font-size: 3vh;
+          font-weight: normal;
+          font-family: 'CeraPro-Bold';
+        }
+
+        color: white;
+        width: 50%;
+        height: 100%;
+        // border: 2px solid red;
+        border-bottom-right-radius: 6.5vh;
+        font-size: 3vh;
+        font-weight: normal;
+        font-family: 'CeraPro-Bold';
+      }
+
+      .tutorial-button-full {
+
+        .middle-txt {
+          position: relative;
+          top: 25%;
+          width: 100%;
+          // border: 1px solid red;
+          font-size: 3vh;
+          font-weight: normal;
+          font-family: 'CeraPro-Bold';
+        }
+
+        color: white;
+        border-bottom-left-radius: 6.5vh;
+        border-bottom-right-radius: 6.5vh;
+        width: 100%;
+        height: 100%;
+        font-size: 3vh;
+        font-weight: normal;
+        font-family: 'CeraPro-Bold';
+        // border: 2px solid red;
+      }
+    }
+
+  }
 
   .tutorial-image {
-    height: 100vh;
+    height: 100%;
   }
 }
