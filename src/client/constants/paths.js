@@ -4,7 +4,7 @@ const PATHS = {
   tutorial: '/tutorial',
   citySelect: () => '/create-trip/city-select',
   trips: () => '/trips',
-  createTripOld: (userId = ':userId') => `/user/${userId}/create-trip`,
+  createTrip: () => '/create-trip',//(userId = ':userId') => `/user/${userId}/create-trip`,
   swipe: (tripId = `:tripId`) => `/swipe/${tripId}`,
   list: (tripId = `:tripId`) => `/list/${tripId}`,
   swipeOld: (userId = ':userId', tripId = ':tripId') => `/user/${userId}/trip/${tripId}/swipe`,
