@@ -13,6 +13,7 @@ const SideDrawer = props => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('platform');
+    routeChange(PATHS.home)
   }
 
   if (localStorage.getItem('platform') == 'google') {
@@ -54,11 +55,11 @@ const SideDrawer = props => {
               {"Settings"}
             </div>
           </div>
-          <div className="swipe-drawer-tab-last" onClick={() => alert('Coming soon!')}>
+          <div className="swipe-drawer-tab-last" onClick={() => handleLogOut()}>
             <div>
               <FontAwesomeIcon icon={ faSignOutAlt } size="xs"></FontAwesomeIcon>
             </div>
-            <div className="swipe-drawer-tab" onClick={() => handleLogOut()}>
+            <div className="swipe-drawer-tab">
               {"Log Out"}
             </div>
           </div>
