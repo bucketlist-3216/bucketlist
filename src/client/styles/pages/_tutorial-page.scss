@@ -1,5 +1,7 @@
 .tutorial-page {
   background: url('/../../../../assets/tutorial/2.jpg');
+  background-color: #272727;
+  background-repeat: no-repeat;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -58,6 +60,16 @@
         font-weight: lighter;
         font-family: 'CeraPro-Regular';
         text-align: center;
+      }
+
+      .skip-button {
+        background: #272727;
+        border-radius: 10px;
+        margin: 5%;
+        border: #272727;
+        font-size: 1.8vh;
+        font-weight: normal;
+        font-family: 'CeraPro-Regular';
       }
     }
 
