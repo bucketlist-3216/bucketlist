@@ -3,7 +3,7 @@
   top: 0;
   display: block;
   width: 100vw;
-  height: 28vh;
+  height: calc(14vh + 110px);
   border-bottom: 0.7px #555555 solid;
 
   .photos-container {

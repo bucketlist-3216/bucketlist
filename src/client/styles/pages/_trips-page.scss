@@ -45,8 +45,8 @@ html, body {
 
   .trips-container {
     position: absolute;
-    top: 28vh;
-    height: 70.46%;
+    top: calc(14vh + 110px);
+    height: calc(77vh - 110px);
     width: 100%;
     display: block;
     overflow-x: hidden;
@@ -94,7 +94,7 @@ html, body {
   }
 
   .trips-container-empty {
-    height: 91%;
+    height: calc(77vh - 100px);
     display: flex;
     flex-direction: column;
     justify-content: center;
