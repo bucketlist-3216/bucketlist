@@ -12,7 +12,7 @@ import EmptyCard from './EmptyCard';
 import InfoPanel from './InfoPanel';
 import SideDrawer from '../SideDrawer/';
 import Backdrop from '../Backdrop/';
-import HomeButton from '../../buttons/HomeButton';
+import ProfileButton from '../../buttons/ProfileButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
 import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
@@ -351,7 +351,7 @@ class Swipe extends Component {
         />
         <div className="swipe-header">
           <div className="swipe-header-sides">
-            <HomeButton
+            <ProfileButton
               onClick={() => this.drawerToggleClickHandler()}
             />
           </div>
