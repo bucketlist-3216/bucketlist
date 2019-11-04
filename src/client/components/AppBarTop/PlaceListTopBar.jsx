@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeButton from '../../buttons/HomeButton';
+import ProfileButton from '../../buttons/ProfileButton';
 
 class PlaceListTopBar extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class PlaceListTopBar extends React.Component {
     return (
       <div className="top-bar">
         <div className="top-bar-button">
-          <HomeButton onClick={onClick}/>
+          <ProfileButton onClick={onClick}/>
         </div>
         <div className = "title">
           {this.props.destination}

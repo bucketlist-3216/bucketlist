@@ -17,6 +17,7 @@ import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 import LogoutButton from "../../buttons/LogoutButton";
+import ProfileBanner from "../../components/Trip/ProfileBanner";
 import axios from 'axios';
 
 import APIS from '../../constants/apis';
@@ -87,12 +88,55 @@ class TripsPage extends Component {
 
     if (this.state.isLoading) {
       return (<Preloader />);
-    } else {
-      const { trips } = this.state;
+    } else if (localStorage.getItem('platform') === 'jwt') {
+      const {trips} = this.state;
       if (trips.length === 0) {
+        this.routeChange(PATHS.citySelect());
+      } else {
+        this.routeChange(PATHS.list(trips[0]['trip_id']));
+      }
+      return null;
+    } else { //Logged in as proper user
+      const { trips } = this.state;
+      let tripsContainer = ""
+      let createTripContainer = ""
+      if (trips.length > 0) {
+        tripsContainer = (
+          <div className="trips-container">
+            {this.state.trips.map((trip, key) => (
+                <Trip
+                  key={key}
+                  trip={trip}
+                  userId={this.props.match.params.userId}
+                  history={this.props.history}
+                  showModal={this.showModal}
+                  onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
+                  onDelete={() => {if (window.confirm('Are you sure you wish to delete this trip?')) this.deleteTrip(trip)}}
+                />
+              ))}
+          </div>
+        );
+      } else {
+        tripsContainer = (
+          <div className="trips-container-empty">
+            <div className="no-trips-text">
+              <span>No trips yet, create one now!</span>
+            </div>
+          </div>
+        )
+      }
+      if (!(localStorage.getItem("platform") === 'jwt' && trips.length>0)) {
+        createTripContainer = (
+          <div className="add-trip-container">
+            <label className="add" onClick={() => this.routeChange(PATHS.citySelect())}>Create New Trip</label>
+          </div>
+        );
+      }
+      if (trips.length === 0) {
+        localStorage.setItem('tutorial', 'true');
         return (
           <div className="trips-page">
-            <div className="top-bar">
+            {/* <div className="top-bar">
               {localStorage.getItem('platform') === 'jwt'
               ? <SingleSignOnButton
                   providerName={PROVIDERS['google'].providerName}
@@ -108,16 +152,21 @@ class TripsPage extends Component {
               <div className="no-trips-text">
                 <span>No trips yet, create one now!</span>
               </div>
-              <div className="icon" onClick={() => this.routeChange(PATHS.tutorial)}>
+              <div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
                 <span className="add">+</span>
               </div>
             </div>
+            </div> */}
+            <ProfileBanner tripCount={trips.length} routeChange={this.routeChange}/>
+            {tripsContainer}
+            {createTripContainer}
           </div>
         );
       } else {
+        localStorage.setItem('tutorial', 'false');
         return (
           <div className="trips-page">
-            <div className="top-bar">
+            {/* <div className="top-bar">
               {localStorage.getItem('platform') === 'jwt' ?
                 <SingleSignOnButton
                   providerName={PROVIDERS['google'].providerName}
@@ -128,25 +177,10 @@ class TripsPage extends Component {
                 <LogoutButton routeChange={this.routeChange}/>
               }
               <h1 className="title">Trips</h1>
-            </div>
-            <div className="trips-container">
-              {this.state.trips.map((trip, key) => (
-                <Trip
-                  key={key}
-                  trip={trip}
-                  userId={this.props.match.params.userId}
-                  history={this.props.history}
-                  showModal={this.showModal}
-                  onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
-                  onDelete={() => {if (window.confirm('Are you sure you wish to delete this trip?')) this.deleteTrip(trip)}}
-                />
-              ))}
-            </div>
-            <div className="add-icon-container">
-              <div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
-                <span className="add">+</span>
-              </div>
-            </div>
+            </div> */}
+            <ProfileBanner tripCount={trips.length} routeChange={this.routeChange}/>
+            {tripsContainer}
+            {createTripContainer}
           </div>
         );
       }

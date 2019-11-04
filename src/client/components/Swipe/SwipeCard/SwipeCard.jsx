@@ -9,7 +9,7 @@ import DislikeButton from '../../../buttons/DislikeButton';
 //<Img className="card-image" src={images[imageIndex]} loader={ <PixelSpinner/> } />
 
 const SwipeCard = props => {
-  const { zIndex, place, imageIndex, setPlaceData, setShowInfo, imageChange, setInitialScreenX, renderResult } = props;
+  const { zIndex, place, imageIndex, setPlaceData, setShowInfo, imageChange, setInitialScreenX, renderResult, numOfImgs } = props;
   const { images } = place;
 
   const handleImageClickStart = (event) => {
@@ -31,6 +31,9 @@ const SwipeCard = props => {
           {renderResult === 'like' && <LikeButton className="like-label" onClick={null}/>}
           <div className="previous-image-button">
             <FontAwesomeIcon icon={ faChevronLeft } size="3x"></FontAwesomeIcon>
+          </div>
+          <div className="card-image-index">
+            {imageIndex + 1 + '/' + numOfImgs}
           </div>
         </div>
         <div className="next-image" onClick={event => handleImageClickEnd(event, "next")}>
