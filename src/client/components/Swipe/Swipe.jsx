@@ -302,7 +302,7 @@ class Swipe extends Component {
 
   renderSwipeComplete(listBuffer) {
     if (this.state.initialSetup === false) {
-      if (listBuffer.attractions.length > 0 || listBuffer.food.length > 0) {
+      if (listBuffer && (listBuffer.attractions.length > 0 || listBuffer.food.length > 0)) {
         this.setState({ initialSetup: true });
       }
     }
