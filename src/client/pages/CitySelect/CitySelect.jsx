@@ -40,9 +40,10 @@ class CitySelect extends Component {
     };
   }
 
-  routeChange(pathname) {
+  routeChange(pathname, search) {
     this.props.history.push({
-      pathname
+      pathname,
+      search
     });
   }
 
@@ -50,33 +51,11 @@ class CitySelect extends Component {
     this.setState({ isLoading });
   }
 
-  handleAddTrip (trip) {
-    let instance = this;
-    return axios
-    .request({
-      url: APIS.trip(),
-      method: 'post',
-      headers: {
-        token: localStorage.getItem('token'),
-        platform: localStorage.getItem('platform')
-      },
-      data: { trip }
-    })
-    .then(function(response) {
-      let tripId = response.data.insertedId;
-      // TODO: put in props for redirect
-      instance.routeChange(PATHS.swipe(tripId));
-      //instance.routeChange(PATHS.trips());
-      instance.setState({ isLoading: false});
-    })
-    .catch(function(error) {
-      if (error.response && error.response.status === 401) {
-        instance.routeChange(PATHS.login);
-        return;
-      }
-      alert(error.message);
-      console.log(error);
-    });
+  handleSelectCity(destination) {
+    this.routeChange(
+      PATHS.tripInfo(),
+      "?" + new URLSearchParams({ new: true, destination }).toString()
+    );
   }
 
   render() {
@@ -101,7 +80,7 @@ class CitySelect extends Component {
           // Create city cards here from data
           CITIES.cities.map(((city, key) => (
               // TODO: Should pass city name also here
-              <div onClick={() => { if (!city.disabled) this.handleAddTrip({ destination: city.name})}}>
+              <div onClick={() => { if (!city.disabled) this.handleSelectCity(city.name)}}>
                 <CityCard city={city} key={key}/>
               </div>
             )

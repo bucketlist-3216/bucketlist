@@ -33,13 +33,17 @@ html, body {
     	color: rgba(255,255,255,1);
     }
     .save {
-    	opacity: 0.524;
     	overflow: visible;
     	font-family: "CeraPro-Regular";
     	font-style: normal;
     	font-weight: normal;
     	font-size: 11px;
     	color: rgba(255,255,255,1);
+    }
+
+    .save.disabled {
+      opacity: 0.524;
+      pointer-events: none;
     }
   }
 
@@ -100,6 +104,7 @@ html, body {
 
       margin: 0;
       padding-left: 22.181px;
+      position: relative;
 
       display: flex;
       align-items: center;
@@ -126,6 +131,51 @@ html, body {
     	font-weight: normal;
     	font-size: 11px;
     	color: rgba(255,255,255,1);
+    }
+
+    .value-form-container {
+      height: 24.5px;
+      width: 180px;
+      display: flex;
+      align-items: center;
+
+      .value-form {
+        position: relative;
+        height: inherit;
+        width: inherit;
+        max-width: 180px;
+        padding-left: 0;
+
+        color: #E4B89C;
+
+        background: transparent;
+        border: none;
+
+        border-bottom-width: 0.7px;//0.0862vh;
+        border-bottom-color: #555555;
+        border-bottom-style: solid;
+      }
+
+      .value-form:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      span {
+        height: inherit;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+
+    .edit {
+      position: absolute;
+      right: 22.181px;
+      font-family: Ikono Mini L;
+      font-style: normal;
+      font-weight: lighter;
+      font-size: 10px;
+      color: rgba(255,255,255,1);
     }
   }
   .delete-button {

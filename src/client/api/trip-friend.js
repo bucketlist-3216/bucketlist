@@ -16,6 +16,7 @@ function getTripFriends (instance, tripId) {
     .then(function (response) {
       console.log(response.data);
       const { parent } = instance.props;
+      console.log(response.data);
       instance.setState({ tripFriends : response.data });
       instance.setState({ isLoading: false });
     })

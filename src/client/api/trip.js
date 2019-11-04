@@ -29,6 +29,28 @@ function getTrips (instance) {
     });
 }
 
+function addTrip (instance, trip) {
+  return axios
+    .request({
+      url: APIS.trip(),
+      method: 'post',
+      headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      },
+      data: { trip }
+    })
+    .catch(function(error) {
+      if (error.response && error.response.status === 401) {
+        instance.routeChange(PATHS.login);
+        return;
+      }
+      alert(error.message);
+      console.log(error);
+    });
+}
+
 export default {
-  getTrips
+  getTrips,
+  addTrip
 };
