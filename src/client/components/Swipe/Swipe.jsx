@@ -46,6 +46,7 @@ class Swipe extends Component {
       name: '',
       username: '',
       profilePictureLink: '',
+      listNotif: false,
     };
   }
 
@@ -56,6 +57,7 @@ class Swipe extends Component {
     this.getPlacesToSwipe(placeId);
     this.getCity(this.props.match.params.tripId);
     getUserData(this, localStorage.getItem("userId")).then(() => {
+      //console.log(this.state.userData[0])
       let {username, name, profile_photo} = this.state.userData[0];
       this.setState({
         name: name,
@@ -152,7 +154,12 @@ class Swipe extends Component {
   }
 
   castVote(place) {
+
     return swipeDirection => {
+      console.log(this.state.listNotif)
+      if (!this.state.listNotif) {
+        this.setState({ listNotif: true });
+      }
       const { tripId } = this.props.match.params;
       const instance = this;
       const vote = {
@@ -383,7 +390,7 @@ class Swipe extends Component {
           profilePictureLink={profilePictureLink}
         />
         <div className="swipe-header">
-          <div className="swipe-header-sides">
+          <div className="swipe-header-left">
             <ProfileButton
               imgSrc={profilePictureLink}
               onClick={() => this.drawerToggleClickHandler()}
@@ -401,11 +408,20 @@ class Swipe extends Component {
               )}
             </div>
           </div>
-          <div className="swipe-header-sides">
-            <ListButton
-              onClick={() => this.routeChange(PATHS.list(tripId))}
-            />
+          <div className="swipe-header-right">
+            <div className="city">
+              {"list"}
+            </div>
+            { this.state.listNotif &&
+              <div className="swipe-list-notif">
+              </div>
+            }
+            <div className="swipe-list-button"
+              onClick={() => this.routeChange(PATHS.list(tripId))}>
+                {"list"}
+            </div>
           </div>
+
         </div>
         { (places.length > 0) 
           ? this.renderSwiping() : this.renderSwipeComplete(listBuffer)}

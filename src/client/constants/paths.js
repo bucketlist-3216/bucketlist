@@ -11,7 +11,7 @@ const PATHS = {
   tripsOld: (userId = ':userId') => `/user/${userId}/trips`,
   listOld: (userId = ':userId', tripId = ':tripId') => `/user/${userId}/trip/${tripId}/list`,
   invite: (inviteLink = ':inviteLink') => `/invite/${inviteLink}`,
-  profile: '/profile'
+  profile: '/profile',
 };
 
 export default PATHS;
