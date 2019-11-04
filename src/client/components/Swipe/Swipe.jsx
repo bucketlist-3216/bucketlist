@@ -16,6 +16,7 @@ import ProfileButton from '../../buttons/ProfileButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
 import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
+import getUserData from "../../api/user.js";
 
 @autoBindMethods
 class Swipe extends Component {
@@ -42,6 +43,10 @@ class Swipe extends Component {
       numOfListRenders: 0,
       emptyListTillRefresh: false,
       lastVoted: '',
+      name: '',
+      username: '',
+      profilePictureLink: '',
+      listNotif: false,
     };
   }
 
@@ -51,6 +56,15 @@ class Swipe extends Component {
       : null;
     this.getPlacesToSwipe(placeId);
     this.getCity(this.props.match.params.tripId);
+    getUserData(this, localStorage.getItem("userId")).then(() => {
+      //console.log(this.state.userData[0])
+      let {username, name, profile_photo} = this.state.userData[0];
+      this.setState({
+        name: name,
+        username: username,
+        profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+      });
+    });
   }
 
   // Helper function for redirecting
@@ -140,7 +154,12 @@ class Swipe extends Component {
   }
 
   castVote(place) {
+
     return swipeDirection => {
+      console.log(this.state.listNotif)
+      if (!this.state.listNotif) {
+        this.setState({ listNotif: true });
+      }
       const { tripId } = this.props.match.params;
       const instance = this;
       const vote = {
@@ -346,7 +365,8 @@ class Swipe extends Component {
   }
 
   render() {
-    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh } = this.state;
+    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh,
+      profilePictureLink, name, username } = this.state;
     const { tripId } = this.props.match.params;
 
     this.bufferRender(places, emptyListTillRefresh, numOfListRenders);
@@ -365,10 +385,14 @@ class Swipe extends Component {
           sideDrawerOpen={sideDrawerOpen} 
           drawerToggleClickHandler={this.drawerToggleClickHandler}
           routeChange={this.routeChange}
+          name={name}
+          username={username}
+          profilePictureLink={profilePictureLink}
         />
         <div className="swipe-header">
-          <div className="swipe-header-sides">
+          <div className="swipe-header-left">
             <ProfileButton
+              imgSrc={profilePictureLink}
               onClick={() => this.drawerToggleClickHandler()}
             />
           </div>
@@ -384,11 +408,20 @@ class Swipe extends Component {
               )}
             </div>
           </div>
-          <div className="swipe-header-sides">
-            <ListButton
-              onClick={() => this.routeChange(PATHS.list(tripId))}
-            />
+          <div className="swipe-header-right">
+            <div className="city">
+              {"list"}
+            </div>
+            { this.state.listNotif &&
+              <div className="swipe-list-notif">
+              </div>
+            }
+            <div className="swipe-list-button"
+              onClick={() => this.routeChange(PATHS.list(tripId))}>
+                {"list"}
+            </div>
           </div>
+
         </div>
         { (places.length > 0) 
           ? this.renderSwiping() : this.renderSwipeComplete(listBuffer)}
