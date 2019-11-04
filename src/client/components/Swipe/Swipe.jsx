@@ -127,14 +127,14 @@ class Swipe extends Component {
         if (instance.state.swipeList === 2) {
           //console.log(response.data['attractions'][0])
           //console.log(instance.state.lastVoted)
-          if (response.data['attractions'][0] == instance.state.lastVoted) {
+          if (response.data['attractions'][0].name == instance.state.lastVoted.name) {
             instance.setState({ places: response.data['attractions'].slice(1, response.data['attractions'].length)});
           } else {
             instance.setState({ places: response.data['attractions']});
           }
           //instance.setState({ places: response.data['attractions']});
         } else {
-          if (response.data['food'][0] == instance.state.lastVoted) {
+          if (response.data['food'][0].name == instance.state.lastVoted.name) {
             instance.setState({ places: response.data['food'].slice(1, response.data['food'].length)});
           } else {
             instance.setState({ places: response.data['food']});
@@ -158,7 +158,7 @@ class Swipe extends Component {
   castVote(place) {
 
     return swipeDirection => {
-      console.log(this.state.listNotif)
+      //console.log(this.state.listNotif)
       if (!this.state.listNotif) {
         this.setState({ listNotif: true });
       }
@@ -295,7 +295,7 @@ class Swipe extends Component {
             renderResult={renderResult} imageIndex={imageIndex} numOfImgs={this.state.places[0].images.length} />
           <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
         </Swipeable>
-        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
+        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} numOfImgs={this.state.places[1].images.length}/>}
       </div>
     );
   }
@@ -365,7 +365,7 @@ class Swipe extends Component {
   }
 
   renderTutorial(zIndex = 2000) {
-    console.log('Rendering the tutorial');
+    //console.log('Rendering the tutorial');
     return (
       <TutorialPopup onFinish={this.handleTutorialFinish.bind(this)} style={{ zIndex }}/>
     )
