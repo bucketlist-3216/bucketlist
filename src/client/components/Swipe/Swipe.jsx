@@ -127,14 +127,14 @@ class Swipe extends Component {
         if (instance.state.swipeList === 2) {
           //console.log(response.data['attractions'][0])
           //console.log(instance.state.lastVoted)
-          if (response.data['attractions'][0] == instance.state.lastVoted) {
+          if (response.data['attractions'][0.name == instance.state.lastVoted.name) {
             instance.setState({ places: response.data['attractions'].slice(1, response.data['attractions'].length)});
           } else {
             instance.setState({ places: response.data['attractions']});
           }
           //instance.setState({ places: response.data['attractions']});
         } else {
-          if (response.data['food'][0] == instance.state.lastVoted) {
+          if (response.data['food'][0].name == instance.state.lastVoted.name) {
             instance.setState({ places: response.data['food'].slice(1, response.data['food'].length)});
           } else {
             instance.setState({ places: response.data['food']});
