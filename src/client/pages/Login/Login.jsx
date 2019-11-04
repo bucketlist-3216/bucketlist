@@ -81,7 +81,7 @@ class Login extends Component {
       		<span>or</span>
         	<div className="line"></div>
       	</div>
-        <span className="guest" onClick={() => LoginAPI.loginGuest(this)}>continue as guest</span>
+        <span className="guest" onClick={() => {localStorage.setItem('tutorial', 'true'); LoginAPI.loginGuest(this)}}>continue as guest</span>
       </div>
     );
   }

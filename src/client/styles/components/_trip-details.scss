@@ -10,6 +10,18 @@
     border-right-style: solid;
   }
 
+  .trip-friends-empty {
+    display: flex;
+    justify-content: center;
+
+    .trip-friends-empty-text {
+      margin: auto;
+      font-family: "CeraPro-Bold";
+      font-size: 1.48vh;
+      color: #FFFFFF;
+    }
+  }
+
   .trip-friends-filled {
     padding: 0 6.93%;
     display: flex;

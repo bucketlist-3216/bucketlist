@@ -18,7 +18,7 @@ class TripDetails extends Component {
 
     return (
       <div className="trip-details">
-        { parent.state.tripFriends.length === 0
+        { parent.state.tripFriends.length <= 1
           ? (
             <div className="trip-friends trip-friends-empty">
               <span className="trip-friends-empty-text">No friends on this trip yet!</span>
