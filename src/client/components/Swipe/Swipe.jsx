@@ -228,7 +228,6 @@ class Swipe extends Component {
     if (this.state.tutorial === 'true') {
       return (
         <div className="swipe-container" style={{ top : "-90%"}}>
-          <div className="overlay">
           <Swipeable
             buttons={this.renderButtons}
             onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
@@ -240,7 +239,6 @@ class Swipe extends Component {
             <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
           </Swipeable>
           {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
-          </div>
         </div>
       );
     }
