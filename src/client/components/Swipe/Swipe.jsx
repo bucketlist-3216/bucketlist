@@ -16,6 +16,7 @@ import ProfileButton from '../../buttons/ProfileButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
 import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
+import TutorialPopup from '../TutorialPopup';
 import getUserData from "../../api/user.js";
 
 @autoBindMethods
@@ -40,6 +41,7 @@ class Swipe extends Component {
       renderResult: '',
       initialSetup: false,
       sideDrawerOpen: false,
+      tutorial: localStorage.getItem('tutorial') || 'false',
       numOfListRenders: 0,
       emptyListTillRefresh: false,
       lastVoted: '',
@@ -263,6 +265,24 @@ class Swipe extends Component {
       this.setState({ initialSetup: true });
     }
 
+    // Hack. TODO: Need better way to show the overlay of tutorial and page
+    if (this.state.tutorial === 'true') {
+      return (
+        <div className="swipe-container" style={{ top : "-90%"}}>
+          <Swipeable
+            buttons={this.renderButtons}
+            onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
+            renderResult={renderResult} setRenderResult={this.setRenderResult}
+          >
+            <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo} 
+              imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} 
+              renderResult={renderResult} />
+            <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
+          </Swipeable>
+          {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
+        </div>
+      );
+    }
     return (
       <div className="swipe-container">
         <Swipeable
@@ -282,7 +302,7 @@ class Swipe extends Component {
 
   renderSwipeComplete(listBuffer) {
     if (this.state.initialSetup === false) {
-      if (listBuffer.attractions.length > 0 || listBuffer.food.length > 0) {
+      if (listBuffer && (listBuffer.attractions.length > 0 || listBuffer.food.length > 0)) {
         this.setState({ initialSetup: true });
       }
     }
@@ -339,6 +359,17 @@ class Swipe extends Component {
     };
   }
 
+  handleTutorialFinish() {
+    this.setState({tutorial: 'false'});
+    localStorage.setItem('tutorial', 'false');
+  }
+
+  renderTutorial(zIndex = 2000) {
+    console.log('Rendering the tutorial');
+    return (
+      <TutorialPopup onFinish={this.handleTutorialFinish.bind(this)} style={{ zIndex }}/>
+    )
+  }
   /* This method waits for 20 render times to register the last location card's voteCount() effect.
      It then calls getPlacesToSwipe() and continuously render for 30 times to display an updated location list. */
   bufferRender(places, emptyListTillRefresh, numOfListRenders) {
@@ -368,6 +399,7 @@ class Swipe extends Component {
     const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh,
       profilePictureLink, name, username } = this.state;
     const { tripId } = this.props.match.params;
+    const zIndex = 200;
 
     this.bufferRender(places, emptyListTillRefresh, numOfListRenders);
 
@@ -423,8 +455,12 @@ class Swipe extends Component {
           </div>
 
         </div>
-        { (places.length > 0) 
-          ? this.renderSwiping() : this.renderSwipeComplete(listBuffer)}
+        {
+          (this.state.tutorial === 'true') &&
+          this.renderTutorial(zIndex)                                              
+        }
+        { (places.length > 0 || listBuffer.attractions > 0 || listBuffer.food > 0) 
+          ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }
