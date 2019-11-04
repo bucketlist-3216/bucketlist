@@ -12,6 +12,12 @@ const {
     PlaceImageQueryModel
 } = require('../query-models');
 
+const {
+    addTripFriendHandler,
+    getTripFriendsHandler,
+    deleteTripFriendHandler
+} = require('../handlers/trip-friend.js');
+
 // Trip API router
 const router = express.Router();
 if (settings.validate) {
@@ -35,9 +41,13 @@ router.post('/', addTripHandler);
 router.put('/:toUpdate', updateTripHandler);
 router.delete('/:toDelete', deleteTripHandler);
 
-router.get('/:tripId/members', getTripMembersHandler);
-router.post('/:tripId/members/', addTripMembersHandler);
-router.delete('/members/:tripFriend', deleteTripMemberHandler);
+/**************** Trip Friend end points ****************/
+
+router.post('/:tripId/friends', addTripFriendHandler);
+router.get('/:tripId/friends', getTripFriendsHandler);
+router.delete('/:tripId/friends/:tripFriendId', deleteTripFriendHandler);
+
+/*********** Implement Request Handlers **********/
 
 // Get trip details
 function getTripDetailsHandler(req, res) {
@@ -195,61 +205,6 @@ async function insertTripLink(trip_id) {
             result = '';
     } while (!result);
     tripQueryModel.updateTrip(trip_id, { invite_extension: result }).then((rows) => console.log(rows));
-}
-
-/**************** Trip Member APIs  ****************/
-
-// Get the members of a given trip.
-function getTripMembersHandler(req, res) {
-    let getTripFriends = tripFriendQueryModel.getTripFriends(req.params.tripId);
-
-    getTripFriends
-        .then(function (queryResponse) {
-            res.json({ "tripFriends": queryResponse });
-        })
-}
-
-// Add a member to a trip (adding a member-trip association)
-function addTripMembersHandler(req, res) {
-    const { tripId } = req.params;
-    const { email } = req.body;
-    const userNotFoundMessage = `Could not find user with email '${email}'`;
-
-    userQueryModel.getUserId({ email })
-        .then(function (results) {
-            if (results.length === 0) {
-                throw new Error(userNotFoundMessage);
-            } else {
-                const { user_id } = results[0];
-                return addTripFriend({ user_id, trip_id: tripId });
-            }
-        })
-        .then(function (insertionResponse) {
-            res.json({ "insertedId": insertionResponse });
-        })
-        .catch(function (err) {
-            if (err.message === userNotFoundMessage) {
-                res.status(404).end(userNotFoundMessage);
-                console.log(err);
-            } else {
-                res.status(500).end('Could not add user to trip');
-                console.log(err);
-            }
-        });
-}
-
-// Remove a member from a trip
-function deleteTripMemberHandler(req, res) {
-    const deleteMember = tripFriendQueryModel.deleteTripFriend(req.params.tripFriend);
-
-    deleteMember
-        .then(function (deletionResponse) {
-            res.json({ "deletedId": deletionResponse });
-        })
-        .catch(function (err) {
-            res.status(500).end('Could not delete user from trip');
-            console.log(JSON.stringify(err));
-        });
 }
 
 /**************** Trip Voting APIs  ****************/

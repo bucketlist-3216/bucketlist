@@ -1,0 +1,20 @@
+.add-button {
+  width: 20.2vh;
+  height: 20.2vh;
+  overflow: visible;
+  border-radius: 50%;
+  border: solid 0.86vh rgba(255,255,255,1);
+  text-align: center;
+  position: relative;
+
+  span {
+    font-family: "CeraPro-Regular";
+    font-size: 9.85vh;
+    line-height: 9.85vh;
+    color: rgba(255,255,255,1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

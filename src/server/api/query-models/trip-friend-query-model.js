@@ -12,7 +12,7 @@ class TripFriendQueryModel extends EntityQueryModel {
         this.validFilters = ['trip_friend_id'];
         this.nonInsertableProps = ['trip_friend_id'];
         this.tableName = 'Trip_Friend';
-        this.selectableProps = ['trip_friend_id', 'trip_id', 'user_id']
+        this.selectableProps = ['trip_friend_id', 'trip_id', 'user_id', 'is_admin'];
 
         this.userMutable = false;
         this.tripQueryModel = new TripQueryModel();
@@ -20,11 +20,22 @@ class TripFriendQueryModel extends EntityQueryModel {
     }
 
     // Get all the members in this particular trip
-    getTripFriends (trip_id) {
-        return knex(this.tableName)
-            .select(this.selectableProps)
-            .where({ trip_id });
+    getTripFriends (tripId, userId) {
+        const tripFriendProperties = this.selectableProps.filter((element) => element !== 'trip_id' && element !== 'user_id');
+        const userProperties = this.userQueryModel.selectableProps.filter((element) => element !== 'user_id');
+        const isSelf = knex.raw(`${this.tableName}.user_id = ${userId} as is_self`);
+        const selectedColumns = tripFriendProperties.concat(
+            userProperties,
+            [`${this.tableName}.trip_friend_id`],
+            [isSelf]);
+        return knex
+            .select(selectedColumns)
+            .from(this.tableName)
+            .innerJoin(this.userQueryModel.tableName, `${this.userQueryModel.tableName}.user_id`, '=', `${this.tableName}.user_id`)
+            .where({ trip_id: tripId })
+            .orderBy('is_self', 'desc');
     }
+
 
     getTripFriendId (trip_id, user_id) {
         return knex(this.tableName)
@@ -37,7 +48,8 @@ class TripFriendQueryModel extends EntityQueryModel {
         return knex(this.tableName)
             .insert({
                 user_id,
-                trip_id
+                trip_id,
+                is_admin: 0
             });
     }
 
