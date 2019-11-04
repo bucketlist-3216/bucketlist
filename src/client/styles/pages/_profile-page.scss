@@ -1,0 +1,85 @@
+.profile-page {
+  background-color: rgba(39,39,39,1);
+  height: 100%;
+  width: 100%;
+  color: rgba(255,255,255,1);
+  font-family: "CeraPro";
+
+  .header-space{
+    height: 3vh;
+  }
+
+  .buttons-container {
+    width: 90vw;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+    .cancel-button {
+      float: left;
+    }
+
+    .save-button {
+      float: right;
+    }
+    
+    .save-button-disabled {
+      float: right;
+      color: #555555;
+    }
+  }
+
+  .pictures-container {
+    height: 20vh;
+    border-bottom: 1px solid #555555;
+
+    .cover-picture {
+      position: relative;
+      height: 14vh;
+      width:100%;
+    }
+
+    .profile-picture {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      position: relative;
+      left: 11vw;
+      top: -30px;
+      border: 1px rgba(255,255,255,1);
+      background-color: #555555;
+      z-index: 1;
+    }
+  }
+
+  .details-container {
+
+    .detail-row {
+      display: block;
+      height: 54px;
+      width: 100%;
+      margin: auto;
+      padding: 25px 5vw;
+
+      .detail-field {
+        display: inline-block;
+        font-family: "CeraPro-Bold";
+        left: 5vw;
+        vertical-align: middle;
+        font-size: 13px;
+        width: 33vw;
+      }
+
+      .detail-value {
+        display: inline-block;
+        font-family: "CeraPro-Regular";
+        left: 36vw;
+        vertical-align: middle;
+        font-size: 11px;
+        width: 57vw;
+        background-color: #555555;
+        border: 1px white solid;
+      }
+    }
+  }
+}

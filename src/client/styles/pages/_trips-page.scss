@@ -45,19 +45,19 @@ html, body {
 
   .trips-container {
     position: absolute;
-    top: 9.1%;
-    height: 70.46%;
+    top: calc(14vh + 110px);
+    height: calc(77vh - 116px);
     width: 100%;
     display: block;
     overflow-x: hidden;
     overflow-y: scroll;
   }
 
-  .add-icon-container {
+  .add-trip-container {
     position: absolute;
     background-color: rgba(39,39,39,1);
     bottom: 0;
-    height: 20.54%;
+    height: 9vh;
     width: 100%;
     border-top-width: 0.0862vh;
     border-top-color: #4E4E4E;
@@ -74,22 +74,27 @@ html, body {
       border: solid 0.493vh rgba(255,255,255,1);
       margin: auto;
       position: relative;
+    }
 
-      span {
-        font-family: "CeraPro-Regular";
-        font-size: 4.43vh;
-        line-height: 5.54vh;
-        color: rgba(255,255,255,1);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+    .add {
+      font-family: "CeraPro-Regular";
+      font-size: 10px;
+      width: 140px;
+      height: 33px;
+      line-height: 33px;
+      color: rgba(0,0,0,1);
+      background-color: rgba(255,255,255,1);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      border-radius: 16.5px;
     }
   }
 
   .trips-container-empty {
-    height: 91%;
+    height: calc(77vh - 100px);
     display: flex;
     flex-direction: column;
     justify-content: center;
