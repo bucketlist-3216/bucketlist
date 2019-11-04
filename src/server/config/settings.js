@@ -1,7 +1,7 @@
 const configFolder = `${__dirname}/../../../config/`;
 const fs = require('fs');
 const mysqlUser = require(`${configFolder}/mysql_user.json`);
-const awsCredentials = require(`./aws_s3.json`);
+const process = require('process');
 
 module.exports = {
     "port": 3001,
@@ -28,5 +28,8 @@ module.exports = {
         "password": mysqlUser.password,
         "database": "bucketlist"
     },
-    "aws": awsCredentials
+    "aws": {
+        "accessKeyId": process.env.accessKeyId,
+        "secretAccessKey": process.env.secretAccessKey
+    }
 };
