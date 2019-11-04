@@ -16,6 +16,7 @@ import ProfileButton from '../../buttons/ProfileButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
 import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
+import getUserData from "../../api/user.js";
 
 @autoBindMethods
 class Swipe extends Component {
@@ -42,6 +43,9 @@ class Swipe extends Component {
       numOfListRenders: 0,
       emptyListTillRefresh: false,
       lastVoted: '',
+      name: '',
+      username: '',
+      profilePictureLink: '',
     };
   }
 
@@ -51,6 +55,14 @@ class Swipe extends Component {
       : null;
     this.getPlacesToSwipe(placeId);
     this.getCity(this.props.match.params.tripId);
+    getUserData(this, localStorage.getItem("userId")).then(() => {
+      let {username, name, profile_photo} = this.state.userData[0];
+      this.setState({
+        name: name,
+        username: username,
+        profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+      });
+    });
   }
 
   // Helper function for redirecting
@@ -346,7 +358,8 @@ class Swipe extends Component {
   }
 
   render() {
-    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh } = this.state;
+    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh,
+      profilePictureLink, name, username } = this.state;
     const { tripId } = this.props.match.params;
 
     this.bufferRender(places, emptyListTillRefresh, numOfListRenders);
@@ -365,10 +378,14 @@ class Swipe extends Component {
           sideDrawerOpen={sideDrawerOpen} 
           drawerToggleClickHandler={this.drawerToggleClickHandler}
           routeChange={this.routeChange}
+          name={name}
+          username={username}
+          profilePictureLink={profilePictureLink}
         />
         <div className="swipe-header">
           <div className="swipe-header-sides">
             <ProfileButton
+              imgSrc={profilePictureLink}
               onClick={() => this.drawerToggleClickHandler()}
             />
           </div>

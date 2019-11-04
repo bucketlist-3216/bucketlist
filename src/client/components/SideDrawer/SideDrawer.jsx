@@ -6,7 +6,7 @@ import PATHS from '../../constants/paths';
 import ProfileButton from '../../buttons/ProfileButton';
 
 const SideDrawer = props => {
-  const { sideDrawerOpen, drawerToggleClickHandler, routeChange } = props;
+  const { sideDrawerOpen, drawerToggleClickHandler, routeChange, name, username, profilePictureLink } = props;
   let sideDrawerClassName = sideDrawerOpen ? "side-drawer-open" : "side-drawer";
 
   const handleLogOut = () => {
@@ -22,14 +22,15 @@ const SideDrawer = props => {
         <div className="side-drawer-container">
           <div className="swipe-drawer-profile">
             <ProfileButton
+              imgSrc={profilePictureLink}
               onClick={() => drawerToggleClickHandler()}
             />
           </div>
           <div className="swipe-drawer-name">
-            {"Name"}
+            {name}
           </div>
           <div className="swipe-drawer-username">
-            {"@username"}
+            {username}
           </div>
           <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.profile)}>
             <div>
