@@ -16,6 +16,7 @@ import HomeButton from '../../buttons/HomeButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
 import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
+import TutorialPopup from '../TutorialPopup';
 
 @autoBindMethods
 class Swipe extends Component {
@@ -39,6 +40,7 @@ class Swipe extends Component {
       renderResult: '',
       initialSetup: false,
       sideDrawerOpen: false,
+      tutorial: localStorage.getItem('tutorial') || 'false',
     };
   }
 
@@ -222,6 +224,24 @@ class Swipe extends Component {
       this.setState({ initialSetup: true });
     }
 
+    // Hack. TODO: Need better way to show the overlay of tutorial and page
+    if (this.state.tutorial === 'true') {
+      return (
+        <div className="swipe-container" style={{ top : "-90%"}}>
+          <Swipeable
+            buttons={this.renderButtons}
+            onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
+            renderResult={renderResult} setRenderResult={this.setRenderResult}
+          >
+            <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo} 
+              imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} 
+              renderResult={renderResult} />
+            <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
+          </Swipeable>
+          {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
+        </div>
+      );
+    }
     return (
       <div className="swipe-container">
         <Swipeable
@@ -293,9 +313,22 @@ class Swipe extends Component {
     };
   }
 
+  handleTutorialFinish() {
+    this.setState({tutorial: 'false'});
+    localStorage.setItem('tutorial', 'false');
+  }
+
+  renderTutorial(zIndex = 2000) {
+    console.log('Rendering the tutorial');
+    return (
+      <TutorialPopup onFinish={this.handleTutorialFinish.bind(this)} style={{ zIndex }}/>
+    )
+  }
+
   render() {
     const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer } = this.state;
     const { tripId } = this.props.match.params;
+    const zIndex = 200;
 
     return (
       <div className="swipe">
@@ -331,6 +364,10 @@ class Swipe extends Component {
             />
           </div>
         </div>
+        {
+          (this.state.tutorial === 'true') &&
+          this.renderTutorial(zIndex)                                              
+        }
         { (places.length > 0 || listBuffer.attractions > 0 || listBuffer.food > 0) 
           ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
