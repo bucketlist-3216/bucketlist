@@ -90,6 +90,7 @@ class TripsPage extends Component {
     } else {
       const { trips } = this.state;
       if (trips.length === 0) {
+        localStorage.setItem('tutorial', 'true');
         return (
           <div className="trips-page">
             <div className="top-bar">
@@ -108,13 +109,14 @@ class TripsPage extends Component {
               <div className="no-trips-text">
                 <span>No trips yet, create one now!</span>
               </div>
-              <div className="icon" onClick={() => this.routeChange(PATHS.tutorial)}>
+              <div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
                 <span className="add">+</span>
               </div>
             </div>
           </div>
         );
       } else {
+        localStorage.setItem('tutorial', 'false');
         return (
           <div className="trips-page">
             <div className="top-bar">
