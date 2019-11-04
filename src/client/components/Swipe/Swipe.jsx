@@ -158,7 +158,7 @@ class Swipe extends Component {
   castVote(place) {
 
     return swipeDirection => {
-      console.log(this.state.listNotif)
+      //console.log(this.state.listNotif)
       if (!this.state.listNotif) {
         this.setState({ listNotif: true });
       }
@@ -295,7 +295,7 @@ class Swipe extends Component {
             renderResult={renderResult} imageIndex={imageIndex} numOfImgs={this.state.places[0].images.length} />
           <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
         </Swipeable>
-        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
+        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} numOfImgs={this.state.places[1].images.length}/>}
       </div>
     );
   }
@@ -365,7 +365,7 @@ class Swipe extends Component {
   }
 
   renderTutorial(zIndex = 2000) {
-    console.log('Rendering the tutorial');
+    //console.log('Rendering the tutorial');
     return (
       <TutorialPopup onFinish={this.handleTutorialFinish.bind(this)} style={{ zIndex }}/>
     )
