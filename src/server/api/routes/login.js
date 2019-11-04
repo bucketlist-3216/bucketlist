@@ -24,7 +24,7 @@ if (settings.validate) {
 router.post('/', function (req, res) {
     // body parameter is of the form: {userData: {email, username, token, platform}}
     const userData = req.body.userData;
-    const { email, username, token, platform } = userData;
+    const { email, username, name, token, platform } = userData;
     const gettingUser = userQueryModel.getUser({ email });
     const gettingPlatformId = verify({ token, platform });
     const oldUserPlatform = req.headers.platform;
@@ -39,7 +39,7 @@ router.post('/', function (req, res) {
             // User does not exist
                 return userQueryModel.addUser({
                     email,
-                    username,
+                    name,
                     [`${platform}_id`]: platformId
                 });
             }
@@ -91,7 +91,7 @@ router.post('/', function (req, res) {
 router.post('/guest', function (req, res) {
     // Add a user to table with temporary as true
     let toAdd = {
-        "username": "_GUEST_USER",
+        "name": "_GUEST_USER",
         "temporary": true
     };
 
