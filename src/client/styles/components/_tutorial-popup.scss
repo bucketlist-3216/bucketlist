@@ -3,10 +3,9 @@
     top:0;
     left: 0;
     height: 90%;
-    width: 320px;
+    width: 100%;
     background: transparent;
     z-index: 2;
-    // border: 1px solid red;
     // background: url('/../../../../assets/tutorial/2.jpg');
     // background-color: #272727;
     // background-repeat: no-repeat;
@@ -92,7 +91,7 @@
           .middle-txt {
             position: relative;
             left: 25%;
-            top: 25%;
+            margin-top: 2.5%;
             // border: 1px solid red;
             font-size: 3vh;
             font-weight: normal;
@@ -114,7 +113,7 @@
           .middle-txt {
             position: relative;
             left: 30%;
-            top: 25%;
+            margin-top: 2.5%;
             // border: 1px solid red;
             font-size: 3vh;
             font-weight: normal;
@@ -136,7 +135,7 @@
   
           .middle-txt {
             // border: 1px solid red;
-            margin-top: 5%;
+            margin-top: 2.5%;
             font-size: 3vh;
             font-weight: normal;
             font-family: 'CeraPro-Bold';
