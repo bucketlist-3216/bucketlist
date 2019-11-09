@@ -14,13 +14,57 @@
     flex-direction: row;
     justify-content: space-between;
 
-    .swipe-header-sides {
+    .swipe-header-left {
       height: 10vh;
       width: 10vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+    }
+
+    .swipe-header-right {
+      width: 10vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 2.4%;
+
+      .city {
+        padding: 5px;
+        font-family: 'CeraPro-Bold';
+        font-size: 2.46vh;
+        font-weight: normal;
+        line-height: 3.08vh;
+        text-align: center;
+        color: #212529;
+        padding-bottom: 5px;
+      }
+
+      .swipe-list-button {
+        font-family: 'CeraPro-Bold';
+        font-weight: normal;
+        line-height: 3.08vh;
+        text-align: center;
+        background-color: #3B3B3B;
+        border-radius: 3.08vh;
+        width: 70%;
+        background-color: #4D4D4D;
+        color: #FFFFFF;
+        font-size: 1.85vh;
+        border-radius: 3.08vh;
+        border: none;
+        padding: 2.5px;
+      }
+      .swipe-list-notif {
+        position: absolute;
+        top: 4%;
+        right: 4%;
+        height: 2.25vh;
+        width: 2.25vh;
+        background-color: #FF0000;
+        border-radius: 50%
+      }
     }
 
     .swipe-header-middle {
@@ -72,9 +116,15 @@
   .swipe-container {
     flex: 2 1 0;
     position: relative;
+    top: 0%;
     width: 100%;
     height: 90%;
     z-index: 1;
+
+    .overlay {
+      width: 100%;
+      height: 100%;
+    }
 
     .wrapper{}
 

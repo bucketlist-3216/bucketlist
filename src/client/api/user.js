@@ -3,10 +3,10 @@ import axios from 'axios';
 import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
 
-function getTripFriends (instance, tripId) {
-  return axios
+function getUserData(instance, userId) {
+    return axios
     .request({
-      url: APIS.tripFriend(tripId),
+      url: APIS.user(userId),
       method: 'get',
       headers: {
         token: localStorage.getItem('token'),
@@ -14,10 +14,8 @@ function getTripFriends (instance, tripId) {
       }
     })
     .then(function (response) {
-      //console.log(response.data);
-      const { parent } = instance.props;
-      console.log(response.data);
-      instance.setState({ tripFriends : response.data });
+      instance.setState({ userData : response.data });
+      instance.setState({ isDoneFetching: true });
       instance.setState({ isLoading: false });
     })
     .catch(function (error) {
@@ -31,6 +29,4 @@ function getTripFriends (instance, tripId) {
     });
 }
 
-export default {
-  getTripFriends
-};
+export default getUserData;

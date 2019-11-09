@@ -16,6 +16,8 @@ import ProfileButton from '../../buttons/ProfileButton';
 import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
 import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
+import TutorialPopup from '../TutorialPopup';
+import getUserData from "../../api/user.js";
 
 @autoBindMethods
 class Swipe extends Component {
@@ -39,9 +41,14 @@ class Swipe extends Component {
       renderResult: '',
       initialSetup: false,
       sideDrawerOpen: false,
+      tutorial: localStorage.getItem('tutorial') || 'false',
       numOfListRenders: 0,
       emptyListTillRefresh: false,
       lastVoted: '',
+      name: '',
+      username: '',
+      profilePictureLink: '',
+      listNotif: false,
     };
   }
 
@@ -51,6 +58,15 @@ class Swipe extends Component {
       : null;
     this.getPlacesToSwipe(placeId);
     this.getCity(this.props.match.params.tripId);
+    getUserData(this, localStorage.getItem("userId")).then(() => {
+      //console.log(this.state.userData[0])
+      let {username, name, profile_photo} = this.state.userData[0];
+      this.setState({
+        name: name,
+        username: username,
+        profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+      });
+    });
   }
 
   // Helper function for redirecting
@@ -111,14 +127,14 @@ class Swipe extends Component {
         if (instance.state.swipeList === 2) {
           //console.log(response.data['attractions'][0])
           //console.log(instance.state.lastVoted)
-          if (response.data['attractions'][0] == instance.state.lastVoted) {
+          if (response.data['attractions'][0].name == instance.state.lastVoted.name) {
             instance.setState({ places: response.data['attractions'].slice(1, response.data['attractions'].length)});
           } else {
             instance.setState({ places: response.data['attractions']});
           }
           //instance.setState({ places: response.data['attractions']});
         } else {
-          if (response.data['food'][0] == instance.state.lastVoted) {
+          if (response.data['food'][0].name == instance.state.lastVoted.name) {
             instance.setState({ places: response.data['food'].slice(1, response.data['food'].length)});
           } else {
             instance.setState({ places: response.data['food']});
@@ -140,7 +156,12 @@ class Swipe extends Component {
   }
 
   castVote(place) {
+
     return swipeDirection => {
+      //console.log(this.state.listNotif)
+      if (!this.state.listNotif) {
+        this.setState({ listNotif: true });
+      }
       const { tripId } = this.props.match.params;
       const instance = this;
       const vote = {
@@ -244,6 +265,24 @@ class Swipe extends Component {
       this.setState({ initialSetup: true });
     }
 
+    // Hack. TODO: Need better way to show the overlay of tutorial and page
+    if (this.state.tutorial === 'true') {
+      return (
+        <div className="swipe-container" style={{ top : "-90%"}}>
+          <Swipeable
+            buttons={this.renderButtons}
+            onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
+            renderResult={renderResult} setRenderResult={this.setRenderResult}
+          >
+            <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo} 
+              imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} 
+              renderResult={renderResult} />
+            <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
+          </Swipeable>
+          {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
+        </div>
+      );
+    }
     return (
       <div className="swipe-container">
         <Swipeable
@@ -256,14 +295,14 @@ class Swipe extends Component {
             renderResult={renderResult} imageIndex={imageIndex} numOfImgs={this.state.places[0].images.length} />
           <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
         </Swipeable>
-        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
+        {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} numOfImgs={this.state.places[1].images.length}/>}
       </div>
     );
   }
 
   renderSwipeComplete(listBuffer) {
     if (this.state.initialSetup === false) {
-      if (listBuffer.attractions.length > 0 || listBuffer.food.length > 0) {
+      if (listBuffer && (listBuffer.attractions.length > 0 || listBuffer.food.length > 0)) {
         this.setState({ initialSetup: true });
       }
     }
@@ -320,6 +359,17 @@ class Swipe extends Component {
     };
   }
 
+  handleTutorialFinish() {
+    this.setState({tutorial: 'false'});
+    localStorage.setItem('tutorial', 'false');
+  }
+
+  renderTutorial(zIndex = 2000) {
+    //console.log('Rendering the tutorial');
+    return (
+      <TutorialPopup onFinish={this.handleTutorialFinish.bind(this)} style={{ zIndex }}/>
+    )
+  }
   /* This method waits for 20 render times to register the last location card's voteCount() effect.
      It then calls getPlacesToSwipe() and continuously render for 30 times to display an updated location list. */
   bufferRender(places, emptyListTillRefresh, numOfListRenders) {
@@ -346,8 +396,10 @@ class Swipe extends Component {
   }
 
   render() {
-    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh } = this.state;
+    const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh,
+      profilePictureLink, name, username } = this.state;
     const { tripId } = this.props.match.params;
+    const zIndex = 200;
 
     this.bufferRender(places, emptyListTillRefresh, numOfListRenders);
 
@@ -365,10 +417,14 @@ class Swipe extends Component {
           sideDrawerOpen={sideDrawerOpen} 
           drawerToggleClickHandler={this.drawerToggleClickHandler}
           routeChange={this.routeChange}
+          name={name}
+          username={username}
+          profilePictureLink={profilePictureLink}
         />
         <div className="swipe-header">
-          <div className="swipe-header-sides">
+          <div className="swipe-header-left">
             <ProfileButton
+              imgSrc={profilePictureLink}
               onClick={() => this.drawerToggleClickHandler()}
             />
           </div>
@@ -384,14 +440,27 @@ class Swipe extends Component {
               )}
             </div>
           </div>
-          <div className="swipe-header-sides">
-            <ListButton
-              onClick={() => this.routeChange(PATHS.list(tripId))}
-            />
+          <div className="swipe-header-right">
+            <div className="city">
+              {"list"}
+            </div>
+            { this.state.listNotif &&
+              <div className="swipe-list-notif">
+              </div>
+            }
+            <div className="swipe-list-button"
+              onClick={() => this.routeChange(PATHS.list(tripId))}>
+                {"list"}
+            </div>
           </div>
+
         </div>
-        { (places.length > 0) 
-          ? this.renderSwiping() : this.renderSwipeComplete(listBuffer)}
+        {
+          (this.state.tutorial === 'true') &&
+          this.renderTutorial(zIndex)                                              
+        }
+        { (places.length > 0 || listBuffer.attractions > 0 || listBuffer.food > 0) 
+          ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );
   }

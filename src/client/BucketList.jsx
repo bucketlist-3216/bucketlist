@@ -21,6 +21,7 @@ import TripsPage from './pages/TripsPage';
 import ListPage from './pages/PlaceList';
 import InvitePage from './pages/InvitePage';
 import TutorialPage from './pages/TutorialPage';
+import ProfilePage from './pages/ProfilePage';
 
 ReactGA.initialize('UA-148749594-1');
 ReactGA.pageview(window.location.pathname + window.location.search)
@@ -41,6 +42,7 @@ ReactDOM.render(
       {/* <Route exact path={PATHS.login} component={AppHome} /> */}
       {/* <Route path={PATHS.trips()} component={CreateView} />
       <Route path={PATHS.swipe()} component={SwipeView} /> */}
+      <Route exact path={PATHS.profile} component={ProfilePage} />
     </Switch>
   </BrowserRouter>,
   document.querySelector('#root')

@@ -1,12 +1,12 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faGlobeAmericas, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faCog, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import PATHS from '../../constants/paths';
 import ProfileButton from '../../buttons/ProfileButton';
 
 const SideDrawer = props => {
-  const { sideDrawerOpen, drawerToggleClickHandler, routeChange } = props;
+  const { sideDrawerOpen, drawerToggleClickHandler, routeChange, name, username, profilePictureLink } = props;
   let sideDrawerClassName = sideDrawerOpen ? "side-drawer-open" : "side-drawer";
 
   const handleLogOut = () => {
@@ -22,29 +22,22 @@ const SideDrawer = props => {
         <div className="side-drawer-container">
           <div className="swipe-drawer-profile">
             <ProfileButton
+              imgSrc={profilePictureLink}
               onClick={() => drawerToggleClickHandler()}
             />
           </div>
           <div className="swipe-drawer-name">
-            {"Name"}
+            {name}
           </div>
           <div className="swipe-drawer-username">
-            {"@username"}
+            {username}
           </div>
-          <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.profile)}>
+          <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.trips())}>
             <div>
               <FontAwesomeIcon icon={ faUser } size="lg"></FontAwesomeIcon>
             </div>
             <div className="swipe-drawer-tab">
               {"Profile"}
-            </div>
-          </div>
-          <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.trips())}>
-            <div>
-              <FontAwesomeIcon icon={ faGlobeAmericas } size="lg"></FontAwesomeIcon>
-            </div>
-            <div className="swipe-drawer-tab">
-              {"Trips"}
             </div>
           </div>
           <div className="swipe-drawer-tab-container" onClick={() => alert('Coming soon!')}>
@@ -53,6 +46,14 @@ const SideDrawer = props => {
             </div>
             <div className="swipe-drawer-tab">
               {"Settings"}
+            </div>
+          </div>
+          <div className="swipe-drawer-tab-container" onClick={() => alert('Coming soon!')}>
+            <div>
+              <FontAwesomeIcon icon={ faSearch } size="lg"></FontAwesomeIcon>
+            </div>
+            <div className="swipe-drawer-tab">
+              {"Search"}
             </div>
           </div>
           <div className="swipe-drawer-tab-last" onClick={() => handleLogOut()}>

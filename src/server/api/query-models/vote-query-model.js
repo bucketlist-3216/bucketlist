@@ -138,6 +138,7 @@ class VoteQueryModel extends EntityQueryModel {
         let queryingVotes = knex
             .select(knex.raw(`${selectedColumns.join()}, count(*) as count`))
             .from(this.tableName)
+            .where({vote: 'LIKE'})
             .innerJoin(this.tripFriendQueryModel.tableName, `${this.tripFriendQueryModel.tableName}.trip_friend_id`, '=', `${this.tableName}.trip_friend_id`)
             .innerJoin(this.placeQueryModel.tableName, `${this.placeQueryModel.tableName}.place_id`, '=', `${this.tableName}.place_id`)
             .where({trip_id: tripId})
@@ -146,6 +147,7 @@ class VoteQueryModel extends EntityQueryModel {
         let that = this;
         return queryingVotes
             .then(function(results) {
+                console.log('Showing groupby results', results);
                 let place_ids = _.map(results, r => r.place_id);
                 let promises = _.map(place_ids, p => that.placeImageQueryModel.getPlaceImage(p));
 
