@@ -91,7 +91,7 @@ class TripsPage extends Component {
     } else if (localStorage.getItem('platform') === 'jwt') {
       const {trips} = this.state;
       if (trips.length === 0) {
-        this.routeChange(PATHS.citySelect());
+        this.routeChange(PATHS.createTrip());
       } else {
         this.routeChange(PATHS.list(trips[0]['trip_id']));
       }
@@ -128,7 +128,7 @@ class TripsPage extends Component {
       if (!(localStorage.getItem("platform") === 'jwt' && trips.length>0)) {
         createTripContainer = (
           <div className="add-trip-container">
-            <label className="add" onClick={() => this.routeChange(PATHS.citySelect())}>Create New Trip</label>
+            <label className="add" onClick={() => this.routeChange(PATHS.createTrip())}>Create New Trip</label>
           </div>
         );
       }
@@ -152,7 +152,7 @@ class TripsPage extends Component {
               <div className="no-trips-text">
                 <span>No trips yet, create one now!</span>
               </div>
-              <div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
+              <div className="icon" onClick={() => this.routeChange(PATHS.createTrip())}>
                 <span className="add">+</span>
               </div>
             </div>

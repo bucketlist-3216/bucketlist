@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
-import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import { Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
@@ -16,9 +15,10 @@ class TripInfo extends Component {
   constructor(props) {
     super (props);
 
-    const { new: isNewTrip, destination }  = queryString.parse(this.props.location.search);
+    const { isNewTrip, destination }  = props;
 
     this.state = {
+      isNewTrip,
       isLoading: false,
       trip_name: null,
       destination,
@@ -30,9 +30,7 @@ class TripInfo extends Component {
   }
 
   routeChange(pathname) {
-    this.props.history.push({
-      pathname
-    });
+    this.props.routeChange(pathname);
   }
 
   setLoading(isLoading) {
@@ -71,8 +69,7 @@ class TripInfo extends Component {
   }
 
   handleSave() {
-    const { new: isNewTrip }  = queryString.parse(this.props.location.search);
-    const { trip_name, destination, startDate, endDate } = this.state;
+    const { isNewTrip, trip_name, destination, startDate, endDate } = this.state;
     if (isNewTrip) {
       if (trip_name == null || startDate == null || endDate == null) {
         alert("Please add trip name, start date and end date!");
@@ -111,14 +108,12 @@ class TripInfo extends Component {
       label: ga_info,
     });
 
-    const { new: isNewTrip } = queryString.parse(this.props.location.search);
-
-    const { trip_name, startDate, endDate, isEditingName, isEditingDate } = this.state;
+    const { isNewTrip, trip_name, startDate, endDate, isEditingName, isEditingDate } = this.state;
     const isChanged = trip_name !== null || startDate !== null || endDate !== null;
     return (
       <div className="create-trip" >
         <div className="top-bar">
-          <div className="cancel">
+          <div className="cancel" onClick={this.props.handleCancel}>
             <span>cancel</span>
           </div>
           <div className={isChanged ? "save" : "save disabled"} onClick={this.handleSave}>
@@ -212,4 +207,4 @@ class TripInfo extends Component {
   }
 }
 
-export default withRouter(TripInfo);
+export default TripInfo;
