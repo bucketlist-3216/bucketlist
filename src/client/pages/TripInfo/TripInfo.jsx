@@ -20,7 +20,7 @@ class TripInfo extends Component {
 
     this.state = {
       isLoading: false,
-      name: null,
+      trip_name: null,
       destination,
       startDate: null,
       endDate: null,
@@ -42,7 +42,7 @@ class TripInfo extends Component {
   toggleEditName() {
     const { isEditingName } = this.state;
     if (isEditingName) {
-      this.setState({ name: null });
+      this.setState({ trip_name: null });
     }
     this.setState({ isEditingName: !isEditingName });
   }
@@ -56,7 +56,7 @@ class TripInfo extends Component {
   }
 
   handleChangeName(event) {
-    this.setState({ name: event.target.value });
+    this.setState({ trip_name: event.target.value });
     this.setState({ isChanged: true });
   }
 
@@ -72,15 +72,15 @@ class TripInfo extends Component {
 
   handleSave() {
     const { new: isNewTrip }  = queryString.parse(this.props.location.search);
-    const { name, destination, startDate, endDate } = this.state;
+    const { trip_name, destination, startDate, endDate } = this.state;
     if (isNewTrip) {
-      if (name == null || startDate == null || endDate == null) {
+      if (trip_name == null || startDate == null || endDate == null) {
         alert("Please add trip name, start date and end date!");
         return;
       }
 
       const trip = {
-        name,
+        trip_name,
         destination,
         start_date: startDate,
         end_date: endDate
@@ -113,8 +113,8 @@ class TripInfo extends Component {
 
     const { new: isNewTrip } = queryString.parse(this.props.location.search);
 
-    const { name, startDate, endDate, isEditingName, isEditingDate } = this.state;
-    const isChanged = name !== null || startDate !== null || endDate !== null;
+    const { trip_name, startDate, endDate, isEditingName, isEditingDate } = this.state;
+    const isChanged = trip_name !== null || startDate !== null || endDate !== null;
     return (
       <div className="create-trip" >
         <div className="top-bar">
