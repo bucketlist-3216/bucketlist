@@ -36,7 +36,7 @@ class VoteQueryModel extends EntityQueryModel {
         return Promise.all(promises)
             .then(function(results) {
                 let response = {};
-                
+
                 response['food'] = results[0];
                 response['attractions'] = results[1];
 
@@ -48,7 +48,7 @@ class VoteQueryModel extends EntityQueryModel {
         let start = new Date();
         console.log ('Invoking SQL Interface at ', new Date());
         let query = knex
-            .select([`${this.placeQueryModel.tableName}.place_id`, 'name', 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number', 'type', knex.raw(`GROUP_CONCAT(image_link) as images`)])
+            .select([`${this.placeQueryModel.tableName}.place_id`, `${this.placeQueryModel.tableName}.name`, 'city', 'price', 'address', 'opening_hours', 'description', 'ph_number', 'type', knex.raw(`GROUP_CONCAT(image_link) as images`)])
             .from(this.placeQueryModel.tableName)
             .where({type: type})
             .innerJoin(this.tripQueryModel.tableName, `${this.tripQueryModel.tableName}.destination`, '=', `${this.placeQueryModel.tableName}.city`)
@@ -72,22 +72,22 @@ class VoteQueryModel extends EntityQueryModel {
         let that = this;
         return query
             .then(function(unsortedPlacesToVote) {
-                unsortedPlacesToVote = _.map(unsortedPlacesToVote, e => { 
+                unsortedPlacesToVote = _.map(unsortedPlacesToVote, e => {
                     e.images = e.images.split(',').map(link => that.placeImageQueryModel.augmentUrlWithBucket(link));
                     return e;
                 })
                 // console.log('Received result: ', unsortedPlacesToVote)
                 console.log ('Organizing place details at ', new Date());
-                
+
                 // let food = []
                 // let attractions = []
 
                 // food = _.filter(unsortedPlacesToVote, e => e.type === 'Food')
                 // attractions = _.filter(unsortedPlacesToVote, e => e.type === 'Attraction')
-                
+
                 console.log ('Returning place details at ', new Date());
                 console.log('Took totally ', new Date() - start);
-                
+
                 return unsortedPlacesToVote;
             });
     }
@@ -142,7 +142,7 @@ class VoteQueryModel extends EntityQueryModel {
             .innerJoin(this.placeQueryModel.tableName, `${this.placeQueryModel.tableName}.place_id`, '=', `${this.tableName}.place_id`)
             .where({trip_id: tripId})
             .groupBy(...selectedColumns);
-        
+
         let that = this;
         return queryingVotes
             .then(function(results) {
