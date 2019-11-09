@@ -118,9 +118,10 @@ class PlaceList extends React.Component {
     }
 
     const { tripId } = this.props.match.params;
+    const { trip, places } = this.state;
     return (
       <div className="list-page">
-        <PlaceListTopBar destination="Singapore" onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
+        <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
         <TripDetails tripId={tripId} parent={this} />
         { this.state.places.length === 0
           ? (
