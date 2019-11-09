@@ -1,64 +1,84 @@
 .trip.row {
+  display: flex;
+  flex-direction: row;
+  background-color: #272727;
+  width: 100%;
+  height: 33.4%;
+  margin: 0;
+  padding: 0 9%;
+
+  .trip-element {
+    display: inline-block;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .delete-button {
+    font-family: Ikono Mini L;
+    font-style: normal;
+    font-weight: normal;
+    color: white;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .trip-img {
+    width: 22%;
+    margin-right: 5%;
+
+    img {
+      width: 22vw;
+      height: 22vw;
+      margin-left: 0 !important;
+      max-width: 18vh;
+      max-height: 18vh;
+      border-radius: 50%;
+    }
+  }
+
+  .trip-details {
+    padding-left: 5%;
+    width: 53.95%;
+    height: 100%;
+    border-bottom-width: 0.0862vh;
+    border-bottom-color: #4E4E4E;
+    border-bottom-style: solid;
+
     display: flex;
-    flex-direction: row;
-    background-color: #272727;
-    width: 100%;
-    height: 33.4%;
-    margin: 0;
-    padding: 0 9%;
+    flex-direction: column;
+    justify-content: center;
+    color: #FFFFFF;
 
-    .trip-element {
-        display: inline-block;
-        margin-top: auto;
-        margin-bottom: auto;
+    .trip-name {
+      font-family: Cera Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
     }
-
-    .delete-button {
-        font-family: Ikono Mini L;
-        font-style: normal;
-        font-weight: normal;
-        color: white;
-        margin-left: 5%;
-        margin-right: 5%;
-    }
-
-    .trip-img {
-        width: 22%;
-        margin-right: 5%;
-
-        img {
-            width: 22vw;
-            height: 22vw;
-            margin-left: 0 !important;
-            max-width: 18vh;
-            max-height: 18vh;
-            border-radius: 50%;
-        }
-    }
-
     .trip-dest {
-        padding-left: 5%;
-        width: 53.95%;
-        height: 100%;
-        border-bottom-width: 0.0862vh;
-        border-bottom-color: #4E4E4E;
-        border-bottom-style: solid;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        span {
-            font-family: "CeraPro-Bold";
-            color: white;
-            font-size: 2.71vh;
-        }
+      font-family: Cera Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
     }
-
-    .right-icon {
-        color: white;
-        margin-left: 0;
-        margin-right: 0;
-        margin-right: 0;
+    .trip-dates {
+      font-family: Cera Pro;
+      font-style: normal;
+      font-weight: medium;
+      font-size: 10px;
     }
+    .trip-members {
+      font-family: Cera Pro;
+      font-style: normal;
+      font-weight: medium;
+      font-size: 10px;
+    }
+  }
+
+  .right-icon {
+    color: white;
+    margin-left: 0;
+    margin-right: 0;
+    margin-right: 0;
+  }
 }
