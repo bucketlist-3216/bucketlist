@@ -2,16 +2,17 @@ import axios from 'axios';
 
 import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
+import ERROR_MESSAGES from '../constants/error-messages.json';
 
 function handleError(error, routeChange) {
   if (error.response && error.response.status === 401) {
     localStorage.removeItem('token');
     localStorage.removeItem('platform');
     routeChange(PATHS.login);
-    error.message = 'Please log in to continue.';
+    error.message = ERROR_MESSAGES["401"];
   } else if (error.response && error.response.status === 403) {
     routeChange(PATHS.trips());
-    error.message = 'Sorry, you are not authorized to view this page.';
+    error.message = ERROR_MESSAGES["403"];
   }
   throw error;
 }
