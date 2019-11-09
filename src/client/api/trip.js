@@ -44,9 +44,13 @@ function getTrip (instance, tripId) {
         localStorage.removeItem('token');
         localStorage.removeItem('platform');
         instance.routeChange(PATHS.login);
-        return;
+        return {};
+      } else if (error.response && error.response.status === 403) {
+        alert("You are not authorized to view this page");
+        instance.routeChange(PATHS.trips());
+        return {};
       }
-      alert(error.message);
+      throw error;
     });
 }
 
@@ -63,6 +67,8 @@ function addTrip (instance, trip) {
     })
     .catch(function(error) {
       if (error.response && error.response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('platform');
         instance.routeChange(PATHS.login);
         return;
       }
@@ -84,6 +90,30 @@ function updateTrip (instance, tripId, trip) {
     })
     .catch(function(error) {
       if (error.response && error.response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('platform');
+        instance.routeChange(PATHS.login);
+        return;
+      }
+      alert(error.message);
+      console.log(error);
+    });
+}
+
+function deleteTrip (instance, tripId) {
+  return axios
+    .request({
+      url: APIS.trip(tripId),
+      method: 'delete',
+      headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      }
+    })
+    .catch(function (error) {
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('platform');
         instance.routeChange(PATHS.login);
         return;
       }
@@ -96,5 +126,6 @@ export default {
   getTrips,
   getTrip,
   addTrip,
-  updateTrip
+  updateTrip,
+  deleteTrip
 };

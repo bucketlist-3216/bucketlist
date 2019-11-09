@@ -18,7 +18,6 @@ import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 import LogoutButton from "../../buttons/LogoutButton";
 import ProfileBanner from "../../components/Trip/ProfileBanner";
-import axios from 'axios';
 
 import APIS from '../../constants/apis';
 
@@ -47,16 +46,12 @@ class TripsPage extends Component {
     TripAPI.getTrips(this);
   }
 
-  deleteTrip(trip) {
-    return axios
-      .request({
-        url: APIS.trip(trip.trip_id),
-        method: 'delete',
-        headers: {
-          token: localStorage.getItem('token'),
-          platform: localStorage.getItem('platform')
-        }
-      })
+  handleDelete(tripId) {
+    const isConfirmed = window.confirm('Are you sure you wish to delete this trip?');
+    if (!isConfirmed) {
+      return;
+    }
+    TripAPI.deleteTrip(this, tripId)
       .then(function (response) {
         if (response.data.tripsDeleted === 1) {
           location.reload();
@@ -65,12 +60,6 @@ class TripsPage extends Component {
         }
       })
       .catch(function (error) {
-        if (error.response && error.response.status === 401) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('platform');
-          instance.routeChange(PATHS.login);
-          return;
-        }
         alert(error.message);
       });
   }
@@ -111,7 +100,7 @@ class TripsPage extends Component {
                   history={this.props.history}
                   showModal={this.showModal}
                   onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
-                  onDelete={() => {if (window.confirm('Are you sure you wish to delete this trip?')) this.deleteTrip(trip)}}
+                  onDelete={() => this.handleDelete(trip.trip_id)}
                 />
               ))}
           </div>

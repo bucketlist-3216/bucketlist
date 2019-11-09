@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt, faChevronRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import PATHS from '../../constants/paths';
 
@@ -26,7 +26,7 @@ const Trip = props => {
         <span>{destination}</span>
       </div>
       <div className="trip-element delete-button" onClick={onDelete}>
-        <FontAwesomeIcon icon={ faTrash }></FontAwesomeIcon>
+        <span></span>
       </div>
       <div className="trip-element right-icon" onClick={onClick}>
         <FontAwesomeIcon icon={ faChevronRight }></FontAwesomeIcon>

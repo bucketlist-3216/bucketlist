@@ -10,6 +10,8 @@ import TripAPI from '../../api/trip';
 
 import PATHS from '../../constants/paths';
 
+import Preloader from '../../components/Preloader';
+
 @autoBindMethods
 class TripInfo extends Component {
   constructor(props) {
@@ -71,6 +73,7 @@ class TripInfo extends Component {
   handleSave() {
     const { trip, tripName, destination, startDate, endDate } = this.state;
     if (!trip) {
+      // Add trip
       if (tripName == null || startDate == null || endDate == null) {
         alert("Please add trip name, start date and end date!");
         return;
@@ -95,6 +98,7 @@ class TripInfo extends Component {
           console.log(error);
         });
     } else {
+      // Update trip
       const tripData = {};
       if (tripName) tripData.trip_name = tripName;
       if (startDate) tripData.start_date = startDate;
@@ -107,7 +111,8 @@ class TripInfo extends Component {
           Object.assign(trip, tripData);
           instance.setState({
             isEditingName: false,
-            isEditingDate: false
+            isEditingDate: false,
+            isLoading: false
           });
         })
         .catch(function (error) {
@@ -115,6 +120,23 @@ class TripInfo extends Component {
           console.log(error);
         });
     }
+  }
+
+  handleDelete() {
+    const { trip } = this.state;
+    const instance = this;
+    TripAPI.deleteTrip(this, trip.trip_id)
+      .then(function (response) {
+        if (response && response.data.tripsDeleted === 1) {
+          instance.routeChange(PATHS.trips());
+        } else {
+          alert('You are not authorized to delete this trip');
+        }
+      })
+      .catch(function (error) {
+        alert(error.message);
+        console.log(error);
+      });
   }
 
   formatDate(date) {
@@ -137,13 +159,18 @@ class TripInfo extends Component {
       label: ga_info,
     });
 
-    const { trip, tripName, startDate, endDate, isEditingName, isEditingDate } = this.state;
+    const { isLoading, trip, tripName, startDate, endDate, isEditingName, isEditingDate } = this.state;
+
+    if (isLoading) {
+      return <Preloader />;
+    }
+
     const isChanged = tripName !== null || startDate !== null || endDate !== null;
     return (
       <div className="create-trip" >
         <div className="top-bar">
-          <div className="cancel" onClick={this.props.handleCancel}>
-            <span>cancel</span>
+          <div className="back" onClick={this.props.handleBack}>
+            <span>back</span>
           </div>
           <div className={isChanged ? "save" : "save disabled"} onClick={this.handleSave}>
             <span>save</span>
@@ -223,7 +250,7 @@ class TripInfo extends Component {
           </Form>
         </div>
         { trip &&
-          <div className="delete-button">
+          <div className="delete-button" onClick={this.handleDelete}>
             <div className="icon">
               <span></span>
             </div>

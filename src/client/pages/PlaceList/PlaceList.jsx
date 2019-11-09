@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
+import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 
 import PlaceCard from '../../components/PlaceCard/PlaceCard'
@@ -29,6 +30,7 @@ const DummyPlace = {
   }
 };
 
+@autoBindMethods
 class PlaceList extends React.Component {
 
   constructor(props) {
@@ -60,12 +62,10 @@ class PlaceList extends React.Component {
 
     const gettingTrip = TripAPI.getTrip(this, tripId)
       .then(function (response) {
-        console.log(response.data);
         instance.setState({ trip : response.data });
       });
     const gettingTripFriends = TripFriendAPI.getTripFriends(this, tripId)
       .then(function (response) {
-        console.log(response.data);
         instance.setState({ tripFriends : response.data });
       });
     const gettingPlaces = axios
@@ -78,7 +78,6 @@ class PlaceList extends React.Component {
         }
       })
       .then(function (response) {
-        console.log(response.data);
         instance.setState({ places: response.data });
       });
     Promise.all([gettingTrip, gettingTripFriends, gettingPlaces])
@@ -86,10 +85,6 @@ class PlaceList extends React.Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        if (error.response && error.response.status === 401) {
-          instance.routeChange(PATHS.login);
-          return;
-        }
         alert(error.message);
       });
   }
@@ -113,7 +108,7 @@ class PlaceList extends React.Component {
       return <TripInfo
         trip={this.state.trip}
         destination="Singapore"
-        handleCancel={() => this.setState({ isManagingTrip: false })}
+        handleBack={() => this.setState({ isManagingTrip: false })}
         routeChange={this.routeChange}
       />;
     }
