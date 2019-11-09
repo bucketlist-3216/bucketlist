@@ -50,6 +50,7 @@ const SingleSignOnButton = props => {
           onLoginSuccess();
         })
         .catch(function (error) {
+          setLoading(false);
           alert(error.message);
         });
     }

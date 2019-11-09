@@ -3,7 +3,20 @@ import axios from 'axios';
 import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
 
-function getTrips (instance) {
+function handleError(error, routeChange) {
+  if (error.response && error.response.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('platform');
+    routeChange(PATHS.login);
+    error.message = 'Please log in to continue.';
+  } else if (error.response && error.response.status === 403) {
+    routeChange(PATHS.trips());
+    error.message = 'Sorry, you are not authorized to view this page.';
+  }
+  throw error;
+}
+
+function getTrips (routeChange) {
   return axios
     .request({
       url: APIS.trip(),
@@ -13,23 +26,12 @@ function getTrips (instance) {
         platform: localStorage.getItem('platform')
       }
     })
-    .then(function (response) {
-      instance.setState({ trips : response.data });
-      instance.setState({ isDoneFetching: true });
-      instance.setState({ isLoading: false });
-    })
     .catch(function (error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('platform');
-        instance.routeChange(PATHS.login);
-        return;
-      }
-      alert(error.message);
+      handleError(error, routeChange);
     });
 }
 
-function getTrip (instance, tripId) {
+function getTrip (routeChange, tripId) {
   return axios
     .request({
       url: APIS.trip(tripId),
@@ -40,21 +42,11 @@ function getTrip (instance, tripId) {
       }
     })
     .catch(function (error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('platform');
-        instance.routeChange(PATHS.login);
-        return {};
-      } else if (error.response && error.response.status === 403) {
-        alert("You are not authorized to view this page");
-        instance.routeChange(PATHS.trips());
-        return {};
-      }
-      throw error;
+      handleError(error, routeChange);
     });
 }
 
-function addTrip (instance, trip) {
+function addTrip (routeChange, trip) {
   return axios
     .request({
       url: APIS.trip(),
@@ -66,18 +58,11 @@ function addTrip (instance, trip) {
       data: { trip }
     })
     .catch(function(error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('platform');
-        instance.routeChange(PATHS.login);
-        return;
-      }
-      alert(error.message);
-      console.log(error);
+      handleError(error, routeChange);
     });
 }
 
-function updateTrip (instance, tripId, trip) {
+function updateTrip (routeChange, tripId, trip) {
   return axios
     .request({
       url: APIS.trip(tripId),
@@ -89,18 +74,11 @@ function updateTrip (instance, tripId, trip) {
       data: { trip }
     })
     .catch(function(error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('platform');
-        instance.routeChange(PATHS.login);
-        return;
-      }
-      alert(error.message);
-      console.log(error);
+      handleError(error, routeChange);
     });
 }
 
-function deleteTrip (instance, tripId) {
+function deleteTrip (routeChange, tripId) {
   return axios
     .request({
       url: APIS.trip(tripId),
@@ -111,14 +89,7 @@ function deleteTrip (instance, tripId) {
       }
     })
     .catch(function (error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('platform');
-        instance.routeChange(PATHS.login);
-        return;
-      }
-      alert(error.message);
-      console.log(error);
+      handleError(error, routeChange);
     });
 }
 

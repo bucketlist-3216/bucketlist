@@ -17,7 +17,7 @@ import ListButton from '../../buttons/ListButton';
 import Img from 'react-image';
 import { LoopingRhombusesSpinner, PixelSpinner } from 'react-epic-spinners';
 import TutorialPopup from '../TutorialPopup';
-import getUserData from "../../api/user.js";
+import UserAPI from "../../api/user.js";
 
 @autoBindMethods
 class Swipe extends Component {
@@ -58,15 +58,27 @@ class Swipe extends Component {
       : null;
     this.getPlacesToSwipe(placeId);
     this.getCity(this.props.match.params.tripId);
-    getUserData(this, localStorage.getItem("userId")).then(() => {
-      //console.log(this.state.userData[0])
-      let {username, name, profile_photo} = this.state.userData[0];
-      this.setState({
-        name: name,
-        username: username,
-        profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+    const instance = this;
+    this.setState({ isLoading: true });
+    UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
+      .then(function (response) {
+        instance.setState({
+          userData : response.data,
+          isLoading: false
+        });
+      })
+      .then(() => {
+        //console.log(this.state.userData[0])
+        let {username, name, profile_photo} = this.state.userData[0];
+        this.setState({
+          name: name,
+          username: username,
+          profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+        });
+      })
+      .catch(function (error) {
+        alert(error.message);
       });
-    });
   }
 
   // Helper function for redirecting
@@ -274,8 +286,8 @@ class Swipe extends Component {
             onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
             renderResult={renderResult} setRenderResult={this.setRenderResult}
           >
-            <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo} 
-              imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} 
+            <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo}
+              imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX}
               renderResult={renderResult} />
             <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
           </Swipeable>
@@ -290,8 +302,8 @@ class Swipe extends Component {
           onSwipe={this.castVote(currentPlace)} onAfterSwipe={this.nextCard}
           renderResult={renderResult} setRenderResult={this.setRenderResult}
         >
-          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo} 
-            imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX} 
+          <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo}
+            imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX}
             renderResult={renderResult} imageIndex={imageIndex} numOfImgs={this.state.places[0].images.length} />
           <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
         </Swipeable>
@@ -385,7 +397,7 @@ class Swipe extends Component {
       } else {
         if (numOfListRenders < 50) {
           this.setState({ numOfListRenders: this.state.numOfListRenders + 1});
-        } 
+        }
       }
     }
 
@@ -410,11 +422,11 @@ class Swipe extends Component {
 
     return (
       <div className="swipe">
-        {sideDrawerOpen && 
-          <Backdrop backdropClickHandler={this.backdropClickHandler} /> 
+        {sideDrawerOpen &&
+          <Backdrop backdropClickHandler={this.backdropClickHandler} />
         }
-        <SideDrawer 
-          sideDrawerOpen={sideDrawerOpen} 
+        <SideDrawer
+          sideDrawerOpen={sideDrawerOpen}
           drawerToggleClickHandler={this.drawerToggleClickHandler}
           routeChange={this.routeChange}
           name={name}
@@ -457,9 +469,9 @@ class Swipe extends Component {
         </div>
         {
           (this.state.tutorial === 'true') &&
-          this.renderTutorial(zIndex)                                              
+          this.renderTutorial(zIndex)
         }
-        { (places.length > 0 || listBuffer.attractions > 0 || listBuffer.food > 0) 
+        { (places.length > 0 || listBuffer.attractions > 0 || listBuffer.food > 0)
           ? this.renderSwiping() : this.renderSwipeComplete()}
       </div>
     );

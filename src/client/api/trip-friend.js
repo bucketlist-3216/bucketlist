@@ -3,7 +3,20 @@ import axios from 'axios';
 import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
 
-function getTripFriends (instance, tripId) {
+function handleError(error, routeChange) {
+  if (error.response && error.response.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('platform');
+    routeChange(PATHS.login);
+    error.message = 'Please log in to continue.';
+  } else if (error.response && error.response.status === 403) {
+    routeChange(PATHS.trips());
+    error.message = 'Sorry, you are not authorized to view this page.';
+  }
+  throw error;
+}
+
+function getTripFriends (routeChange, tripId) {
   return axios
     .request({
       url: APIS.tripFriend(tripId),
@@ -14,13 +27,7 @@ function getTripFriends (instance, tripId) {
       }
     })
     .catch(function (error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('platform');
-        instance.routeChange(PATHS.login);
-        return;
-      }
-      alert(error.message);
+      handleError(error, routeChange);
     });
 }
 

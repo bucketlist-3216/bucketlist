@@ -60,11 +60,11 @@ class PlaceList extends React.Component {
     const { tripId } = this.props.match.params;
     this.setState({ isLoading: true });
 
-    const gettingTrip = TripAPI.getTrip(this, tripId)
+    const gettingTrip = TripAPI.getTrip(this.routeChange, tripId)
       .then(function (response) {
         instance.setState({ trip : response.data });
       });
-    const gettingTripFriends = TripFriendAPI.getTripFriends(this, tripId)
+    const gettingTripFriends = TripFriendAPI.getTripFriends(this.routeChange, tripId)
       .then(function (response) {
         instance.setState({ tripFriends : response.data });
       });

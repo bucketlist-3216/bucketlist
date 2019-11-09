@@ -88,7 +88,7 @@ class TripInfo extends Component {
 
       this.setLoading(true);
       const instance = this;
-      TripAPI.addTrip(this, tripData)
+      TripAPI.addTrip(this.routeChange, tripData)
         .then(function(response) {
           let tripId = response.data.insertedId;
           instance.routeChange(PATHS.swipe(tripId));
@@ -106,7 +106,7 @@ class TripInfo extends Component {
 
       this.setLoading(true);
       const instance = this;
-      TripAPI.updateTrip(this, trip.trip_id, tripData)
+      TripAPI.updateTrip(this.routeChange, trip.trip_id, tripData)
         .then(function(response) {
           Object.assign(trip, tripData);
           instance.setState({
@@ -125,13 +125,9 @@ class TripInfo extends Component {
   handleDelete() {
     const { trip } = this.state;
     const instance = this;
-    TripAPI.deleteTrip(this, trip.trip_id)
+    TripAPI.deleteTrip(this.routeChange, trip.trip_id)
       .then(function (response) {
-        if (response && response.data.tripsDeleted === 1) {
-          instance.routeChange(PATHS.trips());
-        } else {
-          alert('You are not authorized to delete this trip');
-        }
+        instance.routeChange(PATHS.trips());
       })
       .catch(function (error) {
         alert(error.message);
@@ -196,7 +192,7 @@ class TripInfo extends Component {
                         className="value-form"
                         type="email"
                         placeholder="trip name"
-                        defaultValue={trip.trip_name}
+                        defaultValue={trip && trip.trip_name}
                       />
                     </div>
                   : <span>{trip.trip_name}</span>

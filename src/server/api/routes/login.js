@@ -120,7 +120,7 @@ router.post('/guest', function (req, res) {
 
 // When the user signs in after doing some stuff as a guest
 router.put('/guest', function (req, res) {
-    // insert new login details into the table 
+    // insert new login details into the table
 
     // change temporary to false
 })

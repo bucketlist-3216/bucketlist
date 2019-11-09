@@ -17,7 +17,7 @@ import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 import LogoutButton from "../../buttons/LogoutButton";
-import ProfileBanner from "../../components/Trip/ProfileBanner";
+import ProfileBanner from "../../components/ProfileBanner";
 
 import APIS from '../../constants/apis';
 
@@ -28,7 +28,6 @@ class TripsPage extends Component {
 
     this.state = {
       trips: [],
-      isDoneFetching: false,
       isLoading: true,
       isModalShown: false,
       modalTripId: null
@@ -43,7 +42,17 @@ class TripsPage extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    TripAPI.getTrips(this);
+    const instance = this;
+    TripAPI.getTrips(this.routeChange)
+      .then(function (response) {
+        instance.setState({
+          trips : response.data,
+          isLoading: false
+        });
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
   }
 
   handleDelete(tripId) {
@@ -51,13 +60,9 @@ class TripsPage extends Component {
     if (!isConfirmed) {
       return;
     }
-    TripAPI.deleteTrip(this, tripId)
+    TripAPI.deleteTrip(this.routeChange, tripId)
       .then(function (response) {
-        if (response.data.tripsDeleted === 1) {
-          location.reload();
-        } else {
-          alert('You are not authorized to delete this trip');
-        }
+        location.reload();
       })
       .catch(function (error) {
         alert(error.message);
