@@ -29,6 +29,27 @@ function getTrips (instance) {
     });
 }
 
+function getTrip (instance, tripId) {
+  return axios
+    .request({
+      url: APIS.trip(tripId),
+      method: 'get',
+      headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      }
+    })
+    .catch(function (error) {
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('platform');
+        instance.routeChange(PATHS.login);
+        return;
+      }
+      alert(error.message);
+    });
+}
+
 function addTrip (instance, trip) {
   return axios
     .request({
@@ -50,7 +71,30 @@ function addTrip (instance, trip) {
     });
 }
 
+function updateTrip (instance, tripId, trip) {
+  return axios
+    .request({
+      url: APIS.trip(tripId),
+      method: 'put',
+      headers: {
+        token: localStorage.getItem('token'),
+        platform: localStorage.getItem('platform')
+      },
+      data: { trip }
+    })
+    .catch(function(error) {
+      if (error.response && error.response.status === 401) {
+        instance.routeChange(PATHS.login);
+        return;
+      }
+      alert(error.message);
+      console.log(error);
+    });
+}
+
 export default {
   getTrips,
-  addTrip
+  getTrip,
+  addTrip,
+  updateTrip
 };

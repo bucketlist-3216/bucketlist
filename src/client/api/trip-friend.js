@@ -13,13 +13,6 @@ function getTripFriends (instance, tripId) {
         platform: localStorage.getItem('platform')
       }
     })
-    .then(function (response) {
-      //console.log(response.data);
-      const { parent } = instance.props;
-      console.log(response.data);
-      instance.setState({ tripFriends : response.data });
-      instance.setState({ isLoading: false });
-    })
     .catch(function (error) {
       if (error.response && error.response.status === 401) {
         localStorage.removeItem('token');

@@ -15,17 +15,17 @@ class TripInfo extends Component {
   constructor(props) {
     super (props);
 
-    const { isNewTrip, destination }  = props;
+    const { trip, destination }  = props;
 
     this.state = {
-      isNewTrip,
+      trip,
       isLoading: false,
-      trip_name: null,
+      tripName: trip ? trip.trip_name : null,
       destination,
-      startDate: null,
-      endDate: null,
-      isEditingName: isNewTrip ? true : false,
-      isEditingDate: isNewTrip ? true : false
+      startDate: trip ? new Date(trip.start_date) : null,
+      endDate: trip ? new Date(trip.end_date) : null,
+      isEditingName: trip ? false : true,
+      isEditingDate: trip ? false : true
     };
   }
 
@@ -40,7 +40,7 @@ class TripInfo extends Component {
   toggleEditName() {
     const { isEditingName } = this.state;
     if (isEditingName) {
-      this.setState({ trip_name: null });
+      this.setState({ tripName: null });
     }
     this.setState({ isEditingName: !isEditingName });
   }
@@ -54,7 +54,7 @@ class TripInfo extends Component {
   }
 
   handleChangeName(event) {
-    this.setState({ trip_name: event.target.value });
+    this.setState({ tripName: event.target.value });
     this.setState({ isChanged: true });
   }
 
@@ -69,15 +69,15 @@ class TripInfo extends Component {
   }
 
   handleSave() {
-    const { isNewTrip, trip_name, destination, startDate, endDate } = this.state;
-    if (isNewTrip) {
-      if (trip_name == null || startDate == null || endDate == null) {
+    const { trip, tripName, destination, startDate, endDate } = this.state;
+    if (!trip) {
+      if (tripName == null || startDate == null || endDate == null) {
         alert("Please add trip name, start date and end date!");
         return;
       }
 
-      const trip = {
-        trip_name,
+      const tripData = {
+        tripName,
         destination,
         start_date: startDate,
         end_date: endDate
@@ -85,7 +85,7 @@ class TripInfo extends Component {
 
       this.setLoading(true);
       const instance = this;
-      TripAPI.addTrip(this, trip)
+      TripAPI.addTrip(this, tripData)
         .then(function(response) {
           let tripId = response.data.insertedId;
           instance.routeChange(PATHS.swipe(tripId));
@@ -94,7 +94,36 @@ class TripInfo extends Component {
           alert(error.message);
           console.log(error);
         });
+    } else {
+      const tripData = {};
+      if (tripName) tripData.trip_name = tripName;
+      if (startDate) tripData.start_date = startDate;
+      if (endDate) tripData.end_date = endDate;
+
+      this.setLoading(true);
+      const instance = this;
+      TripAPI.updateTrip(this, trip.trip_id, tripData)
+        .then(function(response) {
+          Object.assign(trip, tripData);
+          instance.setState({
+            isEditingName: false,
+            isEditingDate: false
+          });
+        })
+        .catch(function (error) {
+          alert(error.message);
+          console.log(error);
+        });
     }
+  }
+
+  formatDate(date) {
+    const options = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    };
+    return new Date(date).toLocaleDateString('default', options);
   }
 
   render() {
@@ -108,8 +137,8 @@ class TripInfo extends Component {
       label: ga_info,
     });
 
-    const { isNewTrip, trip_name, startDate, endDate, isEditingName, isEditingDate } = this.state;
-    const isChanged = trip_name !== null || startDate !== null || endDate !== null;
+    const { trip, tripName, startDate, endDate, isEditingName, isEditingDate } = this.state;
+    const isChanged = tripName !== null || startDate !== null || endDate !== null;
     return (
       <div className="create-trip" >
         <div className="top-bar">
@@ -140,12 +169,13 @@ class TripInfo extends Component {
                         className="value-form"
                         type="email"
                         placeholder="trip name"
+                        defaultValue={trip.trip_name}
                       />
                     </div>
-                  : <span>Dance Trip Singapore</span>
+                  : <span>{trip.trip_name}</span>
                 }
               </div>
-              { !isNewTrip &&
+              { trip &&
                 <div className="edit" onClick={this.toggleEditName}>
                   <span></span>
                 </div>
@@ -169,22 +199,22 @@ class TripInfo extends Component {
                     <div className="value-form-container">
                       <DatePicker
                         className="value-form value-form-date"
-                        selected={this.state.startDate}
+                        selected={startDate}
                         onChange={this.handleChangeStartDate}
                         placeholderText="start date"
                       />
                       <span>-</span>
                       <DatePicker
                         className="value-form value-form-date"
-                        selected={this.state.endDate}
+                        selected={endDate}
                         onChange={this.handleChangeEndDate}
                         placeholderText="end date"
                       />
                     </div>
-                  : <span>26/11/19 - 4/12/19</span>
+                  : <span>{this.formatDate(trip.start_date)} - {this.formatDate(trip.end_date)}</span>
                 }
               </div>
-              { !isNewTrip &&
+              { trip &&
                 <div className="edit" onClick={this.toggleEditDate}>
                   <span></span>
                 </div>
@@ -192,7 +222,7 @@ class TripInfo extends Component {
             </div>
           </Form>
         </div>
-        { !isNewTrip &&
+        { trip &&
           <div className="delete-button">
             <div className="icon">
               <span></span>
