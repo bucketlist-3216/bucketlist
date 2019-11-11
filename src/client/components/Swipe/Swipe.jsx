@@ -288,10 +288,10 @@ class Swipe extends Component {
           >
             <SwipeCard place={currentPlace} setPlaceData={this.setPlaceData} setShowInfo={this.setShowInfo}
               imageIndex={imageIndex} imageChange={this.imageChange} setInitialScreenX={this.setInitialScreenX}
-              renderResult={renderResult} />
+              renderResult={renderResult} imageIndex={imageIndex} numOfImgs={this.state.places[0].images.length} />
             <InfoPanel place={currentPlace} showInfo={showInfo} setShowInfo={this.setShowInfo}/>
           </Swipeable>
-          {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} />}
+          {places.length > 1 && <SwipeCard zIndex={-1} place={places[1]} imageIndex={0} numOfImgs={this.state.places[1].images.length}/>}
         </div>
       );
     }
