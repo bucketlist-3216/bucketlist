@@ -55,13 +55,13 @@ class GroupSettings extends Component {
             />
           ))}
         </div>
-        <div className="bottom-bar">
+        {/* <div className="bottom-bar">
           <button className="link-button">
             <span>
               copy sharing link
             </span>
           </button>
-        </div>
+        </div> */}
         <AddFriendModal
           isModalShown={isModalShown}
           closeModal={this.closeModal}
