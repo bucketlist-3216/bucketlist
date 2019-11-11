@@ -56,6 +56,7 @@ class Login extends Component {
     }
 
     return (
+      <div className="app-home-parent">
       <div className="app-home">
         <h1 className="title">bucketlist</h1>
         {/* <div className="login-inputs">
@@ -82,6 +83,7 @@ class Login extends Component {
         	<div className="line"></div>
       	</div>
         <span className="guest" onClick={() => {localStorage.setItem('tutorial', 'true'); LoginAPI.loginGuest(this)}}>continue as guest</span>
+      </div>
       </div>
     );
   }
