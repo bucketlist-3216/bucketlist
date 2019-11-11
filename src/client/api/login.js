@@ -17,7 +17,12 @@ function login (userData) {
       localStorage.setItem('userId', response.data.userId);
     })
     .catch(function (error) {
-      alert(error.message);
+      toast(`Something went wrong! Oops`, {
+        type: 'error',
+        autoClose: 4000,
+        position: toast.POSITION.BOTTOM_CENTER,
+        hideProgressBar: true,
+      });
     });
 }
 
@@ -32,7 +37,12 @@ function loginGuest (instance) {
       instance.routeChange(PATHS.trips());
     })
     .catch(function (error) {
-      alert(error.message);
+      toast(`Something went wrong! Oops`, {
+        type: 'error',
+        autoClose: 4000,
+        position: toast.POSITION.BOTTOM_CENTER,
+        hideProgressBar: true,
+      });
     });
 }
 

@@ -73,9 +73,20 @@ class AddFriendModal extends Component {
           instance.routeChange(PATHS.landingPage);
         } else if (error.response && error.response.status === 404) {
           // TODO: Make this error message sound and look nicer
-          alert(`Could not find user with email '${email}'.`);
+          toast(`Could not find user with email ${email}`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
+
         } else {
-          alert(error.message);
+          toast(`Something went wrong! Oops`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
           console.log(error);
         }
       });

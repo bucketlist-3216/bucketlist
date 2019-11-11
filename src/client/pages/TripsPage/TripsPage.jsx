@@ -61,7 +61,12 @@ class TripsPage extends Component {
         if (response.data.tripsDeleted === 1) {
           location.reload();
         } else {
-          alert('You are not authorized to delete this trip');
+          toast('You are not authorized to delete this trip', {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
         }
       })
       .catch(function (error) {
@@ -71,7 +76,12 @@ class TripsPage extends Component {
           instance.routeChange(PATHS.login);
           return;
         }
-        alert(error.message);
+        toast(`Something went wrong! Oops`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 

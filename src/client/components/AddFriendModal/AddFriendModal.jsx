@@ -15,7 +15,7 @@ class AddFriendModal extends Component {
       email: '',
     }
   }
-
+  
   render() {
     const { isModalShown, closeModal } = this.props;
     return (
@@ -73,7 +73,7 @@ class AddFriendModal extends Component {
         // Show a toast
         toast('Added successfully', {
           type: 'success',
-          autoClose: 2000,
+          autoClose: 4000,
           position: toast.POSITION.BOTTOM_CENTER,
           hideProgressBar: true,
         });
@@ -85,11 +85,28 @@ class AddFriendModal extends Component {
           instance.routeChange(PATHS.landingPage);
         } else if (error.response && error.response.status === 404) {
           // TODO: Make this error message sound and look nicer
-          alert(`Could not find user with email '${email}'.`);
+          toast(`Could not find user with email ${email}`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
+
         } else if (error.response && error.response.status === 409) {
-          alert(`User with email '${email}' is already in this trip.`);
+          toast(`User with email '${email}' is already in this trip.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
+
         } else {
-          alert(error.message);
+          toast(`Something went wrong! Oops`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
           console.log(error);
         }
       });

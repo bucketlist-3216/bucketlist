@@ -70,9 +70,9 @@ class Create extends Component {
     });*/
 
     if (this.state.city === '') {
-      alert('Please select city of destination');
+      toast('Please select city of destination');
     } else if (this.state.from > this.state.to) {
-      alert('Start date should be before end date!');
+      toast('Start date should be before end date!');
     } else {
       let userId = this.props.match.params.userId;
       let trip = {
@@ -101,7 +101,13 @@ class Create extends Component {
             instance.routeChange(PATHS.landingPage);
             return;
           }
-          alert(error.message);
+          toast(`Something went wrong! Oops`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
+
           console.log(error);
         });
       this.props.setLoading(true);

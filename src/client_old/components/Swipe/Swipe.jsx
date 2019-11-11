@@ -63,7 +63,13 @@ class Swipe extends Component {
           instance.routeChange(PATHS.landingPage);
           return;
         }
-        alert(error.message);
+        
+        toast(`Something went wrong! Oops`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 
@@ -95,7 +101,12 @@ class Swipe extends Component {
           instance.routeChange(PATHS.landingPage);
           return;
         }
-        alert(error.message);
+        toast(`Something went wrong! Oops`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 
@@ -128,7 +139,13 @@ class Swipe extends Component {
             instance.routeChange(PATHS.landingPage);
             return;
           }
-          alert(error.message);
+          
+          toast(`Something went wrong! Oops`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
         });
     };
   }

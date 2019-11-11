@@ -74,7 +74,12 @@ class CitySelect extends Component {
         instance.routeChange(PATHS.login);
         return;
       }
-      alert(error.message);
+      toast(`Something went wrong! Oops`, {
+        type: 'error',
+        autoClose: 4000,
+        position: toast.POSITION.BOTTOM_CENTER,
+        hideProgressBar: true,
+      });
       console.log(error);
     });
   }
