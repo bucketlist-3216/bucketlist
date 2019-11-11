@@ -4,7 +4,12 @@ import Img from 'react-image';
 import Spinner from '../../components/Spinner';
 
 const TripFriend = (props) => {
-  const { tripFriend, isAdminShown } = props;
+  const { tripFriend, isAdminShown, anonCounter } = props;
+
+  if (tripFriend.name === '_GUEST_USER') {
+    tripFriend.name = 'Anonymous Traveller ' + anonCounter;
+  }
+
   return (
     <div className="trip-friend">
       { tripFriend.profile_pic
@@ -22,7 +27,7 @@ const TripFriend = (props) => {
         )
       }
       <div className="name">
-        <span>{tripFriend.username}</span>
+        <span>{tripFriend.name}</span>
       </div>
       <div className="admin">
         <span>

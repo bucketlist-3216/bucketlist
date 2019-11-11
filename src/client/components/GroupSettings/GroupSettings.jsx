@@ -19,6 +19,7 @@ class GroupSettings extends Component {
     const { parent } = this.props;
     const { tripId } = parent.props.match.params;
     const { isModalShown } = this.state;
+    let anonCounter = 1;
 
     return (
       <div className="group-settings">
@@ -48,6 +49,7 @@ class GroupSettings extends Component {
           {parent.state.tripFriends.map((tripFriend, key) => (
             <TripFriend
               tripFriend={tripFriend}
+              anonCounter={anonCounter}
               isAdminShown={true}
               key={key}
             />
