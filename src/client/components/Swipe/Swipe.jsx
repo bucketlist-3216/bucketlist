@@ -343,7 +343,8 @@ class Swipe extends Component {
 
           <br/>
           {
-            !this.state.emptyListTillRefresh &&
+            ( (this.state.swipeList === 2 && this.state.attractionsHasNext) ||
+              (this.state.swipeList === 1 && this.state.foodHasNext) ) &&
               <LoopingRhombusesSpinner className="finding-cards-spinner" />
           }
         </div>
