@@ -2,8 +2,22 @@ import axios from 'axios';
 
 import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
+import ERROR_MESSAGES from '../constants/error-messages.json';
 
-function getTripFriends (instance, tripId) {
+function handleError(error, routeChange) {
+  if (error.response && error.response.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('platform');
+    routeChange(PATHS.login);
+    error.message = ERROR_MESSAGES["401"];
+  } else if (error.response && error.response.status === 403) {
+    routeChange(PATHS.trips());
+    error.message = ERROR_MESSAGES["403"];
+  }
+  throw error;
+}
+
+function getTripFriends (routeChange, tripId) {
   return axios
     .request({
       url: APIS.tripFriend(tripId),
@@ -13,20 +27,8 @@ function getTripFriends (instance, tripId) {
         platform: localStorage.getItem('platform')
       }
     })
-    .then(function (response) {
-      //console.log(response.data);
-      const { parent } = instance.props;
-      instance.setState({ tripFriends : response.data });
-      instance.setState({ isLoading: false });
-    })
     .catch(function (error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('platform');
-        instance.routeChange(PATHS.login);
-        return;
-      }
-      alert(error.message);
+      handleError(error, routeChange);
     });
 }
 

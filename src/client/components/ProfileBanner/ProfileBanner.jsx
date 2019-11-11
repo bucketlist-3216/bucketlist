@@ -1,8 +1,11 @@
 import React from "react";
-import getUserData from "../../api/user.js";
+import autoBindMethods from 'class-autobind-decorator';
+
+import UserAPI from "../../api/user.js";
 import Preloader from "../Preloader";
 import PATHS from '../../constants/paths';
 
+@autoBindMethods
 class ProfileBanner extends React.Component {
   constructor(props) {
     super(props);
@@ -12,14 +15,22 @@ class ProfileBanner extends React.Component {
   }
 
   routeChange(pathname) {
-    this.props.history.push({
-      pathname
-    });
+    this.props.routeChange(pathname);
   }
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    getUserData(this, localStorage.getItem("userId"));
+    const instance = this;
+    UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
+      .then(function (response) {
+        instance.setState({
+          userData : response.data,
+          isLoading: false
+        });
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
   }
 
   render() {
@@ -37,7 +48,7 @@ class ProfileBanner extends React.Component {
               <label className='edit-button' onClick={() => this.props.routeChange(PATHS.profile)}>edit profile</label>
             </div>
           </div>
-          {localStorage.getItem('platform') === 'jwt' ? 
+          {localStorage.getItem('platform') === 'jwt' ?
           <div className='details-container'>
             <label className='name'>Guest</label>
           </div>

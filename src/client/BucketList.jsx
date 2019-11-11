@@ -13,9 +13,8 @@ import PATHS from './constants/paths';
 
 // Import views for router
 import Login from './pages/Login';
-import CreateTrip from './pages/CreateTrip';
 import PlaceList from './pages/PlaceList';
-import CitySelect from './pages/CitySelect';
+import CreateTrip from './pages/CreateTrip';
 import SwipeView from './pages/SwipeView';
 import TripsPage from './pages/TripsPage';
 import ListPage from './pages/PlaceList';
@@ -33,7 +32,7 @@ ReactDOM.render(
       <Route exact path={PATHS.login} component={Login} />
       <Route exact path={PATHS.trips()} component={TripsPage} />
       {/* <Route exact path={PATHS.appHome} component={SwipeView} /> */}
-      <Route exact path={PATHS.citySelect()} component={CitySelect} />
+      <Route exact path={PATHS.createTrip()} component={CreateTrip} />
       <Route exact path={PATHS.swipe()} component={SwipeView} />
       <Route exact path={PATHS.list()} component={ListPage} />
       <Route exact path={PATHS.invite()} component={InvitePage} />
@@ -49,7 +48,7 @@ ReactDOM.render(
 
 if (false && "serviceWorker" in navigator) { //set to false to disable it for now
   window.addEventListener("load", () => {
-    const wb = new Workbox("/sw.js"); 
+    const wb = new Workbox("/sw.js");
     const updateButton = document.querySelector("#app-update");
     // Fires when the registered service worker has installed but is waiting to activate.
     wb.addEventListener("waiting", event => {
@@ -66,4 +65,4 @@ if (false && "serviceWorker" in navigator) { //set to false to disable it for no
     });
     wb.register();
   });
-}; 
+};

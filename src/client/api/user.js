@@ -2,9 +2,23 @@ import axios from 'axios';
 
 import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
+import ERROR_MESSAGES from '../constants/error-messages.json';
 
-function getUserData(instance, userId) {
-    return axios
+function handleError(error, routeChange) {
+  if (error.response && error.response.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('platform');
+    routeChange(PATHS.login);
+    error.message = ERROR_MESSAGES["401"];
+  } else if (error.response && error.response.status === 403) {
+    routeChange(PATHS.trips());
+    error.message = ERROR_MESSAGES["403"];
+  }
+  throw error;
+}
+
+function getUserData(routeChange, userId) {
+  return axios
     .request({
       url: APIS.user(userId),
       method: 'get',
@@ -13,20 +27,11 @@ function getUserData(instance, userId) {
         platform: localStorage.getItem('platform')
       }
     })
-    .then(function (response) {
-      instance.setState({ userData : response.data });
-      instance.setState({ isDoneFetching: true });
-      instance.setState({ isLoading: false });
-    })
     .catch(function (error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('platform');
-        instance.routeChange(PATHS.login);
-        return;
-      }
-      alert(error.message);
+      handleError(error, routeChange);
     });
 }
 
-export default getUserData;
+export default {
+  getUserData
+};

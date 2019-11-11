@@ -35,6 +35,20 @@ class Login extends Component {
     this.setState({ isLoading });
   }
 
+  handleGuestLogin() {
+    localStorage.setItem('tutorial', 'true');
+    const instance = this;
+    this.setLoading(true);
+    LoginAPI.loginGuest(this)
+      .then(() => {
+        instance.routeChange(PATHS.trips());
+      })
+      .catch(function (error) {
+        instance.setLoading(false);
+        alert(error.message);
+      });
+  }
+
   render() {
     var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
     var ga_info = "LoginPage" + "_" + user_id + "_" + new Date().toLocaleString();
@@ -81,7 +95,7 @@ class Login extends Component {
       		<span>or</span>
         	<div className="line"></div>
       	</div>
-        <span className="guest" onClick={() => {localStorage.setItem('tutorial', 'true'); LoginAPI.loginGuest(this)}}>continue as guest</span>
+        <span className="guest" onClick={this.handleGuestLogin}>continue as guest</span>
       </div>
     );
   }

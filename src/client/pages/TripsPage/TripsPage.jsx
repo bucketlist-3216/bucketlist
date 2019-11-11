@@ -17,8 +17,7 @@ import Preloader from "../../components/Preloader";
 import Title from "../../components/Title";
 import Trip from "../../components/Trip";
 import LogoutButton from "../../buttons/LogoutButton";
-import ProfileBanner from "../../components/Trip/ProfileBanner";
-import axios from 'axios';
+import ProfileBanner from "../../components/ProfileBanner";
 
 import APIS from '../../constants/apis';
 
@@ -29,7 +28,6 @@ class TripsPage extends Component {
 
     this.state = {
       trips: [],
-      isDoneFetching: false,
       isLoading: true,
       isModalShown: false,
       modalTripId: null
@@ -44,33 +42,29 @@ class TripsPage extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    TripAPI.getTrips(this);
-  }
-
-  deleteTrip(trip) {
-    return axios
-      .request({
-        url: APIS.trip(trip.trip_id),
-        method: 'delete',
-        headers: {
-          token: localStorage.getItem('token'),
-          platform: localStorage.getItem('platform')
-        }
-      })
+    const instance = this;
+    TripAPI.getTrips(this.routeChange)
       .then(function (response) {
-        if (response.data.tripsDeleted === 1) {
-          location.reload();
-        } else {
-          alert('You are not authorized to delete this trip');
-        }
+        instance.setState({
+          trips : response.data,
+          isLoading: false
+        });
       })
       .catch(function (error) {
-        if (error.response && error.response.status === 401) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('platform');
-          instance.routeChange(PATHS.login);
-          return;
-        }
+        alert(error.message);
+      });
+  }
+
+  handleDelete(tripId) {
+    const isConfirmed = window.confirm('Are you sure you wish to delete this trip?');
+    if (!isConfirmed) {
+      return;
+    }
+    TripAPI.deleteTrip(this.routeChange, tripId)
+      .then(function (response) {
+        location.reload();
+      })
+      .catch(function (error) {
         alert(error.message);
       });
   }
@@ -91,7 +85,7 @@ class TripsPage extends Component {
     } else if (localStorage.getItem('platform') === 'jwt') {
       const {trips} = this.state;
       if (trips.length === 0) {
-        this.routeChange(PATHS.citySelect());
+        this.routeChange(PATHS.createTrip());
       } else {
         this.routeChange(PATHS.list(trips[0]['trip_id']));
       }
@@ -111,7 +105,7 @@ class TripsPage extends Component {
                   history={this.props.history}
                   showModal={this.showModal}
                   onClick={() => this.routeChange(PATHS.list(trip['trip_id']))}
-                  onDelete={() => {if (window.confirm('Are you sure you wish to delete this trip?')) this.deleteTrip(trip)}}
+                  onDelete={() => this.handleDelete(trip.trip_id)}
                 />
               ))}
           </div>
@@ -128,7 +122,7 @@ class TripsPage extends Component {
       if (!(localStorage.getItem("platform") === 'jwt' && trips.length>0)) {
         createTripContainer = (
           <div className="add-trip-container">
-            <label className="add" onClick={() => this.routeChange(PATHS.citySelect())}>Create New Trip</label>
+            <label className="add" onClick={() => this.routeChange(PATHS.createTrip())}>Create New Trip</label>
           </div>
         );
       }
@@ -152,7 +146,7 @@ class TripsPage extends Component {
               <div className="no-trips-text">
                 <span>No trips yet, create one now!</span>
               </div>
-              <div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
+              <div className="icon" onClick={() => this.routeChange(PATHS.createTrip())}>
                 <span className="add">+</span>
               </div>
             </div>
