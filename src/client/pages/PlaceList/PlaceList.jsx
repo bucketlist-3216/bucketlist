@@ -161,39 +161,41 @@ class PlaceList extends React.Component {
     const { tripId } = this.props.match.params;
     const { trip, places } = this.state;
     return (
-      <div className="list-page">
+      <div className="list-page-parent">
+        <div className="list-page">
         <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
-        <TripDetails tripId={tripId} parent={this} />
-        { this.state.places.length === 0
-          ? (
-            <div className="place-container-empty">
-              <span>
-                No places shortlisted yet! <br/>
-                Start exploring now.
-              </span>
-              <Button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
-                Let's Go!
+          <TripDetails tripId={tripId} parent={this} />
+          { this.state.places.length === 0
+            ? (
+              <div className="place-container-empty">
+                <span>
+                  No places shortlisted yet! <br/>
+                  Start exploring now.
+                </span>
+                <Button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+                  Let's Go!
+                </Button>
+              </div>
+            )
+            : (
+              <div className="place-container">{
+                this.state.places.map((place, key) => (
+                  <PlaceCard
+                    key={key}
+                    place={place}
+                  />
+                ))
+              }</div>
+            )
+          }
+          { this.state.places.length > 0 &&
+            (
+              <Button className="swipe-button-bottom" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+                Let's Explore
               </Button>
-            </div>
-          )
-          : (
-            <div className="place-container">{
-              this.state.places.map((place, key) => (
-                <PlaceCard
-                  key={key}
-                  place={place}
-                />
-              ))
-            }</div>
-          )
-        }
-        { this.state.places.length > 0 &&
-          (
-            <Button className="swipe-button-bottom" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
-              Let's Explore
-            </Button>
-          )
-        }
+            )
+          }
+        </div>
       </div>
     );
   }
