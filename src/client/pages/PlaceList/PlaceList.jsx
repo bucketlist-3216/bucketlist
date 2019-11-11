@@ -74,7 +74,19 @@ class PlaceList extends React.Component {
         }
         alert(error.message);
       });
-    TripFriendAPI.getTripFriends(this, tripId);
+
+    TripFriendAPI
+      .getTripFriends(this, tripId)
+      .then(() => {
+        let counter = 1;
+        instance.setState({tripFriends : _.map(instance.state.tripFriends, e => {
+          if (e.name === '_GUEST_USER') {
+            e.name = 'Anon ' + counter;
+            counter += 1;
+          }
+          return e;
+        })})
+      });
   }
 
   render() {

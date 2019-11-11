@@ -6,9 +6,6 @@ import Spinner from '../../components/Spinner';
 const TripFriend = (props) => {
   const { tripFriend, isAdminShown, anonCounter } = props;
 
-  if (tripFriend.name === '_GUEST_USER') {
-    tripFriend.name = 'Anonymous Traveller ' + anonCounter;
-  }
 
   return (
     <div className="trip-friend">
