@@ -87,6 +87,11 @@ const SideDrawer = props => {
               {"Create an account here to save your trip!"}
             </div>
           </div>
+          <div className="swipe-drawer-login-container" onClick={() => routeChange(PATHS.login)}>
+            <div className="swipe-drawer-login">
+              {"Log In"}
+            </div>
+          </div>
         </div>
       </nav>
     )
