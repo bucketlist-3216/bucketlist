@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import { Workbox } from "workbox-window";
+import { ToastContainer } from 'react-toastify';
 
 // Style imports
 import './styles/styles.scss';
@@ -28,6 +29,7 @@ ReactGA.pageview(window.location.pathname + window.location.search)
 
 ReactDOM.render(
   <BrowserRouter>
+    <ToastContainer />
     <Switch>
       <Route exact path={PATHS.home} component={Login} />
       <Route exact path={PATHS.login} component={Login} />

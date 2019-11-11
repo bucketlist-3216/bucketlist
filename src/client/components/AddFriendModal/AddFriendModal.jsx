@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import autoBindMethods from 'class-autobind-decorator';
+import { toast } from 'react-toastify'; 
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
@@ -11,7 +12,7 @@ class AddFriendModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ''
+      email: '',
     }
   }
 
@@ -69,7 +70,15 @@ class AddFriendModal extends Component {
         data: { email }
       })
       .then(function(response) {
-        window.location.reload();
+        // Show a toast
+        toast('Added successfully', {
+          type: 'success',
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
+
+        setTimeout(() => {window.location.reload();}, 2000);
       })
       .catch(function(error) {
         if (error.response && error.response.status === 401) {
