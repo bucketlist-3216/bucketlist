@@ -26,8 +26,7 @@ class TripInfo extends Component {
       destination,
       startDate: trip ? new Date(trip.start_date) : null,
       endDate: trip ? new Date(trip.end_date) : null,
-      isEditingName: trip ? false : true,
-      isEditingDate: trip ? false : true
+      isChanged: false
     };
   }
 
@@ -37,22 +36,6 @@ class TripInfo extends Component {
 
   setLoading(isLoading) {
     this.setState({ isLoading });
-  }
-
-  toggleEditName() {
-    const { isEditingName } = this.state;
-    if (isEditingName) {
-      this.setState({ tripName: null });
-    }
-    this.setState({ isEditingName: !isEditingName });
-  }
-
-  toggleEditDate() {
-    const { isEditingDate } = this.state;
-    if (isEditingDate) {
-      this.setState({ startDate: null, endDate: null });
-    }
-    this.setState({ isEditingDate: !isEditingDate });
   }
 
   handleChangeName(event) {
@@ -110,8 +93,6 @@ class TripInfo extends Component {
         .then(function(response) {
           Object.assign(trip, tripData);
           instance.setState({
-            isEditingName: false,
-            isEditingDate: false,
             isLoading: false
           });
         })
@@ -155,21 +136,20 @@ class TripInfo extends Component {
       label: ga_info,
     });
 
-    const { isLoading, trip, tripName, startDate, endDate, isEditingName, isEditingDate } = this.state;
+    const { isLoading, trip, tripName, startDate, endDate, isChanged } = this.state;
 
     if (isLoading) {
       return <Preloader />;
     }
 
-    const isChanged = tripName !== null || startDate !== null || endDate !== null;
     return (
       <div className="create-trip" >
         <div className="top-bar">
-          <div className="back" onClick={this.props.handleBack}>
-            <span>back</span>
+          <div className="back" onClick={this.props.handleCancel}>
+            <span>Cancel</span>
           </div>
           <div className={isChanged ? "save" : "save disabled"} onClick={this.handleSave}>
-            <span>save</span>
+            <span>Save</span>
           </div>
         </div>
         <div className="cover-photo">
@@ -184,25 +164,16 @@ class TripInfo extends Component {
                 <span>Trip Name</span>
               </div>
               <div className="value">
-                { isEditingName
-                  ?
-                    <div className="value-form-container">
-                      <Form.Control
-                        onChange={this.handleChangeName}
-                        className="value-form"
-                        type="email"
-                        placeholder="trip name"
-                        defaultValue={trip && trip.trip_name}
-                      />
-                    </div>
-                  : <span>{trip.trip_name}</span>
-                }
-              </div>
-              { trip &&
-                <div className="edit" onClick={this.toggleEditName}>
-                  <span></span>
+                <div className="value-form-container">
+                  <Form.Control
+                    onChange={this.handleChangeName}
+                    className="value-form"
+                    type="email"
+                    placeholder="trip name"
+                    defaultValue={trip && trip.trip_name}
+                  />
                 </div>
-              }
+              </div>
             </div>
             <div className="row">
               <div className="field">
@@ -217,31 +188,22 @@ class TripInfo extends Component {
                 <span>Dates</span>
               </div>
               <div className="value">
-                { isEditingDate
-                  ?
-                    <div className="value-form-container">
-                      <DatePicker
-                        className="value-form value-form-date"
-                        selected={startDate}
-                        onChange={this.handleChangeStartDate}
-                        placeholderText="start date"
-                      />
-                      <span>-</span>
-                      <DatePicker
-                        className="value-form value-form-date"
-                        selected={endDate}
-                        onChange={this.handleChangeEndDate}
-                        placeholderText="end date"
-                      />
-                    </div>
-                  : <span>{this.formatDate(trip.start_date)} - {this.formatDate(trip.end_date)}</span>
-                }
-              </div>
-              { trip &&
-                <div className="edit" onClick={this.toggleEditDate}>
-                  <span></span>
+                <div className="value-form-container">
+                  <DatePicker
+                    className="value-form value-form-date"
+                    selected={startDate}
+                    onChange={this.handleChangeStartDate}
+                    placeholderText="start date"
+                  />
+                  <span>-</span>
+                  <DatePicker
+                    className="value-form value-form-date"
+                    selected={endDate}
+                    onChange={this.handleChangeEndDate}
+                    placeholderText="end date"
+                  />
                 </div>
-              }
+              </div>
             </div>
           </Form>
         </div>
