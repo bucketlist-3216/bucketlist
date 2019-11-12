@@ -5,6 +5,7 @@ import axios from "axios";
 import UserAPI from "../../api/user.js";
 import Preloader from "../../components/Preloader/index.js";
 import APIS from "../../constants/apis";
+import PATHS from "../../constants/paths";
 
 const DEFAULT_COVER = '../../../../assets/common/default-cover.jpg';
 
@@ -113,6 +114,19 @@ class ProfilePage extends React.Component {
     });
   }
 
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname
+    });
+  }
+
+  handleLogOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('platform');
+    this.routeChange(PATHS.home);
+  }
+
   render() {
     if (this.state.isLoading) return <Preloader/>;
     const editImageIcon = (
@@ -176,7 +190,7 @@ class ProfilePage extends React.Component {
           <span className="detail-value detail-value-unchangeable">{this.state.email}</span>
         </div>
       </div>
-      <div className="log-out-button">
+      <div className="log-out-button" onClick={this.handleLogOut}>
         <span>Log Out</span>
       </div>
     </div>

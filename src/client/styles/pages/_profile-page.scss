@@ -205,9 +205,10 @@
     }
 
     .log-out-button {
-      height: 4vh;
+      height: 4.2vh;
       width: 37.3%;
-      border-radius: 2vh;
+      max-width: 20vh;
+      border-radius: 2.1vh;
 
       background-color: #FFFFFF;
 
@@ -215,7 +216,8 @@
 
       position: fixed;
       bottom: 4.19%;
-      left: 31.35%;
+      left: 50%;
+      transform: translate(-50%, 0);
 
       display: flex;
       justify-content: center;
