@@ -37,7 +37,7 @@ class ProfileBanner extends React.Component {
     if (this.state.isLoading) return <Preloader/>;
     else {
       let {user_id, username, email, location, name, profile_photo, cover_photo} = this.state.userData;
-      if (!cover_photo) cover_photo = '../../../../assets/common/default-landscape.jpg';
+      if (!cover_photo) cover_photo = '../../../../assets/common/default-cover.jpg';
       if (!profile_photo) profile_photo = '../../../../assets/common/user-icon.png'
       return (
         <div className='profile-banner'>
