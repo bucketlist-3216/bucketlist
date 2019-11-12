@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import PATHS from '../../constants/paths';
+import ProfileButton from '../../buttons/ProfileButton';
+import IconButton from '../../buttons/IconButton';
 
 const Trip = props => {
   const { trip, userId, showModal, onClick, onDelete } = props;
@@ -11,7 +13,45 @@ const Trip = props => {
     members = [];
   }
   members = members.filter((member) => !member.isSelf);
-  const memberNames = members.map((member) => member.name ? member.name.split(' ')[0] : "");
+
+  function renderMemberPhoto(user) {
+    return (
+      <div className="member-photo">
+       { user.profile_photo
+         ? (<img src={user.profile_photo}></img>)
+         : <ProfileButton />
+       }
+      </div>
+    );
+  }
+
+  function renderMemberPhotos() {
+    if (members.length <= 4) {
+      return members.map(renderMemberPhoto);
+    } else {
+      return members.slice(0, 3).map(renderMemberPhoto).concat([
+        <div className="member-photo">
+          <IconButton className="extra-members-photo" icon={"+" + (members.length - 3)} />
+        </div>
+      ]);
+    }
+  }
+
+  function renderMemberFirstName(user) {
+    return user.name
+      ? user.name.split(' ')[0]
+      : "";
+  }
+
+
+  function renderMemberNames() {
+    const memberNames = members.length <= 4
+      ? members.map(renderMemberFirstName)
+      : members.slice(0, 3).map(renderMemberFirstName).concat([
+        (members.length - 3) + " more"
+      ]);
+    return [memberNames.slice(0, -1).join(', '), memberNames.slice(-1)[0]].join(memberNames.length < 2 ? '' : ' & ')
+  }
 
   function decodePromisified() {
     return new Promise(function(resolve, reject) {
@@ -45,12 +85,8 @@ const Trip = props => {
         <span className="trip-dest">{destination}</span>
         <span className="trip-dates">{formatDateRange(start_date, end_date)}</span>
         <div className="trip-members">
-          <div className="photos">
-            {/* TODO:*/}
-          </div>
-          <div className="names">
-            {[memberNames.slice(0, -1).join(', '), memberNames.slice(-1)[0]].join(memberNames.length < 2 ? '' : ' & ')}
-          </div>
+          <div className="photos">{renderMemberPhotos()}</div>
+          <div className="names">{renderMemberNames()}</div>
         </div>
       </div>
       <div className="trip-element delete-button" onClick={onDelete}>
