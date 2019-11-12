@@ -335,7 +335,16 @@ class Swipe extends Component {
             ( (this.state.swipeList === 2 && !this.state.attractionsHasNext) ||
               (this.state.swipeList === 1 && !this.state.foodHasNext) ) &&
               <div className="no-card-msg">No more locations in this list!</div>
-          }
+          <div className="no-card-msg">
+            { this.state.swipeList === 2
+              ? this.state.attractionsHasNext
+                ? "We're looking for more places!"
+                : "No more locations in this list!"
+              : this.state.foodHasNext
+                ? "We're looking for more places!"
+                : "No more locations in this list!"
+              }
+            </div>
           <Img className="finding-cards-graphic" src={ '__dirname + "../../../../assets/common/adventure.svg' } />
 
           <br/>
