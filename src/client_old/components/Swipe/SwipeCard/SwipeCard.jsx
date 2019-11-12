@@ -28,7 +28,7 @@ const SwipeCard = props => {
           return;
         }
 
-        toast(`Something went wrong! Oops`, {
+        toast(`Oops! Something went wrong.`, {
           type: 'error',
           autoClose: 4000,
           position: toast.POSITION.BOTTOM_CENTER,

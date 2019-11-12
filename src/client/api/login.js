@@ -17,7 +17,7 @@ function login (userData) {
       localStorage.setItem('userId', response.data.userId);
     })
     .catch(function (error) {
-      toast(`Something went wrong! Oops`, {
+      toast(`Oops! Something went wrong.`, {
         type: 'error',
         autoClose: 4000,
         position: toast.POSITION.BOTTOM_CENTER,
@@ -37,7 +37,7 @@ function loginGuest (instance) {
       instance.routeChange(PATHS.trips());
     })
     .catch(function (error) {
-      toast(`Something went wrong! Oops`, {
+      toast(`Oops! Something went wrong.`, {
         type: 'error',
         autoClose: 4000,
         position: toast.POSITION.BOTTOM_CENTER,
