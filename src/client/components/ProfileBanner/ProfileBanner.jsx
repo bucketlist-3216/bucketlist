@@ -24,7 +24,7 @@ class ProfileBanner extends React.Component {
     UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
       .then(function (response) {
         instance.setState({
-          userData : response.data,
+          userData : response.data[0],
           isLoading: false
         });
       })
@@ -36,7 +36,7 @@ class ProfileBanner extends React.Component {
   render() {
     if (this.state.isLoading) return <Preloader/>;
     else {
-      let {user_id, username, email, google_id, facebook_id, temporary, location, name, profile_photo, cover_photo} = this.state.userData[0];
+      let {user_id, username, email, location, name, profile_photo, cover_photo} = this.state.userData;
       if (!cover_photo) cover_photo = '../../../../assets/common/default-landscape.jpg';
       if (!profile_photo) profile_photo = '../../../../assets/common/user-icon.png'
       return (
