@@ -70,10 +70,10 @@
     .profile-picture {
       position: relative;
       left: 10.7%;
-      top: -30px;
+      top: -3.69vh;
 
-      height: 60px;
-      width: 60px;
+      height: 7.38vh;
+      width: 7.38vh;
       overflow: hidden;
 
       border-radius: 50%;
@@ -101,11 +101,11 @@
 
       .edit-image-icon {
         .camera-icon {
-          font-size: 12px;
+          font-size: 1.48vh;
         }
 
         .plus-icon {
-          font-size: 8px;
+          font-size: 0.98vh;
         }
       }
     }
@@ -128,62 +128,61 @@
       .camera-icon {
         position: absolute;
         font-family: "IkonoMiniL-3";
-        font-size: 20px;
+        font-size: 2.46vh;
       }
 
       .plus-icon {
         position: relative;
         padding-top: 20%;
         font-family: normal;
-        font-size: 13px;
+        font-size: 1.6vh;
       }
     }
 
     .details-container {
       width: 100%;
 
-      margin-top: -24.44px;
+      margin-top: -3vh;
 
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
 
       .detail-row {
-        height: 48px;
+        height: 5.9vh;
         width: inherit;
 
         margin: 0;
-        padding-left: 22.181px;
-        padding-right: 22.181px;
+        padding-left: 5.9%;
+        padding-right: 5.9%;
         position: relative;
 
         display: flex;
         align-items: center;
 
         .detail-field {
-          width: 91px;
-          margin-right: 20px;
+          width: 27.5%;
+          margin-right: 6%;
           margin-bottom: 0;
         	white-space: nowrap;
         	text-align: left;
         	font-family: "CeraPro-Bold";
         	font-style: normal;
         	font-weight: normal;
-        	font-size: 13px;
+        	font-size: 1.6vh;
         	color: rgba(255,255,255,1);
         }
 
         .detail-value {
           position: relative;
           height: auto;
-          width: inherit;
-          margin-right: 20px;
+          width: 60.5%;
           padding-left: 0;
 
           font-family: Cera Pro;
         	font-style: normal;
         	font-weight: normal;
-        	font-size: 11px;
+        	font-size: 1.35vh;
           color: #FFFFFF;
 
           background: transparent;
@@ -206,17 +205,17 @@
     }
 
     .log-out-button {
-      height: 33px;
-      width: 140px;
-      border-radius: 16.5px;
+      height: 4vh;
+      width: 37.3%;
+      border-radius: 2vh;
 
       background-color: #FFFFFF;
 
       cursor: pointer;
 
       position: fixed;
-      bottom: 34px;
-      left: 117.5px;
+      bottom: 4.19%;
+      left: 31.35%;
 
       display: flex;
       justify-content: center;
@@ -226,7 +225,7 @@
         color: #000000;
 
         font-family: "CeraPro-Medium";
-        font-size: 10px;
+        font-size: 1.23vh;
         font-style: normal;
         font-weight: normal;
       }
