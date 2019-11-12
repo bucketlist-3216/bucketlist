@@ -3,7 +3,7 @@
   height: 100%;
   width: 100%;
   color: rgba(255,255,255,1);
-  font-family: "CeraPro";
+  font-family: "CeraPro-Regular";
 
   .header-space{
     height: 3vh;
@@ -49,6 +49,7 @@
       border: 1px rgba(255,255,255,1);
       background-color: #555555;
       z-index: 1;
+      object-fit: cover;
     }
   }
 
@@ -72,7 +73,6 @@
 
       .detail-value {
         display: inline-block;
-        font-family: "CeraPro-Regular";
         left: 36vw;
         vertical-align: middle;
         font-size: 11px;
