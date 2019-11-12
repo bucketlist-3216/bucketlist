@@ -326,15 +326,6 @@ class Swipe extends Component {
     return (
       <div className="swipe-container">
         <div className="center-align">
-          {
-            ( (this.state.swipeList === 2 && this.state.attractionsHasNext) ||
-              (this.state.swipeList === 1 && this.state.foodHasNext) ) &&
-              <div className="no-card-msg">We're looking for more places!</div>
-          }
-          {
-            ( (this.state.swipeList === 2 && !this.state.attractionsHasNext) ||
-              (this.state.swipeList === 1 && !this.state.foodHasNext) ) &&
-              <div className="no-card-msg">No more locations in this list!</div>
           <div className="no-card-msg">
             { this.state.swipeList === 2
               ? this.state.attractionsHasNext
