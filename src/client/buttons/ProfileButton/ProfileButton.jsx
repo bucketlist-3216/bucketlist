@@ -3,7 +3,6 @@ import IconButton from '../IconButton';
 
 const ProfileButton = (props) => {
   const { className, onClick, imgSrc } = props;
-  console.log(imgSrc);
   return (
     <IconButton
       icon=""

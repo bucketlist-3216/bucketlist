@@ -323,9 +323,6 @@ class Swipe extends Component {
         this.setState({ initialSetup: true });
       }
     }
-    console.log(this.state.swipeList + "OH");
-    console.log(this.state.attractionsHasNext);
-    console.log(this.state.foodHasNext);
     return (
       <div className="swipe-container">
         <div className="center-align">
@@ -405,7 +402,6 @@ class Swipe extends Component {
   /* This method waits for 20 render times to register the last location card's voteCount() effect.
      It then calls getPlacesToSwipe() and continuously render for 30 times to display an updated location list. */
   bufferRender(places, emptyListTillRefresh, numOfListRenders) {
-    console.log(numOfListRenders)
     if (places.length < 1) {
       if (!emptyListTillRefresh) {
         if (numOfListRenders < 25) {
@@ -431,7 +427,6 @@ class Swipe extends Component {
   render() {
     const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh,
       profilePictureLink, name, username } = this.state;
-    //console.log(profilePictureLink);
     const { tripId } = this.props.match.params;
     const zIndex = 200;
 
