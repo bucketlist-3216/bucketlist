@@ -53,25 +53,76 @@
       font-family: Cera Pro;
       font-style: normal;
       font-weight: bold;
-      font-size: 18px;
+      font-size: 2.22vh;
     }
     .trip-dest {
       font-family: Cera Pro;
       font-style: normal;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 1.48vh;
     }
     .trip-dates {
       font-family: Cera Pro;
       font-style: normal;
       font-weight: medium;
-      font-size: 10px;
+      font-size: 1.23vh;
+      line-height: normal;
     }
     .trip-members {
-      font-family: Cera Pro;
-      font-style: normal;
-      font-weight: medium;
-      font-size: 10px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      margin-top: 1.11vh;
+
+      .photos {
+        display: flex;
+        margin-right: 1.97vh;
+
+        .member-photo {
+          margin-right: -0.86vh;
+          height: 2.7vh;
+          width: 2.7vh;
+
+          img {
+            height: 100%;
+            width: 100%;
+          }
+
+          .icon-button.profile-button {
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+
+            span {
+              font-size: 1.06vh;
+            }
+          }
+
+          .icon-button.extra-members-photo {
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+            background-color: #FFFFFF;
+
+            span {
+              font-family: "CeraPro-Medium";
+              font-style: normal;
+              font-weight: normal;
+              font-size: 1.48vh;
+              color: #000000;
+            }
+          }
+        }
+
+      }
+      .names {
+        font-family: "CeraPro-Medium";
+        font-style: normal;
+        font-weight: normal;
+        font-size: 1.23vh;
+        line-height: 1.6vh;
+        margin-top: -0.25vh;
+      }
     }
   }
 
