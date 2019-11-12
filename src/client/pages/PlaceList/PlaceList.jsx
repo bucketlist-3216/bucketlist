@@ -108,7 +108,7 @@ class PlaceList extends React.Component {
       return <TripInfo
         trip={this.state.trip}
         destination="Singapore"
-        handleBack={() => this.setState({ isManagingTrip: false })}
+        handleCancel={() => this.setState({ isManagingTrip: false })}
         routeChange={this.routeChange}
       />;
     }
