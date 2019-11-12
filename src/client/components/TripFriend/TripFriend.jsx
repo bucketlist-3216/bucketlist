@@ -9,9 +9,9 @@ const TripFriend = (props) => {
 
   return (
     <div className="trip-friend">
-      { tripFriend.profile_pic
+      { tripFriend.profile_photo
         ? (<Img
-            src={tripFriend.profile_pic}
+            src={tripFriend.profile_photo}
             loader={<Spinner />}
             container={children => {
               return <div className="prof-pic prof-pic-filled">{children}</div>
