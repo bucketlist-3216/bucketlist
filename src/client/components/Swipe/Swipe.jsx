@@ -431,6 +431,7 @@ class Swipe extends Component {
   render() {
     const { places, isLoading, city, swipeList, sideDrawerOpen, listBuffer, numOfListRenders, emptyListTillRefresh,
       profilePictureLink, name, username } = this.state;
+    //console.log(profilePictureLink);
     const { tripId } = this.props.match.params;
     const zIndex = 200;
 

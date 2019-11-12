@@ -18,6 +18,7 @@ import PATHS from '../../constants/paths';
 // Import api
 import TripAPI from '../../api/trip';
 import TripFriendAPI from '../../api/trip-friend';
+import UserAPI from "../../api/user.js";
 
 const DummyPlace = {
   place_id: 1,
@@ -80,7 +81,24 @@ class PlaceList extends React.Component {
       .then(function (response) {
         instance.setState({ places: response.data });
       });
-    Promise.all([gettingTrip, gettingTripFriends, gettingPlaces])
+    const gettingUser = UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
+      .then(function (response) {
+        instance.setState({
+          userData : response.data,
+        });
+      })
+      .then(() => {
+        let {username, name, profile_photo} = this.state.userData[0];
+        this.setState({
+          name: name,
+          username: username,
+          profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+        });
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+    Promise.all([gettingTrip, gettingTripFriends, gettingPlaces, gettingUser])
       .then(function () {
         instance.setState({ isLoading: false });
       })
@@ -121,7 +139,7 @@ class PlaceList extends React.Component {
     const { trip, places } = this.state;
     return (
       <div className="list-page">
-        <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
+        <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
         <TripDetails tripId={tripId} parent={this} />
         { this.state.places.length === 0
           ? (

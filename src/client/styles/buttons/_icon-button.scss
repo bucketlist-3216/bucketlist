@@ -13,6 +13,15 @@
   align-content: center;
   align-items: center;
   position: relative;
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
   span {
     text-align: center;
     font-family: "IkonoMiniL-5";
@@ -25,5 +34,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    
   }
 }

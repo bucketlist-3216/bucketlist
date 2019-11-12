@@ -29,7 +29,7 @@ class PlaceListTopBar extends React.Component {
     const {trip_name, destination, start_date, end_date} = trip;
     return (
       <div className="top-bar">
-        <ProfileButton onClick={onClick}/>
+        <ProfileButton onClick={onClick} imgSrc={this.props.profilePictureLink}/>
         <div className = "title">
           <span className="trip-name">{trip_name}</span>
           <span className="trip-dest-dates">{destination} | {this.formatDateRange(start_date, end_date)}</span>

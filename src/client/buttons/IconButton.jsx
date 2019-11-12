@@ -15,7 +15,7 @@ const IconButton = (props) => {
       {
       	!icon && 
 
-            <span><img className="icon-button-image" src={image}/></span>
+            <img className="icon-button-image" src={image}/>
 
       }
     </div>
