@@ -1,5 +1,6 @@
 import React from "react";
 import autoBindMethods from 'class-autobind-decorator';
+import { toast } from 'react-toastify'; 
 
 import UserAPI from "../../api/user.js";
 import Preloader from "../Preloader";
@@ -29,7 +30,12 @@ class ProfileBanner extends React.Component {
         });
       })
       .catch(function (error) {
-        alert(error.message);
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 

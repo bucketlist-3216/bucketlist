@@ -14,12 +14,13 @@ html, body {
   display: block;
 
   .top-bar {
-    height: 61px;
+    height: 7.5%;
     width: 100%;
-    padding: 39.964px 22.181px 0 22.181px; //3.47vw;
+    padding: 0 5.91%; //3.47vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: flex-end;
 
     background: rgba(39,39,39,1);
 
@@ -29,16 +30,18 @@ html, body {
     	font-family: "CeraPro-Regular";
     	font-style: normal;
     	font-weight: normal;
-    	font-size: 11px;
+    	font-size: 1.35vh;
     	color: rgba(255,255,255,1);
+      margin-bottom: 0.87vh;
     }
     .save {
     	overflow: visible;
     	font-family: "CeraPro-Regular";
     	font-style: normal;
     	font-weight: normal;
-    	font-size: 11px;
+    	font-size: 1.35vh;
     	color: rgba(255,255,255,1);
+      margin-bottom: 0.87vh;
     }
 
     .save.disabled {
@@ -48,7 +51,7 @@ html, body {
   }
 
   .cover-photo {
-    height: 160px;
+    height: 19.7%;
     width: 100%;
 
     border-bottom-width: 0.7px;//0.0862vh;
@@ -66,7 +69,7 @@ html, body {
     	text-align: center;
     	font-family: "CeraPro-Bold";
     	font-style: normal;
-    	font-size: 30px;
+    	font-size: 3.69vh;
     	color: #FFFFFF;
       z-index: 2;
     }
@@ -89,99 +92,90 @@ html, body {
     }
   }
   .trip-details {
-    height: inherit;
+    height: auto;
     width: inherit;
 
-    padding-top: 7.664px;
+    padding-top: 0.94vh;
 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 
     .row {
-      height: 48px;
+      height: 5.91vh;
       width: inherit;
 
       margin: 0;
-      padding-left: 22.181px;
+      padding-left: 5.91%;
       position: relative;
 
       display: flex;
       align-items: center;
-    }
 
-    .field {
-      width: 91px;
-    	white-space: nowrap;
-    	text-align: left;
-    	font-family: "CeraPro-Regular";
-    	font-style: normal;
-    	font-weight: bold;
-    	font-size: 13px;
-    	color: rgba(255,255,255,1);
-    }
-
-    .value {
-      margin-left: 20px;
-    	overflow: visible;
-    	white-space: nowrap;
-    	text-align: center;
-    	font-family: Cera Pro;
-    	font-style: normal;
-    	font-weight: normal;
-    	font-size: 11px;
-    	color: rgba(255,255,255,1);
-    }
-
-    .value-form-container {
-      height: 24.5px;
-      width: 180px;
-      display: flex;
-      align-items: center;
-
-      .value-form {
-        position: relative;
-        height: inherit;
-        width: inherit;
-        max-width: 180px;
-        padding-left: 0;
-
-        color: #E4B89C;
-
-        background: transparent;
-        border: none;
-
-        border-bottom-width: 0.7px;//0.0862vh;
-        border-bottom-color: #555555;
-        border-bottom-style: solid;
+      .field {
+        width: 27.5%;
+        margin-right: 6%;
+      	white-space: nowrap;
+      	text-align: left;
+      	font-family: "CeraPro-Regular";
+      	font-style: normal;
+      	font-weight: bold;
+      	font-size: 1.6vh;
+      	color: rgba(255,255,255,1);
       }
 
-      .value-form:focus {
-        box-shadow: none;
-        outline: none;
-      }
+      .value {
+      	overflow: visible;
+      	white-space: nowrap;
+      	text-align: left;
+      	font-family: Cera Pro;
+      	font-style: normal;
+      	font-weight: normal;
+      	font-size: 1.35vh;
+      	color: rgba(255,255,255,1);
+        width: 48%;
 
-      span {
-        height: inherit;
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-    }
+        .value-form-container {
+          height: auto;
+          width: 100%;
+          display: flex;
+          align-items: center;
 
-    .edit {
-      position: absolute;
-      right: 22.181px;
-      font-family: Ikono Mini L;
-      font-style: normal;
-      font-weight: lighter;
-      font-size: 10px;
-      color: rgba(255,255,255,1);
+          .value-form {
+            position: relative;
+            height: inherit;
+            width: inherit;
+            max-width: 180px;
+            padding: 0;
+
+            color: #FFFFFF;
+
+            background: transparent;
+            border: none;
+
+            border-bottom-width: 0.7px;//0.0862vh;
+            border-bottom-color: #555555;
+            border-bottom-style: solid;
+          }
+
+          .value-form:focus {
+            box-shadow: none;
+            outline: none;
+          }
+
+          span {
+            height: inherit;
+            margin-left: 5.56%;
+            margin-right: 5.56%;
+          }
+        }
+      }
     }
   }
   .delete-button {
     position: absolute;
-    left: 20.5px;
-    bottom: 23px;
+    left: 5.47%;
+    bottom: 2.83%;
     height: auto;
     width: auto;
 
@@ -193,14 +187,14 @@ html, body {
       top: auto;
       left: auto;
       overflow: visible;
-      width: 11px;
-      margin-right: 4.681px;
+      width: 1.35vh;
+      margin-right: 0.576vh;
       white-space: nowrap;
       text-align: center;
       font-family: Ikono Mini L;
       font-style: normal;
       font-weight: normal;
-      font-size: 10px;
+      font-size: 1.23vh;
       color: rgba(255,255,255,1);
     }
     .text {
@@ -208,13 +202,12 @@ html, body {
       top: auto;
       left: auto;
       overflow: visible;
-      width: 57px;
       white-space: nowrap;
       text-align: center;
       font-family: Cera Pro;
       font-style: normal;
       font-weight: normal;
-      font-size: 11px;
+      font-size: 1.35vh;
       color: rgba(255,255,255,1);
     }
   }
