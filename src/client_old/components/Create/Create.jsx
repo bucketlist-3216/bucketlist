@@ -6,6 +6,7 @@ import autoBindMethods from 'class-autobind-decorator';
 import 'react-datepicker/dist/react-datepicker.css';
 import _ from 'lodash';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
@@ -44,7 +45,12 @@ class Create extends Component {
 
   handleInvites(event) {
     this.setState({numOfInvites: this.state.numOfInvites + 1});
-    alert('To Implement: Add friends!');
+    toast(`Coming soon!`, {
+      type: 'success',
+      autoClose: 4000,
+      position: toast.POSITION.BOTTOM_CENTER,
+      hideProgressBar: true,
+    });
   }
 
   handleSubmit(event) {

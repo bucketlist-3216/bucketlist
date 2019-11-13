@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import { Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { toast } from 'react-toastify';
 
 import TripAPI from '../../api/trip';
 
@@ -58,7 +59,12 @@ class TripInfo extends Component {
     if (!trip) {
       // Add trip
       if (tripName == null || startDate == null || endDate == null) {
-        alert("Please add trip name, start date and end date!");
+        toast(`Please add trip name, start date and end date! ${email}`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
         return;
       }
 
@@ -77,7 +83,12 @@ class TripInfo extends Component {
           instance.routeChange(PATHS.swipe(tripId));
         })
         .catch(function (error) {
-          alert(error.message);
+          toast(`Oops! Something went wrong.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
           console.log(error);
         });
     } else {
@@ -97,7 +108,12 @@ class TripInfo extends Component {
           });
         })
         .catch(function (error) {
-          alert(error.message);
+          toast(`Oops! Something went wrong.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
           console.log(error);
         });
     }
@@ -111,7 +127,12 @@ class TripInfo extends Component {
         instance.routeChange(PATHS.trips());
       })
       .catch(function (error) {
-        alert(error.message);
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
         console.log(error);
       });
   }
