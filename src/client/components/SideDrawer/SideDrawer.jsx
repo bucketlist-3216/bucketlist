@@ -30,7 +30,7 @@ const SideDrawer = props => {
             {name}
           </div>
           <div className="swipe-drawer-username">
-            {username}
+            {'@' + username}
           </div>
           <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.trips())}>
             <div>
