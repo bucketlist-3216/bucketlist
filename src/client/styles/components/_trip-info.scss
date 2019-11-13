@@ -32,7 +32,7 @@ html, body {
       width: 100%;
       border: none;
     }
-    
+
     .top-bar {
       height: 7.5%;
       width: 100%;
@@ -183,6 +183,10 @@ html, body {
             .value-form:focus {
               box-shadow: none;
               outline: none;
+            }
+
+            .react-datepicker {
+              margin-left: -50%;
             }
 
             span {
