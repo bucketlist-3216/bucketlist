@@ -83,13 +83,13 @@ class TripInfo extends Component {
           instance.routeChange(PATHS.swipe(tripId));
         })
         .catch(function (error) {
-          toast(`Oops! Something went wrong.`, {
+          const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
+          toast(errorMessage, {
             type: 'error',
             autoClose: 4000,
             position: toast.POSITION.BOTTOM_CENTER,
             hideProgressBar: true,
           });
-          console.log(error);
         });
     } else {
       // Update trip
@@ -108,13 +108,13 @@ class TripInfo extends Component {
           });
         })
         .catch(function (error) {
-          toast(`Oops! Something went wrong.`, {
+          const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
+          toast(errorMessage, {
             type: 'error',
             autoClose: 4000,
             position: toast.POSITION.BOTTOM_CENTER,
             hideProgressBar: true,
           });
-          console.log(error);
         });
     }
   }
@@ -127,13 +127,13 @@ class TripInfo extends Component {
         instance.routeChange(PATHS.trips());
       })
       .catch(function (error) {
-        toast(`Oops! Something went wrong.`, {
+        const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
+        toast(errorMessage, {
           type: 'error',
           autoClose: 4000,
           position: toast.POSITION.BOTTOM_CENTER,
           hideProgressBar: true,
         });
-        console.log(error);
       });
   }
 

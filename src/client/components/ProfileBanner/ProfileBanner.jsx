@@ -1,6 +1,6 @@
 import React from "react";
 import autoBindMethods from 'class-autobind-decorator';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 import UserAPI from "../../api/user.js";
 import Preloader from "../Preloader";

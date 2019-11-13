@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCog, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 import PATHS from '../../constants/paths';
 import ProfileButton from '../../buttons/ProfileButton';
@@ -40,7 +41,7 @@ const SideDrawer = props => {
               {"Profile"}
             </div>
           </div>
-          <div className="swipe-drawer-tab-container" onClick={() => alert('Coming soon!')}>
+          {/*<div className="swipe-drawer-tab-container" onClick={() => alert('Coming soon!')}>
             <div>
               <FontAwesomeIcon icon={ faCog } size="lg"></FontAwesomeIcon>
             </div>
@@ -55,7 +56,7 @@ const SideDrawer = props => {
             <div className="swipe-drawer-tab">
               {"Search"}
             </div>
-          </div>
+          </div>*/}
           <div className="swipe-drawer-tab-last" onClick={() => handleLogOut()}>
             <div>
               <FontAwesomeIcon icon={ faSignOutAlt } size="xs"></FontAwesomeIcon>

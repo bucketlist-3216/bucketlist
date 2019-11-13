@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 import APIS from '../constants/apis.js';
 import PATHS from '../constants/paths';
@@ -11,17 +11,13 @@ function handleError(error, routeChange) {
     localStorage.removeItem('platform');
     routeChange(PATHS.login);
     error.message = ERROR_MESSAGES["401"];
+    error.hasSpecialMessage = true;
   } else if (error.response && error.response.status === 403) {
     routeChange(PATHS.trips());
     error.message = ERROR_MESSAGES["403"];
+    error.hasSpecialMessage = true;
   }
 
-  toast(`Oops! Something went wrong.`, {
-    type: 'error',
-    autoClose: 4000,
-    position: toast.POSITION.BOTTOM_CENTER,
-    hideProgressBar: true,
-  });
   throw error;
 }
 
