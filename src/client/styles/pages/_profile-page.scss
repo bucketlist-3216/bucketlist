@@ -1,16 +1,27 @@
-.profile-page {
+.profile-page-container {
   background-color: rgba(39,39,39,1);
   height: 100%;
   width: 100%;
+  justify-content: center;
+  display: flex;
+}
+
+.profile-page {
+  background-color: rgba(39,39,39,1);
+  height: 100%;
+  width: 320px;
   color: rgba(255,255,255,1);
   font-family: "CeraPro-Regular";
+  @media screen and (max-width: 555px) {
+    width: 100%;
+  }
 
   .header-space{
     height: 3vh;
   }
 
   .buttons-container {
-    width: 90vw;
+    width: 90%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -45,7 +56,7 @@
       width: 60px;
       border-radius: 50%;
       position: relative;
-      left: 11vw;
+      left: 11%;
       top: -30px;
       border: 1px rgba(255,255,255,1);
       background-color: #555555;
@@ -61,23 +72,23 @@
       height: 54px;
       width: 100%;
       margin: auto;
-      padding: 25px 5vw;
+      padding: 25px 5%;
 
       .detail-field {
         display: inline-block;
         font-family: "CeraPro-Bold";
-        left: 5vw;
+        left: 5%;
         vertical-align: middle;
         font-size: 13px;
-        width: 33vw;
+        width: 33%;
       }
 
       .detail-value {
         display: inline-block;
-        left: 36vw;
+        left: 36%;
         vertical-align: middle;
         font-size: 11px;
-        width: 57vw;
+        width: 62%;
         background-color: #555555;
         border: 1px white solid;
         font-family: "CeraPro-Regular";

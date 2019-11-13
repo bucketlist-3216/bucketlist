@@ -127,50 +127,52 @@ class ProfilePage extends React.Component {
   render() {
     if (this.state.isLoading) return <Preloader/>;
     return (
-    <div className="profile-page">
-      <div className="header-space"></div>
-      <div className="buttons-container">
-        <label className="cancel-button" onClick={this.props.history.goBack}>Cancel</label>
-        {this.state.changesMade ?
-        <label className="save-button" onClick={this.sendForm}>Save</label>
-        :
-        <label className="save-button-disabled">Save</label>}
+      <div className="profile-page-container">
+        <div className="profile-page">
+          <div className="header-space"></div>
+          <div className="buttons-container">
+            <label className="cancel-button" onClick={this.props.history.goBack}>Cancel</label>
+            {this.state.changesMade ?
+            <label className="save-button" onClick={this.sendForm}>Save</label>
+            :
+            <label className="save-button-disabled">Save</label>}
+          </div>
+          <div className="pictures-container">
+            <img className="cover-picture" src={this.state.coverPictureLink} onClick={this.changeCoverPic}/>
+            <input type="file" id="cover-pic-file" style={{display: "none"}}
+              ref={this.coverUploadRef} accept="image/*" onChange={this.handleCoverPicChange}/>
+            <img className="profile-picture" src={this.state.profilePictureLink} onClick={this.changeProfilePic}/>
+            <input type="file" id="profile-pic-file" style={{display: "none"}}
+              ref={this.profileUploadRef} accept="image/*" onChange={this.handleProfilePicChange}/>
+          </div>
+          <div className="details-container">
+            <div className="detail-row">
+              <label className="detail-field">Name</label>
+              <input className="detail-value" type="text" value={this.state.name}
+                onChange={(event)=>this.setState({nameChanged:true, changesMade:true, name: event.target.value})}
+              />
+            </div>
+            <div className="detail-row">
+              <label className="detail-field">Username</label>
+              <input className="detail-value" type="text" value={this.state.username}
+                onChange={(event)=>this.setState({usernameChanged:true, changesMade:true, username: event.target.value})}
+              />
+            </div>
+            <div className="detail-row">
+              <label className="detail-field">Location</label>
+              <input className="detail-value" type="text" value={this.state.location}
+                onChange={(event)=>this.setState({locationChanged:true, changesMade:true, location: event.target.value})}
+              />
+            </div>
+            <div className="detail-row">
+              <label className="detail-field">Email</label>
+              <input className="detail-value" type="text" value={this.state.email}
+                onChange={(event)=>this.setState({emailChanged:true, changesMade:true, email: event.target.value})}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="pictures-container">
-        <img className="cover-picture" src={this.state.coverPictureLink} onClick={this.changeCoverPic}/>
-        <input type="file" id="cover-pic-file" style={{display: "none"}}
-          ref={this.coverUploadRef} accept="image/*" onChange={this.handleCoverPicChange}/>
-        <img className="profile-picture" src={this.state.profilePictureLink} onClick={this.changeProfilePic}/>
-        <input type="file" id="profile-pic-file" style={{display: "none"}}
-          ref={this.profileUploadRef} accept="image/*" onChange={this.handleProfilePicChange}/>
-      </div>
-      <div className="details-container">
-        <div className="detail-row">
-          <label className="detail-field">Name</label>
-          <input className="detail-value" type="text" value={this.state.name}
-            onChange={(event)=>this.setState({nameChanged:true, changesMade:true, name: event.target.value})}
-          />
-        </div>
-        <div className="detail-row">
-          <label className="detail-field">Username</label>
-          <input className="detail-value" type="text" value={this.state.username}
-            onChange={(event)=>this.setState({usernameChanged:true, changesMade:true, username: event.target.value})}
-          />
-        </div>
-        <div className="detail-row">
-          <label className="detail-field">Location</label>
-          <input className="detail-value" type="text" value={this.state.location}
-            onChange={(event)=>this.setState({locationChanged:true, changesMade:true, location: event.target.value})}
-          />
-        </div>
-        <div className="detail-row">
-          <label className="detail-field">Email</label>
-          <input className="detail-value" type="text" value={this.state.email}
-            onChange={(event)=>this.setState({emailChanged:true, changesMade:true, email: event.target.value})}
-          />
-        </div>
-      </div>
-    </div>
     )
   }
 
