@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 import _ from 'lodash';
-
+import { toast } from 'react-toastify'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
@@ -58,7 +58,13 @@ class TripsPage extends Component {
           instance.routeChange(PATHS.landingPage);
           return;
         }
-        alert(error.message);
+        
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
     this.setState({ isLoading: true });
   }

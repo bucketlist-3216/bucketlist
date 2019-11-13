@@ -34,7 +34,7 @@ class Tutorial extends Component {
 
   nextTutorial(event) {
     if (this.state.tutorialIndex == this.state.tutorialMsgs.length - 1) {
-      this.routeChange(PATHS.citySelect());
+      this.routeChange(PATHS.createTrip());
     }
 
     var tutIdx = this.state.tutorialIndex;
@@ -62,7 +62,7 @@ class Tutorial extends Component {
           </div>
           <div className="tutorial-msg">
             {<p className="msg">{tutorialMsgs[tutorialIndex]}</p>}
-            {tutorialIndex == 0 && <button className="skip-button" onClick={() => this.routeChange(PATHS.citySelect())}>skip tutorial</button>}
+            {tutorialIndex == 0 && <button className="skip-button" onClick={() => this.routeChange(PATHS.createTrip())}>skip tutorial</button>}
           </div>
             {
               (tutorialIndex == 0 &&

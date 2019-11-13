@@ -1,48 +1,46 @@
 import React, { Component } from "react";
-import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 
+// Import paths
 import PATHS from '../../constants/paths';
+
+// Import components
+import CitySelect from '../../components/CitySelect';
+import TripInfo from '../../components/TripInfo';
 
 @autoBindMethods
 class CreateTrip extends Component {
   constructor(props) {
-    super (props);
+    super(props);
 
     this.state = {
-      isLoading: false
+      destination: null
     };
   }
 
-  routeChange(pathname) {
-    this.props.history.push({
-      pathname
-    });
+  handleSelectCity(destination) {
+    this.setState({ destination });
   }
 
-  setLoading(isLoading) {
-    this.setState({ isLoading });
+  handleClose() {
+    this.routeChange(PATHS.trips());
+  }
+
+  handleCancel() {
+    this.setState({ destination: null });
+  }
+
+  routeChange(path) {
+    this.props.history.push(path);
   }
 
   render() {
-    var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
-    var ga_info = "CreateTripPage" + "_" + user_id + "_" + new Date().toLocaleString();
-
-    ReactGA.initialize('UA-148749594-1');
-    ReactGA.event({
-      category: 'User',
-      action: 'Viewed Create Trip Page',
-      label: ga_info,
-    });
-
-    return (
-      <div className="create-trip" >
-      	<span className="title">Create a Trip</span>
-      	<div className="icon" onClick={() => this.routeChange(PATHS.citySelect())}>
-    			<span className="add">+</span>
-      	</div>
-      </div>
-    );
+    if (!this.state.destination) {
+      // return "abs";
+      return <CitySelect handleSelectCity={this.handleSelectCity} handleClose={this.handleClose}/>;
+    } else {
+      return <TripInfo isNewTrip={true} destination={this.state.destination} handleCancel={this.handleCancel} routeChange={this.routeChange}/>;
+    }
   }
 }
 

@@ -9,9 +9,15 @@ class GroupSettings extends Component {
   constructor(props) {
     super(props);
 
+    let counter = 1;
+    this.tripFriendsList = _.map(this.props.parent.state.tripFriends, e => {
+      return e;
+    })
+
     this.state = {
       isEditing: false,
-      isModalShown: false
+      isModalShown: false,
+      anonCounter: 1
     };
   }
 
@@ -21,6 +27,7 @@ class GroupSettings extends Component {
     const { isModalShown } = this.state;
 
     return (
+      <div className="group-settings-parent">
       <div className="group-settings">
         <div className="top-bar">
           <button className="close icon-button" onClick={() =>
@@ -45,26 +52,28 @@ class GroupSettings extends Component {
               <span>Add Friends</span>
             </div>
           </div>
-          {parent.state.tripFriends.map((tripFriend, key) => (
-            <TripFriend
+          {this.tripFriendsList.map((tripFriend, key) => {
+
+            return (<TripFriend
               tripFriend={tripFriend}
               isAdminShown={true}
               key={key}
-            />
-          ))}
+            />);
+          })}
         </div>
-        <div className="bottom-bar">
+        {/* <div className="bottom-bar">
           <button className="link-button">
             <span>
               copy sharing link
             </span>
           </button>
-        </div>
+        </div> */}
         <AddFriendModal
           isModalShown={isModalShown}
           closeModal={this.closeModal}
           tripId={tripId}
         />
+      </div>
       </div>
     );
   }

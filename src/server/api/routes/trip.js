@@ -39,7 +39,7 @@ router.get('/', getUserTripsHandler); // TODO: Move this to /user/trips
 router.get('/:tripId', getTripDetailsHandler);
 router.post('/', addTripHandler);
 router.put('/:toUpdate', updateTripHandler);
-router.delete('/:toDelete', deleteTripHandler);
+router.delete('/:tripId', deleteTripHandler);
 
 /**************** Trip Friend end points ****************/
 
@@ -72,14 +72,32 @@ function getTripDetailsHandler(req, res) {
                 console.log(err);
             });
     } else {
-        return tripQueryModel.getTrip(req.params.tripId)
-            .then(function (queryResponse) {
-                res.json(queryResponse[0]);
-            })
-            .catch(function (err) {
+        const { tripId } = req.params;
+        const userId = req.headers.verifiedUserId;
+        const forbiddenErrorMessage = `Failed to get trip details because user ${userId} is not inside trip ${tripId}`;
+
+        // Check if user is in this trip
+        tripFriendQueryModel.getTripFriendId(tripId, userId)
+          .then(function (queryResponse) {
+            console.log(queryResponse);
+             if (queryResponse.length === 0) {
+               throw new Error(forbiddenErrorMessage);
+             }
+
+             // If user is inside the trip retrieve trip details
+             return tripQueryModel.getTrip(tripId);
+          })
+          .then(function (queryResponse) {
+              res.json(queryResponse[0]);
+          })
+          .catch(function (err) {
+              if (err.message === forbiddenErrorMessage) {
+                res.status(403).end('User is not authorized to get trip details');
+              } else {
                 res.status(500).end('Unable to get trip details');
-                console.log(err);
-            });
+              }
+              console.log(err);
+          });
     }
 }
 
@@ -143,30 +161,43 @@ function addTripHandler(req, res) {
         });
 }
 
-// Delete a trip
-function deleteTripHandler(req, res) {
+// Delete user's trip
+function deleteTripHandler(req, res, next) {
     // Generate mySQL query to delete entry
-    const userId = req.headers.verifiedUserId;
-    const deletion = tripQueryModel.deleteTrip(userId, req.params.toDelete);
+    const user_id = req.headers.verifiedUserId;
+    const trip_id = req.params.tripId;
+    console.log('Parameters to delete: ', user_id, trip_id);
 
-    console.log('Prameters to delete: ', userId, req.params.toDelete);
-    // Construct response after deletion
-    deletion
-        .then(function (returnObject) {
-            console.log(returnObject);
+    // Delete user's trip by deleting user's tripFriend object
+    let userTripsDeleted;
+    tripFriendQueryModel.deleteTripFriend({ trip_id, user_id })
+      .then(function (queryResponse) {
+            console.log(queryResponse);
+            userTripsDeleted = queryResponse;
 
-            if (returnObject === 0) {
-                res.status(500).end('Not authorized to delete this trip');
-                return;
-            } else {
-                res.json({
-                    "tripToDelete": req.params.toDelete,
-                    "tripsDeleted": returnObject
-                });
+            if (userTripsDeleted === 0) {
+                throw new Error(`Failed to delete because user ${user_id} is not inside trip ${trip_id}`);
             }
+
+            // Check if the trip has other users inside
+            return tripFriendQueryModel.getTripFriends(trip_id, user_id);
+        })
+        .then(function (tripFriends) {
+            // Delete trip object if it no longer has any user inside
+            if (tripFriends && tripFriends.length === 0) {
+                return tripQueryModel.deleteTrip(user_id, trip_id);
+            }
+            return null;
+        })
+        .then(function () {
+            // Form and send response
+            res.json({
+              "tripToDelete": req.params.toDelete,
+              "tripsDeleted": userTripsDeleted
+            });
         })
         .catch(function (err) {
-            res.status(500).end(`Unable to delete trip because of the following error: ${err.message}`);
+            res.status(500).end('Not authorized to delete this trip');
             console.log(err);
         });
 }

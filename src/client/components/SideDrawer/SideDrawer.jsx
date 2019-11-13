@@ -30,7 +30,7 @@ const SideDrawer = props => {
             {name}
           </div>
           <div className="swipe-drawer-username">
-            {username}
+            {'@' + username}
           </div>
           <div className="swipe-drawer-tab-container" onClick={() => routeChange(PATHS.trips())}>
             <div>
@@ -84,7 +84,12 @@ const SideDrawer = props => {
               {"You are currently signed in as a guest."}
             </div>
             <div>
-              {"Create an account here to save your trip!"}
+              {"Log in with Google to save your trip!"}
+            </div>
+          </div>
+          <div className="swipe-drawer-login-container" onClick={() => routeChange(PATHS.login)}>
+            <div className="swipe-drawer-login">
+              {"Log In"}
             </div>
           </div>
         </div>

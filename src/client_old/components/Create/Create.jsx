@@ -6,11 +6,13 @@ import autoBindMethods from 'class-autobind-decorator';
 import 'react-datepicker/dist/react-datepicker.css';
 import _ from 'lodash';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import CITIES from '../../constants/cities';
 import Link from './link.png';
+import { toast } from 'react-toastify'; 
 
 @autoBindMethods
 class Create extends Component {
@@ -43,7 +45,12 @@ class Create extends Component {
 
   handleInvites(event) {
     this.setState({numOfInvites: this.state.numOfInvites + 1});
-    alert('To Implement: Add friends!');
+    toast(`Coming soon!`, {
+      type: 'success',
+      autoClose: 4000,
+      position: toast.POSITION.BOTTOM_CENTER,
+      hideProgressBar: true,
+    });
   }
 
   handleSubmit(event) {
@@ -70,9 +77,9 @@ class Create extends Component {
     });*/
 
     if (this.state.city === '') {
-      alert('Please select city of destination');
+      toast('Please select city of destination');
     } else if (this.state.from > this.state.to) {
-      alert('Start date should be before end date!');
+      toast('Start date should be before end date!');
     } else {
       let userId = this.props.match.params.userId;
       let trip = {
@@ -101,7 +108,13 @@ class Create extends Component {
             instance.routeChange(PATHS.landingPage);
             return;
           }
-          alert(error.message);
+          toast(`Oops! Something went wrong.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
+
           console.log(error);
         });
       this.props.setLoading(true);

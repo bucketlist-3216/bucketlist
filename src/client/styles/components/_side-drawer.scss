@@ -15,6 +15,7 @@
   position: fixed;
   height: 100%;
   width: 80%;
+  max-width: 320px;
   top: 0;
   left: 0;
   background-color: #212529;
@@ -40,7 +41,7 @@
     }
 
     .swipe-drawer-name {
-      height: 2.5vh;
+      height: 3.3vh;
       width: 100%;
       font-family: 'CeraPro-Medium';
       color: white;
@@ -49,13 +50,48 @@
     }
 
     .swipe-drawer-guest {
-      height: 2.5vh;
+      height: 12vh;
       width: 100%;
       font-family: 'CeraPro-Medium';
       color: white;
       font-size: 2vh;
       padding-top: 2vh;
       padding-left: 2vh;
+    }
+
+    .swipe-drawer-login-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding: 1vh;
+
+      .swipe-drawer-login {
+        font-family: 'CeraPro-Bold';
+        font-weight: normal;
+        line-height: 4.43vh;
+        text-align: center;
+        background-color: #FFFFFF;
+        border-radius: 3.08vh;
+        width: 68%;
+        color: #707070;
+        font-size: 1.85vh;
+        border-radius: 3.08vh;
+        border: none;
+      }
+
+      .swipe-drawer-create-account {
+        font-family: 'CeraPro-Bold';
+        font-weight: normal;
+        line-height: 4.43vh;
+        text-align: center;
+        background-color: #707070;
+        border-radius: 3.08vh;
+        width: 68%;
+        color: #FFFFFF;
+        font-size: 1.85vh;
+        border-radius: 3.08vh;
+        border: none;
+      }
     }
 
     .swipe-drawer-username {
@@ -65,6 +101,7 @@
       color: white;
       font-size: 2vh;
       padding-left: 2vh;
+      padding-top: 0.5vh;
       padding-bottom: 10vh;
     }
 

@@ -6,17 +6,11 @@ const IconButton = (props) => {
 
   return (
     <div className={`icon-button ${className}`}  onClick={onClick}>
-      {
-      	icon && 
-      	  <span>
-      	    {icon}
-      	  </span>
-      }
-      {
-      	!icon && 
-
-            <span><img className="icon-button-image" src={image}/></span>
-
+      { icon
+        ? <span>
+            {icon} 
+          </span>
+        : <img className="icon-button-image" src={image}/>
       }
     </div>
   );

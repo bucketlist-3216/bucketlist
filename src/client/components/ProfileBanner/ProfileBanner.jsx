@@ -1,8 +1,12 @@
 import React from "react";
-import getUserData from "../../api/user.js";
+import autoBindMethods from 'class-autobind-decorator';
+import { toast } from 'react-toastify'; 
+
+import UserAPI from "../../api/user.js";
 import Preloader from "../Preloader";
 import PATHS from '../../constants/paths';
 
+@autoBindMethods
 class ProfileBanner extends React.Component {
   constructor(props) {
     super(props);
@@ -12,21 +16,34 @@ class ProfileBanner extends React.Component {
   }
 
   routeChange(pathname) {
-    this.props.history.push({
-      pathname
-    });
+    this.props.routeChange(pathname);
   }
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    getUserData(this, localStorage.getItem("userId"));
+    const instance = this;
+    UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
+      .then(function (response) {
+        instance.setState({
+          userData : response.data[0],
+          isLoading: false
+        });
+      })
+      .catch(function (error) {
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
+      });
   }
 
   render() {
     if (this.state.isLoading) return <Preloader/>;
     else {
-      let {user_id, username, email, google_id, facebook_id, temporary, location, name, profile_photo, cover_photo} = this.state.userData[0];
-      if (!cover_photo) cover_photo = '../../../../assets/common/default-landscape.jpg';
+      let {user_id, username, email, location, name, profile_photo, cover_photo} = this.state.userData;
+      if (!cover_photo) cover_photo = '../../../../assets/common/default-cover.jpg';
       if (!profile_photo) profile_photo = '../../../../assets/common/user-icon.png'
       return (
         <div className='profile-banner'>
@@ -37,7 +54,7 @@ class ProfileBanner extends React.Component {
               <label className='edit-button' onClick={() => this.props.routeChange(PATHS.profile)}>edit profile</label>
             </div>
           </div>
-          {localStorage.getItem('platform') === 'jwt' ? 
+          {localStorage.getItem('platform') === 'jwt' ?
           <div className='details-container'>
             <label className='name'>Guest</label>
           </div>

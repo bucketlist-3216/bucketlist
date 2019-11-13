@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
+import { toast } from 'react-toastify'; 
 
 // Import paths
 import PATHS from '../../constants/paths';
@@ -74,7 +75,12 @@ class CitySelect extends Component {
         instance.routeChange(PATHS.login);
         return;
       }
-      alert(error.message);
+      toast(`Oops! Something went wrong.`, {
+        type: 'error',
+        autoClose: 4000,
+        position: toast.POSITION.BOTTOM_CENTER,
+        hideProgressBar: true,
+      });
       console.log(error);
     });
   }
