@@ -20,13 +20,16 @@
   }
 
   .place-details {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+
     position: relative;
     width: 49.6%;
     height: 100%;
 
     margin-left: 42.67%;
-    padding-top: 5.54vh;
     text-align: left;
 
     border-bottom-width: 0.123vh;
