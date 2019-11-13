@@ -152,58 +152,16 @@ class TripsPage extends Component {
           </div>
         );
       }
-      if (trips.length === 0) {
-        localStorage.setItem('tutorial', 'true');
-        return (
+      (trips.length === 0) ? localStorage.setItem('tutorial', 'true') : localStorage.setItem('tutorial', 'false');
+      return (
+        <div className="trips-page-container">
           <div className="trips-page">
-            {/* <div className="top-bar">
-              {localStorage.getItem('platform') === 'jwt'
-              ? <SingleSignOnButton
-                  providerName={PROVIDERS['google'].providerName}
-                  logo={PROVIDERS['google'].logo}
-                  setLoading={(isLoading) => this.setState({ isLoading })}
-                  onLoginSuccess={() => TripAPI.getTrips(this)}
-                />
-              : <LogoutButton routeChange={this.routeChange}/>
-              }
-              <h1 className="title">Trips</h1>
-            </div>
-            <div className="trips-container-empty">
-              <div className="no-trips-text">
-                <span>No trips yet, create one now!</span>
-              </div>
-              <div className="icon" onClick={() => this.routeChange(PATHS.createTrip())}>
-                <span className="add">+</span>
-              </div>
-            </div>
-            </div> */}
             <ProfileBanner tripCount={trips.length} routeChange={this.routeChange}/>
             {tripsContainer}
             {createTripContainer}
           </div>
-        );
-      } else {
-        localStorage.setItem('tutorial', 'false');
-        return (
-          <div className="trips-page">
-            {/* <div className="top-bar">
-              {localStorage.getItem('platform') === 'jwt' ?
-                <SingleSignOnButton
-                  providerName={PROVIDERS['google'].providerName}
-                  logo={PROVIDERS['google'].logo}
-                  setLoading={(isLoading) => this.setState({ isLoading })}
-                  onLoginSuccess={() => TripAPI.getTrips(this)}
-                /> :
-                <LogoutButton routeChange={this.routeChange}/>
-              }
-              <h1 className="title">Trips</h1>
-            </div> */}
-            <ProfileBanner tripCount={trips.length} routeChange={this.routeChange}/>
-            {tripsContainer}
-            {createTripContainer}
-          </div>
-        );
-      }
+        </div>
+      );
     }
   }
 
