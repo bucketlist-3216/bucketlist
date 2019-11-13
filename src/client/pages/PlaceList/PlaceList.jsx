@@ -93,7 +93,7 @@ class PlaceList extends React.Component {
         this.setState({
           name: name,
           username: username,
-          profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+          profilePictureLink: profile_photo
         });
       })
       .catch(function (error) {
