@@ -19,13 +19,17 @@ class ProfileBanner extends React.Component {
   render() {
     let {user_id, username, email, location, name, profile_photo, cover_photo} = this.props.userData;
     if (!cover_photo) cover_photo = '../../../../assets/common/default-cover.jpg';
-    if (!profile_photo) profile_photo = '../../../../assets/common/user-icon.png'
+    //if (!profile_photo) profile_photo = '../../../../assets/common/user-icon.png'
     return (
       <div className='profile-banner'>
         <div className='photos-container'>
           <img className='cover-photo' src={cover_photo}/>
           <div className='profile-and-button-container'>
+            {profile_photo ?
             <img className='profile-photo' src={profile_photo} alt={name.charAt(0)}/>
+            :
+            <label className='profile-photo'></label>
+            }
             <label className='edit-button' onClick={() => this.props.routeChange(PATHS.profile)}>edit profile</label>
           </div>
         </div>
