@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import autoBindMethods from 'class-autobind-decorator';
+import { toast } from 'react-toastify'; 
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
@@ -11,10 +12,10 @@ class AddFriendModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ''
+      email: '',
     }
   }
-
+  
   render() {
     const { isModalShown, closeModal } = this.props;
     return (
@@ -34,6 +35,7 @@ class AddFriendModal extends Component {
           <Form onSubmit={this.addFriend}>
             <Form.Group controlId="formBasicEmail">
               <Form.Control
+                required
                 onChange={this.handleChangeEmail}
                 className="email-field"
                 type="email"
@@ -69,18 +71,43 @@ class AddFriendModal extends Component {
         data: { email }
       })
       .then(function(response) {
-        window.location.reload();
+        // Show a toast
+        toast('Added successfully', {
+          type: 'success',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
+
+        setTimeout(() => {window.location.reload();}, 2000);
       })
       .catch(function(error) {
         if (error.response && error.response.status === 401) {
           instance.routeChange(PATHS.landingPage);
         } else if (error.response && error.response.status === 404) {
           // TODO: Make this error message sound and look nicer
-          alert(`Could not find user with email '${email}'.`);
+          toast(`Could not find user with email ${email}`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
+
         } else if (error.response && error.response.status === 409) {
-          alert(`User with email '${email}' is already in this trip.`);
+          toast(`User with email '${email}' is already in this trip.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
+
         } else {
-          alert(error.message);
+          toast(`Oops! Something went wrong.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
           console.log(error);
         }
       });

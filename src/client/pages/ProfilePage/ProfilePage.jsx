@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import autoBindMethods from 'class-autobind-decorator';
 import axios from "axios";
+import { toast } from 'react-toastify'; 
 
 import UserAPI from "../../api/user.js";
 import Preloader from "../../components/Preloader/index.js";
@@ -109,7 +110,12 @@ class ProfilePage extends React.Component {
         instance.routeChange(PATHS.login);
         return;
       }
-      alert(error.message);
+      toast(`Oops! Something went wrong.`, {
+        type: 'error',
+        autoClose: 4000,
+        position: toast.POSITION.BOTTOM_CENTER,
+        hideProgressBar: true,
+      });
     }).then(() => this.props.history.goBack());
   }
 

@@ -28,6 +28,8 @@ body {
 //Pages
 @import "pages/__pages-dir";
 
+@import "../../../node_modules/react-toastify/dist/ReactToastify.css";
+
 // Custom
 .modal {
   opacity: 1;

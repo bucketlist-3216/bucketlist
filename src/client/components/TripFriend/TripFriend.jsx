@@ -4,12 +4,14 @@ import Img from 'react-image';
 import Spinner from '../../components/Spinner';
 
 const TripFriend = (props) => {
-  const { tripFriend, isAdminShown } = props;
+  const { tripFriend, isAdminShown, anonCounter } = props;
+
+
   return (
     <div className="trip-friend">
-      { tripFriend.profile_pic
+      { tripFriend.profile_photo
         ? (<Img
-            src={tripFriend.profile_pic}
+            src={tripFriend.profile_photo}
             loader={<Spinner />}
             container={children => {
               return <div className="prof-pic prof-pic-filled">{children}</div>
@@ -22,7 +24,7 @@ const TripFriend = (props) => {
         )
       }
       <div className="name">
-        <span>{tripFriend.username}</span>
+        <span>{tripFriend.name}</span>
       </div>
       <div className="admin">
         <span>

@@ -3,6 +3,7 @@ import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
+import { toast } from 'react-toastify'; 
 
 import PlaceCard from '../../components/PlaceCard/PlaceCard'
 import DummyPlaces from '../../components/PlaceCard/DummyData'
@@ -18,6 +19,7 @@ import PATHS from '../../constants/paths';
 // Import api
 import TripAPI from '../../api/trip';
 import TripFriendAPI from '../../api/trip-friend';
+import UserAPI from "../../api/user.js";
 
 const DummyPlace = {
   place_id: 1,
@@ -80,12 +82,51 @@ class PlaceList extends React.Component {
       .then(function (response) {
         instance.setState({ places: response.data });
       });
-    Promise.all([gettingTrip, gettingTripFriends, gettingPlaces])
+    const gettingUser = UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
+      .then(function (response) {
+        instance.setState({
+          userData : response.data,
+        });
+      })
+      .then(() => {
+        let {username, name, profile_photo} = this.state.userData[0];
+        this.setState({
+          name: name,
+          username: username,
+          profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+        });
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+    Promise.all([gettingTrip, gettingTripFriends, gettingPlaces, gettingUser])
       .then(function () {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        alert(error.message);
+        if (error.response && error.response.status === 401) {
+          instance.routeChange(PATHS.login);
+          return;
+        }
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
+      });
+
+    TripFriendAPI
+      .getTripFriends(this, tripId)
+      .then(() => {
+        let counter = 1;
+        instance.setState({tripFriends : _.map(instance.state.tripFriends, e => {
+          if (e.name === '_GUEST_USER') {
+            e.name = 'Anon ' + counter;
+            counter += 1;
+          }
+          return e;
+        })})
       });
   }
 
@@ -121,7 +162,7 @@ class PlaceList extends React.Component {
     const { trip, places } = this.state;
     return (
       <div className="list-page">
-        <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
+        <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
         <TripDetails tripId={tripId} parent={this} />
         { this.state.places.length === 0
           ? (

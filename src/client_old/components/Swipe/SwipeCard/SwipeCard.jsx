@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify'; 
 
 import APIS from '../../../constants/apis';
 import InfoIcon from '../../../../../assets/common/icon-info.svg';
@@ -27,7 +28,13 @@ const SwipeCard = props => {
           routeChange(PATHS.landingPage);
           return;
         }
-        alert(error.message);
+
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   };
 
