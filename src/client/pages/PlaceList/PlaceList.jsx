@@ -12,6 +12,8 @@ import Preloader from '../../components/Preloader'
 import TripDetails from '../../components/TripDetails'
 import TripInfo from '../../components/TripInfo';
 import GroupSettings from '../../components/GroupSettings';
+import SideDrawer from '../../components/SideDrawer/';
+import Backdrop from '../../components/Backdrop/';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
@@ -44,7 +46,8 @@ class PlaceList extends React.Component {
         tripFriends: [],
         isLoading: true,
         isManagingTrip: false,
-        isManagingGroup: false
+        isManagingGroup: false,
+        sideDrawerOpen: false
     };
   }
 
@@ -93,7 +96,7 @@ class PlaceList extends React.Component {
         this.setState({
           name: name,
           username: username,
-          profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+          profilePictureLink: profile_photo
         });
       })
       .catch(function (error) {
@@ -130,6 +133,16 @@ class PlaceList extends React.Component {
       });
   }
 
+  drawerToggleClickHandler = () => {
+    this.setState(prevState => {
+      return { sideDrawerOpen: !prevState.sideDrawerOpen }
+    });
+  }
+
+  backdropClickHandler = () => {
+    this.setState({ sideDrawerOpen: false });
+  }
+
   render() {
     var user_id = localStorage.getItem('userId') ? localStorage.getItem('userId') : 'undefined';
     var ga_info = "PlaceListPage" + "_" + user_id + "_" + new Date().toLocaleString();
@@ -163,6 +176,17 @@ class PlaceList extends React.Component {
     return (
       <div className="list-page-parent">
         <div className="list-page">
+          {this.state.sideDrawerOpen &&
+            <Backdrop backdropClickHandler={this.backdropClickHandler} />
+          }
+          <SideDrawer
+            sideDrawerOpen={this.state.sideDrawerOpen}
+            drawerToggleClickHandler={this.drawerToggleClickHandler}
+            routeChange={this.routeChange}
+            name={this.state.name}
+            username={this.state.username}
+            profilePictureLink={this.state.profilePictureLink}
+          />
           <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
           <TripDetails tripId={tripId} parent={this} />
           { this.state.places.length === 0
