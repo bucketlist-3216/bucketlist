@@ -81,9 +81,13 @@ function updateUserHandler(req, res) {
         updatedData['profile_photo'] = fileFields['profile-pic-file'][0]['location'];
     }
     if ('cover-pic-file' in fileFields) {
-        updatedData['cover'] = fileFields['cover-pic-file'][0]['location'];
+        updatedData['cover_photo'] = fileFields['cover-pic-file'][0]['location'];
     }
-    return userQueryModel.updateUser({user_id: req.params.userId}, updatedData).then(() => res.end());
+    return userQueryModel.updateUser({user_id: req.params.userId}, updatedData).then(() => res.end())
+                                                                               .catch((err) =>{
+                                                                                    console.log(err);
+                                                                                    res.status(500).end("Could not update user");
+                                                                               });
 }
 
 // TODO: Implement this operation
