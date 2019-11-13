@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import getUserData from "../../api/user.js";
-import Preloader from "../../components/Preloader/index.js";
+import autoBindMethods from 'class-autobind-decorator';
 import axios from "axios";
+
+import UserAPI from "../../api/user.js";
+import Preloader from "../../components/Preloader/index.js";
 import APIS from "../../constants/apis";
 
+@autoBindMethods
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isDoneFetching: false,
       isLoading: true,
       coverPictureLink: '../../../../assets/common/default-landscape.jpg',
       profilePictureLink: '../../../../assets/common/user-icon.png',
@@ -36,23 +38,28 @@ class ProfilePage extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    getUserData(this, localStorage.getItem("userId")).then(() => {
-      let {user_id, username, email, google_id, facebook_id, temporary, location, name, profile_photo, cover_photo} = this.state.userData[0];
-      this.setState({
-        name: name,
-        username: username,
-        location: location,
-        email: email,
-        profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
-        coverPictureLink: cover_photo ? cover_photo : '../../../../assets/common/default-landscape.jpg',
-        nameChanged: false,
-        usernameChanged: false,
-        locationChanged: false,
-        emailChanged: false,
-        profilePhotoChanged: false,
-        coverPhotoChanged: false
+    UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
+      .then((response) => {
+        let {user_id, username, email, google_id, facebook_id, temporary, location, name, profile_photo, cover_photo} = response.data[0];
+        this.setState({
+          name: name,
+          username: username,
+          location: location,
+          email: email,
+          profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
+          coverPictureLink: cover_photo ? cover_photo : '../../../../assets/common/default-landscape.jpg',
+          nameChanged: false,
+          usernameChanged: false,
+          locationChanged: false,
+          emailChanged: false,
+          profilePhotoChanged: false,
+          coverPhotoChanged: false,
+          isLoading: false
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
       });
-    });
   }
 
   changeCoverPic() {
@@ -65,7 +72,7 @@ class ProfilePage extends React.Component {
   handleCoverPicChange(event) {
     this.setState({
       coverPhotoChanged: true,
-      changesMade:true, 
+      changesMade:true,
       coverPictureLink: URL.createObjectURL(event.target.files[0]),
       coverPictureFile: event.target.files[0]
     })
@@ -73,7 +80,7 @@ class ProfilePage extends React.Component {
   handleProfilePicChange(event) {
     this.setState({
       profilePhotoChanged: true,
-      changesMade:true, 
+      changesMade:true,
       profilePictureLink: URL.createObjectURL(event.target.files[0]),
       profilePictureFile: event.target.files[0]
     })
@@ -118,14 +125,14 @@ class ProfilePage extends React.Component {
       <div className="header-space"></div>
       <div className="buttons-container">
         <label className="cancel-button" onClick={this.props.history.goBack}>Cancel</label>
-        {this.state.changesMade ? 
+        {this.state.changesMade ?
         <label className="save-button" onClick={this.sendForm}>Save</label>
         :
         <label className="save-button-disabled">Save</label>}
       </div>
       <div className="pictures-container">
         <img className="cover-picture" src={this.state.coverPictureLink} onClick={this.changeCoverPic}/>
-        <input type="file" id="cover-pic-file" style={{display: "none"}} 
+        <input type="file" id="cover-pic-file" style={{display: "none"}}
           ref={this.coverUploadRef} accept="image/*" onChange={this.handleCoverPicChange}/>
         <img className="profile-picture" src={this.state.profilePictureLink} onClick={this.changeProfilePic}/>
         <input type="file" id="profile-pic-file" style={{display: "none"}}

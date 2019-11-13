@@ -50,6 +50,7 @@ const SingleSignOnButton = props => {
           onLoginSuccess();
         })
         .catch(function (error) {
+          setLoading(false);
           toast(`Oops! Something went wrong.`, {
             type: 'error',
             autoClose: 4000,

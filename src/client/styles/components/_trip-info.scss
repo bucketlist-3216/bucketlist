@@ -1,0 +1,221 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.create-trip {
+  position: fixed;
+	box-sizing: border-box;
+	background: #E5E5E5;
+  height: 100%;
+  width: 100%;
+	background-color: rgba(39,39,39,1);
+	overflow: hidden;
+  display: block;
+
+  .top-bar {
+    height: 61px;
+    width: 100%;
+    padding: 39.964px 22.181px 0 22.181px; //3.47vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    background: rgba(39,39,39,1);
+
+    .back {
+    	white-space: nowrap;
+    	text-align: center;
+    	font-family: "CeraPro-Regular";
+    	font-style: normal;
+    	font-weight: normal;
+    	font-size: 11px;
+    	color: rgba(255,255,255,1);
+    }
+    .save {
+    	overflow: visible;
+    	font-family: "CeraPro-Regular";
+    	font-style: normal;
+    	font-weight: normal;
+    	font-size: 11px;
+    	color: rgba(255,255,255,1);
+    }
+
+    .save.disabled {
+      opacity: 0.524;
+      pointer-events: none;
+    }
+  }
+
+  .cover-photo {
+    height: 160px;
+    width: 100%;
+
+    border-bottom-width: 0.7px;//0.0862vh;
+    border-bottom-color: #555555;
+    border-bottom-style: solid;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    span {
+      position: absolute;
+    	width: inherit;
+    	white-space: nowrap;
+    	text-align: center;
+    	font-family: "CeraPro-Bold";
+    	font-style: normal;
+    	font-size: 30px;
+    	color: #FFFFFF;
+      z-index: 2;
+    }
+    .overlay {
+      position: absolute;
+    	width: inherit;
+    	height: inherit;
+      background-color: #272727;
+      opacity: 0.5;
+      z-index: 1
+    }
+    img {
+      position: absolute;
+    	overflow: hidden;
+    	width: inherit;
+    	height: inherit;
+      object-fit: cover;
+      object-position: 0 30%;
+      z-index: 0;
+    }
+  }
+  .trip-details {
+    height: inherit;
+    width: inherit;
+
+    padding-top: 7.664px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .row {
+      height: 48px;
+      width: inherit;
+
+      margin: 0;
+      padding-left: 22.181px;
+      position: relative;
+
+      display: flex;
+      align-items: center;
+    }
+
+    .field {
+      width: 91px;
+    	white-space: nowrap;
+    	text-align: left;
+    	font-family: "CeraPro-Regular";
+    	font-style: normal;
+    	font-weight: bold;
+    	font-size: 13px;
+    	color: rgba(255,255,255,1);
+    }
+
+    .value {
+      margin-left: 20px;
+    	overflow: visible;
+    	white-space: nowrap;
+    	text-align: center;
+    	font-family: Cera Pro;
+    	font-style: normal;
+    	font-weight: normal;
+    	font-size: 11px;
+    	color: rgba(255,255,255,1);
+    }
+
+    .value-form-container {
+      height: 24.5px;
+      width: 180px;
+      display: flex;
+      align-items: center;
+
+      .value-form {
+        position: relative;
+        height: inherit;
+        width: inherit;
+        max-width: 180px;
+        padding-left: 0;
+
+        color: #E4B89C;
+
+        background: transparent;
+        border: none;
+
+        border-bottom-width: 0.7px;//0.0862vh;
+        border-bottom-color: #555555;
+        border-bottom-style: solid;
+      }
+
+      .value-form:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      span {
+        height: inherit;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+
+    .edit {
+      position: absolute;
+      right: 22.181px;
+      font-family: Ikono Mini L;
+      font-style: normal;
+      font-weight: lighter;
+      font-size: 10px;
+      color: rgba(255,255,255,1);
+    }
+  }
+  .delete-button {
+    position: absolute;
+    left: 20.5px;
+    bottom: 23px;
+    height: auto;
+    width: auto;
+
+    display: flex;
+    align-items: center;
+
+    .icon {
+      position: relative;
+      top: auto;
+      left: auto;
+      overflow: visible;
+      width: 11px;
+      margin-right: 4.681px;
+      white-space: nowrap;
+      text-align: center;
+      font-family: Ikono Mini L;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 10px;
+      color: rgba(255,255,255,1);
+    }
+    .text {
+      position: relative;
+      top: auto;
+      left: auto;
+      overflow: visible;
+      width: 57px;
+      white-space: nowrap;
+      text-align: center;
+      font-family: Cera Pro;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 11px;
+      color: rgba(255,255,255,1);
+    }
+  }
+}

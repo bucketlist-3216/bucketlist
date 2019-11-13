@@ -69,13 +69,10 @@ class TripFriendQueryModel extends EntityQueryModel {
 
     // Get all the locations in this particular trip
     getUserTrips (userId) {
-        let tripProperties = this.tripQueryModel.selectableProps.filter((element) => element !== 'trip_id');
-        let userProperties = this.userQueryModel.selectableProps.filter((element) => element !== 'user_id');
+        let tripProperties = this.tripQueryModel.selectableProps.map((element) => this.tripQueryModel.tableName + '.' + element);
+        let userProperties = this.userQueryModel.selectableProps.map((element) => this.userQueryModel.tableName + '.' + element);
 
-        let selectedColumns = [`${this.tableName}.trip_id`,`${this.tableName}.user_id`].concat(
-            tripProperties,
-            userProperties
-        );
+        let selectedColumns = tripProperties.concat(userProperties);
 
         let filteringUserTrips = knex(this.tableName)
             .where({user_id: userId});

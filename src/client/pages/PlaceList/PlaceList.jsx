@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
+import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 
 import PlaceCard from '../../components/PlaceCard/PlaceCard'
@@ -8,12 +9,14 @@ import DummyPlaces from '../../components/PlaceCard/DummyData'
 import PlaceListTopBar from '../../components/AppBarTop/PlaceListTopBar';
 import Preloader from '../../components/Preloader'
 import TripDetails from '../../components/TripDetails'
+import TripInfo from '../../components/TripInfo';
 import GroupSettings from '../../components/GroupSettings';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 
 // Import api
+import TripAPI from '../../api/trip';
 import TripFriendAPI from '../../api/trip-friend';
 
 const DummyPlace = {
@@ -27,16 +30,18 @@ const DummyPlace = {
   }
 };
 
+@autoBindMethods
 class PlaceList extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
+        trip: null,
         places: [],
         tripFriends: [],
-        isDoneFetching: false,
         isLoading: true,
+        isManagingTrip: false,
         isManagingGroup: false
     };
   }
@@ -51,9 +56,19 @@ class PlaceList extends React.Component {
   }
 
   componentDidMount() {
-    let instance = this;
-    const tripId = this.props.match.params.tripId;
-    axios
+    const instance = this;
+    const { tripId } = this.props.match.params;
+    this.setState({ isLoading: true });
+
+    const gettingTrip = TripAPI.getTrip(this.routeChange, tripId)
+      .then(function (response) {
+        instance.setState({ trip : response.data });
+      });
+    const gettingTripFriends = TripFriendAPI.getTripFriends(this.routeChange, tripId)
+      .then(function (response) {
+        instance.setState({ tripFriends : response.data });
+      });
+    const gettingPlaces = axios
       .request({
         url: APIS.voteResults(tripId),
         method: 'get',
@@ -63,9 +78,11 @@ class PlaceList extends React.Component {
         }
       })
       .then(function (response) {
-        instance.setState({places:response.data});
-        instance.setState({isDoneFetching:true});
-        instance.setState({isLoading:false});
+        instance.setState({ places: response.data });
+      });
+    Promise.all([gettingTrip, gettingTripFriends, gettingPlaces])
+      .then(function () {
+        instance.setState({ isLoading: false });
       })
       .catch(function (error) {
         if (error.response && error.response.status === 401) {
@@ -105,8 +122,17 @@ class PlaceList extends React.Component {
       label: ga_info,
     });
 
-    if (!this.state.isDoneFetching) {
+    if (this.state.isLoading) {
       return <Preloader/>;
+    }
+
+    if (this.state.isManagingTrip) {
+      return <TripInfo
+        trip={this.state.trip}
+        destination="Singapore"
+        handleBack={() => this.setState({ isManagingTrip: false })}
+        routeChange={this.routeChange}
+      />;
     }
 
     if (this.state.isManagingGroup) {
@@ -114,10 +140,10 @@ class PlaceList extends React.Component {
     }
 
     const { tripId } = this.props.match.params;
-
+    const { trip, places } = this.state;
     return (
       <div className="list-page">
-        <PlaceListTopBar destination="Singapore" onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
+        <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())}></PlaceListTopBar>
         <TripDetails tripId={tripId} parent={this} />
         { this.state.places.length === 0
           ? (

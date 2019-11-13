@@ -41,7 +41,7 @@ class TutorialPopup extends React.Component {
   nextTutorial(event) {
     if (this.state.tutorialIndex == this.state.tutorialMsgs.length - 1) {
       this.finishTutorialHandler();
-      // this.routeChange(PATHS.citySelect());
+      // this.routeChange(PATHS.createTrip());
     }
 
     var tutIdx = this.state.tutorialIndex;

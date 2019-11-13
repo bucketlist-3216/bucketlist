@@ -36,7 +36,12 @@ class TripDetails extends Component {
           )
         }
         <div className="trip-buttons">
-          <button className="manage-group" onClick={() =>
+          <button className="trip-button" onClick={() =>
+            parent.setState({ isManagingTrip: true })
+          }>
+            <span>Manage Trip</span>
+          </button>
+          <button className="trip-button" onClick={() =>
             parent.setState({ isManagingGroup: true })
           }>
             <span>Manage Group</span>
