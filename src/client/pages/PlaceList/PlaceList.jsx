@@ -162,7 +162,7 @@ class PlaceList extends React.Component {
       return <TripInfo
         trip={this.state.trip}
         destination="Singapore"
-        handleCancel={() => this.setState({ isManagingTrip: false })}
+        handleBack={() => this.setState({ isManagingTrip: false })}
         routeChange={this.routeChange}
       />;
     }
@@ -187,7 +187,7 @@ class PlaceList extends React.Component {
             username={this.state.username}
             profilePictureLink={this.state.profilePictureLink}
           />
-          <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
+          <PlaceListTopBar trip={trip} placeCount={places.length} onClick={this.drawerToggleClickHandler} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
           <TripDetails tripId={tripId} parent={this} />
           { this.state.places.length === 0
             ? (
