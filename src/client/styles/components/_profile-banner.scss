@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   display: block;
-  width: 100vw;
+  width: 100%;
   height: calc(14vh + 115px);
   border-bottom: 0.5px #555555 solid;
 
@@ -12,21 +12,21 @@
     .cover-photo {
       position: absolute;
       height: 14vh;
-      width: 100vw;
+      width: 100%;
     }
 
     .profile-and-button-container {
       position: absolute;
       height: 60px;
       top: calc(14vh - 30px);
-      width: 100vw;
+      width: 100%;
 
       .profile-photo {
         height: 60px;
         width: 60px;
         border-radius: 50%;
         position: relative;
-        left: 6vw;
+        left: 6%;
         border: 1px rgba(255,255,255,1);
         background-color: #555555;
         z-index: 1;
@@ -46,14 +46,14 @@
         bottom: 0px;
         position: absolute;
         height: 16px;
-        left: calc(95vw - 80px);
+        left: calc(95% - 80px);
       }
     }
   }
   .details-container {
     display: block;
     color: rgba(255,255,255,1);
-    margin-left: 6vw;
+    margin-left: 6%;
     font-family: "CeraPro-Regular";
     
 
