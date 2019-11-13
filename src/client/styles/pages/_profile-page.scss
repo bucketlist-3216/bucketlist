@@ -10,7 +10,7 @@
 
   background-color: #272727;
   color: rgba(255,255,255,1);
-  font-family: Cera Pro;
+  font-family: "CeraPro-Regular";
 
   .profile-page {
     position: fixed;
@@ -33,6 +33,7 @@
       align-items: flex-end;
 
       label {
+        font-family: "CeraPro-Regular";
         font-style: normal;
         font-weight: normal;
         font-size: 1.35vh;
@@ -179,7 +180,7 @@
           width: 60.5%;
           padding-left: 0;
 
-          font-family: Cera Pro;
+          font-family: "CeraPro-Regular";
         	font-style: normal;
         	font-weight: normal;
         	font-size: 1.35vh;
