@@ -1,6 +1,6 @@
 import React from "react";
 import autoBindMethods from 'class-autobind-decorator';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 import UserAPI from "../../api/user.js";
 import Preloader from "../Preloader";
@@ -30,7 +30,8 @@ class ProfileBanner extends React.Component {
         });
       })
       .catch(function (error) {
-        toast(`Oops! Something went wrong.`, {
+        const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
+        toast(errorMessage, {
           type: 'error',
           autoClose: 4000,
           position: toast.POSITION.BOTTOM_CENTER,

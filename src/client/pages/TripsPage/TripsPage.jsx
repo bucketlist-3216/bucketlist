@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 import _ from 'lodash';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleRight, faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -52,7 +52,8 @@ class TripsPage extends Component {
         });
       })
       .catch(function (error) {
-        toast(`Oops! Something went wrong.`, {
+        const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
+        toast(errorMessage, {
           type: 'error',
           autoClose: 4000,
           position: toast.POSITION.BOTTOM_CENTER,
@@ -80,13 +81,8 @@ class TripsPage extends Component {
         }
       })
       .catch(function (error) {
-        if (error.response && error.response.status === 401) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('platform');
-          instance.routeChange(PATHS.login);
-          return;
-        }
-        toast(`Oops! Something went wrong.`, {
+        const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
+        toast(errorMessage, {
           type: 'error',
           autoClose: 4000,
           position: toast.POSITION.BOTTOM_CENTER,

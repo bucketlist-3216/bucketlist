@@ -57,7 +57,8 @@ class ProfilePage extends React.Component {
         this.setState(newState);
       })
       .catch((error) => {
-        toast(`Oops! Something went wrong.`, {
+        const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
+        toast(errorMessage, {
           type: 'error',
           autoClose: 4000,
           position: toast.POSITION.BOTTOM_CENTER,

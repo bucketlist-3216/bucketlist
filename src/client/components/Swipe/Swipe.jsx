@@ -3,7 +3,7 @@ import Swipeable from './Swipeable/Swipeable';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
@@ -79,7 +79,13 @@ class Swipe extends Component {
         });
       })
       .catch(function (error) {
-        console.log(error.message);
+        const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
+        toast(errorMessage, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 
