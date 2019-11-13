@@ -14,6 +14,13 @@ function handleError(error, routeChange) {
     routeChange(PATHS.trips());
     error.message = ERROR_MESSAGES["403"];
   }
+  toast(`Oops! Something went wrong.`, {
+    type: 'error',
+    autoClose: 4000,
+    position: toast.POSITION.BOTTOM_CENTER,
+    hideProgressBar: true,
+  });
+
   throw error;
 }
 

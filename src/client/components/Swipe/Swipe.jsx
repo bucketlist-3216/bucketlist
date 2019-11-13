@@ -110,7 +110,12 @@ class Swipe extends Component {
         instance.routeChange(PATHS.landingPage);
         return;
       }
-      console.log(error.message);
+      toast(`Oops! Something went wrong.`, {
+        type: 'error',
+        autoClose: 4000,
+        position: toast.POSITION.BOTTOM_CENTER,
+        hideProgressBar: true,
+      });
     });
   }
 
@@ -167,7 +172,12 @@ class Swipe extends Component {
           instance.routeChange(PATHS.login);
           return;
         }
-        console.log(error.message);
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
 
     this.setState({ numOfListRenders: this.state.numOfListRenders + 1})
@@ -205,7 +215,12 @@ class Swipe extends Component {
             instance.routeChange(PATHS.login);
             return;
           }
-          console.log(error.message);
+          toast(`Oops! Something went wrong.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
         });
       this.setState({ lastVoted: place})
     };
