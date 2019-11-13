@@ -27,6 +27,7 @@ class GroupSettings extends Component {
     const { isModalShown } = this.state;
 
     return (
+      <div className="group-settings-parent">
       <div className="group-settings">
         <div className="top-bar">
           <button className="close icon-button" onClick={() =>
@@ -72,6 +73,7 @@ class GroupSettings extends Component {
           closeModal={this.closeModal}
           tripId={tripId}
         />
+      </div>
       </div>
     );
   }

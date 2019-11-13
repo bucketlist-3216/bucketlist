@@ -1,85 +1,235 @@
-.profile-page {
-  background-color: rgba(39,39,39,1);
+#root {
+  position: fixed;
   height: 100%;
   width: 100%;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #272727;
   color: rgba(255,255,255,1);
-  font-family: "CeraPro-Regular";
+  font-family: Cera Pro;
 
-  .header-space{
-    height: 3vh;
-  }
+  .profile-page {
+    position: fixed;
+    height: 100%;
+    width: 320px;
 
-  .buttons-container {
-    width: 90vw;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-
-    .cancel-button {
-      float: left;
+    // if screen width < 555px, apply this
+    @media screen and (max-width: 555px) {
+      width: 100%;
+      border: none;
     }
 
-    .save-button {
-      float: right;
-    }
-    
-    .save-button-disabled {
-      float: right;
-      color: #555555;
-    }
-  }
+    .buttons-container {
+      height: 7.5%;
+      width: 100%;
+      padding-left: 5.9%;
+      padding-right: 5.9%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
 
-  .pictures-container {
-    height: 20vh;
-    border-bottom: 1px solid #555555;
+      label {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 1.35vh;
+      }
+
+      .save-button-disabled {
+        pointer-events: none;
+        color: rgba(255,255,255,0.52);
+      }
+    }
 
     .cover-picture {
       position: relative;
-      height: 14vh;
-      width:100%;
+      height: 13.9%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        position: absolute;
+      	overflow: hidden;
+      	width: 100%;
+      	height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        image-orientation: none;
+      }
+
+      #cover-pic-file {
+        display: none;
+      }
     }
 
     .profile-picture {
-      height: 60px;
-      width: 60px;
-      border-radius: 50%;
       position: relative;
-      left: 11vw;
-      top: -30px;
-      border: 1px rgba(255,255,255,1);
-      background-color: #555555;
-      z-index: 1;
-      object-fit: cover;
-    }
-  }
+      left: 10.7%;
+      top: -3.69vh;
 
-  .details-container {
+      height: 7.38vh;
+      width: 7.38vh;
+      overflow: hidden;
 
-    .detail-row {
-      display: block;
-      height: 54px;
-      width: 100%;
-      margin: auto;
-      padding: 25px 5vw;
+      border-radius: 50%;
+      border-style: solid;
+      border-width: 0.3px;
+      border-color: #FFFFFF;
 
-      .detail-field {
-        display: inline-block;
-        font-family: "CeraPro-Bold";
-        left: 5vw;
-        vertical-align: middle;
-        font-size: 13px;
-        width: 33vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+
+      img {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: none;
       }
 
-      .detail-value {
-        display: inline-block;
-        left: 36vw;
-        vertical-align: middle;
-        font-size: 11px;
-        width: 57vw;
-        background-color: #555555;
-        border: 1px white solid;
-        font-family: "CeraPro-Regular";
+      #profile-pic-file {
+        display: none;
+      }
+
+      .edit-image-icon {
+        .camera-icon {
+          font-size: 1.48vh;
+        }
+
+        .plus-icon {
+          font-size: 0.98vh;
+        }
+      }
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+    	width: 100%;
+    	height: 100%;
+      background-color: #272727;
+      opacity: 0.5;
+    }
+
+    .edit-image-icon {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .camera-icon {
+        position: absolute;
+        font-family: "IkonoMiniL-3";
+        font-size: 2.46vh;
+      }
+
+      .plus-icon {
+        position: relative;
+        padding-top: 20%;
+        font-family: normal;
+        font-size: 1.6vh;
+      }
+    }
+
+    .details-container {
+      width: 100%;
+
+      margin-top: -3vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      .detail-row {
+        height: 5.9vh;
+        width: inherit;
+
+        margin: 0;
+        padding-left: 5.9%;
+        padding-right: 5.9%;
+        position: relative;
+
+        display: flex;
+        align-items: center;
+
+        .detail-field {
+          width: 27.5%;
+          margin-right: 6%;
+          margin-bottom: 0;
+        	white-space: nowrap;
+        	text-align: left;
+        	font-family: "CeraPro-Bold";
+        	font-style: normal;
+        	font-weight: normal;
+        	font-size: 1.6vh;
+        	color: rgba(255,255,255,1);
+        }
+
+        .detail-value {
+          position: relative;
+          height: auto;
+          width: 60.5%;
+          padding-left: 0;
+
+          font-family: Cera Pro;
+        	font-style: normal;
+        	font-weight: normal;
+        	font-size: 1.35vh;
+          color: #FFFFFF;
+
+          background: transparent;
+          border: none;
+
+          border-bottom-width: 0.7px;//0.0862vh;
+          border-bottom-color: #555555;
+          border-bottom-style: solid;
+        }
+
+        .detail-value:focus {
+          box-shadow: none;
+          outline: none;
+        }
+
+        .detail-value-unchangeable {
+          border: none;
+        }
+      }
+    }
+
+    .log-out-button {
+      height: 4.2vh;
+      width: 37.3%;
+      max-width: 20vh;
+      border-radius: 2.1vh;
+
+      background-color: #FFFFFF;
+
+      cursor: pointer;
+
+      position: fixed;
+      bottom: 4.19%;
+      left: 50%;
+      transform: translate(-50%, 0);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        color: #000000;
+
+        font-family: "CeraPro-Medium";
+        font-size: 1.23vh;
+        font-style: normal;
+        font-weight: normal;
       }
     }
   }

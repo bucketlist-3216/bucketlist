@@ -1,5 +1,6 @@
 import React from "react";
 import autoBindMethods from 'class-autobind-decorator';
+import { toast } from 'react-toastify'; 
 
 import UserAPI from "../../api/user.js";
 import Preloader from "../Preloader";
@@ -24,20 +25,25 @@ class ProfileBanner extends React.Component {
     UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
       .then(function (response) {
         instance.setState({
-          userData : response.data,
+          userData : response.data[0],
           isLoading: false
         });
       })
       .catch(function (error) {
-        alert(error.message);
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 
   render() {
     if (this.state.isLoading) return <Preloader/>;
     else {
-      let {user_id, username, email, google_id, facebook_id, temporary, location, name, profile_photo, cover_photo} = this.state.userData[0];
-      if (!cover_photo) cover_photo = '../../../../assets/common/default-landscape.jpg';
+      let {user_id, username, email, location, name, profile_photo, cover_photo} = this.state.userData;
+      if (!cover_photo) cover_photo = '../../../../assets/common/default-cover.jpg';
       if (!profile_photo) profile_photo = '../../../../assets/common/user-icon.png'
       return (
         <div className='profile-banner'>

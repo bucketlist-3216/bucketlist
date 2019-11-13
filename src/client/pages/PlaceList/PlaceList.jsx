@@ -3,7 +3,7 @@ import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 import PlaceCard from '../../components/PlaceCard/PlaceCard'
 import DummyPlaces from '../../components/PlaceCard/DummyData'
@@ -162,7 +162,7 @@ class PlaceList extends React.Component {
       return <TripInfo
         trip={this.state.trip}
         destination="Singapore"
-        handleBack={() => this.setState({ isManagingTrip: false })}
+        handleCancel={() => this.setState({ isManagingTrip: false })}
         routeChange={this.routeChange}
       />;
     }
@@ -174,50 +174,52 @@ class PlaceList extends React.Component {
     const { tripId } = this.props.match.params;
     const { trip, places } = this.state;
     return (
-      <div className="list-page">
-        {this.state.sideDrawerOpen &&
-          <Backdrop backdropClickHandler={this.backdropClickHandler} />
-        }
-        <SideDrawer
-          sideDrawerOpen={this.state.sideDrawerOpen}
-          drawerToggleClickHandler={this.drawerToggleClickHandler}
-          routeChange={this.routeChange}
-          name={this.state.name}
-          username={this.state.username}
-          profilePictureLink={this.state.profilePictureLink}
-        />
-        <PlaceListTopBar trip={trip} placeCount={places.length} onClick={this.drawerToggleClickHandler} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
-        <TripDetails tripId={tripId} parent={this} />
-        { this.state.places.length === 0
-          ? (
-            <div className="place-container-empty">
-              <span>
-                No places shortlisted yet! <br/>
-                Start exploring now.
-              </span>
-              <Button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
-                Let's Go!
+      <div className="list-page-parent">
+        <div className="list-page">
+          {this.state.sideDrawerOpen &&
+            <Backdrop backdropClickHandler={this.backdropClickHandler} />
+          }
+          <SideDrawer
+            sideDrawerOpen={this.state.sideDrawerOpen}
+            drawerToggleClickHandler={this.drawerToggleClickHandler}
+            routeChange={this.routeChange}
+            name={this.state.name}
+            username={this.state.username}
+            profilePictureLink={this.state.profilePictureLink}
+          />
+          <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
+          <TripDetails tripId={tripId} parent={this} />
+          { this.state.places.length === 0
+            ? (
+              <div className="place-container-empty">
+                <span>
+                  No places shortlisted yet! <br/>
+                  Start exploring now.
+                </span>
+                <Button className="swipe-button" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+                  Let's Go!
+                </Button>
+              </div>
+            )
+            : (
+              <div className="place-container">{
+                this.state.places.map((place, key) => (
+                  <PlaceCard
+                    key={key}
+                    place={place}
+                  />
+                ))
+              }</div>
+            )
+          }
+          { this.state.places.length > 0 &&
+            (
+              <Button className="swipe-button-bottom" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
+                Let's Explore!
               </Button>
-            </div>
-          )
-          : (
-            <div className="place-container">{
-              this.state.places.map((place, key) => (
-                <PlaceCard
-                  key={key}
-                  place={place}
-                />
-              ))
-            }</div>
-          )
-        }
-        { this.state.places.length > 0 &&
-          (
-            <Button className="swipe-button-bottom" onClick={() => this.routeChange(PATHS.swipe(tripId))}>
-              Let's Explore
-            </Button>
-          )
-        }
+            )
+          }
+        </div>
       </div>
     );
   }
