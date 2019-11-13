@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactGA from 'react-ga';
 import autoBindMethods from 'class-autobind-decorator';
 import _ from 'lodash';
+import { toast } from 'react-toastify'; 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleRight, faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -62,10 +63,30 @@ class TripsPage extends Component {
     }
     TripAPI.deleteTrip(this.routeChange, tripId)
       .then(function (response) {
-        location.reload();
+        if (response.data.tripsDeleted === 1) {
+          location.reload();
+        } else {
+          toast('You are not authorized to delete this trip', {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
+        }
       })
       .catch(function (error) {
-        alert(error.message);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('platform');
+          instance.routeChange(PATHS.login);
+          return;
+        }
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Swipeable from 'react-swipy';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
+import { toast } from 'react-toastify'; 
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
@@ -63,7 +64,13 @@ class Swipe extends Component {
           instance.routeChange(PATHS.landingPage);
           return;
         }
-        alert(error.message);
+        
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 
@@ -95,7 +102,12 @@ class Swipe extends Component {
           instance.routeChange(PATHS.landingPage);
           return;
         }
-        alert(error.message);
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 
@@ -128,7 +140,13 @@ class Swipe extends Component {
             instance.routeChange(PATHS.landingPage);
             return;
           }
-          alert(error.message);
+          
+          toast(`Oops! Something went wrong.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
         });
     };
   }

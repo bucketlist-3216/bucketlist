@@ -10,6 +10,7 @@ import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import PROVIDERS from '../../constants/providers';
 import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
+import { toast } from 'react-toastify'; 
 
 @autoBindMethods
 class Login extends Component {
@@ -59,7 +60,13 @@ class Login extends Component {
             instance.routeChange(PATHS.landingPage);
             return;
           }
-          alert(error.message);
+          
+          toast(`Oops! Something went wrong.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
         });
       //this.props.setLoading(true); // Should set loading here but it keeps throwing this error: Can't perform a React state update on an unmounted component.
     }

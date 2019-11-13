@@ -19,6 +19,7 @@
       position: absolute;
       height: 60px;
       top: calc(14vh - 30px);
+      width: 100vw;
 
       .profile-photo {
         height: 60px;
@@ -30,20 +31,22 @@
         background-color: #555555;
         z-index: 1;
         float:left;
+        object-fit: cover;
       }
 
       .edit-button {
         text-align: center;
         vertical-align: middle;
-        width: 70px;
+        width: 80px;
         font-size: 8px;
-        font-family: 'CeraPro';
+        font-family: 'CeraPro-Regular';
         color: rgba(255,255,255,1);
-        border: 2px rgba(255,255,255,1) solid;
+        border: 0.5px rgba(255,255,255,1) solid;
         border-radius: 8px;
         bottom: 0px;
         position: absolute;
-        left: calc(95vw - 70px);
+        height: 16px;
+        left: calc(95vw - 80px);
       }
     }
   }
@@ -51,12 +54,12 @@
     display: block;
     color: rgba(255,255,255,1);
     margin-left: 6vw;
-    font-style: "CeraPro-Regular";
+    font-family: "CeraPro-Regular";
     
 
     .name {
       display: block;
-      font-style: "CeraPro-Bold";
+      font-family: "CeraPro-Bold";
       font-size: 15px;
       margin-bottom: 0px;
     }
