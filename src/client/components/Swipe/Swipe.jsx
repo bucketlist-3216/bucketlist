@@ -3,6 +3,7 @@ import Swipeable from './Swipeable/Swipeable';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { toast } from 'react-toastify'; 
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';

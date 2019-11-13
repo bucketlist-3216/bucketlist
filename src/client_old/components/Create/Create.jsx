@@ -11,6 +11,7 @@ import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import CITIES from '../../constants/cities';
 import Link from './link.png';
+import { toast } from 'react-toastify'; 
 
 @autoBindMethods
 class Create extends Component {

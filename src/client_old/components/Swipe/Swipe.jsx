@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Swipeable from 'react-swipy';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
+import { toast } from 'react-toastify'; 
 
 import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';

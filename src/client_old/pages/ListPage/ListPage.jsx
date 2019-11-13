@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import autoBindMethods from 'class-autobind-decorator';
-
+import { toast } from 'react-toastify'; 
 import axios from 'axios'
 
 import APIS from '../../constants/apis';

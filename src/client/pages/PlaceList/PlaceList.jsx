@@ -3,6 +3,7 @@ import ReactGA from 'react-ga';
 import { Button } from 'react-bootstrap';
 import autoBindMethods from 'class-autobind-decorator';
 import axios from 'axios';
+import { toast } from 'react-toastify'; 
 
 import PlaceCard from '../../components/PlaceCard/PlaceCard'
 import DummyPlaces from '../../components/PlaceCard/DummyData'
