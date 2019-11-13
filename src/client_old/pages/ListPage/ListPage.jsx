@@ -52,7 +52,12 @@ class ListPage extends Component {
           instance.routeChange(PATHS.landingPage);
           return;
         }
-        alert(error.message);
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
       });
   }
 

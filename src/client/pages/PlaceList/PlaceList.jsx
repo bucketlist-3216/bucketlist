@@ -85,7 +85,29 @@ class PlaceList extends React.Component {
         instance.setState({ isLoading: false });
       })
       .catch(function (error) {
-        alert(error.message);
+        if (error.response && error.response.status === 401) {
+          instance.routeChange(PATHS.login);
+          return;
+        }
+        toast(`Oops! Something went wrong.`, {
+          type: 'error',
+          autoClose: 4000,
+          position: toast.POSITION.BOTTOM_CENTER,
+          hideProgressBar: true,
+        });
+      });
+
+    TripFriendAPI
+      .getTripFriends(this, tripId)
+      .then(() => {
+        let counter = 1;
+        instance.setState({tripFriends : _.map(instance.state.tripFriends, e => {
+          if (e.name === '_GUEST_USER') {
+            e.name = 'Anon ' + counter;
+            counter += 1;
+          }
+          return e;
+        })})
       });
   }
 

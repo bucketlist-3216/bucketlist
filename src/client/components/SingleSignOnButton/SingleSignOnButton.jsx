@@ -51,7 +51,12 @@ const SingleSignOnButton = props => {
         })
         .catch(function (error) {
           setLoading(false);
-          alert(error.message);
+          toast(`Oops! Something went wrong.`, {
+            type: 'error',
+            autoClose: 4000,
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+          });
         });
     }
   }
