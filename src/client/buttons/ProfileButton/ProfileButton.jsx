@@ -8,7 +8,8 @@ const ProfileButton = (props) => {
       icon=""
       className="profile-button"
       onClick={onClick}
-      icon=""
+      icon={imgSrc ? null : ""}
+      imgSrc = {imgSrc}
     />
   );
 };
