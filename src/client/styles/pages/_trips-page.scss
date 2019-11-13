@@ -3,12 +3,25 @@ html, body {
   margin: 0;
 }
 
+.trips-page-container {
+  position: fixed;
+  background: rgba(39,39,39,1);
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
 .trips-page {
   position: fixed;
   background: rgba(39,39,39,1);
   height: 100%;
-  width: 100%;
+  width: 320px;
   display: block;
+  @media screen and (max-width: 555px) {
+    width: 100%;
+  }
 
   .top-bar {
       position: absolute;
