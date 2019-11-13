@@ -163,7 +163,7 @@ class PlaceList extends React.Component {
     return (
       <div className="list-page-parent">
         <div className="list-page">
-        <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
+          <PlaceListTopBar trip={trip} placeCount={places.length} onClick={() => this.routeChange(PATHS.trips())} profilePictureLink={this.state.profilePictureLink}></PlaceListTopBar>
           <TripDetails tripId={tripId} parent={this} />
           { this.state.places.length === 0
             ? (
