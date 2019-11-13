@@ -88,7 +88,11 @@ const SideDrawer = props => {
               {"Log in with Google to save your trip!"}
             </div>
           </div>
-          <div className="swipe-drawer-login-container" onClick={() => routeChange(PATHS.login)}>
+          <div className="swipe-drawer-login-container" onClick={() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('platform');
+            routeChange(PATHS.login);
+          }}>
             <div className="swipe-drawer-login">
               {"Log In"}
             </div>
