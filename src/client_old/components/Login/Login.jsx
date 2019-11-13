@@ -10,6 +10,7 @@ import APIS from '../../constants/apis';
 import PATHS from '../../constants/paths';
 import PROVIDERS from '../../constants/providers';
 import SingleSignOnButton from '../SingleSignOnButton/SingleSignOnButton';
+import { toast } from 'react-toastify'; 
 
 @autoBindMethods
 class Login extends Component {
