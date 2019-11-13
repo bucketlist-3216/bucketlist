@@ -82,10 +82,15 @@
           margin-right: -0.86vh;
           height: 2.7vh;
           width: 2.7vh;
+          border-radius: 50%;
 
           img {
             height: 100%;
             width: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            overflow: hidden;
           }
 
           .icon-button.profile-button {

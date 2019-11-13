@@ -3,212 +3,235 @@ html, body {
   margin: 0;
 }
 
-.create-trip {
+#root {
   position: fixed;
-	box-sizing: border-box;
-	background: #E5E5E5;
   height: 100%;
   width: 100%;
-	background-color: rgba(39,39,39,1);
-	overflow: hidden;
-  display: block;
 
-  .top-bar {
-    height: 7.5%;
-    width: 100%;
-    padding: 0 5.91%; //3.47vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
-    background: rgba(39,39,39,1);
+  background-color: #272727;
+  color: rgba(255,255,255,1);
+  font-family: Cera Pro;
 
-    .back {
-    	white-space: nowrap;
-    	text-align: center;
-    	font-family: "CeraPro-Regular";
-    	font-style: normal;
-    	font-weight: normal;
-    	font-size: 1.35vh;
-    	color: rgba(255,255,255,1);
-      margin-bottom: 0.87vh;
+  .create-trip {
+    position: fixed;
+  	box-sizing: border-box;
+  	background: #E5E5E5;
+    height: 100%;
+    width: 320px;
+  	background-color: rgba(39,39,39,1);
+  	overflow: hidden;
+    display: block;
+
+    // if screen width < 555px, apply this
+    @media screen and (max-width: 555px) {
+      width: 100%;
+      border: none;
     }
-    .save {
-    	overflow: visible;
-    	font-family: "CeraPro-Regular";
-    	font-style: normal;
-    	font-weight: normal;
-    	font-size: 1.35vh;
-    	color: rgba(255,255,255,1);
-      margin-bottom: 0.87vh;
-    }
-
-    .save.disabled {
-      opacity: 0.524;
-      pointer-events: none;
-    }
-  }
-
-  .cover-photo {
-    height: 19.7%;
-    width: 100%;
-
-    border-bottom-width: 0.7px;//0.0862vh;
-    border-bottom-color: #555555;
-    border-bottom-style: solid;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    span {
-      position: absolute;
-    	width: inherit;
-    	white-space: nowrap;
-    	text-align: center;
-    	font-family: "CeraPro-Bold";
-    	font-style: normal;
-    	font-size: 3.69vh;
-    	color: #FFFFFF;
-      z-index: 2;
-    }
-    .overlay {
-      position: absolute;
-    	width: inherit;
-    	height: inherit;
-      background-color: #272727;
-      opacity: 0.5;
-      z-index: 1
-    }
-    img {
-      position: absolute;
-    	overflow: hidden;
-    	width: inherit;
-    	height: inherit;
-      object-fit: cover;
-      object-position: 0 30%;
-      z-index: 0;
-    }
-  }
-  .trip-details {
-    height: auto;
-    width: inherit;
-
-    padding-top: 0.94vh;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-
-    .row {
-      height: 5.91vh;
-      width: inherit;
-
-      margin: 0;
-      padding-left: 5.91%;
-      position: relative;
-
+    
+    .top-bar {
+      height: 7.5%;
+      width: 100%;
+      padding: 0 5.91%; //3.47vw;
       display: flex;
-      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
 
-      .field {
-        width: 27.5%;
-        margin-right: 6%;
+      background: rgba(39,39,39,1);
+
+      .back {
       	white-space: nowrap;
-      	text-align: left;
+      	text-align: center;
       	font-family: "CeraPro-Regular";
-      	font-style: normal;
-      	font-weight: bold;
-      	font-size: 1.6vh;
-      	color: rgba(255,255,255,1);
-      }
-
-      .value {
-      	overflow: visible;
-      	white-space: nowrap;
-      	text-align: left;
-      	font-family: Cera Pro;
       	font-style: normal;
       	font-weight: normal;
       	font-size: 1.35vh;
       	color: rgba(255,255,255,1);
-        width: 48%;
+        margin-bottom: 0.87vh;
+      }
+      .save {
+      	overflow: visible;
+      	font-family: "CeraPro-Regular";
+      	font-style: normal;
+      	font-weight: normal;
+      	font-size: 1.35vh;
+      	color: rgba(255,255,255,1);
+        margin-bottom: 0.87vh;
+      }
 
-        .value-form-container {
-          height: auto;
-          width: 100%;
-          display: flex;
-          align-items: center;
+      .save.disabled {
+        opacity: 0.524;
+        pointer-events: none;
+      }
+    }
 
-          .value-form {
-            position: relative;
-            height: inherit;
-            width: inherit;
-            max-width: 180px;
-            padding: 0;
+    .cover-photo {
+      height: 19.7%;
+      width: 100%;
 
-            color: #FFFFFF;
+      border-bottom-width: 0.7px;//0.0862vh;
+      border-bottom-color: #555555;
+      border-bottom-style: solid;
 
-            background: transparent;
-            border: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-            border-bottom-width: 0.7px;//0.0862vh;
-            border-bottom-color: #555555;
-            border-bottom-style: solid;
-          }
+      span {
+        position: absolute;
+      	width: inherit;
+      	white-space: nowrap;
+      	text-align: center;
+      	font-family: "CeraPro-Bold";
+      	font-style: normal;
+      	font-size: 3.69vh;
+      	color: #FFFFFF;
+        z-index: 2;
+      }
+      .overlay {
+        position: absolute;
+      	width: inherit;
+      	height: inherit;
+        background-color: #272727;
+        opacity: 0.5;
+        z-index: 1
+      }
+      img {
+        position: absolute;
+      	overflow: hidden;
+      	width: inherit;
+      	height: inherit;
+        object-fit: cover;
+        object-position: 0 30%;
+        z-index: 0;
+      }
+    }
+    .trip-details {
+      height: auto;
+      width: inherit;
+      overflow: visible;
 
-          .value-form:focus {
-            box-shadow: none;
-            outline: none;
-          }
+      padding-top: 0.94vh;
 
-          span {
-            height: inherit;
-            margin-left: 5.56%;
-            margin-right: 5.56%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      .row {
+        height: 5.91vh;
+        width: inherit;
+
+        margin: 0;
+        padding-left: 5.91%;
+        position: relative;
+
+        display: flex;
+        align-items: center;
+
+        .field {
+          width: 27.5%;
+          margin-right: 6%;
+        	white-space: nowrap;
+        	text-align: left;
+        	font-family: "CeraPro-Regular";
+        	font-style: normal;
+        	font-weight: bold;
+        	font-size: 1.6vh;
+        	color: rgba(255,255,255,1);
+        }
+
+        .value {
+        	overflow: visible;
+        	white-space: nowrap;
+        	text-align: left;
+        	font-family: Cera Pro;
+        	font-style: normal;
+        	font-weight: normal;
+        	font-size: 1.35vh;
+        	color: rgba(255,255,255,1);
+          width: 48%;
+
+          .value-form-container {
+            height: auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+
+            .value-form {
+              position: relative;
+              height: inherit;
+              width: inherit;
+              max-width: 180px;
+              padding: 0;
+
+              color: #FFFFFF;
+            	font-size: 1.35vh;
+
+              background: transparent;
+              border: none;
+
+              border-bottom-width: 0.7px;//0.0862vh;
+              border-bottom-color: #555555;
+              border-bottom-style: solid;
+            }
+
+            .value-form:focus {
+              box-shadow: none;
+              outline: none;
+            }
+
+            span {
+              height: inherit;
+              margin-left: 5.56%;
+              margin-right: 5.56%;
+            }
           }
         }
       }
     }
-  }
-  .delete-button {
-    position: absolute;
-    left: 5.47%;
-    bottom: 2.83%;
-    height: auto;
-    width: auto;
+    .delete-button {
+      position: absolute;
+      left: 5.47%;
+      bottom: 2.83%;
+      height: auto;
+      width: auto;
 
-    display: flex;
-    align-items: center;
+      display: flex;
+      align-items: center;
 
-    .icon {
-      position: relative;
-      top: auto;
-      left: auto;
-      overflow: visible;
-      width: 1.35vh;
-      margin-right: 0.576vh;
-      white-space: nowrap;
-      text-align: center;
-      font-family: Ikono Mini L;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 1.23vh;
-      color: rgba(255,255,255,1);
-    }
-    .text {
-      position: relative;
-      top: auto;
-      left: auto;
-      overflow: visible;
-      white-space: nowrap;
-      text-align: center;
-      font-family: Cera Pro;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 1.35vh;
-      color: rgba(255,255,255,1);
+      .icon {
+        position: relative;
+        top: auto;
+        left: auto;
+        overflow: visible;
+        width: 1.35vh;
+        margin-right: 0.576vh;
+        white-space: nowrap;
+        text-align: center;
+        font-family: Ikono Mini L;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 1.23vh;
+        color: rgba(255,255,255,1);
+      }
+      .text {
+        position: relative;
+        top: auto;
+        left: auto;
+        overflow: visible;
+        white-space: nowrap;
+        text-align: center;
+        font-family: Cera Pro;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 1.35vh;
+        color: rgba(255,255,255,1);
+      }
     }
   }
 }

@@ -37,9 +37,12 @@ const Trip = props => {
     }
   }
 
+  let anonCounter = 0;
   function renderMemberFirstName(user) {
     return user.name
-      ? user.name.split(' ')[0]
+      ? (user.name === "_GUEST_USER")
+        ? (anonCounter += 1) && "Anon " + anonCounter
+        : user.name.split(' ')[0]
       : "";
   }
 
