@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import autoBindMethods from 'class-autobind-decorator';
 import axios from "axios";
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 import UserAPI from "../../api/user.js";
 import Preloader from "../../components/Preloader/index.js";
 import APIS from "../../constants/apis";
+import PATHS from "../../constants/paths";
+
+const DEFAULT_COVER = '../../../../assets/common/default-cover.jpg';
 
 @autoBindMethods
 class ProfilePage extends React.Component {
@@ -14,12 +17,12 @@ class ProfilePage extends React.Component {
 
     this.state = {
       isLoading: true,
-      coverPictureLink: '../../../../assets/common/default-landscape.jpg',
-      profilePictureLink: '../../../../assets/common/user-icon.png',
-      name: 'Kaya Toast',
-      username: 'kayaAndButter',
-      location: 'Singapore',
-      email: 'ilovekaya@toast.com',
+      cover_photo: DEFAULT_COVER,
+      profile_photo: null,
+      name: null,
+      username: null,
+      location: null,
+      email: null,
       changesMade: false
     };
     this.coverUploadRef = React.createRef();
@@ -41,14 +44,7 @@ class ProfilePage extends React.Component {
     this.setState({ isLoading: true });
     UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
       .then((response) => {
-        let {user_id, username, email, google_id, facebook_id, temporary, location, name, profile_photo, cover_photo} = response.data[0];
-        this.setState({
-          name: name,
-          username: username,
-          location: location,
-          email: email,
-          profilePictureLink: profile_photo ? profile_photo : '../../../../assets/common/user-icon.png',
-          coverPictureLink: cover_photo ? cover_photo : '../../../../assets/common/default-landscape.jpg',
+        const newState = Object.assign({
           nameChanged: false,
           usernameChanged: false,
           locationChanged: false,
@@ -56,7 +52,9 @@ class ProfilePage extends React.Component {
           profilePhotoChanged: false,
           coverPhotoChanged: false,
           isLoading: false
-        });
+        }, response.data[0]);
+        newState.cover_photo = newState.cover_photo || DEFAULT_COVER;
+        this.setState(newState);
       })
       .catch((error) => {
         toast(`Oops! Something went wrong.`, {
@@ -79,7 +77,7 @@ class ProfilePage extends React.Component {
     this.setState({
       coverPhotoChanged: true,
       changesMade:true,
-      coverPictureLink: URL.createObjectURL(event.target.files[0]),
+      cover_photo: URL.createObjectURL(event.target.files[0]),
       coverPictureFile: event.target.files[0]
     })
   }
@@ -87,19 +85,20 @@ class ProfilePage extends React.Component {
     this.setState({
       profilePhotoChanged: true,
       changesMade:true,
-      profilePictureLink: URL.createObjectURL(event.target.files[0]),
+      profile_photo: URL.createObjectURL(event.target.files[0]),
       profilePictureFile: event.target.files[0]
     })
   }
 
   sendForm() {
-    var formData = new FormData();
+    const formData = new FormData();
     if (this.state.nameChanged) formData.set('name', this.state.name);
     if (this.state.usernameChanged) formData.set('username', this.state.username);
     if (this.state.locationChanged) formData.set('location', this.state.location);
     if (this.state.emailChanged) formData.set('email', this.state.email);
     if (this.state.profilePhotoChanged) formData.append('profile-pic-file', this.state.profilePictureFile);
     if (this.state.coverPhotoChanged) formData.append('cover-pic-file', this.state.coverPictureFile);
+    this.setState({ isLoading: true });
     axios.request({
       url: APIS.user(localStorage.getItem('userId')),
       method: 'put',
@@ -108,7 +107,9 @@ class ProfilePage extends React.Component {
         token: localStorage.getItem('token'),
         platform: localStorage.getItem('platform')
       }
-    }).catch(function (error) {
+    })
+    .then(() => this.props.history.goBack())
+    .catch(function (error) {
       if (error.response && error.response.status === 401) {
         localStorage.removeItem('token');
         localStorage.removeItem('platform');
@@ -121,28 +122,60 @@ class ProfilePage extends React.Component {
         position: toast.POSITION.BOTTOM_CENTER,
         hideProgressBar: true,
       });
-    }).then(() => this.props.history.goBack());
+    });
+  }
+
+  routeChange(pathname) {
+    this.props.history.push({
+      pathname
+    });
+  }
+
+  handleLogOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('platform');
+    this.routeChange(PATHS.home);
   }
 
   render() {
     if (this.state.isLoading) return <Preloader/>;
+    const editImageIcon = (
+      <div className="edit-image-icon">
+        <span className="camera-icon"></span>
+        <span className="plus-icon">+</span>
+      </div>
+    );
+
     return (
     <div className="profile-page">
-      <div className="header-space"></div>
       <div className="buttons-container">
         <label className="cancel-button" onClick={this.props.history.goBack}>Cancel</label>
-        {this.state.changesMade ?
-        <label className="save-button" onClick={this.sendForm}>Save</label>
-        :
-        <label className="save-button-disabled">Save</label>}
+        <label className={this.state.changesMade ? "save-button" : "save-button-disabled"} onClick={this.sendForm}>Save</label>
       </div>
-      <div className="pictures-container">
-        <img className="cover-picture" src={this.state.coverPictureLink} onClick={this.changeCoverPic}/>
-        <input type="file" id="cover-pic-file" style={{display: "none"}}
-          ref={this.coverUploadRef} accept="image/*" onChange={this.handleCoverPicChange}/>
-        <img className="profile-picture" src={this.state.profilePictureLink} onClick={this.changeProfilePic}/>
-        <input type="file" id="profile-pic-file" style={{display: "none"}}
-          ref={this.profileUploadRef} accept="image/*" onChange={this.handleProfilePicChange}/>
+      <div className="cover-picture" onClick={this.changeCoverPic}>
+        <img src={this.state.cover_photo}/>
+        <div className="overlay"></div>
+        <input
+          type="file"
+          id="cover-pic-file"
+          ref={this.coverUploadRef}
+          accept="image/*"
+          onChange={this.handleCoverPicChange}
+        />
+        {editImageIcon}
+      </div>
+      <div className="profile-picture" onClick={this.changeProfilePic}>
+        <img src={this.state.profile_photo}/>
+        <input
+          type="file"
+          id="profile-pic-file"
+          ref={this.profileUploadRef}
+          accept="image/*"
+          onChange={this.handleProfilePicChange}
+        />
+        <div className="overlay"></div>
+        {editImageIcon}
       </div>
       <div className="details-container">
         <div className="detail-row">
@@ -165,10 +198,11 @@ class ProfilePage extends React.Component {
         </div>
         <div className="detail-row">
           <label className="detail-field">Email</label>
-          <input className="detail-value" type="text" value={this.state.email}
-            onChange={(event)=>this.setState({emailChanged:true, changesMade:true, email: event.target.value})}
-          />
+          <span className="detail-value detail-value-unchangeable">{this.state.email}</span>
         </div>
+      </div>
+      <div className="log-out-button" onClick={this.handleLogOut}>
+        <span>Log Out</span>
       </div>
     </div>
     )
