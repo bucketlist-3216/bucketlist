@@ -35,6 +35,7 @@ class AddFriendModal extends Component {
           <Form onSubmit={this.addFriend}>
             <Form.Group controlId="formBasicEmail">
               <Form.Control
+                required
                 onChange={this.handleChangeEmail}
                 className="email-field"
                 type="email"
