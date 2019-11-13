@@ -9,6 +9,7 @@ import { faChevronCircleRight, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 // Import api
 import TripAPI from '../../api/trip';
+import UserAPI from "../../api/user.js";
 
 import PROVIDERS from '../../constants/providers';
 import PATHS from '../../constants/paths';
@@ -44,13 +45,20 @@ class TripsPage extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     const instance = this;
-    TripAPI.getTrips(this.routeChange)
+    const gettingTripData = TripAPI.getTrips(this.routeChange)
       .then(function (response) {
         instance.setState({
           trips : response.data,
-          isLoading: false
         });
-      })
+      });
+    const gettingUserData = UserAPI.getUserData(this.routeChange, localStorage.getItem("userId"))
+      .then(function (response) {
+        instance.setState({
+          userData : response.data[0],
+        });
+      });
+    Promise.all([gettingUserData, gettingTripData])
+      .then(() => this.setState({isLoading: false}))
       .catch(function (error) {
         const errorMessage = error.hasSpecialMessage ? error.message : `Oops! Something went wrong.`;
         toast(errorMessage, {
@@ -152,7 +160,7 @@ class TripsPage extends Component {
       return (
         <div className="trips-page-container">
           <div className="trips-page">
-            <ProfileBanner tripCount={trips.length} routeChange={this.routeChange}/>
+            <ProfileBanner tripCount={trips.length} routeChange={this.routeChange} userData={this.state.userData}/>
             {tripsContainer}
             {createTripContainer}
           </div>

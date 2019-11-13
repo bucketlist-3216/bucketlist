@@ -13,6 +13,8 @@
       position: absolute;
       height: 14vh;
       width: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
     .profile-and-button-container {
@@ -56,7 +58,7 @@
     color: rgba(255,255,255,1);
     margin-left: 6%;
     font-family: "CeraPro-Regular";
-    
+
 
     .name {
       display: block;
