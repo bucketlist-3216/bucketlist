@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   display: block;
-  width: 100vw;
+  width: 100%;
   height: calc(14vh + 115px);
   border-bottom: 0.5px #555555 solid;
 
@@ -12,14 +12,14 @@
     .cover-photo {
       position: absolute;
       height: 14vh;
-      width: 100vw;
+      width: 100%;
     }
 
     .profile-and-button-container {
       position: absolute;
       height: 60px;
       top: calc(14vh - 30px);
-      width: 100vw;
+      width: 100%;
 
       .profile-photo {
         height: 60px;
@@ -32,6 +32,7 @@
         z-index: 1;
         float:left;
         object-fit: cover;
+        object-position: center;
       }
 
       .edit-button {
