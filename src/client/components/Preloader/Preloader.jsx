@@ -1,13 +1,15 @@
 import React from 'react';
 import { Animated } from 'react-animated-css';
+import { CirclesToRhombusesSpinner } from 'react-epic-spinners';
 
 const Preloader = () => {
   return (
     <div className="preloader">
       <div className="loading">
         <div className="loader-text">bucketlist</div>
-        {renderEllipsisAnimation()}
-      </div>
+        {/* {renderEllipsisAnimation()} */}
+        <CirclesToRhombusesSpinner color="white" />
+      </div>  
     </div>
   );
 };
